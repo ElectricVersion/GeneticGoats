@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 @Mod("geneticgoats")
 public class GeneticGoats
 {
+    public static String MOD_ID = "geneticgoats";
     public GeneticGoats()
     {
         // Register ourselves for server and other game events we are interested in
