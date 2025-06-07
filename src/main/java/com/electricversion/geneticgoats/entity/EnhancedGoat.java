@@ -2,6 +2,7 @@ package com.electricversion.geneticgoats.entity;
 
 import com.electricversion.geneticgoats.config.GoatsCommonConfig;
 import com.electricversion.geneticgoats.entity.genetics.GoatGeneticsInitializer;
+import com.electricversion.geneticgoats.entity.texture.GoatTexture;
 import mokiyoki.enhancedanimals.entity.EnhancedAnimalAbstract;
 import mokiyoki.enhancedanimals.init.FoodSerialiser;
 import mokiyoki.enhancedanimals.util.Genes;
@@ -73,6 +74,9 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
 
     @Override
     protected void setTexturePaths() {
+        if (getGenes() != null) {
+            GoatTexture.calculateTexture(this, getGenes().getAutosomalGenes(), getStringUUID().toCharArray());
+        }
     }
 
     @Override
