@@ -1,10 +1,14 @@
 package com.electricversion.geneticgoats.entity;
 
+import com.electricversion.geneticgoats.entity.genetics.GoatGeneticsInitializer;
 import mokiyoki.enhancedanimals.entity.EnhancedAnimalAbstract;
 import mokiyoki.enhancedanimals.init.FoodSerialiser;
 import mokiyoki.enhancedanimals.util.Genes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 
@@ -17,6 +21,14 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
         super(type, worldIn, SEXLINKED_GENES_LENGTH, AUTOSOMAL_GENES_LENGTH, true);
         this.initilizeAnimalSize();
     }
+
+    public static AttributeSupplier.Builder prepareAttributes() {
+        return Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 4.0D)
+                .add(Attributes.MOVEMENT_SPEED, 0.5D)
+                .add(Attributes.ATTACK_DAMAGE, 1.0D);
+    }
+
 
     @Override
     protected String getSpecies() {
@@ -92,12 +104,13 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
     protected void fixGeneLengths() {}
 
     @Override
-    protected Genes createInitialGenes(LevelAccessor levelAccessor, BlockPos blockPos, boolean b) {
-        return null;
+    protected Genes createInitialGenes(LevelAccessor levelAccessor, BlockPos blockPos, boolean isBreed) {
+        return new GoatGeneticsInitializer().generateNewGenetics(levelAccessor, blockPos, isBreed);
     }
 
     @Override
-    public Genes createInitialBreedGenes(LevelAccessor levelAccessor, BlockPos blockPos, String s) {
-        return null;
+    public Genes createInitialBreedGenes(LevelAccessor levelAccessor, BlockPos blockPos, String breedName) {
+        return new GoatGeneticsInitializer().generateWithBreed(levelAccessor, blockPos, breedName);
     }
+
 }
