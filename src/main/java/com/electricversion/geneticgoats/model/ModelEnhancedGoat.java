@@ -36,7 +36,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         ModelPart basePart = modelPart.getChild("base");
 
         base = new WrappedModelPart(basePart, "base");
-        bBody = new WrappedModelPart("base", basePart);
+        bBody = new WrappedModelPart("bBody", basePart);
         testCube = new WrappedModelPart("testCube", basePart);
 
         base.addChild(bBody);
