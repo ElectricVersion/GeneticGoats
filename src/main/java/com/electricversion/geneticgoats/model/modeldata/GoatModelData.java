@@ -4,6 +4,6 @@ import mokiyoki.enhancedanimals.model.modeldata.AnimalModelData;
 
 public class GoatModelData extends AnimalModelData {
     public GoatPhenotype getPhenotype() {
-        return (GoatPhenotype) this.phenotype;
+        return (GoatPhenotype)phenotype;
     }
 }

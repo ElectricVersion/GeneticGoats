@@ -23,12 +23,12 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
     }
 
 
-    public Genes generateNewGenetics(LevelAccessor world, BlockPos pos, boolean generateBreed) {
-        return super.generateNewGenetics(world, pos, generateBreed, this.breeds);
+    public Genes generateNewGenetics(LevelAccessor world, BlockPos pos, boolean isBreed) {
+        return super.generateNewGenetics(world, pos, isBreed, breeds);
     }
 
-    public Genes generateWithBreed(LevelAccessor world, BlockPos pos, String breed) {
-        return super.generateWithBreed(world, pos, this.breeds, breed);
+    public Genes generateWithBreed(LevelAccessor world, BlockPos pos, String breedName) {
+        return super.generateWithBreed(world, pos, breeds, breedName);
     }
 
     @Override

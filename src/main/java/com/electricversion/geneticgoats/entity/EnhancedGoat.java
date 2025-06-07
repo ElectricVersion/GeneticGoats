@@ -20,7 +20,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
 
     public EnhancedGoat(EntityType<? extends EnhancedAnimalAbstract> type, Level worldIn) {
         super(type, worldIn, SEXLINKED_GENES_LENGTH, AUTOSOMAL_GENES_LENGTH, true);
-        this.initilizeAnimalSize();
+        initilizeAnimalSize();
     }
 
     public static AttributeSupplier.Builder prepareAttributes() {
