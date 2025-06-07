@@ -1,5 +1,6 @@
 package com.electricversion.geneticgoats.entity;
 
+import com.electricversion.geneticgoats.config.GoatsCommonConfig;
 import com.electricversion.geneticgoats.entity.genetics.GoatGeneticsInitializer;
 import mokiyoki.enhancedanimals.entity.EnhancedAnimalAbstract;
 import mokiyoki.enhancedanimals.init.FoodSerialiser;
@@ -37,12 +38,12 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
 
     @Override
     protected int getAdultAge() {
-        return 0;
+        return GoatsCommonConfig.COMMON.growthTime.get();
     }
 
     @Override
     protected int gestationConfig() {
-        return 0;
+        return GoatsCommonConfig.COMMON.birthTime.get();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.electricversion.geneticgoats.entity.genetics;
 
+import com.electricversion.geneticgoats.config.GoatsCommonConfig;
 import com.electricversion.geneticgoats.entity.EnhancedGoat;
 import mokiyoki.enhancedanimals.entity.genetics.AbstractGeneticsInitialiser;
 import mokiyoki.enhancedanimals.util.Breed;
@@ -14,6 +15,7 @@ import java.util.List;
 
 public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
 
+    int WTC = GoatsCommonConfig.COMMON.wildTypeChance.get();
     List<Breed> breeds = new ArrayList<>();
 
     public GoatGeneticsInitializer() {
