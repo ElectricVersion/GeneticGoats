@@ -2,7 +2,9 @@ package com.electricversion.geneticgoats.entity;
 
 import com.electricversion.geneticgoats.config.GoatsCommonConfig;
 import com.electricversion.geneticgoats.entity.genetics.GoatGeneticsInitializer;
+import com.electricversion.geneticgoats.entity.texture.GoatTexture;
 import mokiyoki.enhancedanimals.entity.EnhancedAnimalAbstract;
+import mokiyoki.enhancedanimals.entity.EntityState;
 import mokiyoki.enhancedanimals.init.FoodSerialiser;
 import mokiyoki.enhancedanimals.util.Genes;
 import net.minecraft.core.BlockPos;
@@ -12,6 +14,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+
+import static com.electricversion.geneticgoats.init.AddonEntities.ENHANCED_GOAT;
 
 public class EnhancedGoat extends EnhancedAnimalAbstract {
 
@@ -73,23 +77,48 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
 
     @Override
     protected void setTexturePaths() {
+        if (getGenes() != null) {
+            GoatTexture.calculateTexture(this, getGenes().getAutosomalGenes(), getStringUUID().toCharArray());
+        }
     }
 
     @Override
     protected void setAlphaTexturePaths() {
+        // Unused in newer GA animals and can probably be considered deprecated.
     }
 
     @Override
     public void initilizeAnimalSize() {
+        setAnimalSize(1F);
     }
 
     @Override
-    protected EnhancedAnimalAbstract createEnhancedChild(Level level, EnhancedAnimalAbstract enhancedAnimalAbstract) {
-        return null;
+    protected EnhancedAnimalAbstract createEnhancedChild(Level level, EnhancedAnimalAbstract otherParent) {
+        EnhancedGoat goat = ENHANCED_GOAT.get().create(level);
+        Genes babyGenes = new Genes(getGenes()).makeChild(getOrSetIsFemale(), otherParent.getOrSetIsFemale(), otherParent.getGenes());
+        if (goat != null) {
+            goat.setGenes(babyGenes);
+            goat.setSharedGenes(babyGenes);
+            goat.setSireName(otherParent.getCustomName() == null ? "???" : otherParent.getCustomName().getString());
+            goat.setDamName(getCustomName() == null ? "???" : getCustomName().getString());
+            goat.setParent(getUUID().toString());
+            goat.setGrowingAge();
+            goat.setBirthTime();
+            goat.initilizeAnimalSize();
+            goat.setEntityStatus(EntityState.CHILD_STAGE_ONE.toString());
+            goat.moveTo(getX(), getY(), getZ(), getYRot(), 0.0F);
+            goat.setInitialDefaults();
+        }
+        return goat;
     }
 
     @Override
     protected void createAndSpawnEnhancedChild(Level level) {
+        EnhancedGoat goat = ENHANCED_GOAT.get().create(level);
+        Genes babyGenes = new Genes(genetics).makeChild(getOrSetIsFemale(), mateGender, mateGenetics);
+        defaultCreateAndSpawn(goat, level, babyGenes, -getAdultAge());
+        level.addFreshEntity(goat);
+        goat.setInitialDefaults();
     }
 
     @Override
@@ -99,7 +128,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
 
     @Override
     protected boolean canLactate() {
-        return false;
+        return true;
     }
 
     @Override
