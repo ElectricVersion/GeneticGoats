@@ -79,6 +79,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
         }
     }
 
+    // Unused in newer GA animals and can probably be considered deprecated.
     @Override
     protected void setAlphaTexturePaths() {
     }
