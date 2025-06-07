@@ -1,6 +1,5 @@
 package com.electricversion.geneticgoats.init;
 
-import com.electricversion.geneticgoats.GeneticGoats;
 import com.electricversion.geneticgoats.entity.EnhancedGoat;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;

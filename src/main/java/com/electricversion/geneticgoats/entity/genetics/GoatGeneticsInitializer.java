@@ -22,7 +22,6 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         breeds.add(GoatBreeds.PLACEHOLDER);
     }
 
-
     public Genes generateNewGenetics(LevelAccessor world, BlockPos pos, boolean isBreed) {
         return super.generateNewGenetics(world, pos, isBreed, breeds);
     }

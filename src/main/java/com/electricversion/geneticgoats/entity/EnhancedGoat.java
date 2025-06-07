@@ -52,10 +52,12 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
     }
 
     @Override
-    protected void runExtraIdleTimeTick() {}
+    protected void runExtraIdleTimeTick() {
+    }
 
     @Override
-    protected void lethalGenes() {}
+    protected void lethalGenes() {
+    }
 
     @Override
     public String getTexture() {
@@ -70,13 +72,16 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
     }
 
     @Override
-    protected void setTexturePaths() {}
+    protected void setTexturePaths() {
+    }
 
     @Override
-    protected void setAlphaTexturePaths() {}
+    protected void setAlphaTexturePaths() {
+    }
 
     @Override
-    public void initilizeAnimalSize() {}
+    public void initilizeAnimalSize() {
+    }
 
     @Override
     protected EnhancedAnimalAbstract createEnhancedChild(Level level, EnhancedAnimalAbstract enhancedAnimalAbstract) {
@@ -84,7 +89,8 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
     }
 
     @Override
-    protected void createAndSpawnEnhancedChild(Level level) {}
+    protected void createAndSpawnEnhancedChild(Level level) {
+    }
 
     @Override
     protected boolean canBePregnant() {
@@ -102,7 +108,8 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
     }
 
     @Override
-    protected void fixGeneLengths() {}
+    protected void fixGeneLengths() {
+    }
 
     @Override
     protected Genes createInitialGenes(LevelAccessor levelAccessor, BlockPos blockPos, boolean isBreed) {

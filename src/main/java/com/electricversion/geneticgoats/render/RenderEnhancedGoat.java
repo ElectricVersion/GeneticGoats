@@ -24,8 +24,7 @@ public class RenderEnhancedGoat extends MobRenderer<EnhancedGoat, ModelEnhancedG
     private static final ResourceLocation ERROR_TEXTURE_LOCATION = new ResourceLocation("geneticgoats:textures/entity/goat/goat_base.png");
     public static final ModelLayerLocation GOAT_LAYER = new ModelLayerLocation(new ResourceLocation(GeneticGoats.MOD_ID, "goat"), "goat_layer");
 
-    public RenderEnhancedGoat(EntityRendererProvider.Context renderManager)
-    {
+    public RenderEnhancedGoat(EntityRendererProvider.Context renderManager) {
         super(renderManager, new ModelEnhancedGoat<>(renderManager.bakeLayer(GOAT_LAYER)), 0.2F);
     }
 

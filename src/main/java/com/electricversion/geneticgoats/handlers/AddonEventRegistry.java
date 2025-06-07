@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.electricversion.geneticgoats.init.AddonEntities.ENHANCED_GOAT;
 
-@Mod.EventBusSubscriber(modid = GeneticGoats.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = GeneticGoats.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AddonEventRegistry {
 
     @SubscribeEvent

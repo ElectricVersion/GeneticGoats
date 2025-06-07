@@ -78,7 +78,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         PartDefinition base = meshDefinition.getRoot().addOrReplaceChild("base", CubeListBuilder.create(), PartPose.ZERO);
         PartDefinition bBody = base.addOrReplaceChild("bBody", CubeListBuilder.create(), PartPose.ZERO);
         base.addOrReplaceChild("testCube", CubeListBuilder.create()
-                .addBox(0,0,0,8,8,8),
+                        .addBox(0, 0, 0, 8, 8, 8),
                 PartPose.ZERO);
 
 
