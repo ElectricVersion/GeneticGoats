@@ -133,9 +133,8 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
 
     @Override
     protected FoodSerialiser.AnimalFoodMap getAnimalFoodType() {
-        return null;
+        return FoodSerialiser.getAnimalFoodMap("goat");
     }
-
     @Override
     protected void fixGeneLengths() {
     }

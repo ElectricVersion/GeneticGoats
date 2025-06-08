@@ -10,7 +10,7 @@ public class GoatTexture {
     // interact to create a single, "compiled" texture.
     public static void calculateTexture(EnhancedGoat goat, int[] gene, char[] uuidArry) {
         TextureGrouping rootGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
-
+        goat.addTextureToAnimalTextureGrouping(rootGroup, "goat_base.png");
         goat.setTextureGrouping(rootGroup);
     }
 }
