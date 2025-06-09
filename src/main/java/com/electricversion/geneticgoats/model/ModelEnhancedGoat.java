@@ -48,9 +48,13 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         return new GoatPhenotype(goat.getGenes().getAutosomalGenes(), goat.getOrSetIsFemale());
     }
 
+    private GoatModelData getCreateGoatModelData(T goat) {
+        return (GoatModelData) getCreateAnimalModelData(goat);
+    }
+
     @Override
     public void setupAnim(@NotNull T goat, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
+        goatModelData = getCreateGoatModelData(goat);
     }
 
     @Override
@@ -78,7 +82,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         PartDefinition base = meshDefinition.getRoot().addOrReplaceChild("base", CubeListBuilder.create(), PartPose.ZERO);
         PartDefinition bBody = base.addOrReplaceChild("bBody", CubeListBuilder.create(), PartPose.ZERO);
         base.addOrReplaceChild("testCube", CubeListBuilder.create()
-                        .addBox(0, 0, 0, 8, 8, 8),
+                        .texOffs(0, 0)
+                        .addBox(-4.5F, 9F, -8F, 9, 9, 10),
                 PartPose.ZERO);
 
 

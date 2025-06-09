@@ -3,9 +3,11 @@ package com.electricversion.geneticgoats.entity;
 import com.electricversion.geneticgoats.config.GoatsCommonConfig;
 import com.electricversion.geneticgoats.entity.genetics.GoatGeneticsInitializer;
 import com.electricversion.geneticgoats.entity.texture.GoatTexture;
+import com.electricversion.geneticgoats.model.modeldata.GoatModelData;
 import mokiyoki.enhancedanimals.entity.EnhancedAnimalAbstract;
 import mokiyoki.enhancedanimals.entity.EntityState;
 import mokiyoki.enhancedanimals.init.FoodSerialiser;
+import mokiyoki.enhancedanimals.model.modeldata.AnimalModelData;
 import mokiyoki.enhancedanimals.util.Genes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
@@ -14,6 +16,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import static com.electricversion.geneticgoats.init.AddonEntities.ENHANCED_GOAT;
 
@@ -21,6 +25,9 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
 
     public static final int AUTOSOMAL_GENES_LENGTH = 2;
     public static final int SEXLINKED_GENES_LENGTH = 2;
+
+    @OnlyIn(Dist.CLIENT)
+    private GoatModelData goatModelData;
 
     public EnhancedGoat(EntityType<? extends EnhancedAnimalAbstract> type, Level worldIn) {
         super(type, worldIn, SEXLINKED_GENES_LENGTH, AUTOSOMAL_GENES_LENGTH, true);
@@ -149,4 +156,15 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
         return new GoatGeneticsInitializer().generateWithBreed(levelAccessor, blockPos, breedName);
     }
 
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public GoatModelData getModelData() {
+        return goatModelData;
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public void setModelData(AnimalModelData modelData) {
+        goatModelData = (GoatModelData) modelData;
+    }
 }
