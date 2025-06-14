@@ -188,9 +188,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                 PartPose.ZERO);
 
         baseDef.addOrReplaceChild("snout", CubeListBuilder.create()
-                        .texOffs(23, 43)
-                        .addBox(-2.5F, 0.25F, -6.0F, 5, 4, 8, new CubeDeformation(-1)),
-                PartPose.offsetAndRotation(0F, 0F, 0F, Mth.HALF_PI*0.125F, 0F, 0F));
+                        .texOffs(24, 44)
+                        .addBox(-2.5F, -1F, -6F, 5, 4, 7, new CubeDeformation(-1)),
+                PartPose.offsetAndRotation(0F, 1F, 0F, Mth.HALF_PI*0.125F, 0F, 0F));
 
         baseDef.addOrReplaceChild("upperMouth", CubeListBuilder.create()
                         .texOffs(28, 56)
