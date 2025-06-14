@@ -28,6 +28,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     private WrappedModelPart bBodyF;
     private WrappedModelPart bBodyB;
     private WrappedModelPart bHead;
+    private WrappedModelPart bNeck;
     private WrappedModelPart bLegFL;
     private WrappedModelPart bLegFR;
     private WrappedModelPart bLegBL;
@@ -35,10 +36,13 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
     private WrappedModelPart bodyF;
     private WrappedModelPart bodyB;
+    private WrappedModelPart neck;
     private WrappedModelPart head;
     private WrappedModelPart snout;
     private WrappedModelPart upperMouth;
     private WrappedModelPart mouth;
+    private WrappedModelPart eyeL;
+    private WrappedModelPart eyeR;
 
     private WrappedModelPart legFL;
     private WrappedModelPart legFR;
@@ -53,19 +57,26 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         base = new WrappedModelPart(basePart, "base");
         bBodyF = new WrappedModelPart("bBodyF", basePart);
         bBodyB = new WrappedModelPart("bBodyB", basePart);
+
+        bNeck = new WrappedModelPart("bNeck", basePart);
         bHead = new WrappedModelPart("bHead", basePart);
+
         bLegFL = new WrappedModelPart("bLegFL", basePart);
         bLegFR = new WrappedModelPart("bLegFR", basePart);
-        
         bLegBL = new WrappedModelPart("bLegBL", basePart);
         bLegBR = new WrappedModelPart("bLegBR", basePart);
 
         bodyF = new WrappedModelPart("bodyF", basePart);
         bodyB = new WrappedModelPart("bodyB", basePart);
+
+        neck = new WrappedModelPart("neck", basePart);
+
         head = new WrappedModelPart("head", basePart);
         snout = new WrappedModelPart("snout", basePart);
         upperMouth = new WrappedModelPart("upperMouth", basePart);
         mouth = new WrappedModelPart("mouth", basePart);
+        eyeL = new WrappedModelPart("eyeL", basePart);
+        eyeR = new WrappedModelPart("eyeR", basePart);
 
         legFL = new WrappedModelPart("legFL", basePart);
         legFR = new WrappedModelPart("legFR", basePart);
@@ -77,11 +88,16 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bBodyF.addChild(bodyF);
         bBodyB.addChild(bodyB);
 
-        base.addChild(bHead);
+        base.addChild(bNeck);
+        bNeck.addChild(neck);
+
+        bNeck.addChild(bHead);
         bHead.addChild(head);
         bHead.addChild(snout);
         bHead.addChild(upperMouth);
         bHead.addChild(mouth);
+        bHead.addChild(eyeL);
+        bHead.addChild(eyeR);
 
         base.addChild(bLegFL);
         base.addChild(bLegFR);
@@ -136,16 +152,18 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                 PartPose.offset(0F,-9F,-8F));
         PartDefinition bBodyBDef = baseDef.addOrReplaceChild("bBodyB", CubeListBuilder.create(),
                 PartPose.offset(0F,-9F,2F));
+        PartDefinition bNeckDef = baseDef.addOrReplaceChild("bNeck", CubeListBuilder.create(),
+                PartPose.offset(0F,-16F,-9F));
         PartDefinition bHeadDef = baseDef.addOrReplaceChild("bHead", CubeListBuilder.create(),
-                PartPose.offset(0F,-22F,-14F));
-        PartDefinition bLegFL = baseDef.addOrReplaceChild("bLegFL", CubeListBuilder.create(),
-                PartPose.offset(-4.5F,0F,-8F));
-        PartDefinition bLegFR = baseDef.addOrReplaceChild("bLegFR", CubeListBuilder.create(),
+                PartPose.offset(0F,-2F,-1F));
+        PartDefinition bLegFR = baseDef.addOrReplaceChild("bLegFL", CubeListBuilder.create(),
                 PartPose.offset(1.5F,0F,-8F));
-        PartDefinition bLegVL = baseDef.addOrReplaceChild("bLegBL", CubeListBuilder.create(),
-                PartPose.offset(-4.5F,0F,8F));
-        PartDefinition bLegBR = baseDef.addOrReplaceChild("bLegBR", CubeListBuilder.create(),
+        PartDefinition bLegFL = baseDef.addOrReplaceChild("bLegFR", CubeListBuilder.create(),
+                PartPose.offset(-4.5F,0F,-8F));
+        PartDefinition bLegBR = baseDef.addOrReplaceChild("bLegBL", CubeListBuilder.create(),
                 PartPose.offset(1.5F,0F,8F));
+        PartDefinition bLegVL = baseDef.addOrReplaceChild("bLegBR", CubeListBuilder.create(),
+                PartPose.offset(-4.5F,0F,8F));
 
 
 
@@ -155,47 +173,62 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                 PartPose.ZERO);
 
         baseDef.addOrReplaceChild("bodyB", CubeListBuilder.create()
-                        .texOffs(0, 19)
+                        .texOffs(0, 20)
                         .addBox(-4.5F, 0F, 0F, 9, 9, 10),
                 PartPose.ZERO);
 
+        baseDef.addOrReplaceChild("neck", CubeListBuilder.create()
+                        .texOffs(0, 40)
+                        .addBox(-2.5F, 0F, 0F, 5, 14, 6),
+                PartPose.ZERO);
+
         baseDef.addOrReplaceChild("head", CubeListBuilder.create()
-                        .texOffs(38, 0)
-                        .addBox(-3.5F, 0F, 0F, 7, 5, 6),
+                        .texOffs(50, 44)
+                        .addBox(-3F, 0F, 0F, 6, 5, 6),
                 PartPose.ZERO);
 
         baseDef.addOrReplaceChild("snout", CubeListBuilder.create()
-                        .texOffs(38, 11)
-                        .addBox(-2.5F, 1F, -5.5F, 5, 3, 6, new CubeDeformation(-0.5F)),
+                        .texOffs(23, 43)
+                        .addBox(-2.5F, 0.25F, -6.0F, 5, 4, 8, new CubeDeformation(-1)),
                 PartPose.offsetAndRotation(0F, 0F, 0F, Mth.HALF_PI*0.125F, 0F, 0F));
 
         baseDef.addOrReplaceChild("upperMouth", CubeListBuilder.create()
-                        .texOffs(52, 53)
+                        .texOffs(28, 56)
                         .addBox(-1.5F, 3F, -4F, 3, 1, 4),
                 PartPose.ZERO);
 
         baseDef.addOrReplaceChild("mouth", CubeListBuilder.create()
-                        .texOffs(38, 53)
+                        .texOffs(28, 62)
                         .addBox(-1.5F, 4F, -4F, 3, 1, 4),
                 PartPose.ZERO);
 
+        baseDef.addOrReplaceChild("eyeL", CubeListBuilder.create()
+                        .texOffs(61, 68)
+                        .addBox(0.505F, -0.5F, -1.505F, 4, 4, 4, new CubeDeformation(-1.5F)),
+                PartPose.ZERO);
+
+        baseDef.addOrReplaceChild("eyeR", CubeListBuilder.create()
+                        .texOffs(44, 68)
+                        .addBox(-4.505F, -0.5F, -1.505F, 4, 4, 4, new CubeDeformation(-1.5F)),
+                PartPose.ZERO);
+
         baseDef.addOrReplaceChild("legFL", CubeListBuilder.create()
-                        .texOffs(22, 38)
+                        .texOffs(13, 66)
                         .addBox(0F, 0F, 0F, 3, 9, 3),
                 PartPose.ZERO);
 
         baseDef.addOrReplaceChild("legFR", CubeListBuilder.create()
-                        .texOffs(38, 29)
+                        .texOffs(0, 66)
                         .addBox(0F, 0F, 0F, 3, 9, 3),
                 PartPose.ZERO);
 
         baseDef.addOrReplaceChild("legBL", CubeListBuilder.create()
-                        .texOffs(34, 41)
+                        .texOffs(13, 79)
                         .addBox(0F, 0F, 0F, 3, 9, 3),
                 PartPose.ZERO);
 
         baseDef.addOrReplaceChild("legBR", CubeListBuilder.create()
-                        .texOffs(46, 41)
+                        .texOffs(0, 79)
                         .addBox(0F, 0F, 0F, 3, 9, 3),
                 PartPose.ZERO);
 
