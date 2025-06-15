@@ -212,8 +212,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         baseDef.addOrReplaceChild("muzzle", CubeListBuilder.create()
                         .texOffs(24, 44)
-                        .addBox(-2.5F, -1F, -6F, 5, 4, 7, new CubeDeformation(-1)),
-                PartPose.offsetAndRotation(0F, -3.75F, -5.75F, Mth.HALF_PI*0.125F, 0F, 0F));
+                        .addBox(-2.5F, -0.8F, -6F, 5, 4, 7, new CubeDeformation(-1, -0.8F, -1)),
+                PartPose.offsetAndRotation(0F, -4F, -5.75F, Mth.HALF_PI*0.125F, 0F, 0F));
 
         baseDef.addOrReplaceChild("upperMouth", CubeListBuilder.create()
                         .texOffs(28, 56)
