@@ -25,10 +25,13 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     private GoatModelData goatModelData;
 
     private WrappedModelPart base;
+
     private WrappedModelPart bBodyF;
     private WrappedModelPart bBodyB;
+
     private WrappedModelPart bHead;
     private WrappedModelPart bNeck;
+
     private WrappedModelPart bLegFL;
     private WrappedModelPart bLegFR;
     private WrappedModelPart bLegBL;
@@ -36,6 +39,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
     private WrappedModelPart bodyF;
     private WrappedModelPart bodyB;
+
+    private WrappedModelPart tail;
 
     private WrappedModelPart neck;
 
@@ -59,6 +64,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         ModelPart basePart = modelPart.getChild("base");
 
         base = new WrappedModelPart(basePart, "base");
+
         bBodyF = new WrappedModelPart("bBodyF", basePart);
         bBodyB = new WrappedModelPart("bBodyB", basePart);
 
@@ -72,6 +78,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         bodyF = new WrappedModelPart("bodyF", basePart);
         bodyB = new WrappedModelPart("bodyB", basePart);
+        tail = new WrappedModelPart("tail", basePart);
 
         neck = new WrappedModelPart("neck", basePart);
 
@@ -93,6 +100,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         base.addChild(bBodyB);
         bBodyF.addChild(bodyF);
         bBodyB.addChild(bodyB);
+        bBodyB.addChild(tail);
 
         base.addChild(bNeck);
         bNeck.addChild(neck);
@@ -185,6 +193,11 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                         .addBox(-4.5F, 0F, 0F, 9, 9, 10),
                 PartPose.ZERO);
 
+        baseDef.addOrReplaceChild("tail", CubeListBuilder.create()
+                        .texOffs(0, 93)
+                        .addBox(-1F, 0F, 0F, 2, 3, 6),
+                PartPose.offset(0F, 0F, 10F));
+
         baseDef.addOrReplaceChild("neck", CubeListBuilder.create()
                         .texOffs(0, 40)
                         .addBox(-2.5F, 0F, 0F, 5, 14, 6),
@@ -198,7 +211,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("muzzle", CubeListBuilder.create()
                         .texOffs(24, 44)
                         .addBox(-2.5F, -1F, -6F, 5, 4, 7, new CubeDeformation(-1)),
-                PartPose.offsetAndRotation(0F, 1.5F, 0F, Mth.HALF_PI*0.125F, 0F, 0F));
+                PartPose.offsetAndRotation(0F, 1.5F, 0.25F, Mth.HALF_PI*0.125F, 0F, 0F));
 
         baseDef.addOrReplaceChild("upperMouth", CubeListBuilder.create()
                         .texOffs(28, 56)
