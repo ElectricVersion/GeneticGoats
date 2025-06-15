@@ -40,7 +40,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     private WrappedModelPart neck;
 
     private WrappedModelPart head;
-    private WrappedModelPart snout;
+    private WrappedModelPart muzzle;
     private WrappedModelPart upperMouth;
     private WrappedModelPart mouth;
     private WrappedModelPart eyeL;
@@ -76,7 +76,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         neck = new WrappedModelPart("neck", basePart);
 
         head = new WrappedModelPart("head", basePart);
-        snout = new WrappedModelPart("snout", basePart);
+        muzzle = new WrappedModelPart("muzzle", basePart);
         upperMouth = new WrappedModelPart("upperMouth", basePart);
         mouth = new WrappedModelPart("mouth", basePart);
         eyeL = new WrappedModelPart("eyeL", basePart);
@@ -99,7 +99,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         bNeck.addChild(bHead);
         bHead.addChild(head);
-        bHead.addChild(snout);
+        bHead.addChild(muzzle);
         bHead.addChild(upperMouth);
         bHead.addChild(mouth);
         bHead.addChild(eyeL);
@@ -195,7 +195,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                         .addBox(-3F, 0F, 0F, 6, 5, 6),
                 PartPose.ZERO);
 
-        baseDef.addOrReplaceChild("snout", CubeListBuilder.create()
+        baseDef.addOrReplaceChild("muzzle", CubeListBuilder.create()
                         .texOffs(24, 44)
                         .addBox(-2.5F, -1F, -6F, 5, 4, 7, new CubeDeformation(-1)),
                 PartPose.offsetAndRotation(0F, 1.5F, 0F, Mth.HALF_PI*0.125F, 0F, 0F));
