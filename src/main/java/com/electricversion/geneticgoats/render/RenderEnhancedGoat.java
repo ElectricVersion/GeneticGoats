@@ -25,7 +25,7 @@ public class RenderEnhancedGoat extends MobRenderer<EnhancedGoat, ModelEnhancedG
     public static final ModelLayerLocation GOAT_LAYER = new ModelLayerLocation(new ResourceLocation(GeneticGoats.MOD_ID, "goat"), "goat_layer");
 
     public RenderEnhancedGoat(EntityRendererProvider.Context renderManager) {
-        super(renderManager, new ModelEnhancedGoat<>(renderManager.bakeLayer(GOAT_LAYER)), 0.2F);
+        super(renderManager, new ModelEnhancedGoat<>(renderManager.bakeLayer(GOAT_LAYER)), 0.5F);
     }
 
     @Override
