@@ -36,13 +36,17 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
     private WrappedModelPart bodyF;
     private WrappedModelPart bodyB;
+
     private WrappedModelPart neck;
+
     private WrappedModelPart head;
     private WrappedModelPart snout;
     private WrappedModelPart upperMouth;
     private WrappedModelPart mouth;
     private WrappedModelPart eyeL;
     private WrappedModelPart eyeR;
+    private WrappedModelPart earL;
+    private WrappedModelPart earR;
 
     private WrappedModelPart legFL;
     private WrappedModelPart legFR;
@@ -77,6 +81,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         mouth = new WrappedModelPart("mouth", basePart);
         eyeL = new WrappedModelPart("eyeL", basePart);
         eyeR = new WrappedModelPart("eyeR", basePart);
+        earL = new WrappedModelPart("earL", basePart);
+        earR = new WrappedModelPart("earR", basePart);
 
         legFL = new WrappedModelPart("legFL", basePart);
         legFR = new WrappedModelPart("legFR", basePart);
@@ -98,6 +104,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bHead.addChild(mouth);
         bHead.addChild(eyeL);
         bHead.addChild(eyeR);
+        bHead.addChild(earL);
+        bHead.addChild(earR);
 
         base.addChild(bLegFL);
         base.addChild(bLegFR);
@@ -190,7 +198,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("snout", CubeListBuilder.create()
                         .texOffs(24, 44)
                         .addBox(-2.5F, -1F, -6F, 5, 4, 7, new CubeDeformation(-1)),
-                PartPose.offsetAndRotation(0F, 1F, 0F, Mth.HALF_PI*0.125F, 0F, 0F));
+                PartPose.offsetAndRotation(0F, 1.5F, 0F, Mth.HALF_PI*0.125F, 0F, 0F));
 
         baseDef.addOrReplaceChild("upperMouth", CubeListBuilder.create()
                         .texOffs(28, 56)
@@ -211,6 +219,17 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                         .texOffs(44, 68)
                         .addBox(-4.505F, -0.5F, -1.505F, 4, 4, 4, new CubeDeformation(-1.5F)),
                 PartPose.ZERO);
+
+        baseDef.addOrReplaceChild("earL", CubeListBuilder.create()
+                        .texOffs(88, 51)
+                        .addBox(0F, 0F, 0F, 5, 3, 1),
+                PartPose.offset(2F, 0F,5F));
+
+        baseDef.addOrReplaceChild("earR", CubeListBuilder.create()
+                        .texOffs(88, 51)
+                        .addBox(-5F, 0F, 0F, 5, 3, 1),
+                PartPose.offset(-2F, 0F,5F));
+
 
         baseDef.addOrReplaceChild("legFL", CubeListBuilder.create()
                         .texOffs(13, 66)
