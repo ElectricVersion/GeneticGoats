@@ -24,39 +24,45 @@ import java.util.Map;
 public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalModel<T> {
     private GoatModelData goatModelData;
 
-    private WrappedModelPart base;
+    /* Bones */
 
-    private WrappedModelPart bBodyF;
-    private WrappedModelPart bBodyB;
+    private final WrappedModelPart base;
 
-    private WrappedModelPart bHead;
-    private WrappedModelPart bNeck;
+    private final WrappedModelPart bBodyF;
+    private final WrappedModelPart bBodyB;
 
-    private WrappedModelPart bLegFL;
-    private WrappedModelPart bLegFR;
-    private WrappedModelPart bLegBL;
-    private WrappedModelPart bLegBR;
+    private final WrappedModelPart bHead;
+    private final WrappedModelPart bNeck;
 
-    private WrappedModelPart bodyF;
-    private WrappedModelPart bodyB;
+    private final WrappedModelPart bLegFL;
+    private final WrappedModelPart bLegFR;
+    private final WrappedModelPart bLegBL;
+    private final WrappedModelPart bLegBR;
 
-    private WrappedModelPart tail;
+    private final WrappedModelPart bodyF;
+    private final WrappedModelPart bodyB;
 
-    private WrappedModelPart neck;
+    /* Blocks */
 
-    private WrappedModelPart head;
-    private WrappedModelPart muzzle;
-    private WrappedModelPart upperMouth;
-    private WrappedModelPart mouth;
-    private WrappedModelPart eyeL;
-    private WrappedModelPart eyeR;
-    private WrappedModelPart earL;
-    private WrappedModelPart earR;
+    private final WrappedModelPart tail;
 
-    private WrappedModelPart legFL;
-    private WrappedModelPart legFR;
-    private WrappedModelPart legBL;
-    private WrappedModelPart legBR;
+    private final WrappedModelPart neck;
+
+    private final WrappedModelPart head;
+    private final WrappedModelPart muzzle;
+    private final WrappedModelPart upperMouth;
+    private final WrappedModelPart mouth;
+    private final WrappedModelPart eyeL;
+    private final WrappedModelPart eyeR;
+    private final WrappedModelPart earL;
+    private final WrappedModelPart earR;
+
+    private final WrappedModelPart legFL;
+    private final WrappedModelPart legFR;
+    private final WrappedModelPart legBL;
+    private final WrappedModelPart legBR;
+
+    /* Part Setup */
 
     public ModelEnhancedGoat(ModelPart modelPart) {
         super(modelPart);
@@ -128,61 +134,27 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
     }
 
-    @Override
-    protected Phenotype createPhenotype(T goat) {
-        return new GoatPhenotype(goat.getGenes().getAutosomalGenes(), goat.getOrSetIsFemale());
-    }
-
-    private GoatModelData getCreateGoatModelData(T goat) {
-        return (GoatModelData) getCreateAnimalModelData(goat);
-    }
-
-    @Override
-    public void setupAnim(@NotNull T goat, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        goatModelData = getCreateGoatModelData(goat);
-    }
-
-    @Override
-    public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer, int packedLightIn, int packedOverlayIn, float r, float g, float b, float a) {
-        if (goatModelData != null && goatModelData.getPhenotype() != null) {
-            super.renderToBuffer(goatModelData, poseStack, vertexConsumer, packedLightIn, packedOverlayIn, r, g, b, a);
-            Map<String, List<Float>> mapOfScale = new HashMap<>(); //Stores transformations for blocks and bones
-            poseStack.pushPose();
-
-            gaRender(base, mapOfScale, poseStack, vertexConsumer, packedLightIn, packedOverlayIn, r, g, b, a);
-            poseStack.popPose();
-
-        }
-    }
-
-    @Override
-    protected void setInitialModelData(T goat) {
-        GoatModelData goatModelData = new GoatModelData();
-        setBaseInitialModelData(goatModelData, goat);
-    }
-
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshDefinition = new MeshDefinition();
 
         PartDefinition baseDef = meshDefinition.getRoot().addOrReplaceChild("base", CubeListBuilder.create(),
                 PartPose.offset(0F, 16F, 0F));
         PartDefinition bBodyFDef = baseDef.addOrReplaceChild("bBodyF", CubeListBuilder.create(),
-                PartPose.offset(0F,-9F,-9F));
+                PartPose.offset(0F, -9F, -9F));
         PartDefinition bBodyBDef = baseDef.addOrReplaceChild("bBodyB", CubeListBuilder.create(),
-                PartPose.offset(0F,-9F,1F));
+                PartPose.offset(0F, -9F, 1F));
         PartDefinition bNeckDef = baseDef.addOrReplaceChild("bNeck", CubeListBuilder.create(),
-                PartPose.offsetAndRotation(0F,-2F,-9F, Mth.HALF_PI*0.20F, 0F, 0F));
+                PartPose.offsetAndRotation(0F, -2F, -9F, Mth.HALF_PI * 0.20F, 0F, 0F));
         PartDefinition bHeadDef = baseDef.addOrReplaceChild("bHead", CubeListBuilder.create(),
-                PartPose.offsetAndRotation(0F,-10.5F,5F, -Mth.HALF_PI*0.20F, 0F, 0F));
+                PartPose.offsetAndRotation(0F, -10.5F, 5F, -Mth.HALF_PI * 0.20F, 0F, 0F));
         PartDefinition bLegFR = baseDef.addOrReplaceChild("bLegFL", CubeListBuilder.create(),
-                PartPose.offset(1.5F,0F,-9F));
+                PartPose.offset(1.5F, 0F, -9F));
         PartDefinition bLegFL = baseDef.addOrReplaceChild("bLegFR", CubeListBuilder.create(),
-                PartPose.offset(-4.5F,0F,-9F));
+                PartPose.offset(-4.5F, 0F, -9F));
         PartDefinition bLegBR = baseDef.addOrReplaceChild("bLegBL", CubeListBuilder.create(),
-                PartPose.offset(1.5F,0F,7F));
+                PartPose.offset(1.5F, 0F, 7F));
         PartDefinition bLegVL = baseDef.addOrReplaceChild("bLegBR", CubeListBuilder.create(),
-                PartPose.offset(-4.5F,0F,7F));
-
+                PartPose.offset(-4.5F, 0F, 7F));
 
 
         baseDef.addOrReplaceChild("bodyF", CubeListBuilder.create()
@@ -213,7 +185,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("muzzle", CubeListBuilder.create()
                         .texOffs(24, 44)
                         .addBox(-2.5F, -0.8F, -6F, 5, 4, 7, new CubeDeformation(-1, -0.8F, -1)),
-                PartPose.offsetAndRotation(0F, -4F, -5.75F, Mth.HALF_PI*0.125F, 0F, 0F));
+                PartPose.offsetAndRotation(0F, -4F, -5.75F, Mth.HALF_PI * 0.125F, 0F, 0F));
 
         baseDef.addOrReplaceChild("upperMouth", CubeListBuilder.create()
                         .texOffs(28, 56)
@@ -238,12 +210,12 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("earL", CubeListBuilder.create()
                         .texOffs(88, 51)
                         .addBox(0F, 0F, 0F, 5, 3, 1),
-                PartPose.offsetAndRotation(2F, -5F,-1F, 0F, 0F, -Mth.HALF_PI*0.0625F));
+                PartPose.offsetAndRotation(2F, -5F, -1F, 0F, 0F, -Mth.HALF_PI * 0.0625F));
 
         baseDef.addOrReplaceChild("earR", CubeListBuilder.create()
                         .texOffs(75, 51)
                         .addBox(-5F, 0F, 0F, 5, 3, 1),
-                PartPose.offsetAndRotation(-2F, -5F,-1F, 0F, 0F, Mth.HALF_PI*0.0625F));
+                PartPose.offsetAndRotation(-2F, -5F, -1F, 0F, 0F, Mth.HALF_PI * 0.0625F));
 
 
         baseDef.addOrReplaceChild("legFL", CubeListBuilder.create()
@@ -268,4 +240,44 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         return LayerDefinition.create(meshDefinition, 128, 128);
     }
+
+    /* Model Data */
+
+    @Override
+    protected Phenotype createPhenotype(T goat) {
+        return new GoatPhenotype(goat.getGenes().getAutosomalGenes(), goat.getOrSetIsFemale());
+    }
+
+    private GoatModelData getCreateGoatModelData(T goat) {
+        return (GoatModelData) getCreateAnimalModelData(goat);
+    }
+
+    @Override
+    protected void setInitialModelData(T goat) {
+        GoatModelData goatModelData = new GoatModelData();
+        setBaseInitialModelData(goatModelData, goat);
+    }
+
+    /* Animation */
+
+    @Override
+    public void setupAnim(@NotNull T goat, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        goatModelData = getCreateGoatModelData(goat);
+    }
+
+    /* Render */
+
+    @Override
+    public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer, int packedLightIn, int packedOverlayIn, float r, float g, float b, float a) {
+        if (goatModelData != null && goatModelData.getPhenotype() != null) {
+            super.renderToBuffer(goatModelData, poseStack, vertexConsumer, packedLightIn, packedOverlayIn, r, g, b, a);
+            Map<String, List<Float>> mapOfScale = new HashMap<>(); //Stores transformations for blocks and bones
+            poseStack.pushPose();
+
+            gaRender(base, mapOfScale, poseStack, vertexConsumer, packedLightIn, packedOverlayIn, r, g, b, a);
+            poseStack.popPose();
+
+        }
+    }
+
 }
