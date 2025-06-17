@@ -1,21 +1,32 @@
 package com.electricversion.geneticgoats.entity;
 
+import com.electricversion.geneticgoats.ai.GoatAi;
 import com.electricversion.geneticgoats.config.GoatsCommonConfig;
 import com.electricversion.geneticgoats.entity.genetics.GoatGeneticsInitializer;
 import com.electricversion.geneticgoats.entity.texture.GoatTexture;
 import com.electricversion.geneticgoats.model.modeldata.GoatModelData;
+import com.google.common.collect.ImmutableList;
+import com.mojang.serialization.Dynamic;
 import mokiyoki.enhancedanimals.entity.EnhancedAnimalAbstract;
 import mokiyoki.enhancedanimals.entity.EntityState;
 import mokiyoki.enhancedanimals.init.FoodSerialiser;
 import mokiyoki.enhancedanimals.model.modeldata.AnimalModelData;
 import mokiyoki.enhancedanimals.util.Genes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.LookControl;
+import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.ai.sensing.Sensor;
+import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -31,6 +42,9 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
 
     public EnhancedGoat(EntityType<? extends EnhancedAnimalAbstract> type, Level worldIn) {
         super(type, worldIn, SEXLINKED_GENES_LENGTH, AUTOSOMAL_GENES_LENGTH, true);
+        this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
+        this.moveControl = new MoveControl(this);
+        this.lookControl = new LookControl(this);
         initilizeAnimalSize();
     }
 
@@ -142,6 +156,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
     protected FoodSerialiser.AnimalFoodMap getAnimalFoodType() {
         return FoodSerialiser.getAnimalFoodMap("goat");
     }
+
     @Override
     protected void fixGeneLengths() {
     }
@@ -167,4 +182,42 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
     public void setModelData(AnimalModelData modelData) {
         goatModelData = (GoatModelData) modelData;
     }
+
+    /* Brain/AI Related Code */
+
+    static final ImmutableList<? extends MemoryModuleType<?>> MEMORY_TYPES = ImmutableList.of(
+            MemoryModuleType.PATH, MemoryModuleType.WALK_TARGET, MemoryModuleType.LOOK_TARGET,
+            MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE,
+            MemoryModuleType.BREED_TARGET
+    );
+
+
+    private static final ImmutableList<? extends SensorType<? extends Sensor<? super EnhancedGoat>>> SENSOR_TYPES = ImmutableList.of(
+            SensorType.NEAREST_LIVING_ENTITIES, SensorType.NEAREST_ADULT
+    );
+
+
+    @Override
+    protected void customServerAiStep() {
+        this.getBrain().tick((ServerLevel) this.level, this);
+        if (!this.isNoAi()) {
+            GoatAi.updateActivity(this);
+        }
+    }
+
+    @Override
+    protected Brain.Provider<EnhancedGoat> brainProvider() {
+        return Brain.provider(MEMORY_TYPES, SENSOR_TYPES);
+    }
+
+    @Override
+    protected Brain<?> makeBrain(Dynamic<?> dynamic) {
+        return GoatAi.makeBrain(this.brainProvider().makeBrain(dynamic));
+    }
+
+    @Override
+    public Brain<EnhancedGoat> getBrain() {
+        return (Brain<EnhancedGoat>) super.getBrain();
+    }
+
 }
