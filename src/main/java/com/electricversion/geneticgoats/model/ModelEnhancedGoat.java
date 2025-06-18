@@ -165,13 +165,13 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         PartDefinition bHeadDef = baseDef.addOrReplaceChild("bHead", CubeListBuilder.create(),
                 PartPose.offsetAndRotation(0F, -10.5F, 5F, -Mth.HALF_PI * 0.20F, 0F, 0F));
         PartDefinition bLegFR = baseDef.addOrReplaceChild("bLegFL", CubeListBuilder.create(),
-                PartPose.offset(1.5F, -10F, -9F));
+                PartPose.offset(1.5F, -10F, -7.5F));
         PartDefinition bLegFL = baseDef.addOrReplaceChild("bLegFR", CubeListBuilder.create(),
-                PartPose.offset(-4.5F, -10F, -9F));
+                PartPose.offset(-4.5F, -10F, -7.5F));
         PartDefinition bLegBR = baseDef.addOrReplaceChild("bLegBL", CubeListBuilder.create(),
-                PartPose.offset(1.5F, -10F, 7F));
+                PartPose.offset(1.5F, -10F, 8.5F));
         PartDefinition bLegVL = baseDef.addOrReplaceChild("bLegBR", CubeListBuilder.create(),
-                PartPose.offset(-4.5F, -10F, 7F));
+                PartPose.offset(-4.5F, -10F, 8.5F));
 
         // Body
         baseDef.addOrReplaceChild("bodyF", CubeListBuilder.create()
@@ -240,22 +240,22 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("legFL", CubeListBuilder.create()
                         .texOffs(13, 61)
                         .addBox(0F, 5F, 0F, 3, 5, 3),
-                PartPose.offset(0F, -5F, 0F));
+                PartPose.offset(0F, -5F, -1.5F));
 
         baseDef.addOrReplaceChild("legFR", CubeListBuilder.create()
                         .texOffs(0, 61)
                         .addBox(0F, 5F, 0F, 3, 5, 3),
-                PartPose.offset(0F, -5F, 0F));
+                PartPose.offset(0F, -5F, -1.5F));
 
         baseDef.addOrReplaceChild("legBL", CubeListBuilder.create()
                         .texOffs(13, 70)
                         .addBox(0F, 5F, 0F, 3, 5, 3),
-                PartPose.offset(0F, -5F, 0F));
+                PartPose.offset(0F, -5F, -1.5F));
 
         baseDef.addOrReplaceChild("legBR", CubeListBuilder.create()
                         .texOffs(0, 70)
                         .addBox(0F, 5F, 0F, 3, 5, 3),
-                PartPose.offset(0F, -5F, 0F));
+                PartPose.offset(0F, -5F, -1.5F));
 
         // Lower Legs
         baseDef.addOrReplaceChild("legBFL", CubeListBuilder.create()
@@ -323,9 +323,23 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         map.put("bLegBR", getRotationVector(bLegBR));
     }
 
+    private void walkAnim(float limbSwing, float limbSwingAmount) {
+        float leftLegsAngle = Mth.sin(limbSwing) * limbSwingAmount;
+        float rightLegsAngle = Mth.sin(-limbSwing) * limbSwingAmount;
+        bLegFL.setXRot(leftLegsAngle);
+        bLegBL.setXRot(leftLegsAngle);
+        bLegFR.setXRot(rightLegsAngle);
+        bLegBR.setXRot(rightLegsAngle);
+    }
+
     @Override
     public void setupAnim(@NotNull T goat, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         goatModelData = getCreateGoatModelData(goat);
+        if (goat.getDeltaMovement().horizontalDistanceSqr() > 0.001 || goat.xOld != goat.getX() || goat.zOld != goat.getZ())
+        {
+            walkAnim(limbSwing, limbSwingAmount);
+        }
+
     }
 
     /* Render */
