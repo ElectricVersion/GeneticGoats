@@ -157,21 +157,21 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         PartDefinition baseDef = meshDefinition.getRoot().addOrReplaceChild("base", CubeListBuilder.create(),
                 PartPose.offset(0F, 24F, 0F));
         PartDefinition bBodyFDef = baseDef.addOrReplaceChild("bBodyF", CubeListBuilder.create(),
-                PartPose.offset(0F, -19F, -9F));
+                PartPose.offset(0F, -18F, -9F));
         PartDefinition bBodyBDef = baseDef.addOrReplaceChild("bBodyB", CubeListBuilder.create(),
-                PartPose.offset(0F, -19F, 1F));
+                PartPose.offset(0F, -18F, 1F));
         PartDefinition bNeckDef = baseDef.addOrReplaceChild("bNeck", CubeListBuilder.create(),
-                PartPose.offsetAndRotation(0F, -13F, -9F, Mth.HALF_PI * 0.20F, 0F, 0F));
+                PartPose.offsetAndRotation(0F, -12F, -9F, Mth.HALF_PI * 0.20F, 0F, 0F));
         PartDefinition bHeadDef = baseDef.addOrReplaceChild("bHead", CubeListBuilder.create(),
                 PartPose.offsetAndRotation(0F, -10.5F, 5F, -Mth.HALF_PI * 0.20F, 0F, 0F));
         PartDefinition bLegFR = baseDef.addOrReplaceChild("bLegFL", CubeListBuilder.create(),
-                PartPose.offset(1.5F, -10F, -6F));
+                PartPose.offset(1.49F, -10F, -5.99F));
         PartDefinition bLegFL = baseDef.addOrReplaceChild("bLegFR", CubeListBuilder.create(),
-                PartPose.offset(-4.5F, -10F, -6F));
+                PartPose.offset(-4.49F, -10F, -5.99F));
         PartDefinition bLegBR = baseDef.addOrReplaceChild("bLegBL", CubeListBuilder.create(),
-                PartPose.offset(1.5F, -10F, 10F));
+                PartPose.offset(1.49F, -10F, 10F));
         PartDefinition bLegVL = baseDef.addOrReplaceChild("bLegBR", CubeListBuilder.create(),
-                PartPose.offset(-4.5F, -10F, 10F));
+                PartPose.offset(-4.49F, -10F, 10F));
 
         // Body
         baseDef.addOrReplaceChild("bodyF", CubeListBuilder.create()
