@@ -330,9 +330,13 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     }
 
     private void lookAnim(float netHeadYaw, float headPitch) {
-        float yRot = limit(netHeadYaw, 45) * Mth.HALF_PI * 0.005F;
+        float xRotDefault = Mth.HALF_PI*0.20F;
+        float xRot = (limit(headPitch, 45) * 0.005F) * Mth.HALF_PI;
+        float yRot = limit(netHeadYaw, 90) * Mth.HALF_PI * 0.005F;
+        bHead.setXRot(lerpTo(bHead.getXRot(), xRot * 0.5F - xRotDefault));
+        bNeck.setXRot(lerpTo(bNeck.getXRot(), xRot + xRotDefault));
+        bHead.setYRot(lerpTo(bHead.getYRot(), yRot * 0.125F));
         bNeck.setYRot(lerpTo(bNeck.getYRot(), yRot));
-        bHead.setYRot(lerpTo(bHead.getYRot(), yRot * 0.25F));
     }
 
     private void walkAnim(float limbSwing, float limbSwingAmount) {
