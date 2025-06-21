@@ -5,6 +5,8 @@ import com.electricversion.geneticgoats.init.AddonEntities;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.*;
 import net.minecraft.world.entity.schedule.Activity;
@@ -36,6 +38,7 @@ public class GoatAi {
         goatBrain.addActivity(Activity.IDLE, 10,
                 ImmutableList.of(
                         new AnimalMakeLove(AddonEntities.ENHANCED_GOAT.get(), 0.6F),
+                        new RunSometimes<>(new SetEntityLookTarget(EntityType.PLAYER, 6.0F), UniformInt.of(30, 60)),
                         new RunOne<>(ImmutableList.of(
                                 Pair.of(new RandomStroll(SPEED_MULTIPLIER_WHEN_IDLING), 2),
                                 Pair.of(new SetWalkTargetFromLookTarget(SPEED_MULTIPLIER_WHEN_IDLING, 3), 2),
