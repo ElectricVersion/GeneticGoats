@@ -161,9 +161,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         PartDefinition bBodyBDef = baseDef.addOrReplaceChild("bBodyB", CubeListBuilder.create(),
                 PartPose.offset(0F, -18F, 1F));
         PartDefinition bNeckDef = baseDef.addOrReplaceChild("bNeck", CubeListBuilder.create(),
-                PartPose.offsetAndRotation(0F, -12F, -9F, Mth.HALF_PI * 0.20F, 0F, 0F));
+                PartPose.offsetAndRotation(0F, -12F, -6F, Mth.HALF_PI * 0.20F, 0F, 0F));
         PartDefinition bHeadDef = baseDef.addOrReplaceChild("bHead", CubeListBuilder.create(),
-                PartPose.offsetAndRotation(0F, -10.5F, 5F, -Mth.HALF_PI * 0.20F, 0F, 0F));
+                PartPose.offsetAndRotation(0F, -10.5F, 1.5F, -Mth.HALF_PI * 0.20F, 0F, 0F));
         PartDefinition bLegFR = baseDef.addOrReplaceChild("bLegFL", CubeListBuilder.create(),
                 PartPose.offset(1.49F, -10F, -5.99F));
         PartDefinition bLegFL = baseDef.addOrReplaceChild("bLegFR", CubeListBuilder.create(),
@@ -187,11 +187,11 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("tail", CubeListBuilder.create()
                         .texOffs(39, 30)
                         .addBox(-1F, 0F, -2F, 2, 3, 6),
-                PartPose.offsetAndRotation(0F, 0F, 10F, Mth.HALF_PI*0.45F, 0F, 0F));
+                PartPose.offsetAndRotation(0F, 0F, 10F, Mth.HALF_PI * 0.45F, 0F, 0F));
 
         baseDef.addOrReplaceChild("neck", CubeListBuilder.create()
                         .texOffs(0, 40)
-                        .addBox(-2.5F, -14F, 0F, 5, 14, 6),
+                        .addBox(-2.5F, -14F, -3F, 5, 14, 6),
                 PartPose.ZERO);
 
         // Head
@@ -307,11 +307,15 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             bLegFR.setRotation(0F, 0F, 0F);
             bLegBL.setRotation(0F, 0F, 0F);
             bLegBR.setRotation(0F, 0F, 0F);
+            bNeck.setRotation(Mth.HALF_PI * 0.20F, 0F, 0F);
+            bHead.setRotation(-Mth.HALF_PI * 0.20F, 0F, 0F);
         } else {
             setRotationFromVector(bLegFL, map.get("bLegFL"));
             setRotationFromVector(bLegFR, map.get("bLegFR"));
             setRotationFromVector(bLegBL, map.get("bLegBL"));
             setRotationFromVector(bLegBR, map.get("bLegBR"));
+            setRotationFromVector(bNeck, map.get("bNeck"));
+            setRotationFromVector(bHead, map.get("bHead"));
         }
     }
 
@@ -321,11 +325,20 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         map.put("bLegFR", getRotationVector(bLegFR));
         map.put("bLegBL", getRotationVector(bLegBL));
         map.put("bLegBR", getRotationVector(bLegBR));
+        map.put("bNeck", getRotationVector(bNeck));
+        map.put("bHead", getRotationVector(bHead));
+    }
+
+    private void lookAnim(float netHeadYaw, float headPitch) {
+        float yRot = limit(netHeadYaw, 45) * Mth.HALF_PI * 0.005F;
+        bNeck.setYRot(lerpTo(bNeck.getYRot(), yRot));
+        bHead.setYRot(lerpTo(bHead.getYRot(), yRot * 0.25F));
     }
 
     private void walkAnim(float limbSwing, float limbSwingAmount) {
-        float leftLegAngle = Mth.sin(limbSwing) * limbSwingAmount;
-        float rightLegAngle = Mth.sin(-limbSwing) * limbSwingAmount;
+        float angleMultiplier = limbSwingAmount * 1.5F;
+        float leftLegAngle = Mth.sin(limbSwing) * angleMultiplier;
+        float rightLegAngle = Mth.sin(-limbSwing) * angleMultiplier;
         bLegFL.setXRot(leftLegAngle);
         bLegFR.setXRot(rightLegAngle);
         bLegBL.setXRot(leftLegAngle);
@@ -337,8 +350,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         goatModelData = getCreateGoatModelData(goat);
         if (goatModelData != null) {
             setupInitialAnimationValues(goatModelData, netHeadYaw, headPitch);
+            lookAnim(netHeadYaw, headPitch);
             if (goat.getDeltaMovement().horizontalDistanceSqr() > 0.001 || goat.xOld != goat.getX() || goat.zOld != goat.getZ()) {
-                walkAnim(limbSwing, 1.5F*limbSwingAmount);
+                walkAnim(limbSwing, limbSwingAmount);
             } else {
                 bLegFL.setXRot(lerpTo(bLegFL.getXRot(), 0F));
                 bLegFR.setXRot(lerpTo(bLegFR.getXRot(), 0F));
