@@ -12,6 +12,7 @@ import net.minecraft.world.level.biome.Biome;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
 
@@ -30,6 +31,11 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         return super.generateWithBreed(world, pos, breeds, breedName);
     }
 
+    // Utility function for generating a single gene. Moving it here just makes the code a little more readable
+    private int randomizeGene(int mutations) {
+        return ThreadLocalRandom.current().nextInt(100) > WTC ? (ThreadLocalRandom.current().nextInt(mutations) + 1) : 1;
+    }
+
     @Override
     protected Genes generateLocalWildGenetics(Holder<Biome> biomeHolder, boolean b) {
         Biome biome = biomeHolder.value();
@@ -41,8 +47,25 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         sexlinkedGenes[1] = 1;
 
         /* Autosomal Genes */
-        autosomalGenes[0] = 1;
-        autosomalGenes[1] = 1;
+
+        /* AGOUTI/ASIP
+         * 1 - Wildtype; Incomplete Dom
+         * 2 - Gold; Dominant
+         * 3 - Buckskin; Incomplete Dom
+         * 4 - Chamoisee; Incomplete Dom
+         * 5 - Swiss; Incomplete Dom
+         * 6 - Cou Clair; Incomplete Dom
+         * 7 - Sundgau; Incomplete Dom
+         * 8 - Bezoar; Incomplete Dom
+         * 9 - Caramel; Incomplete Dom
+         * 10 - Red Cheek; Incomplete Dom
+         * 11 - Sable; Incomplete Dom
+         * 12 - Dinglu; Incomplete Dom
+         * 13 - Serpentina; Incomplete Dom
+         * 14 - Non-Agouti/Black; Recessive
+         */
+        autosomalGenes[0] = randomizeGene(14);
+        autosomalGenes[1] = randomizeGene(14);
 
         return new Genes(sexlinkedGenes, autosomalGenes);
     }
