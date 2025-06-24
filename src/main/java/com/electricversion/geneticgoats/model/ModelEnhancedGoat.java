@@ -24,6 +24,8 @@ import java.util.Map;
 
 @OnlyIn(Dist.CLIENT)
 public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalModel<T> {
+    private static final float baseNeckAngle = Mth.HALF_PI*0.30F;
+
     private GoatModelData goatModelData;
 
     /* Bones */
@@ -161,17 +163,17 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         PartDefinition bBodyBDef = baseDef.addOrReplaceChild("bBodyB", CubeListBuilder.create(),
                 PartPose.offset(0F, -18F, 1F));
         PartDefinition bNeckDef = baseDef.addOrReplaceChild("bNeck", CubeListBuilder.create(),
-                PartPose.offsetAndRotation(0F, -12F, -6F, Mth.HALF_PI * 0.20F, 0F, 0F));
+                PartPose.offsetAndRotation(0F, -13.5F, -6F, baseNeckAngle, 0F, 0F));
         PartDefinition bHeadDef = baseDef.addOrReplaceChild("bHead", CubeListBuilder.create(),
-                PartPose.offsetAndRotation(0F, -10.5F, 1.5F, -Mth.HALF_PI * 0.20F, 0F, 0F));
+                PartPose.offsetAndRotation(0F, -8F, 1.5F, -baseNeckAngle, 0F, 0F));
         PartDefinition bLegFR = baseDef.addOrReplaceChild("bLegFL", CubeListBuilder.create(),
                 PartPose.offset(1.49F, -10F, -5.99F));
         PartDefinition bLegFL = baseDef.addOrReplaceChild("bLegFR", CubeListBuilder.create(),
                 PartPose.offset(-4.49F, -10F, -5.99F));
         PartDefinition bLegBR = baseDef.addOrReplaceChild("bLegBL", CubeListBuilder.create(),
-                PartPose.offset(1.49F, -10F, 10F));
+                PartPose.offset(1.49F, -10F, 10.99F));
         PartDefinition bLegVL = baseDef.addOrReplaceChild("bLegBR", CubeListBuilder.create(),
-                PartPose.offset(-4.49F, -10F, 10F));
+                PartPose.offset(-4.49F, -10F, 10.99F));
 
         // Body
         baseDef.addOrReplaceChild("bodyF", CubeListBuilder.create()
@@ -192,7 +194,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("neck", CubeListBuilder.create()
                         .texOffs(0, 40)
                         .addBox(-2.5F, -14F, -3F, 5, 14, 6),
-                PartPose.ZERO);
+                PartPose.offset(0F, 3F, 0F));
 
         // Head
         baseDef.addOrReplaceChild("head", CubeListBuilder.create()
@@ -307,8 +309,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             bLegFR.setRotation(0F, 0F, 0F);
             bLegBL.setRotation(0F, 0F, 0F);
             bLegBR.setRotation(0F, 0F, 0F);
-            bNeck.setRotation(Mth.HALF_PI * 0.20F, 0F, 0F);
-            bHead.setRotation(-Mth.HALF_PI * 0.20F, 0F, 0F);
+            bNeck.setRotation(baseNeckAngle, 0F, 0F);
+            bHead.setRotation(-baseNeckAngle, 0F, 0F);
         } else {
             setRotationFromVector(bLegFL, map.get("bLegFL"));
             setRotationFromVector(bLegFR, map.get("bLegFR"));
@@ -330,7 +332,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     }
 
     private void lookAnim(float netHeadYaw, float headPitch) {
-        float xRotDefault = Mth.HALF_PI*0.20F;
+        float xRotDefault = baseNeckAngle;
         float xRot = (limit(headPitch, 45) * 0.0025F) * Mth.HALF_PI;
         float yRot = limit(netHeadYaw, 90) * Mth.HALF_PI * 0.005F;
         bHead.setXRot(lerpTo(bHead.getXRot(), xRot * 0.5F - xRotDefault));
