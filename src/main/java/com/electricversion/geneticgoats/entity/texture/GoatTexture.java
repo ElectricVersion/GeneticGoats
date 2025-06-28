@@ -8,9 +8,9 @@ public class GoatTexture {
 
     private static final String[] TX_AGOUTI_BLACK = new String[]{
         "", "agouti/wildtype.png", "misc/transparent.png",
-            "agouti/buckskin.png", "agouti/chamoisee.png", "agouti/swiss.png", "agouti/cou_clair.png",
-            "agouti/sundgau.png", "agouti/bezoar.png", "agouti/caramel.png", "agouti/caramel.png",
-            "agouti/red_cheek.png", "agouti/sable.png",  "agouti/dinglu.png", "agouti/serpentina.png"
+            "agouti/buckskin_light.png", "agouti/chamoisee_light.png", "agouti/swiss_light.png", "agouti/cou_clair_light.png",
+            "agouti/sundgau_light.png", "agouti/bezoar_light.png", "agouti/caramel_light.png", "agouti/caramel_light.png",
+            "agouti/red_cheek_light.png", "agouti/sable_light.png",  "agouti/dinglu_light.png", "agouti/serpentina_light.png"
     };
 
     // This method handles the logic of how individual texture components and genes should
