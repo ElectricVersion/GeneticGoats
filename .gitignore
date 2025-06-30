@@ -24,3 +24,5 @@ run
 # Files from Forge MDK
 forge*changelog.txt
 /libs
+/script/agouti_generator/in
+/script/agouti_generator/out
