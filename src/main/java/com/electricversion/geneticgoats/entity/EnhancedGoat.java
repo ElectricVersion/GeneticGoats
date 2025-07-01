@@ -34,7 +34,7 @@ import static com.electricversion.geneticgoats.init.AddonEntities.ENHANCED_GOAT;
 
 public class EnhancedGoat extends EnhancedAnimalAbstract {
 
-    public static final int AUTOSOMAL_GENES_LENGTH = 2;
+    public static final int AUTOSOMAL_GENES_LENGTH = 6;
     public static final int SEXLINKED_GENES_LENGTH = 2;
 
     @OnlyIn(Dist.CLIENT)
