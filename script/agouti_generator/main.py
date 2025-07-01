@@ -12,7 +12,7 @@ def merge_agoutis(in1, in2, out):
     pixels_out = img_out.load()
     for x in range(img1.size[0]):
         for y in range(img1.size[1]):
-            pixels_out[x, y] = (0,0,0,min(pixels1[x, y][3], pixels2[x, y][3]))
+            pixels_out[x, y] = (0,0,0,(pixels1[x, y][3]*pixels2[x, y][3])//255)
     img_out.save(out)
 
 
