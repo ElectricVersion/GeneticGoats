@@ -8,7 +8,7 @@ import mokiyoki.enhancedanimals.renderer.texture.TexturingType;
 public class GoatTexture {
 
     private static final String[] TX_AGOUTI_BLACK = new String[]{
-            "agouti/wildtype.png", "", "agouti/buckskin_light.png", "agouti/chamoisee_light.png",
+            "", "agouti/wildtype.png", "", "agouti/buckskin_light.png", "agouti/chamoisee_light.png",
             "agouti/swiss_light.png", "agouti/cou_clair_light.png", "agouti/sundgau_light.png",
             "agouti/tanhead_light.png", "agouti/caramel_light.png",
     };
@@ -67,6 +67,7 @@ public class GoatTexture {
 
         if (agouti1 == 1 || agouti2 == 1) {
             // Gold agouti. Fully dominant and has no black, so we can stop here
+            goat.addTextureToAnimalTextureGrouping(agoutiGroup, "misc/transparent.png");
             return agoutiGroup;
         }
         TextureGrouping blackGroup = new TextureGrouping(TexturingType.MASK_GROUP);
