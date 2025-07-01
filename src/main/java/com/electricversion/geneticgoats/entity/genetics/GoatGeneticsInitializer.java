@@ -56,13 +56,8 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
          * 5 - Swiss; Incomplete Dom
          * 6 - Cou Clair; Incomplete Dom
          * 7 - Sundgau; Incomplete Dom
-         * 8 - Bezoar; Incomplete Dom
+         * 8 - Tanhead; Incomplete Dom
          * 9 - Caramel; Incomplete Dom
-         * 10 - Red Cheek; Incomplete Dom
-         * 11 - Sable; Incomplete Dom
-         * 12 - Dinglu; Incomplete Dom
-         * 13 - Serpentina; Incomplete Dom
-         * 14 - Non-Agouti/Black; Recessive
          */
         autosomalGenes[0] = randomizeGene(14);
         autosomalGenes[1] = randomizeGene(14);
