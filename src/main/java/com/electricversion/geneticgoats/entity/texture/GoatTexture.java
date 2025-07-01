@@ -41,6 +41,12 @@ public class GoatTexture {
 
         rootGroup.addGrouping(blackGroup);
 
+        // Detail Layer
+        TextureGrouping detailGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
+        goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/eyes.png");
+        rootGroup.addGrouping(detailGroup);
+
+
         goat.setTextureGrouping(rootGroup);
     }
 
