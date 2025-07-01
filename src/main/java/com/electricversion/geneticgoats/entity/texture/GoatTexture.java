@@ -17,7 +17,7 @@ public class GoatTexture {
     // interact to create a single, "compiled" texture.
     public static void calculateTexture(EnhancedGoat goat, int[] gene, char[] uuidArry) {
 
-        calculateColor(goat, gene, uuidArry);
+        GoatColors color = calculateColor(goat, gene, uuidArry);
 
         TextureGrouping rootGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
 
@@ -25,9 +25,10 @@ public class GoatTexture {
         TextureGrouping redGroup = new TextureGrouping(TexturingType.MASK_GROUP);
         redGroup.addGrouping(makeAgoutiRed(goat, gene, uuidArry));
 
-        TextureGrouping redNoiseGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
-        goat.addTextureToAnimalTextureGrouping(redNoiseGroup, TexturingType.APPLY_RED, "misc/noise.png");
-        redGroup.addGrouping(redNoiseGroup);
+        TextureGrouping redColorGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
+        goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RED, "misc/noise.png");
+        goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RGB, "misc/nose.png", "nr", color.getNoseRedColor());
+        redGroup.addGrouping(redColorGroup);
 
         rootGroup.addGrouping(redGroup);
 
@@ -35,14 +36,16 @@ public class GoatTexture {
         TextureGrouping blackGroup = new TextureGrouping(TexturingType.MASK_GROUP);
         blackGroup.addGrouping(makeAgoutiBlack(goat, gene, uuidArry));
 
-        TextureGrouping blackNoiseGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
-        goat.addTextureToAnimalTextureGrouping(blackNoiseGroup, TexturingType.APPLY_BLACK, "misc/noise.png");
-        blackGroup.addGrouping(blackNoiseGroup);
+        TextureGrouping blackColorGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
+        goat.addTextureToAnimalTextureGrouping(blackColorGroup, TexturingType.APPLY_BLACK, "misc/noise.png");
+        goat.addTextureToAnimalTextureGrouping(blackColorGroup, TexturingType.APPLY_RGB, "misc/nose.png", "nb", color.getNoseBlackColor());
+        blackGroup.addGrouping(blackColorGroup);
 
         rootGroup.addGrouping(blackGroup);
 
         // Detail Layer
         TextureGrouping detailGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
+
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/eyes.png");
         rootGroup.addGrouping(detailGroup);
 
@@ -74,11 +77,22 @@ public class GoatTexture {
         return agoutiGroup;
     }
 
-    private static void calculateColor(EnhancedGoat goat, int[] gene, char[] uuidArry) {
+    private static GoatColors calculateColor(EnhancedGoat goat, int[] gene, char[] uuidArry) {
+
+        GoatColors color = new GoatColors();
+
         float[] melanin = {0.0427F, 0.227F, 0.071F};
         float[] pheomelanin = {0.05F, 0.52F, 0.42F};
+        float[] noseRed = {0.047F, 0.52F, 0.20F};
+        float[] noseBlack = {0.047F, 0.52F, 0.04F};
 
+        //Universal Colouration Values
         goat.colouration.setMelaninColour(Colouration.HSBtoABGR(melanin[0], melanin[1], melanin[2]));
         goat.colouration.setPheomelaninColour(Colouration.HSBtoABGR(pheomelanin[0], pheomelanin[1], pheomelanin[2]));
+        //Goat Specific Colors
+        color.setNoseRedColor(Colouration.HSBtoARGB(noseRed[0], noseRed[1], noseRed[2]));
+        color.setNoseBlackColor(Colouration.HSBtoARGB(noseBlack[0], noseBlack[1], noseBlack[2]));
+
+        return color;
     }
 }
