@@ -23,7 +23,7 @@ public class GoatTexture {
 
         // Red Layer
         TextureGrouping redGroup = new TextureGrouping(TexturingType.MASK_GROUP);
-        redGroup.addGrouping(makeAgoutiRed(goat, gene, uuidArry));
+        redGroup.addGrouping(makeRedPattern(goat, gene, uuidArry));
 
         TextureGrouping redColorGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RED, "misc/noise.png");
@@ -34,7 +34,7 @@ public class GoatTexture {
 
         // Black Layer
         TextureGrouping blackGroup = new TextureGrouping(TexturingType.MASK_GROUP);
-        blackGroup.addGrouping(makeAgoutiBlack(goat, gene, uuidArry));
+        blackGroup.addGrouping(makeBlackPattern(goat, gene, uuidArry));
 
         TextureGrouping blackColorGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         goat.addTextureToAnimalTextureGrouping(blackColorGroup, TexturingType.APPLY_BLACK, "misc/noise.png");
@@ -53,14 +53,14 @@ public class GoatTexture {
         goat.setTextureGrouping(rootGroup);
     }
 
-    private static TextureGrouping makeAgoutiRed(EnhancedGoat goat, int[] gene, char[] uuidArry) {
+    private static TextureGrouping makeRedPattern(EnhancedGoat goat, int[] gene, char[] uuidArry) {
         TextureGrouping agoutiGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         goat.addTextureToAnimalTextureGrouping(agoutiGroup, "goat_base.png");
 
         return agoutiGroup;
     }
 
-    private static TextureGrouping makeAgoutiBlack(EnhancedGoat goat, int[] gene, char[] uuidArry) {
+    private static TextureGrouping makeBlackPattern(EnhancedGoat goat, int[] gene, char[] uuidArry) {
         TextureGrouping agoutiGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         int agouti1 = gene[0];
         int agouti2 = gene[1];
