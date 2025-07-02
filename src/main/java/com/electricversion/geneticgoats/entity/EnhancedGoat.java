@@ -47,6 +47,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
     @OnlyIn(Dist.CLIENT)
     private GoatModelData goatModelData;
 
+    /* Initialization & General Properties */
     public EnhancedGoat(EntityType<? extends EnhancedAnimalAbstract> type, Level worldIn) {
         super(type, worldIn, SEXLINKED_GENES_LENGTH, AUTOSOMAL_GENES_LENGTH, true);
         this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
@@ -62,69 +63,14 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
                 .add(Attributes.ATTACK_DAMAGE, 1.0D);
     }
 
-
     @Override
-    protected String getSpecies() {
-        return "entity.eanimod.enhanced_goat";
+    protected Genes createInitialGenes(LevelAccessor levelAccessor, BlockPos blockPos, boolean isBreed) {
+        return new GoatGeneticsInitializer().generateNewGenetics(levelAccessor, blockPos, isBreed);
     }
 
     @Override
-    public @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
-        ItemStack itemStack = player.getItemInHand(hand);
-        Item item = itemStack.getItem();
-
-        if (item == AddonItems.ENHANCED_GOAT_EGG.get()) {
-            return InteractionResult.SUCCESS;
-        }
-
-        return super.mobInteract(player, hand);
-    }
-
-    @Override
-    protected int getAdultAge() {
-        return GoatsCommonConfig.COMMON.growthTime.get();
-    }
-
-    @Override
-    protected int gestationConfig() {
-        return GoatsCommonConfig.COMMON.birthTime.get();
-    }
-
-    @Override
-    protected void incrementHunger() {
-        hunger += (sleeping ? 0.5F : 1F) * getHungerModifier();
-    }
-
-    @Override
-    protected void runExtraIdleTimeTick() {
-    }
-
-    @Override
-    protected void lethalGenes() {
-    }
-
-    @Override
-    public String getTexture() {
-        if (enhancedAnimalTextureGrouping == null) {
-            setTexturePaths();
-        } else if (reload && !isBaby()) {
-            reload = false;
-            reloadTextures();
-        }
-
-        return getCompiledTextures("enhanced_goat");
-    }
-
-    @Override
-    protected void setTexturePaths() {
-        if (getGenes() != null) {
-            GoatTexture.calculateTexture(this, getGenes().getAutosomalGenes(), getStringUUID().toCharArray());
-        }
-    }
-
-    @Override
-    protected void setAlphaTexturePaths() {
-        // Unused in newer GA animals and can probably be considered deprecated.
+    public Genes createInitialBreedGenes(LevelAccessor levelAccessor, BlockPos blockPos, String breedName) {
+        return new GoatGeneticsInitializer().generateWithBreed(levelAccessor, blockPos, breedName);
     }
 
     @Override
@@ -162,6 +108,21 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
     }
 
     @Override
+    protected String getSpecies() {
+        return "entity.eanimod.enhanced_goat";
+    }
+
+    @Override
+    protected void incrementHunger() {
+        hunger += (sleeping ? 0.5F : 1F) * getHungerModifier();
+    }
+
+    @Override
+    protected void runExtraIdleTimeTick() {
+    }
+
+
+    @Override
     protected boolean canBePregnant() {
         return false;
     }
@@ -177,17 +138,61 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
     }
 
     @Override
+    public @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
+        ItemStack itemStack = player.getItemInHand(hand);
+        Item item = itemStack.getItem();
+
+        if (item == AddonItems.ENHANCED_GOAT_EGG.get()) {
+            return InteractionResult.SUCCESS;
+        }
+
+        return super.mobInteract(player, hand);
+    }
+
+    /* Gene Related Code */
+
+    @Override
     protected void fixGeneLengths() {
     }
 
     @Override
-    protected Genes createInitialGenes(LevelAccessor levelAccessor, BlockPos blockPos, boolean isBreed) {
-        return new GoatGeneticsInitializer().generateNewGenetics(levelAccessor, blockPos, isBreed);
+    protected int getAdultAge() {
+        return GoatsCommonConfig.COMMON.growthTime.get();
     }
 
     @Override
-    public Genes createInitialBreedGenes(LevelAccessor levelAccessor, BlockPos blockPos, String breedName) {
-        return new GoatGeneticsInitializer().generateWithBreed(levelAccessor, blockPos, breedName);
+    protected int gestationConfig() {
+        return GoatsCommonConfig.COMMON.birthTime.get();
+    }
+
+    @Override
+    protected void lethalGenes() {
+    }
+
+    /* Model & Textures */
+
+    @Override
+    public String getTexture() {
+        if (enhancedAnimalTextureGrouping == null) {
+            setTexturePaths();
+        } else if (reload && !isBaby()) {
+            reload = false;
+            reloadTextures();
+        }
+
+        return getCompiledTextures("enhanced_goat");
+    }
+
+    @Override
+    protected void setTexturePaths() {
+        if (getGenes() != null) {
+            GoatTexture.calculateTexture(this, getGenes().getAutosomalGenes(), getStringUUID().toCharArray());
+        }
+    }
+
+    @Override
+    protected void setAlphaTexturePaths() {
+        // Unused in newer GA animals and can probably be considered deprecated.
     }
 
     @Override
