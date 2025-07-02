@@ -15,7 +15,7 @@ public class AddonEntities {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, MOD_ID);
 
     public static final RegistryObject<EntityType<EnhancedGoat>> ENHANCED_GOAT = ENTITIES.register("enhanced_goat", () ->
-            EntityType.Builder.of(EnhancedGoat::new, MobCategory.CREATURE).sized(1F, 0.5F).build(MOD_ID + ":enhanced_goat"));
+            EntityType.Builder.of(EnhancedGoat::new, MobCategory.CREATURE).sized(1F, 1.25F).build(MOD_ID + ":enhanced_goat"));
 
     public static void register(IEventBus modEventBus) {
         ENTITIES.register(modEventBus);
