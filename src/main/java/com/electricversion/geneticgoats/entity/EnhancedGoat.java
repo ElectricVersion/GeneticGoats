@@ -4,6 +4,7 @@ import com.electricversion.geneticgoats.ai.GoatAi;
 import com.electricversion.geneticgoats.config.GoatsCommonConfig;
 import com.electricversion.geneticgoats.entity.genetics.GoatGeneticsInitializer;
 import com.electricversion.geneticgoats.entity.texture.GoatTexture;
+import com.electricversion.geneticgoats.init.AddonEntities;
 import com.electricversion.geneticgoats.model.modeldata.GoatModelData;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Dynamic;
@@ -29,8 +30,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import static com.electricversion.geneticgoats.init.AddonEntities.ENHANCED_GOAT;
 
 public class EnhancedGoat extends EnhancedAnimalAbstract {
 
@@ -115,7 +114,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
 
     @Override
     protected EnhancedAnimalAbstract createEnhancedChild(Level level, EnhancedAnimalAbstract otherParent) {
-        EnhancedGoat goat = ENHANCED_GOAT.get().create(level);
+        EnhancedGoat goat = AddonEntities.ENHANCED_GOAT.get().create(level);
         Genes babyGenes = new Genes(getGenes()).makeChild(getOrSetIsFemale(), otherParent.getOrSetIsFemale(), otherParent.getGenes());
         if (goat != null) {
             goat.setGenes(babyGenes);
@@ -135,7 +134,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
 
     @Override
     protected void createAndSpawnEnhancedChild(Level level) {
-        EnhancedGoat goat = ENHANCED_GOAT.get().create(level);
+        EnhancedGoat goat = AddonEntities.ENHANCED_GOAT.get().create(level);
         Genes babyGenes = new Genes(genetics).makeChild(getOrSetIsFemale(), mateGender, mateGenetics);
         defaultCreateAndSpawn(goat, level, babyGenes, -getAdultAge());
         level.addFreshEntity(goat);
