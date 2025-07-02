@@ -120,6 +120,33 @@ public class GoatTexture {
         float[] noseBlack = {0.047F, 0.52F, 0.04F};
         float[] noseWhite = {0.016F, 0.28F, 0.81F};
 
+        // Brown Locus/TYRP1
+        if (gene[6] == 2 || gene[7] == 2) {
+            // Dark Brown
+            if (gene[6] != gene[7])  {
+                // Heterozygous Dark Brown
+                melanin[0] = 0.044F;
+                melanin[1] = 0.333F;
+                melanin[2] = 0.153F;
+            }
+            else {
+                // Homozygous Dark Brown
+                melanin[0] = 0.044F;
+                melanin[1] = 0.351F;
+                melanin[2] = 0.239F;
+            }
+        } else if (gene[6] == 3 || gene[7] == 3) {
+            // Light Brown
+            melanin[0] = 0.072F;
+            melanin[1] = 0.306F;
+            melanin[2] = 0.616F;
+        } else if (gene[6] == 4 && gene[7] == 4) {
+            // Chocolate
+            melanin[0] = 0.039F;
+            melanin[1] = 0.563F;
+            melanin[2] = 0.278F;
+        }
+
         //Universal Colouration Values (Uses ABGR)
         goat.colouration.setMelaninColour(Colouration.HSBtoABGR(melanin[0], melanin[1], melanin[2]));
         goat.colouration.setPheomelaninColour(Colouration.HSBtoABGR(pheomelanin[0], pheomelanin[1], pheomelanin[2]));
