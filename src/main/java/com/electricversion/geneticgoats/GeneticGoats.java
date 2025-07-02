@@ -2,6 +2,7 @@ package com.electricversion.geneticgoats;
 
 import com.electricversion.geneticgoats.config.GoatsCommonConfig;
 import com.electricversion.geneticgoats.init.AddonEntities;
+import com.electricversion.geneticgoats.init.AddonItems;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -21,6 +22,7 @@ public class GeneticGoats {
 
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         AddonEntities.register(modEventBus);
+        AddonItems.register(modEventBus);
 
         // Register the addon-specific config file
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, GoatsCommonConfig.getConfigSpec(), GoatsCommonConfig.getFileName());
