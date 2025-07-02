@@ -13,6 +13,10 @@ public class GoatTexture {
             "agouti/tanhead_light.png", "agouti/caramel_light.png",
     };
 
+    private static final String[] TX_KIT = new String[]{
+            "misc/transparent.png", "misc/solid.png"
+    };
+
     // This method handles the logic of how individual texture components and genes should
     // interact to create a single, "compiled" texture.
     public static void calculateTexture(EnhancedGoat goat, int[] gene, char[] uuidArry) {
@@ -26,7 +30,7 @@ public class GoatTexture {
         redGroup.addGrouping(makeRedPattern(goat, gene, uuidArry));
 
         TextureGrouping redColorGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
-        goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RED, "misc/noise.png");
+        goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RED, "misc/solid.png");
         goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RGB, "misc/nose.png", "nr", color.getNoseRedColor());
         redGroup.addGrouping(redColorGroup);
 
@@ -37,14 +41,26 @@ public class GoatTexture {
         blackGroup.addGrouping(makeBlackPattern(goat, gene, uuidArry));
 
         TextureGrouping blackColorGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
-        goat.addTextureToAnimalTextureGrouping(blackColorGroup, TexturingType.APPLY_BLACK, "misc/noise.png");
+        goat.addTextureToAnimalTextureGrouping(blackColorGroup, TexturingType.APPLY_BLACK, "misc/solid.png");
         goat.addTextureToAnimalTextureGrouping(blackColorGroup, TexturingType.APPLY_RGB, "misc/nose.png", "nb", color.getNoseBlackColor());
         blackGroup.addGrouping(blackColorGroup);
 
         rootGroup.addGrouping(blackGroup);
 
+        // White Layer
+        TextureGrouping whiteGroup = new TextureGrouping(TexturingType.MASK_GROUP);
+        whiteGroup.addGrouping(makeWhitePattern(goat, gene, uuidArry));
+
+        TextureGrouping whiteColorGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
+        goat.addTextureToAnimalTextureGrouping(whiteColorGroup, TexturingType.APPLY_RGB, "misc/solid.png", "w", color.getWhiteColor());
+        goat.addTextureToAnimalTextureGrouping(whiteColorGroup, TexturingType.APPLY_RGB, "misc/nose.png", "nw", color.getNoseWhiteColor());
+        whiteGroup.addGrouping(whiteColorGroup);
+
+        rootGroup.addGrouping(whiteGroup);
+
         // Detail Layer
         TextureGrouping detailGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
+        goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/noise.png");
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/hooves.png");
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/eyes.png");
         rootGroup.addGrouping(detailGroup);
@@ -54,28 +70,41 @@ public class GoatTexture {
     }
 
     private static TextureGrouping makeRedPattern(EnhancedGoat goat, int[] gene, char[] uuidArry) {
-        TextureGrouping agoutiGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
-        goat.addTextureToAnimalTextureGrouping(agoutiGroup, "goat_base.png");
+        TextureGrouping redGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
+        goat.addTextureToAnimalTextureGrouping(redGroup, "misc/solid.png");
 
-        return agoutiGroup;
+        return redGroup;
     }
 
     private static TextureGrouping makeBlackPattern(EnhancedGoat goat, int[] gene, char[] uuidArry) {
-        TextureGrouping agoutiGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
+        TextureGrouping blackGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         int agouti1 = gene[0];
         int agouti2 = gene[1];
 
         if (agouti1 == 1 || agouti2 == 1) {
             // Gold agouti. Fully dominant and has no black, so we can stop here
-            goat.addTextureToAnimalTextureGrouping(agoutiGroup, "misc/transparent.png");
-            return agoutiGroup;
+            goat.addTextureToAnimalTextureGrouping(blackGroup, "misc/transparent.png");
+            return blackGroup;
         }
-        TextureGrouping blackGroup = new TextureGrouping(TexturingType.MASK_GROUP);
-        goat.addTextureToAnimalTextureGrouping(blackGroup, TX_AGOUTI_BLACK, agouti1, true);
-        goat.addTextureToAnimalTextureGrouping(blackGroup, TX_AGOUTI_BLACK, agouti2, agouti1 != agouti2);
-        agoutiGroup.addGrouping(blackGroup);
+        TextureGrouping agoutiGroup = new TextureGrouping(TexturingType.MASK_GROUP);
+        goat.addTextureToAnimalTextureGrouping(agoutiGroup, TX_AGOUTI_BLACK, agouti1, true);
+        goat.addTextureToAnimalTextureGrouping(agoutiGroup, TX_AGOUTI_BLACK, agouti2, agouti1 != agouti2);
+        blackGroup.addGrouping(agoutiGroup);
 
-        return agoutiGroup;
+        return blackGroup;
+    }
+
+    private static TextureGrouping makeWhitePattern(EnhancedGoat goat, int[] gene, char[] uuidArry) {
+        TextureGrouping spottingGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
+        int white = 0;
+        if (gene[4] == 2 || gene[5] == 2) {
+            // Dominant White
+            white = 1;
+        }
+
+        goat.addTextureToAnimalTextureGrouping(spottingGroup, TX_KIT, white, true);
+
+        return spottingGroup;
     }
 
     private static GoatColors calculateColor(EnhancedGoat goat, int[] gene, char[] uuidArry) {
@@ -84,15 +113,22 @@ public class GoatTexture {
 
         float[] melanin = {0.0427F, 0.227F, 0.071F};
         float[] pheomelanin = {0.05F, 0.52F, 0.42F};
+
+        float[] white = {0.094F, 0.10F, 0.93F};
+
         float[] noseRed = {0.047F, 0.52F, 0.20F};
         float[] noseBlack = {0.047F, 0.52F, 0.04F};
+        float[] noseWhite = {0.016F, 0.28F, 0.81F};
 
-        //Universal Colouration Values
+        //Universal Colouration Values (Uses ABGR)
         goat.colouration.setMelaninColour(Colouration.HSBtoABGR(melanin[0], melanin[1], melanin[2]));
         goat.colouration.setPheomelaninColour(Colouration.HSBtoABGR(pheomelanin[0], pheomelanin[1], pheomelanin[2]));
-        //Goat Specific Colors
+        //Goat Specific Colors (Uses ARGB)
+        color.setWhiteColor(Colouration.HSBtoARGB(white[0], white[1], white[2]));
+
         color.setNoseRedColor(Colouration.HSBtoARGB(noseRed[0], noseRed[1], noseRed[2]));
         color.setNoseBlackColor(Colouration.HSBtoARGB(noseBlack[0], noseBlack[1], noseBlack[2]));
+        color.setNoseWhiteColor(Colouration.HSBtoARGB(noseWhite[0], noseWhite[1], noseWhite[2]));
 
         return color;
     }

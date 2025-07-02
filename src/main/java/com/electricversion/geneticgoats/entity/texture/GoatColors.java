@@ -1,6 +1,8 @@
 package com.electricversion.geneticgoats.entity.texture;
 
 public class GoatColors {
+    private int whiteColor = -1;
+
     private int noseRedColor = -1;
     private int noseBlackColor = -1;
     private int noseWhiteColor = -1;
@@ -27,5 +29,13 @@ public class GoatColors {
 
     public void setNoseWhiteColor(int noseWhiteColor) {
         this.noseWhiteColor = noseWhiteColor;
+    }
+
+    public int getWhiteColor() {
+        return whiteColor;
+    }
+
+    public void setWhiteColor(int whiteColor) {
+        this.whiteColor = whiteColor;
     }
 }
