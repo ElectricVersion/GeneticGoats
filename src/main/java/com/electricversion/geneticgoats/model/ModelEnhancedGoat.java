@@ -130,8 +130,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bHead.addChild(muzzle);
         bHead.addChild(upperMouth);
         bHead.addChild(mouth);
-        bHead.addChild(eyeL);
-        bHead.addChild(eyeR);
+        head.addChild(eyeL);
+        head.addChild(eyeR);
         bHead.addChild(earL);
         bHead.addChild(earR);
 
@@ -165,7 +165,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         PartDefinition bNeckDef = baseDef.addOrReplaceChild("bNeck", CubeListBuilder.create(),
                 PartPose.offsetAndRotation(0F, -13.5F, -6F, baseNeckAngle, 0F, 0F));
         PartDefinition bHeadDef = baseDef.addOrReplaceChild("bHead", CubeListBuilder.create(),
-                PartPose.offsetAndRotation(0F, -8F, 1.5F, -baseNeckAngle, 0F, 0F));
+                PartPose.offsetAndRotation(0F, -8.5F, -1.5F, -baseNeckAngle, 0F, 0F));
         PartDefinition bLegFR = baseDef.addOrReplaceChild("bLegFL", CubeListBuilder.create(),
                 PartPose.offset(1.49F, -10F, -5.99F));
         PartDefinition bLegFL = baseDef.addOrReplaceChild("bLegFR", CubeListBuilder.create(),
@@ -200,22 +200,22 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("head", CubeListBuilder.create()
                         .texOffs(50, 44)
                         .addBox(-3F, -5F, -6F, 6, 5, 6),
-                PartPose.ZERO);
+                PartPose.offset(0F, 0F, 3F));
 
         baseDef.addOrReplaceChild("muzzle", CubeListBuilder.create()
                         .texOffs(24, 44)
                         .addBox(-2.5F, -0.8F, -6F, 5, 4, 7, new CubeDeformation(-0.99F, -0.8F, -1)),
-                PartPose.offsetAndRotation(0F, -4F, -5.75F, Mth.HALF_PI * 0.125F, 0F, 0F));
+                PartPose.offsetAndRotation(0F, -4F, -2.75F, Mth.HALF_PI * 0.125F, 0F, 0F));
 
         baseDef.addOrReplaceChild("upperMouth", CubeListBuilder.create()
                         .texOffs(28, 56)
                         .addBox(-1.5F, -2F, -10F, 3, 1, 4),
-                PartPose.ZERO);
+                PartPose.offset(0F, 0F, 3F));
 
         baseDef.addOrReplaceChild("mouth", CubeListBuilder.create()
                         .texOffs(28, 62)
                         .addBox(-1.5F, -1F, -10F, 3, 1, 4),
-                PartPose.ZERO);
+                PartPose.offset(0F, 0F, 3F));
 
         baseDef.addOrReplaceChild("eyeL", CubeListBuilder.create()
                         .texOffs(61, 68)
@@ -230,12 +230,12 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("earL", CubeListBuilder.create()
                         .texOffs(88, 51)
                         .addBox(0F, 0F, 0F, 5, 3, 1),
-                PartPose.offsetAndRotation(2F, -5F, -1F, 0F, 0F, -Mth.HALF_PI * 0.0625F));
+                PartPose.offsetAndRotation(2F, -5F, 2F, 0F, 0F, -Mth.HALF_PI * 0.0625F));
 
         baseDef.addOrReplaceChild("earR", CubeListBuilder.create()
                         .texOffs(75, 51)
                         .addBox(-5F, 0F, 0F, 5, 3, 1),
-                PartPose.offsetAndRotation(-2F, -5F, -1F, 0F, 0F, Mth.HALF_PI * 0.0625F));
+                PartPose.offsetAndRotation(-2F, -5F, 2F, 0F, 0F, Mth.HALF_PI * 0.0625F));
 
 
         // Upper Legs
@@ -351,12 +351,27 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bLegBR.setXRot(rightLegAngle);
     }
 
+    private void grazeAnim(float ticksOfGrazing) {
+        bNeck.setXRot(lerpTo(bNeck.getXRot(), Mth.HALF_PI*0.9F + baseNeckAngle));
+        bHead.setXRot(lerpTo(bHead.getXRot(), -Mth.HALF_PI*0.2F - baseNeckAngle));
+    }
+
     @Override
     public void setupAnim(@NotNull T goat, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         goatModelData = getCreateGoatModelData(goat);
         if (goatModelData != null) {
             setupInitialAnimationValues(goatModelData, netHeadYaw, headPitch);
-            lookAnim(netHeadYaw, headPitch);
+            if (goatModelData.isEating != 0) {
+                if (goatModelData.isEating == -1) {
+                    goatModelData.isEating = (int)ageInTicks + 90;
+                } else if (goatModelData.isEating < ageInTicks) {
+                    goatModelData.isEating = 0;
+                }
+                grazeAnim(goatModelData.isEating - ageInTicks);
+            } else {
+                lookAnim(netHeadYaw, headPitch);
+            }
+
             if (goat.getDeltaMovement().horizontalDistanceSqr() > 0.001 || goat.xOld != goat.getX() || goat.zOld != goat.getZ()) {
                 walkAnim(limbSwing, limbSwingAmount);
             } else {
