@@ -12,6 +12,7 @@ import com.mojang.serialization.Dynamic;
 import mokiyoki.enhancedanimals.entity.EnhancedAnimalAbstract;
 import mokiyoki.enhancedanimals.entity.EntityState;
 import mokiyoki.enhancedanimals.init.FoodSerialiser;
+import mokiyoki.enhancedanimals.init.ModMemoryModuleTypes;
 import mokiyoki.enhancedanimals.model.modeldata.AnimalModelData;
 import mokiyoki.enhancedanimals.util.Genes;
 import net.minecraft.core.BlockPos;
@@ -59,7 +60,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
     public static AttributeSupplier.Builder prepareAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 4.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.5D)
+                .add(Attributes.MOVEMENT_SPEED, 0.2D)
                 .add(Attributes.ATTACK_DAMAGE, 1.0D);
     }
 
@@ -212,7 +213,12 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
     static final ImmutableList<? extends MemoryModuleType<?>> MEMORY_TYPES = ImmutableList.of(
             MemoryModuleType.PATH, MemoryModuleType.WALK_TARGET, MemoryModuleType.LOOK_TARGET,
             MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE,
-            MemoryModuleType.BREED_TARGET
+            MemoryModuleType.BREED_TARGET,
+            ModMemoryModuleTypes.SLEEPING.get(),
+            ModMemoryModuleTypes.SEEKING_FOOD.get(), ModMemoryModuleTypes.HUNGRY.get(),
+            ModMemoryModuleTypes.PAUSE_BETWEEN_EATING.get(),
+            ModMemoryModuleTypes.FOCUS_BRAIN.get(), ModMemoryModuleTypes.PAUSE_BRAIN.get(),
+            ModMemoryModuleTypes.ROOSTING.get(), ModMemoryModuleTypes.EGG_LAYING.get()
     );
 
 
@@ -225,6 +231,9 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
     protected void customServerAiStep() {
         this.getBrain().tick((ServerLevel) this.level, this);
         if (!this.isNoAi()) {
+            if (getHunger() > hungerLimit) {
+                getBrain().setMemory(ModMemoryModuleTypes.HUNGRY.get(), true);
+            }
             GoatAi.updateActivity(this);
         }
     }

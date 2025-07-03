@@ -5,6 +5,8 @@ import com.electricversion.geneticgoats.init.AddonEntities;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
+import mokiyoki.enhancedanimals.ai.brain.Grazing;
+import mokiyoki.enhancedanimals.init.ModMemoryModuleTypes;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.Brain;
@@ -13,7 +15,7 @@ import net.minecraft.world.entity.schedule.Activity;
 
 public class GoatAi {
 
-    private static final float SPEED_MULTIPLIER_WHEN_IDLING = 0.3F;
+    private static final float SPEED_MULTIPLIER_WHEN_IDLING = 0.75F;
 
     public static Brain<?> makeBrain(Brain<EnhancedGoat> goatBrain) {
         initCoreActivity(goatBrain);
@@ -29,8 +31,10 @@ public class GoatAi {
         goatBrain.addActivity(Activity.CORE, 0,
                 ImmutableList.of(
                         new LookAtTargetSink(45, 90),
-                        new MoveToTargetSink()
-                )
+                        new MoveToTargetSink(),
+                        new Grazing(),
+                        new CountDownCooldownTicks(ModMemoryModuleTypes.PAUSE_BETWEEN_EATING.get())
+        )
         );
     }
 
