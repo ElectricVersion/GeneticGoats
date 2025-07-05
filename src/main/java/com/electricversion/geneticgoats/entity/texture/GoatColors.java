@@ -5,6 +5,7 @@ import mokiyoki.enhancedanimals.entity.util.Colouration;
 
 public class GoatColors {
     private int whiteColor = -1;
+    private int creamColor = -1;
 
     private int noseRedColor = -1;
     private int noseBlackColor = -1;
@@ -12,6 +13,10 @@ public class GoatColors {
 
     public int getWhiteColor() {
         return whiteColor;
+    }
+
+    public int getCreamColor() {
+        return creamColor;
     }
 
     public int getNoseRedColor() {
@@ -26,12 +31,34 @@ public class GoatColors {
         return noseWhiteColor;
     }
 
+    // Utility method for making sure colors stay in a nice range
+    private static float clamp(float value, float min, float max) {
+        return value < min ? min : value > max ? max : value;
+    }
+
+    private static void modifyRed(float[] red, float[] white, float percent) {
+        if (percent > 0F) {
+            red[0] += 0.008F * percent;
+            red[1] += -0.520F * percent;
+            red[2] += 0.424F * percent;
+        } else {
+            red[0] += 0.033F * percent;
+            red[1] += -0.091F * percent;
+            red[2] += 0.271F * percent;
+        }
+        // Clamp values
+        red[0] = clamp(red[0], 0.031F, white[0]);
+        red[1] = clamp(red[1], white[1], 0.62F);
+        red[2] = clamp(red[2], 0.29F, white[2]);
+    }
+
     protected static GoatColors calculateColors(EnhancedGoat goat, int[] gene, char[] uuidArry) {
 
         GoatColors color = new GoatColors();
 
         float[] melanin = {0.0427F, 0.227F, 0.071F};
-        float[] pheomelanin = {0.05F, 0.52F, 0.42F};
+        float[] pheomelanin = {0.064F, 0.525F, 0.578F};
+        float[] cream = pheomelanin.clone();
 
         float[] white = {0.094F, 0.10F, 0.93F};
 
@@ -66,11 +93,15 @@ public class GoatColors {
             melanin[2] = 0.278F;
         }
 
+        GoatColors.modifyRed(pheomelanin, white, (gene[8] + gene[9] - 6)/4F);
+        GoatColors.modifyRed(cream, white, (gene[8] + gene[9] - 3)/4F);
+
         //Universal Colouration Values (Uses ABGR)
         goat.colouration.setMelaninColour(Colouration.HSBtoABGR(melanin[0], melanin[1], melanin[2]));
         goat.colouration.setPheomelaninColour(Colouration.HSBtoABGR(pheomelanin[0], pheomelanin[1], pheomelanin[2]));
         //Goat Specific Colors (Uses ARGB)
         color.whiteColor = Colouration.HSBtoARGB(white[0], white[1], white[2]);
+        color.creamColor = Colouration.HSBtoARGB(cream[0], cream[1], cream[2]);
 
         color.noseRedColor = Colouration.HSBtoARGB(noseRed[0], noseRed[1], noseRed[2]);
         color.noseBlackColor = Colouration.HSBtoARGB(noseBlack[0], noseBlack[1], noseBlack[2]);

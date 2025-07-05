@@ -77,7 +77,6 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[4] = randomizeGene(2);
         autosomalGenes[5] = randomizeGene(2);
 
-
         /* BROWN/TYRP1
          * 1 - Wildtype
          * 2 - Dark Brown; Incomplete Dom
@@ -87,6 +86,16 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
          */
         autosomalGenes[6] = randomizeGene(4);
         autosomalGenes[7] = randomizeGene(4);
+
+        /* RED COLOR 1
+         * 1 - dark red
+         * 2 - red
+         * 3 - wildtype/tan
+         * 4 - cream
+         * 5 - white
+         */
+        autosomalGenes[8] = randomizeGene(5);
+        autosomalGenes[9] = randomizeGene(5);
 
         return new Genes(sexlinkedGenes, autosomalGenes);
     }
