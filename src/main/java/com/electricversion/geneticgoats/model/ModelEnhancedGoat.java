@@ -159,21 +159,21 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         PartDefinition baseDef = meshDefinition.getRoot().addOrReplaceChild("base", CubeListBuilder.create(),
                 PartPose.offset(0F, 24F, 0F));
         PartDefinition bBodyFDef = baseDef.addOrReplaceChild("bBodyF", CubeListBuilder.create(),
-                PartPose.offset(0F, -18F, -9F));
+                PartPose.offset(0F, -19F, -9F));
         PartDefinition bBodyBDef = baseDef.addOrReplaceChild("bBodyB", CubeListBuilder.create(),
-                PartPose.offset(0F, -18F, 1F));
+                PartPose.offset(0F, -19F, 1F));
         PartDefinition bNeckDef = baseDef.addOrReplaceChild("bNeck", CubeListBuilder.create(),
-                PartPose.offsetAndRotation(0F, -15F, -6F, baseNeckAngle, 0F, 0F));
+                PartPose.offsetAndRotation(0F, -16F, -6F, baseNeckAngle, 0F, 0F));
         PartDefinition bHeadDef = baseDef.addOrReplaceChild("bHead", CubeListBuilder.create(),
                 PartPose.offsetAndRotation(0F, -9F, -1.5F, -baseNeckAngle, 0F, 0F));
         PartDefinition bLegFR = baseDef.addOrReplaceChild("bLegFL", CubeListBuilder.create(),
-                PartPose.offset(1.49F, -10F, -5.99F));
+                PartPose.offset(1.49F, -11F, -5.99F));
         PartDefinition bLegFL = baseDef.addOrReplaceChild("bLegFR", CubeListBuilder.create(),
-                PartPose.offset(-4.49F, -10F, -5.99F));
+                PartPose.offset(-4.49F, -11F, -5.99F));
         PartDefinition bLegBR = baseDef.addOrReplaceChild("bLegBL", CubeListBuilder.create(),
-                PartPose.offset(1.49F, -10F, 10.99F));
+                PartPose.offset(1.49F, -11F, 10.99F));
         PartDefinition bLegVL = baseDef.addOrReplaceChild("bLegBR", CubeListBuilder.create(),
-                PartPose.offset(-4.49F, -10F, 10.99F));
+                PartPose.offset(-4.49F, -11F, 10.99F));
 
         // Body
         baseDef.addOrReplaceChild("bodyF", CubeListBuilder.create()
@@ -240,45 +240,45 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         // Upper Legs
         baseDef.addOrReplaceChild("legFL", CubeListBuilder.create()
-                        .texOffs(13, 61)
-                        .addBox(0F, 5F, 0F, 3, 5, 3),
-                PartPose.offset(0F, -5F, -3F));
+                        .texOffs(13, 59)
+                        .addBox(0F, 6F, 0F, 3, 6, 3),
+                PartPose.offset(0F, -6F, -3F));
 
         baseDef.addOrReplaceChild("legFR", CubeListBuilder.create()
-                        .texOffs(0, 61)
-                        .addBox(0F, 5F, 0F, 3, 5, 3),
-                PartPose.offset(0F, -5F, -3F));
+                        .texOffs(0, 59)
+                        .addBox(0F, 6F, 0F, 3, 6, 3),
+                PartPose.offset(0F, -6F, -3F));
 
         baseDef.addOrReplaceChild("legBL", CubeListBuilder.create()
-                        .texOffs(13, 70)
-                        .addBox(0F, 5F, 0F, 3, 5, 3),
-                PartPose.offset(0F, -5F, -3F));
+                        .texOffs(13, 69)
+                        .addBox(0F, 6F, 0F, 3, 6, 3),
+                PartPose.offset(0F, -6F, -3F));
 
         baseDef.addOrReplaceChild("legBR", CubeListBuilder.create()
-                        .texOffs(0, 70)
-                        .addBox(0F, 5F, 0F, 3, 5, 3),
-                PartPose.offset(0F, -5F, -3F));
+                        .texOffs(0, 69)
+                        .addBox(0F, 6F, 0F, 3, 6, 3),
+                PartPose.offset(0F, -6F, -3F));
 
         // Lower Legs
         baseDef.addOrReplaceChild("legBFL", CubeListBuilder.create()
                         .texOffs(13, 79)
                         .addBox(0F, 5F, 0F, 3, 5, 3),
-                PartPose.offset(0F, 5F, 0F));
+                PartPose.offset(0F, 7F, 0F));
 
         baseDef.addOrReplaceChild("legBFR", CubeListBuilder.create()
                         .texOffs(0, 79)
                         .addBox(0F, 5F, 0F, 3, 5, 3),
-                PartPose.offset(0F, 5F, 0F));
+                PartPose.offset(0F, 7F, 0F));
 
         baseDef.addOrReplaceChild("legBBL", CubeListBuilder.create()
                         .texOffs(13, 88)
                         .addBox(0F, 5F, 0F, 3, 5, 3),
-                PartPose.offset(0F, 5F, 0F));
+                PartPose.offset(0F, 7F, 0F));
 
         baseDef.addOrReplaceChild("legBBR", CubeListBuilder.create()
                         .texOffs(0, 88)
                         .addBox(0F, 5F, 0F, 3, 5, 3),
-                PartPose.offset(0F, 5F, 0F));
+                PartPose.offset(0F, 7F, 0F));
 
         return LayerDefinition.create(meshDefinition, 128, 128);
     }
