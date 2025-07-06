@@ -79,11 +79,14 @@ public class GoatTexture {
         int agouti1 = gene[0];
         int agouti2 = gene[1];
         goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RED, "misc/solid.png");
-        if (!TX_AGOUTI_CREAM[agouti1].isEmpty()) {
-            goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RGB, TX_AGOUTI_CREAM[agouti1], "ac2", color.getCreamColor());
-        }
-        if (!TX_AGOUTI_CREAM[agouti2].isEmpty()) {
-            goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RGB, TX_AGOUTI_CREAM[agouti2], "ac2", color.getCreamColor());
+        if (agouti1 != 2 && agouti2 != 2) {
+            // Gold agouti is dominant and blocks the cream highlights, so require that it's not present
+            if (!TX_AGOUTI_CREAM[agouti1].isEmpty()) {
+                goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RGB, TX_AGOUTI_CREAM[agouti1], "ac2", color.getCreamColor());
+            }
+            if (!TX_AGOUTI_CREAM[agouti2].isEmpty()) {
+                goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RGB, TX_AGOUTI_CREAM[agouti2], "ac2", color.getCreamColor());
+            }
         }
         goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RGB, "misc/nose.png", "nr", color.getNoseRedColor());
 

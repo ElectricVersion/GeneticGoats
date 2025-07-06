@@ -88,14 +88,22 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[7] = randomizeGene(4);
 
         /* RED COLOR 1
-         * 1 - dark red
-         * 2 - red
-         * 3 - wildtype/tan
-         * 4 - cream
-         * 5 - white
+         * 1 - wildtype/tan
+         * 2 - cream
+         * 3 - off-white
+         * 4 - white
          */
-        autosomalGenes[8] = randomizeGene(5);
-        autosomalGenes[9] = randomizeGene(5);
+        autosomalGenes[8] = randomizeGene(4);
+        autosomalGenes[9] = randomizeGene(4);
+
+        /* RED COLOR 2
+         * 1 - wildtype/tan
+         * 2 - red-brown
+         * 3 - darker red
+         * 4 - deep red
+         */
+        autosomalGenes[10] = randomizeGene(4);
+        autosomalGenes[11] = randomizeGene(4);
 
         return new Genes(sexlinkedGenes, autosomalGenes);
     }

@@ -93,8 +93,9 @@ public class GoatColors {
             melanin[2] = 0.278F;
         }
 
-        GoatColors.modifyRed(pheomelanin, white, (gene[8] + gene[9] - 6)/4F);
-        GoatColors.modifyRed(cream, white, (gene[8] + gene[9] - 3)/4F);
+        int redModifier = (gene[8] + gene[9] - 2) - (gene[10] + gene[11] - 2);
+        GoatColors.modifyRed(pheomelanin, white, redModifier/6F);
+        GoatColors.modifyRed(cream, white, (redModifier+4)/6F);
 
         //Universal Colouration Values (Uses ABGR)
         goat.colouration.setMelaninColour(Colouration.HSBtoABGR(melanin[0], melanin[1], melanin[2]));
