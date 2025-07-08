@@ -96,11 +96,12 @@ public class GoatColors {
         int redModifier = (gene[8] + gene[9] - 2) - (gene[10] + gene[11] - 2);
         int tanModifier = 0;
         if (gene[12] == 2 || gene[13] == 2) {
-            tanModifier = gene[12] == gene[13] ? 2 : 1;
+            // "Red Distribution Modifier" - Hypothesized gene to lighten the tan points that appear on some agoutis
+            tanModifier = gene[12] == gene[13] ? 4 : 2;
         }
         if (gene[0] == 5 || gene[1] == 5) {
             // Swiss specifically seems to have lighter cream points than other agoutis. This includes heterozygotes
-            tanModifier = (2*tanModifier)+4;
+            tanModifier = tanModifier+4;
         }
 
         GoatColors.modifyRed(pheomelanin, white, redModifier/6F);
