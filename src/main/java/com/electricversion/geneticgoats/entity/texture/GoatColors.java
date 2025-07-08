@@ -94,8 +94,17 @@ public class GoatColors {
         }
 
         int redModifier = (gene[8] + gene[9] - 2) - (gene[10] + gene[11] - 2);
+        int tanModifier = 0;
+        if (gene[12] == 2 || gene[13] == 2) {
+            tanModifier = gene[12] == gene[13] ? 2 : 1;
+        }
+        if (gene[0] == 5 || gene[1] == 5) {
+            // Swiss specifically seems to have lighter cream points than other agoutis. This includes heterozygotes
+            tanModifier = (2*tanModifier)+4;
+        }
+
         GoatColors.modifyRed(pheomelanin, white, redModifier/6F);
-        GoatColors.modifyRed(cream, white, (redModifier+4)/6F);
+        GoatColors.modifyRed(cream, white, (redModifier+tanModifier+4)/6F);
 
         //Universal Colouration Values (Uses ABGR)
         goat.colouration.setMelaninColour(Colouration.HSBtoABGR(melanin[0], melanin[1], melanin[2]));

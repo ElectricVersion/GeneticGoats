@@ -105,6 +105,13 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[10] = randomizeGene(4);
         autosomalGenes[11] = randomizeGene(4);
 
+        /* RED DISTRIBUTION MODIFIER
+         * 1 - Normal Points
+         * 2 - Lighter Cream
+         */
+        autosomalGenes[12] = randomizeGene(2);
+        autosomalGenes[13] = randomizeGene(2);
+
         return new Genes(sexlinkedGenes, autosomalGenes);
     }
 }
