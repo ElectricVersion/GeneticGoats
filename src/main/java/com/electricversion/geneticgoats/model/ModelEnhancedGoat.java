@@ -227,16 +227,26 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                         .addBox(-4.505F, -5.5F, -7.505F, 4, 4, 4, new CubeDeformation(-1.5F)),
                 PartPose.ZERO);
 
+
         baseDef.addOrReplaceChild("earL", CubeListBuilder.create()
-                        .texOffs(88, 51)
-                        .addBox(0F, 0F, 0F, 5, 3, 1),
-                PartPose.offsetAndRotation(2F, -5F, 1.95F, 0F, 0F, -Mth.HALF_PI * 0.0625F));
+                        .texOffs(87, 64)
+                        .addBox(0F, -5F, 0F, 3, 5, 1),
+                PartPose.offsetAndRotation(3F, -5F, 1.95F, 0F, 0F, Mth.HALF_PI));
 
         baseDef.addOrReplaceChild("earR", CubeListBuilder.create()
-                        .texOffs(75, 51)
-                        .addBox(-5F, 0F, 0F, 5, 3, 1),
-                PartPose.offsetAndRotation(-2F, -5F, 1.95F, 0F, 0F, Mth.HALF_PI * 0.0625F));
-
+                        .texOffs(78, 64)
+                        .addBox(-3F, -5F, 0F, 3, 5, 1),
+                PartPose.offsetAndRotation(-3F, -5F, 1.95F, 0F, 0F, -Mth.HALF_PI));
+//
+//        baseDef.addOrReplaceChild("earL12", CubeListBuilder.create()
+//                        .texOffs(87, 64)
+//                        .addBox(0F, -12F, 0F, 3, 12, 1),
+//                PartPose.offsetAndRotation(3F, -5F, 1.95F, 0F, 0F, Mth.HALF_PI));
+//
+//        baseDef.addOrReplaceChild("earR12", CubeListBuilder.create()
+//                        .texOffs(78, 64)
+//                        .addBox(-3F, -12F, 0F, 3, 12, 1),
+//                PartPose.offsetAndRotation(-3F, -5F, 1.95F, 0F, 0F, -Mth.HALF_PI));
 
         // Upper Legs
         baseDef.addOrReplaceChild("legFL", CubeListBuilder.create()
