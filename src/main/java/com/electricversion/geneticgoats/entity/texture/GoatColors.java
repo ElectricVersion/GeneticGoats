@@ -3,6 +3,8 @@ package com.electricversion.geneticgoats.entity.texture;
 import com.electricversion.geneticgoats.entity.EnhancedGoat;
 import mokiyoki.enhancedanimals.entity.util.Colouration;
 
+import static net.minecraft.util.Mth.clamp;
+
 public class GoatColors {
     private int whiteColor = -1;
     private int creamColor = -1;
@@ -29,11 +31,6 @@ public class GoatColors {
 
     public int getNoseWhiteColor() {
         return noseWhiteColor;
-    }
-
-    // Utility method for making sure colors stay in a nice range
-    private static float clamp(float value, float min, float max) {
-        return value < min ? min : value > max ? max : value;
     }
 
     private static void modifyRed(float[] red, float[] white, float percent) {
