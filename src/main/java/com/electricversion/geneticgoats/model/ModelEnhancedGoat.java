@@ -61,6 +61,10 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
     private final WrappedModelPart earL5;
     private final WrappedModelPart earR5;
+    private final WrappedModelPart earL7;
+    private final WrappedModelPart earR7;
+    private final WrappedModelPart earL9;
+    private final WrappedModelPart earR9;
     private final WrappedModelPart earL12;
     private final WrappedModelPart earR12;
 
@@ -116,6 +120,10 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         eyeR = new WrappedModelPart("eyeR", basePart);
         earL5 = new WrappedModelPart("earL5", basePart);
         earR5 = new WrappedModelPart("earR5", basePart);
+        earL7 = new WrappedModelPart("earL7", basePart);
+        earR7 = new WrappedModelPart("earR7", basePart);
+        earL9 = new WrappedModelPart("earL9", basePart);
+        earR9 = new WrappedModelPart("earR9", basePart);
         earL12 = new WrappedModelPart("earL12", basePart);
         earR12 = new WrappedModelPart("earR12", basePart);
 
@@ -149,6 +157,10 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bHead.addChild(bEarR);
         bEarL.addChild(earL5);
         bEarR.addChild(earR5);
+        bEarL.addChild(earL7);
+        bEarR.addChild(earR7);
+        bEarL.addChild(earL9);
+        bEarR.addChild(earR9);
         bEarL.addChild(earL12);
         bEarR.addChild(earR12);
 
@@ -214,8 +226,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                 PartPose.offsetAndRotation(0F, 0F, 10F, Mth.HALF_PI * 0.45F, 0F, 0F));
 
         baseDef.addOrReplaceChild("neck", CubeListBuilder.create()
-                        .texOffs(0, 40)
-                        .addBox(-2.5F, -12F, -3F, 5, 12, 6),
+                           .texOffs(0, 40)
+                     .addBox(-2.5F, -12F, -3F, 5, 12, 6),
                 PartPose.ZERO);
 
         // Head
@@ -260,15 +272,37 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                         .addBox(-3F, -5F, 0F, 3, 5, 1),
                 PartPose.rotation(0F, 0F, -Mth.HALF_PI));
 
+        baseDef.addOrReplaceChild("earL7", CubeListBuilder.create()
+                        .texOffs(87, 64)
+                        .addBox(0F, -7F, 0F, 3, 7, 1),
+                PartPose.rotation(0F, 0F, Mth.HALF_PI*1.5F));
+
+        baseDef.addOrReplaceChild("earR7", CubeListBuilder.create()
+                        .texOffs(78, 64)
+                        .addBox(-3F, -7F, 0F, 3, 7, 1),
+                PartPose.rotation(0F, 0F, -Mth.HALF_PI*1.5F));
+
+
+        baseDef.addOrReplaceChild("earL9", CubeListBuilder.create()
+                        .texOffs(87, 64)
+                        .addBox(0F, -9F, -1F, 3, 9, 1),
+                PartPose.offsetAndRotation(0F,0F,-2F, 0F, -Mth.HALF_PI, Mth.HALF_PI));
+
+        baseDef.addOrReplaceChild("earR9", CubeListBuilder.create()
+                        .texOffs(78, 64)
+                        .addBox(-3F, -9F, -1F, 3, 9, 1),
+                PartPose.offsetAndRotation(0F,0F,-2F, 0F, Mth.HALF_PI, -Mth.HALF_PI));
+
+
         baseDef.addOrReplaceChild("earL12", CubeListBuilder.create()
                         .texOffs(87, 64)
-                        .addBox(0F, -12F, 0F, 3, 12, 1),
-                PartPose.offsetAndRotation(0F,1F,-2F, 0F, -Mth.HALF_PI, Mth.HALF_PI));
+                        .addBox(0F, -12F, -1F, 3, 12, 1),
+                PartPose.offsetAndRotation(0F,0F,-2F, 0F, -Mth.HALF_PI, Mth.HALF_PI));
 
         baseDef.addOrReplaceChild("earR12", CubeListBuilder.create()
                         .texOffs(78, 64)
-                        .addBox(-3F, -12F, 0F, 3, 12, 1),
-                PartPose.offsetAndRotation(0F,1F,-2F, 0F, Mth.HALF_PI, -Mth.HALF_PI));
+                        .addBox(-3F, -12F, -1F, 3, 12, 1),
+                PartPose.offsetAndRotation(0F,0F,-2F, 0F, Mth.HALF_PI, -Mth.HALF_PI));
 
         // Upper Legs
         baseDef.addOrReplaceChild("legFL", CubeListBuilder.create()
@@ -418,9 +452,62 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
     /* Render */
 
+    private void resetCubes() {
+        // Hide all swappable blocks
+        earL5.hide();
+        earR5.hide();
+        earL7.hide();
+        earR7.hide();
+        earL9.hide();
+        earR9.hide();
+        earL12.hide();
+        earR12.hide();
+
+        setupEars();
+    }
+
+    private void setupEars() {
+        // Enable the necessary blocks
+        switch (goatModelData.getPhenotype().getEarLength()) {
+            case NORMAL -> {
+                earL5.show();
+                earR5.show();
+            }
+            case LONG -> {
+                earL7.show();
+                earR7.show();
+            }
+            case EXTRA_LONG -> {
+                earL9.show();
+                earR9.show();
+            }
+            case LONGEST -> {
+                earL12.show();
+                earR12.show();
+            }
+        }
+        // Set Ear Positioning
+        switch (goatModelData.getPhenotype().getEarPlacement()) {
+            case HIGH -> {
+                bEarL.setY(-5F);
+                bEarR.setY(-5F);
+            }
+            case MEDIUM -> {
+                bEarL.setY(-4F);
+                bEarR.setY(-4F);
+            }
+            case LOW -> {
+                bEarL.setY(-3F);
+                bEarR.setY(-3F);
+            }
+        }
+    }
+
     @Override
     public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer, int packedLightIn, int packedOverlayIn, float r, float g, float b, float a) {
         if (goatModelData != null && goatModelData.getPhenotype() != null) {
+            resetCubes();
+
             super.renderToBuffer(goatModelData, poseStack, vertexConsumer, packedLightIn, packedOverlayIn, r, g, b, a);
             Map<String, List<Float>> mapOfScale = new HashMap<>(); //Stores transformations for blocks and bones
             poseStack.pushPose();
