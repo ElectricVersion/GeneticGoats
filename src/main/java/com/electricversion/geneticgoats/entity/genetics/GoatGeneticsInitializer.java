@@ -87,7 +87,7 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[6] = randomizeGene(4);
         autosomalGenes[7] = randomizeGene(4);
 
-        /* RED COLOR 1
+        /* RED COLOR 1 (Incomplete Dominant)
          * 1 - wildtype/tan
          * 2 - cream
          * 3 - off-white
@@ -96,7 +96,7 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[8] = randomizeGene(4);
         autosomalGenes[9] = randomizeGene(4);
 
-        /* RED COLOR 2
+        /* RED COLOR 2 (Incomplete Dominant)
          * 1 - wildtype/tan
          * 2 - red-brown
          * 3 - darker red
@@ -105,12 +105,30 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[10] = randomizeGene(4);
         autosomalGenes[11] = randomizeGene(4);
 
-        /* RED DISTRIBUTION MODIFIER
+        /* RED DISTRIBUTION MODIFIER (Incomplete Dominant)
          * 1 - Normal Points
          * 2 - Lighter Cream
          */
         autosomalGenes[12] = randomizeGene(2);
         autosomalGenes[13] = randomizeGene(2);
+
+        /* EAR FLOP TESTING GENE (Higher More Dominant)
+         * 1-6
+         */
+        autosomalGenes[14] = randomizeGene(6);
+        autosomalGenes[15] = randomizeGene(6);
+
+        /* EAR LENGTH TESTING GENE (Higher More Dominant)
+         * 1-4
+         */
+        autosomalGenes[16] = randomizeGene(4);
+        autosomalGenes[17] = randomizeGene(4);
+
+        /* HIGHER EARS (Higher More Dominant)
+         * 1-2
+         */
+        autosomalGenes[18] = randomizeGene(2);
+        autosomalGenes[19] = randomizeGene(2);
 
         return new Genes(sexlinkedGenes, autosomalGenes);
     }

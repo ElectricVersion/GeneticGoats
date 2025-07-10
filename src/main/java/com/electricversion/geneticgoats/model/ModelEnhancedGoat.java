@@ -467,40 +467,45 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     }
 
     private void setupEars() {
+        GoatPhenotype phenotype = goatModelData.getPhenotype();
         // Enable the necessary blocks
-        switch (goatModelData.getPhenotype().getEarLength()) {
+        switch (phenotype.getEarLength()) {
             case NORMAL -> {
                 earL5.show();
                 earR5.show();
             }
-            case LONG -> {
+            case LONG1 -> {
                 earL7.show();
                 earR7.show();
             }
-            case EXTRA_LONG -> {
+            case LONG2 -> {
                 earL9.show();
                 earR9.show();
             }
-            case LONGEST -> {
+            case LONG3 -> {
                 earL12.show();
                 earR12.show();
             }
         }
         // Set Ear Positioning
-        switch (goatModelData.getPhenotype().getEarPlacement()) {
-            case HIGH -> {
+        switch (phenotype.getEarPlacement()) {
+            case 0 -> {
                 bEarL.setY(-5F);
                 bEarR.setY(-5F);
             }
-            case MEDIUM -> {
+            case 1 -> {
                 bEarL.setY(-4F);
                 bEarR.setY(-4F);
             }
-            case LOW -> {
+            case 2 -> {
                 bEarL.setY(-3F);
                 bEarR.setY(-3F);
             }
         }
+        bEarL.setX(phenotype.getEarX());
+        bEarR.setX(-phenotype.getEarX());
+        bEarL.setZRot(phenotype.getEarFlop());
+        bEarR.setZRot(-phenotype.getEarFlop());
     }
 
     @Override
