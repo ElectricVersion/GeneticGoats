@@ -121,8 +121,8 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         /* EAR LENGTH TESTING GENE (Higher More Dominant)
          * 1-4
          */
-        autosomalGenes[16] = randomizeGene(4);
-        autosomalGenes[17] = randomizeGene(4);
+        autosomalGenes[16] = randomizeGene(5);
+        autosomalGenes[17] = randomizeGene(5);
 
         /* HIGHER EARS (Higher More Dominant)
          * 1-2
