@@ -201,7 +201,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("bNeck", CubeListBuilder.create(),
                 PartPose.offsetAndRotation(0F, -16F, -6F, baseNeckAngle, 0F, 0F));
         baseDef.addOrReplaceChild("bHead", CubeListBuilder.create(),
-                PartPose.offsetAndRotation(0F, -9F, -1.5F, -baseNeckAngle, 0F, 0F));
+                PartPose.offsetAndRotation(0F, -9.25F, -1.5F, -baseNeckAngle, 0F, 0F));
         baseDef.addOrReplaceChild("bLegFL", CubeListBuilder.create(),
                 PartPose.offset(1.49F, -11F, -5.99F));
         baseDef.addOrReplaceChild("bLegFR", CubeListBuilder.create(),
@@ -434,7 +434,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
     private void grazeAnim(float ticksOfGrazing) {
         bNeck.setXRot(lerpTo(bNeck.getXRot(), Mth.HALF_PI*0.9F + baseNeckAngle));
-        bHead.setXRot(lerpTo(bHead.getXRot(), -Mth.HALF_PI*0.2F - baseNeckAngle));
+        bHead.setXRot(lerpTo(bHead.getXRot(), -Mth.HALF_PI*0.075F - baseNeckAngle));
     }
 
     @Override

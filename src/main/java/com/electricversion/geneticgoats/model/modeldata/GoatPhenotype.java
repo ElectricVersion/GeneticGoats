@@ -69,6 +69,6 @@ public class GoatPhenotype implements Phenotype {
         }
 
         earFlop = clamp(earFlop, -1F, 0.875F) * Mth.HALF_PI;
-        earX = earFlop < -0.25 ? 1F : earFlop < 0 ? 2F : 3F;
+        earX = earFlop < -0.5    ? 1F : earFlop < 0 ? 2F : 3F;
     }
 }
