@@ -48,27 +48,27 @@ public class GoatPhenotype implements Phenotype {
             earLength = EarLength.NORMAL;
         }
         earPlacement = 0;
-        earFlop = ((gene[14] + gene[15] - 7)/5F) * 0.75F ;
+        earFlop = (gene[14] + gene[15] - 7)/5F;
 
         switch (earLength) {
             case SMALL -> {
-                earFlop += - 0.25F;
+                earFlop = (earFlop * 0.8F) - 0.2F;
             }
             case NORMAL -> {
-                earFlop += 0.125F;
+                earFlop = (earFlop * 0.7F) - 0.1F;
             }
             case LONG1 -> {
-                earFlop += 1F;
+                earFlop = (earFlop * 0.3F) + 0.5F;
             }
             case LONG2 -> {
-                earFlop += 1.5F;
+                earFlop = (earFlop * 0.2F) + 0.7F;
             }
             case LONG3 -> {
-                earFlop += 1.875F;
+                earFlop = (earFlop * 0.1F) + 0.8F;
             }
         }
 
-        earFlop = clamp(earFlop, -1F, 0.875F) * Mth.HALF_PI;
-        earX = earFlop < -0.5    ? 1F : earFlop < 0 ? 2F : 3F;
+        earX = earFlop < -0.5 ? 1F : earFlop < 0 ? 2F : 3F;
+        earFlop = clamp(earFlop, -1, 1) * Mth.HALF_PI;
     }
 }
