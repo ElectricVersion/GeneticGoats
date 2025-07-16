@@ -59,8 +59,8 @@ public class GoatPhenotype implements Phenotype {
         }
         earFlop = ((Math.max(gene[14], gene[15]) * 2) - 7) / 5F;
         earXRot = 0;
-        earY = -5F; // possible values: -5, -4, -3
-        earZ = 1F;
+        earY = 0F;
+        earZ = -1.05F;
 
         switch (earLength) {
             case SMALL -> {
