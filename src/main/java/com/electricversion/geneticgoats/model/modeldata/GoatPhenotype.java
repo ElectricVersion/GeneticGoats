@@ -66,24 +66,28 @@ public class GoatPhenotype implements Phenotype {
             case SMALL -> {
                 earFlop = (earFlop * 0.7F) - 0.1F;
                 if (earFlop > 0.25F) {
+                    // High Flop
                     earXRot = 1F;
-                    earY += 1F;
+                    earY += 0F;
                     earZ -= 1F;
                 }
                 else if (earFlop > -0.25F) {
+                    // Medium Flop
                     earXRot = 0.5F;
-                    earY += 1F;
+                    earY += 0F;
                     earZ -= 1F;
                 }
             }
             case NORMAL -> {
                 earFlop = (earFlop * 0.7F) - 0.1F;
                 if (earFlop > 0.25F) {
+                    // High Flop
                     earXRot = 1F;
                     earY += 0F;
                     earZ -= 2F;
                 }
                 else if (earFlop > -0.25F) {
+                    // Medium Flop
                     earXRot = 0.5F;
                     earY += 0F;
                     earZ -= 1F;

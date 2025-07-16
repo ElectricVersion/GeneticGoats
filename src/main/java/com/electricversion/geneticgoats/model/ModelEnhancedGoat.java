@@ -290,12 +290,12 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("earL7", CubeListBuilder.create()
                         .texOffs(87, 64)
                         .addBox(0F, -7F, -1F, 3, 7, 1),
-                PartPose.rotation(0F, 0F, Mth.HALF_PI));
+                PartPose.offsetAndRotation(0F,0F,-2F, 0F, -Mth.HALF_PI, Mth.HALF_PI));
 
         baseDef.addOrReplaceChild("earR7", CubeListBuilder.create()
                         .texOffs(78, 64)
                         .addBox(-3F, -7F, -1F, 3, 7, 1),
-                PartPose.rotation(0F, 0F, -Mth.HALF_PI));
+                PartPose.offsetAndRotation(0F,0F,-2F, 0F, Mth.HALF_PI, -Mth.HALF_PI));
 
 
         baseDef.addOrReplaceChild("earL9", CubeListBuilder.create()
