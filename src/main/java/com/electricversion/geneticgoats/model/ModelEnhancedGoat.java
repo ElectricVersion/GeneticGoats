@@ -528,7 +528,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             Map<String, List<Float>> mapOfScale = new HashMap<>(); //Stores transformations for blocks and bones
             poseStack.pushPose();
 
-            float goatScale = ((3F * goatModelData.size * goatModelData.growthAmount) + goatModelData.size) / 4F;
+            float goatScale = ((2F * goatModelData.size * goatModelData.growthAmount) + goatModelData.size) / 3F;
             poseStack.scale(goatScale, goatScale, goatScale);
             poseStack.translate(0.0F, -1.5F + 1.5F / goatScale, 0.0F);
             gaRender(base, mapOfScale, poseStack, vertexConsumer, packedLightIn, packedOverlayIn, r, g, b, a);
