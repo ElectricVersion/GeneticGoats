@@ -508,23 +508,13 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                 earR12.show();
             }
         }
-        // Set Ear Positioning
-        switch (phenotype.getEarPlacement()) {
-            case 0 -> {
-                bEarL.setY(-5F);
-                bEarR.setY(-5F);
-            }
-            case 1 -> {
-                bEarL.setY(-4F);
-                bEarR.setY(-4F);
-            }
-            case 2 -> {
-                bEarL.setY(-3F);
-                bEarR.setY(-3F);
-            }
-        }
-        bEarL.setX(phenotype.getEarX());
-        bEarR.setX(-phenotype.getEarX());
+        // Set Ear Positioning and Rotation
+        bEarL.setPos(phenotype.getEarX(), phenotype.getEarY(), phenotype.getEarZ());
+        bEarR.setPos(-phenotype.getEarX(), phenotype.getEarY(), phenotype.getEarZ());
+
+//        bEarL.setXRot(phenotype.getEarXRot());
+//        bEarR.setXRot(phenotype.getEarXRot());
+
         bEarL.setZRot(phenotype.getEarFlop());
         bEarR.setZRot(-phenotype.getEarFlop());
     }

@@ -7,10 +7,6 @@ import static net.minecraft.util.Mth.clamp;
 
 // The phenotype class is used for storing model data related to immutable genetic traits that need to be accessed by the model
 public class GoatPhenotype implements Phenotype {
-    public int getEarPlacement() {
-        return earPlacement;
-    }
-
     public EarLength getEarLength() {
         return earLength;
     }
@@ -23,6 +19,18 @@ public class GoatPhenotype implements Phenotype {
         return earX;
     }
 
+    public float getEarXRot() {
+        return earXRot;
+    }
+
+    public float getEarZ() {
+        return earZ;
+    }
+
+    public float getEarY() {
+        return earY;
+    }
+
     public enum EarLength {
         SMALL,
         NORMAL,
@@ -32,9 +40,11 @@ public class GoatPhenotype implements Phenotype {
     }
 
     private EarLength earLength;
-    private int earPlacement; //Range 0-2, 0 is highest 2 is lowest
     private float earFlop; //Ear angle from -1 (upwards) to 1 (lopped)
+    private float earXRot;
     private float earX;
+    private float earY;
+    private float earZ;
 
     public GoatPhenotype(int[] gene, boolean isFemale) {
         earLength = EarLength.SMALL;
@@ -47,28 +57,35 @@ public class GoatPhenotype implements Phenotype {
         } else if (gene[16] == 2 || gene[17] == 2) {
             earLength = EarLength.NORMAL;
         }
-        earPlacement = 0;
-        earFlop = (gene[14] + gene[15] - 7)/5F;
+        earFlop = ((Math.max(gene[14], gene[15]) * 2) - 7) / 5F;
+        earXRot = 0;
+        earY = -5F; // possible values: -5, -4, -3
+        earZ = 1F;
 
         switch (earLength) {
             case SMALL -> {
-                earFlop = (earFlop * 0.8F) - 0.2F;
+                earFlop = (earFlop * 0.7F) - 0.1F;
             }
             case NORMAL -> {
                 earFlop = (earFlop * 0.7F) - 0.1F;
+                if (earFlop > 0F) {
+                    earXRot = 0.5F;
+                    earZ -= 1F;
+                }
             }
             case LONG1 -> {
-                earFlop = (earFlop * 0.3F) + 0.5F;
+                earFlop = (earFlop * 0.2F) + 0.6F;
             }
             case LONG2 -> {
-                earFlop = (earFlop * 0.2F) + 0.7F;
+                earFlop = (earFlop * 0.1F) + 0.7F;
             }
             case LONG3 -> {
                 earFlop = (earFlop * 0.1F) + 0.8F;
             }
         }
 
-        earX = earFlop < -0.5 ? 1F : earFlop < 0 ? 2F : 3F;
+        earXRot *= Mth.HALF_PI;
+        earX = earFlop < -0.5F ? 1F : earFlop < 0F ? 2F : 3F;
         earFlop = clamp(earFlop, -1, 1) * Mth.HALF_PI;
     }
 }
