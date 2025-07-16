@@ -269,32 +269,32 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         baseDef.addOrReplaceChild("earL4", CubeListBuilder.create()
                         .texOffs(87, 64)
-                        .addBox(-0.5F, -4F, 0F, 3, 4, 1, new CubeDeformation(-0.5F, 0F, 0F)),
+                        .addBox(-0.5F, -4F, -1F, 3, 4, 1, new CubeDeformation(-0.5F, 0F, 0F)),
                 PartPose.rotation(0F, 0F, Mth.HALF_PI));
 
         baseDef.addOrReplaceChild("earR4", CubeListBuilder.create()
                         .texOffs(78, 64)
-                        .addBox(-2.5F, -4F, 0F, 3, 4, 1, new CubeDeformation(-0.5F, 0F, 0F)),
+                        .addBox(-2.5F, -4F, -1F, 3, 4, 1, new CubeDeformation(-0.5F, 0F, 0F)),
                 PartPose.rotation(0F, 0F, -Mth.HALF_PI));
 
         baseDef.addOrReplaceChild("earL5", CubeListBuilder.create()
                         .texOffs(87, 64)
-                        .addBox(0F, -5F, 0F, 3, 5, 1),
+                        .addBox(0F, -5F, -1F, 3, 5, 1),
                 PartPose.rotation(0F, 0F, Mth.HALF_PI));
 
         baseDef.addOrReplaceChild("earR5", CubeListBuilder.create()
                         .texOffs(78, 64)
-                        .addBox(-3F, -5F, 0F, 3, 5, 1),
+                        .addBox(-3F, -5F, -1F, 3, 5, 1),
                 PartPose.rotation(0F, 0F, -Mth.HALF_PI));
 
         baseDef.addOrReplaceChild("earL7", CubeListBuilder.create()
                         .texOffs(87, 64)
-                        .addBox(0F, -7F, 0F, 3, 7, 1),
+                        .addBox(0F, -7F, -1F, 3, 7, 1),
                 PartPose.rotation(0F, 0F, Mth.HALF_PI));
 
         baseDef.addOrReplaceChild("earR7", CubeListBuilder.create()
                         .texOffs(78, 64)
-                        .addBox(-3F, -7F, 0F, 3, 7, 1),
+                        .addBox(-3F, -7F, -1F, 3, 7, 1),
                 PartPose.rotation(0F, 0F, -Mth.HALF_PI));
 
 
@@ -512,8 +512,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bEarL.setPos(phenotype.getEarX(), phenotype.getEarY(), phenotype.getEarZ());
         bEarR.setPos(-phenotype.getEarX(), phenotype.getEarY(), phenotype.getEarZ());
 
-//        bEarL.setXRot(phenotype.getEarXRot());
-//        bEarR.setXRot(phenotype.getEarXRot());
+        bEarL.setXRot(phenotype.getEarXRot());
+        bEarR.setXRot(phenotype.getEarXRot());
 
         bEarL.setZRot(phenotype.getEarFlop());
         bEarR.setZRot(-phenotype.getEarFlop());
