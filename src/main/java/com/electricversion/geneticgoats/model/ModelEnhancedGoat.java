@@ -490,10 +490,14 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             case SMALL -> {
                 earL4.show();
                 earR4.show();
+                earL4.setZ(phenotype.getSmallEarPivotZ());
+                earR4.setZ(phenotype.getSmallEarPivotZ());
             }
             case NORMAL -> {
                 earL5.show();
                 earR5.show();
+                earL5.setZ(phenotype.getSmallEarPivotZ());
+                earR5.setZ(phenotype.getSmallEarPivotZ());
             }
             case LONG1 -> {
                 earL7.show();
@@ -515,8 +519,11 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bEarL.setXRot(phenotype.getEarXRot());
         bEarR.setXRot(phenotype.getEarXRot());
 
-        bEarL.setZRot(phenotype.getEarFlop());
-        bEarR.setZRot(-phenotype.getEarFlop());
+        bEarL.setYRot(phenotype.getEarYRot());
+        bEarR.setYRot(-phenotype.getEarYRot());
+
+        bEarL.setZRot(phenotype.getEarZRot());
+        bEarR.setZRot(-phenotype.getEarZRot());
     }
 
     @Override

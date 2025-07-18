@@ -124,11 +124,11 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[16] = randomizeGene(5);
         autosomalGenes[17] = randomizeGene(5);
 
-        /* HIGHER EARS (Higher More Dominant)
-         * 1-2
+        /* EAR FORWARD
+         * 1-3
          */
-        autosomalGenes[18] = randomizeGene(2);
-        autosomalGenes[19] = randomizeGene(2);
+        autosomalGenes[18] = randomizeGene(3);
+        autosomalGenes[19] = randomizeGene(3);
 
         return new Genes(sexlinkedGenes, autosomalGenes);
     }

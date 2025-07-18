@@ -11,8 +11,8 @@ public class GoatPhenotype implements Phenotype {
         return earLength;
     }
 
-    public float getEarFlop() {
-        return earFlop;
+    public float getEarZRot() {
+        return earZRot;
     }
 
     public float getEarX() {
@@ -31,6 +31,14 @@ public class GoatPhenotype implements Phenotype {
         return earY;
     }
 
+    public float getEarYRot() {
+        return earYRot;
+    }
+
+    public float getSmallEarPivotZ() {
+        return smallEarPivotZ;
+    }
+
     public enum EarLength {
         SMALL,
         NORMAL,
@@ -40,11 +48,13 @@ public class GoatPhenotype implements Phenotype {
     }
 
     private EarLength earLength;
-    private float earFlop; //Ear angle from -1 (upwards) to 1 (lopped)
     private float earXRot;
+    private float earYRot;
+    private float earZRot; //Ear angle from -1 (upwards) to 1 (lopped)
     private float earX;
     private float earY;
     private float earZ;
+    private float smallEarPivotZ;
 
     public GoatPhenotype(int[] gene, boolean isFemale) {
         earLength = EarLength.SMALL;
@@ -57,36 +67,51 @@ public class GoatPhenotype implements Phenotype {
         } else if (gene[16] == 2 || gene[17] == 2) {
             earLength = EarLength.NORMAL;
         }
-        earFlop = ((Math.max(gene[14], gene[15]) * 2) - 7) / 5F;
-        earXRot = 0;
+        float earForward = ((Math.max(gene[18], gene[19]) * 2) - 2) / 4F;
+        float earFlop = ((Math.max(gene[14], gene[15]) * 2) - 2) / 10F;
+        earXRot = 0F;
+        earYRot = 0F;
+        earZRot = (earFlop * 2F) - 1;
         earY = 0F;
         earZ = -1.05F;
+        smallEarPivotZ = 0F;
 
         switch (earLength) {
             case SMALL -> {
-                earFlop = (earFlop * 0.7F) - 0.1F;
-                if (earFlop > 0.25F) {
+                earZRot = (earZRot * 0.8F);
+                if (earZRot > 0.5F) {
                     // High Flop
                     earXRot = 1F;
                     earY += 0F;
                     earZ -= 1F;
+                    smallEarPivotZ = 1F - earForward;
+                    if (earForward > 0F) {
+                        earXRot += 0.75F * earForward;
+                        earYRot = earForward * Mth.HALF_PI * 0.35F * earFlop;
+                        earZRot += 0.1F * earForward;
+                    }
                 }
-                else if (earFlop > -0.25F) {
+                else if (earZRot > -0.25F) {
                     // Medium Flop
                     earXRot = 0.5F;
                     earY += 0F;
                     earZ -= 1F;
+                    if (earForward > 0F) {
+                        earXRot += 0.1F + earForward * earFlop;
+                        earYRot = earForward * Mth.HALF_PI * 0.25F * earFlop;
+                        earZRot += 0.1F;
+                    }
                 }
             }
             case NORMAL -> {
-                earFlop = (earFlop * 0.7F) - 0.1F;
-                if (earFlop > 0.25F) {
+                earZRot = (earZRot * 0.8F);
+                if (earZRot > 0.25F) {
                     // High Flop
                     earXRot = 1F;
                     earY += 0F;
                     earZ -= 2F;
                 }
-                else if (earFlop > -0.25F) {
+                else if (earZRot > -0.25F) {
                     // Medium Flop
                     earXRot = 0.5F;
                     earY += 0F;
@@ -94,18 +119,18 @@ public class GoatPhenotype implements Phenotype {
                 }
             }
             case LONG1 -> {
-                earFlop = (earFlop * 0.2F) + 0.6F;
+                earZRot = (earZRot * 0.2F) + 0.6F;
             }
             case LONG2 -> {
-                earFlop = (earFlop * 0.1F) + 0.7F;
+                earZRot = (earZRot * 0.1F) + 0.7F;
             }
             case LONG3 -> {
-                earFlop = (earFlop * 0.1F) + 0.8F;
+                earZRot = (earZRot * 0.1F) + 0.8F;
             }
         }
 
         earXRot *= Mth.HALF_PI;
-        earX = earFlop < -0.5F ? 1F : earFlop < 0F ? 2F : 3F;
-        earFlop = clamp(earFlop, -1, 1) * Mth.HALF_PI;
+        earX = earZRot < -0.5F ? 1F : earZRot < 0F ? 2F : 3F;
+        earZRot *= Mth.HALF_PI;
     }
 }
