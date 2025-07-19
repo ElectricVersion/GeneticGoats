@@ -103,12 +103,30 @@ public class GoatPhenotype implements Phenotype {
             }
             case LONG1 -> {
                 earZRot = (earZRot * 0.2F) + 0.6F;
+                earZ -= 2F;
+                if (earForward > 0F) {
+                    earXRot += 0.75F * earForward * earFlop;
+                    earYRot += 0.25F * earForward * earFlop;
+                    earZRot += 0.1F * earForward * earFlop;
+                }
             }
             case LONG2 -> {
                 earZRot = (earZRot * 0.1F) + 0.7F;
+                earZ -= 2F;
+                if (earForward > 0F) {
+                    earXRot += 0.5F * earForward * earFlop;
+                    earYRot += 0.125F * earForward * earFlop;
+                    earZRot += 0.05F * earForward * earFlop;
+                }
             }
             case LONG3 -> {
                 earZRot = (earZRot * 0.1F) + 0.8F;
+                earZ -= 2F;
+                if (earForward > 0F) {
+                    earXRot += 0.25F * earForward * earFlop;
+                    earYRot += 0.05F * earForward * earFlop;
+                    earZRot += 0.02F * earForward * earFlop;
+                }
             }
         }
 
