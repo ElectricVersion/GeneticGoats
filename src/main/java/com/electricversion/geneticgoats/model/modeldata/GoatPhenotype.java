@@ -67,8 +67,9 @@ public class GoatPhenotype implements Phenotype {
         } else if (gene[16] == 2 || gene[17] == 2) {
             earLength = EarLength.NORMAL;
         }
-        float earForward = ((Math.max(gene[18], gene[19]) * 2) - 2) / 4F;
-        float earFlop = ((Math.max(gene[14], gene[15]) * 2) - 2) / 10F;
+        float earForward = ((Math.max(gene[18], gene[19]) * 2) - 2) / 4F;  // 0 to 1
+        float earFlop = ((Math.max(gene[14], gene[15]) * 2) - 2) / 10F; // 0 to 1
+        float earLowering = Math.max(gene[20], gene[21]) - 1; // 0 to 1
         earXRot = 0F;
         earYRot = 0F;
         earZRot = (earFlop * 2F) - 1;
@@ -79,6 +80,7 @@ public class GoatPhenotype implements Phenotype {
         switch (earLength) {
             case SMALL, NORMAL -> {
                 earZRot = (earZRot * 0.8F);
+                earY += earLowering / 2F;
                 if (earZRot > 0.5F) {
                     // High Flop
                     earXRot = 1F;
@@ -103,6 +105,7 @@ public class GoatPhenotype implements Phenotype {
             }
             case LONG1 -> {
                 earZRot = (earZRot * 0.2F) + 0.6F;
+                earY += earLowering / 2F;
                 earZ -= 2F;
                 if (earForward > 0F) {
                     earXRot += 0.75F * earForward * earFlop;
@@ -112,6 +115,7 @@ public class GoatPhenotype implements Phenotype {
             }
             case LONG2 -> {
                 earZRot = (earZRot * 0.1F) + 0.7F;
+                earY += earLowering;
                 earZ -= 2F;
                 if (earForward > 0F) {
                     earXRot += 0.5F * earForward * earFlop;
@@ -121,6 +125,7 @@ public class GoatPhenotype implements Phenotype {
             }
             case LONG3 -> {
                 earZRot = (earZRot * 0.1F) + 0.8F;
+                earY += earLowering;
                 earZ -= 2F;
                 if (earForward > 0F) {
                     earXRot += 0.25F * earForward * earFlop;
@@ -131,6 +136,7 @@ public class GoatPhenotype implements Phenotype {
         }
 
         earX = earZRot < -0.5F ? 1F : earZRot < 0F ? 2F : 3F;
+
         earXRot *= Mth.HALF_PI;
         earYRot *= Mth.HALF_PI;
         earZRot *= Mth.HALF_PI;
