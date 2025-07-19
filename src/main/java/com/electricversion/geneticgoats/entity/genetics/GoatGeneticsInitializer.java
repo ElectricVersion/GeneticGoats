@@ -112,29 +112,22 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[12] = randomizeGene(2);
         autosomalGenes[13] = randomizeGene(2);
 
-        /* EAR FLOP TESTING GENE (Higher More Dominant)
-         * 1-6
+        /* EAR SIZE 1
+         * 1 - Smallest (Wildtype)
+         * 2 - Medium; Dominant
+         * 3 - Large; Incomplete Dominant
          */
-        autosomalGenes[14] = randomizeGene(6);
-        autosomalGenes[15] = randomizeGene(6);
+        autosomalGenes[14] = randomizeGene(3);
+        autosomalGenes[15] = randomizeGene(3);
 
-        /* EAR LENGTH TESTING GENE (Higher More Dominant)
-         * 1-5
+        /* EAR SIZE 2 (Incomplete Dominant)
+         * 1 - Smallest (Wildtype)
+         * 2 - Medium
+         * 3 - Large
          */
-        autosomalGenes[16] = randomizeGene(5);
-        autosomalGenes[17] = randomizeGene(5);
+        autosomalGenes[16] = randomizeGene(3);
+        autosomalGenes[17] = randomizeGene(3);
 
-        /* EAR FORWARD
-         * 1-3
-         */
-        autosomalGenes[18] = randomizeGene(3);
-        autosomalGenes[19] = randomizeGene(3);
-
-        /* EAR FORWARD
-         * 1-3
-         */
-        autosomalGenes[20] = randomizeGene(3);
-        autosomalGenes[21] = randomizeGene(3);
         return new Genes(sexlinkedGenes, autosomalGenes);
     }
 }

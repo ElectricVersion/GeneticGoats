@@ -57,19 +57,33 @@ public class GoatPhenotype implements Phenotype {
     private float smallEarPivotZ;
 
     public GoatPhenotype(int[] gene, boolean isFemale) {
-        earLength = EarLength.SMALL;
-        if (gene[16] == 5 || gene[17] == 5) {
-            earLength = EarLength.LONG3;
-        } else if (gene[16] == 4 || gene[17] == 4) {
-            earLength = EarLength.LONG2;
-        } else if (gene[16] == 3 || gene[17] == 3) {
-            earLength = EarLength.LONG1;
-        } else if (gene[16] == 2 || gene[17] == 2) {
-            earLength = EarLength.NORMAL;
+        int earLengthCounter = 0;
+        // Ear Size 1
+        if (gene[14] == 3 || gene[15] == 3) {
+            earLengthCounter += (gene[14] == gene[15]) ? 2 : 1;
+        } else if (gene[14] == 2 || gene[15] == 2) {
+            earLengthCounter += 1;
         }
-        float earForward = ((Math.max(gene[18], gene[19]) * 2) - 2) / 4F;  // 0 to 1
-        float earFlop = ((Math.max(gene[14], gene[15]) * 2) - 2) / 10F; // 0 to 1
-        float earLowering = Math.max(gene[20], gene[21]) - 1; // 0 to 1
+        // Ear Size 2
+        if (gene[16] == 3 || gene[17] == 3) {
+            earLengthCounter += (gene[16] == gene[17]) ? 2 : 1;
+        } else if (gene[16] == 2 || gene[17] == 2) {
+            earLengthCounter += 1;
+        }
+        switch (earLengthCounter) {
+            case 4 -> earLength = EarLength.LONG3;
+            case 3 -> earLength = EarLength.LONG2;
+            case 2 -> earLength = EarLength.LONG1;
+            case 1 -> earLength = EarLength.NORMAL;
+            default -> earLength = EarLength.SMALL;
+        }
+
+//        float earFlop = ((Math.max(gene[14], gene[15]) * 2) - 2) / 10F; // 0 to 1
+//        float earForward = ((Math.max(gene[18], gene[19]) * 2) - 2) / 4F;  // 0 to 1
+//        float earLowering = Math.max(gene[20], gene[21]) - 1; // 0 to 1
+        float earFlop = 0;
+        float earForward = 0;
+        float earLowering = 0;
         earXRot = 0F;
         earYRot = 0F;
         earZRot = (earFlop * 2F) - 1;
