@@ -82,11 +82,19 @@ public class GoatPhenotype implements Phenotype {
         float earFlop = 0.25F;
         earFlop += 0.75F * ((gene[18] + gene[19] + gene[20] + gene[21] - 4)/6F);
         earFlop -= 0.25F * ((gene[22] + gene[23] - 2)/4F);
+        earFlop = clamp(earFlop, 0F, 1F); // 0 to 1
 
-//        float earForward = ((Math.max(gene[18], gene[19]) * 2) - 2) / 4F;  // 0 to 1
-//        float earLowering = Math.max(gene[20], gene[21]) - 1; // 0 to 1
-        float earForward = 0;
+        float earForward = clamp((gene[18] + gene[19] - 2) / 4F, 0F, 1F);  // 0 to 1
         float earLowering = 0;
+        if (gene[26] == 2 || gene[27] == 2) {
+            // Ear Height 1
+            earLowering = 0.5F;
+        }
+        if (gene[28] == 2 || gene[29] == 2) {
+            // Ear Height 2
+            earLowering += 0.5F;
+        }
+
         earXRot = 0F;
         earYRot = 0F;
         earZRot = (earFlop * 2F) - 1;
