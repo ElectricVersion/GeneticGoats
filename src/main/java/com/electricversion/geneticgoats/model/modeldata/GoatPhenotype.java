@@ -56,18 +56,18 @@ public class GoatPhenotype implements Phenotype {
     private float earZ;
     private float smallEarPivotZ;
 
-    public GoatPhenotype(int[] gene, boolean isFemale) {
+    private void calculateEars(int[] genes) {
         int earLengthCounter = 0;
         // Ear Size 1
-        if (gene[14] == 3 || gene[15] == 3) {
-            earLengthCounter += (gene[14] == gene[15]) ? 2 : 1;
-        } else if (gene[14] == 2 || gene[15] == 2) {
+        if (genes[14] == 3 || genes[15] == 3) {
+            earLengthCounter += (genes[14] == genes[15]) ? 2 : 1;
+        } else if (genes[14] == 2 || genes[15] == 2) {
             earLengthCounter += 1;
         }
         // Ear Size 2
-        if (gene[16] == 3 || gene[17] == 3) {
-            earLengthCounter += (gene[16] == gene[17]) ? 2 : 1;
-        } else if (gene[16] == 2 || gene[17] == 2) {
+        if (genes[16] == 3 || genes[17] == 3) {
+            earLengthCounter += (genes[16] == genes[17]) ? 2 : 1;
+        } else if (genes[16] == 2 || genes[17] == 2) {
             earLengthCounter += 1;
         }
         switch (earLengthCounter) {
@@ -80,17 +80,17 @@ public class GoatPhenotype implements Phenotype {
 
         // Ear Flop
         float earFlop = 0.25F;
-        earFlop += 0.75F * ((gene[18] + gene[19] + gene[20] + gene[21] - 4)/6F);
-        earFlop -= 0.25F * ((gene[22] + gene[23] - 2)/4F);
+        earFlop += 0.75F * ((genes[18] + genes[19] + genes[20] + genes[21] - 4)/6F);
+        earFlop -= 0.25F * ((genes[22] + genes[23] - 2)/4F);
         earFlop = clamp(earFlop, 0F, 1F); // 0 to 1
 
-        float earForward = clamp((gene[18] + gene[19] - 2) / 4F, 0F, 1F);  // 0 to 1
+        float earForward = clamp((genes[18] + genes[19] - 2) / 4F, 0F, 1F);  // 0 to 1
         float earLowering = 0;
-        if (gene[26] == 2 || gene[27] == 2) {
+        if (genes[26] == 2 || genes[27] == 2) {
             // Ear Height 1
             earLowering = 0.5F;
         }
-        if (gene[28] == 2 || gene[29] == 2) {
+        if (genes[28] == 2 || genes[29] == 2) {
             // Ear Height 2
             earLowering += 0.5F;
         }
@@ -165,5 +165,9 @@ public class GoatPhenotype implements Phenotype {
         earXRot *= Mth.HALF_PI;
         earYRot *= Mth.HALF_PI;
         earZRot *= Mth.HALF_PI;
+    }
+
+    public GoatPhenotype(int[] genes, boolean isFemale) {
+        calculateEars(genes);
     }
 }
