@@ -54,6 +54,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
     private final WrappedModelPart head;
     private final WrappedModelPart muzzle;
+    private final WrappedModelPart bMuzzle;
     private final WrappedModelPart upperMouth;
     private final WrappedModelPart mouth;
     private final WrappedModelPart eyeL;
@@ -99,6 +100,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bNeck = new WrappedModelPart("bNeck", basePart);
 
         bHead = new WrappedModelPart("bHead", basePart);
+        bMuzzle = new WrappedModelPart("bMuzzle", basePart);
         bEarL = new WrappedModelPart("bEarL", basePart);
         bEarR = new WrappedModelPart("bEarR", basePart);
 
@@ -152,7 +154,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         bNeck.addChild(bHead);
         bHead.addChild(head);
-        bHead.addChild(muzzle);
+        bHead.addChild(bMuzzle);
+        bMuzzle.addChild(muzzle);
         bHead.addChild(upperMouth);
         bHead.addChild(mouth);
         head.addChild(eyeL);
@@ -202,6 +205,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                 PartPose.offsetAndRotation(0F, -16F, -6F, baseNeckAngle, 0F, 0F));
         baseDef.addOrReplaceChild("bHead", CubeListBuilder.create(),
                 PartPose.offsetAndRotation(0F, -12F, 3F, -baseNeckAngle, 0F, 0F));
+        baseDef.addOrReplaceChild("bMuzzle", CubeListBuilder.create(),
+                PartPose.offsetAndRotation(0F, 1F, -6F, Mth.HALF_PI * 0.125F, 0F, 0F));
         baseDef.addOrReplaceChild("bLegFL", CubeListBuilder.create(),
                 PartPose.offset(1.49F, -11F, -5.99F));
         baseDef.addOrReplaceChild("bLegFR", CubeListBuilder.create(),
@@ -243,19 +248,19 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                 PartPose.offset(0F, 5F, 0F));
 
         baseDef.addOrReplaceChild("muzzle", CubeListBuilder.create()
-                        .texOffs(24, 44)
-                        .addBox(-2.5F, -0.8F, -6F, 5, 4, 7, new CubeDeformation(-0.99F, -0.8F, -1)),
-                PartPose.offsetAndRotation(0F, 1F, -5.75F, Mth.HALF_PI * 0.125F, 0F, 0F));
+                        .texOffs(23, 43)
+                        .addBox(-2.5F, -0.8F, -6.4F, 5, 4, 8, new CubeDeformation(-0.99F, -0.8F, -1.6F)),
+                PartPose.offset(0F, 0F, 0F)); // Increments of 0.6 on the Z axis correspond to 1 pixel
 
         baseDef.addOrReplaceChild("upperMouth", CubeListBuilder.create()
                         .texOffs(28, 56)
-                        .addBox(-1.5F, -2F, -10F, 3, 1, 4),
-                PartPose.offset(0F, 5F, 0F));
+                        .addBox(-1.5F, -2F, -4F, 3, 1, 4),
+                PartPose.offset(0F, 5F, -6F));
 
         baseDef.addOrReplaceChild("mouth", CubeListBuilder.create()
                         .texOffs(28, 62)
-                        .addBox(-1.5F, -1F, -10F, 3, 1, 4),
-                PartPose.offset(0F, 5F, 0F));
+                        .addBox(-1.5F, -1F, -4F, 3, 1, 4),
+                PartPose.offset(0F, 5F, -6F));
 
         baseDef.addOrReplaceChild("eyeL", CubeListBuilder.create()
                         .texOffs(61, 68)
