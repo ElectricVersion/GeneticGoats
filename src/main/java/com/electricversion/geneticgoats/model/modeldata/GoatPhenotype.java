@@ -78,10 +78,13 @@ public class GoatPhenotype implements Phenotype {
             default -> earLength = EarLength.SMALL;
         }
 
-//        float earFlop = ((Math.max(gene[14], gene[15]) * 2) - 2) / 10F; // 0 to 1
+        // Ear Flop
+        float earFlop = 0.25F;
+        earFlop += 0.75F * ((gene[18] + gene[19] + gene[20] + gene[21] - 4)/6F);
+        earFlop -= 0.25F * ((gene[22] + gene[23] - 2)/4F);
+
 //        float earForward = ((Math.max(gene[18], gene[19]) * 2) - 2) / 4F;  // 0 to 1
 //        float earLowering = Math.max(gene[20], gene[21]) - 1; // 0 to 1
-        float earFlop = 0;
         float earForward = 0;
         float earLowering = 0;
         earXRot = 0F;
