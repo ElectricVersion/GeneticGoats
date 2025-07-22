@@ -173,11 +173,18 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[28] = randomizeGene(3);
         autosomalGenes[29] = randomizeGene(3);
 
-        /* Placeholder Muzzle Length
+        /* Placeholder Muzzle Angle
          * 1 - 6
          */
         autosomalGenes[30] = randomizeGene(6);
         autosomalGenes[31] = randomizeGene(6);
+
+        /* Placeholder Muzzle Shortness
+         * 1 - 3
+         */
+        autosomalGenes[32] = randomizeGene(3);
+        autosomalGenes[33] = randomizeGene(3);
+
         return new Genes(sexlinkedGenes, autosomalGenes);
     }
 }
