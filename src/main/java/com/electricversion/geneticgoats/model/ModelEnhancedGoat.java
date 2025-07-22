@@ -9,6 +9,7 @@ import com.mojang.math.Vector3f;
 import mokiyoki.enhancedanimals.model.EnhancedAnimalModel;
 import mokiyoki.enhancedanimals.model.modeldata.AnimalModelData;
 import mokiyoki.enhancedanimals.model.modeldata.Phenotype;
+import mokiyoki.enhancedanimals.model.util.ModelHelper;
 import mokiyoki.enhancedanimals.model.util.WrappedModelPart;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -254,8 +255,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         baseDef.addOrReplaceChild("upperMouth", CubeListBuilder.create()
                         .texOffs(28, 56)
-                        .addBox(-1.5F, -2F, -4F, 3, 1, 4),
-                PartPose.offset(0F, 5F, -6F));
+                        .addBox(-1.5F, -1F, -4F, 3, 1, 4),
+                PartPose.offset(0F, 4F, -6F));
 
         baseDef.addOrReplaceChild("mouth", CubeListBuilder.create()
                         .texOffs(28, 62)
@@ -486,6 +487,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         earR12.hide();
 
         setupEars();
+        setupMuzzle();
     }
 
     private void setupEars() {
@@ -531,14 +533,28 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bEarR.setZRot(-phenotype.getEarZRot());
     }
 
-    @Override
+    private void setupMuzzle() {
+        GoatPhenotype phenotype = goatModelData.getPhenotype();
+        muzzle.setZ(phenotype.getMuzzlePivotZ());
+        bMuzzle.setY(phenotype.getMuzzleY());
+        bMuzzle.setXRot(phenotype.getMuzzleXRot());
+//        upperMouth.setZ(phenotype.getUpperMouthZ());
+//        mouth.setZ(phenotype.getMouthZ());
+    }
+
+        @Override
     public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer, int packedLightIn, int packedOverlayIn, float r, float g, float b, float a) {
         if (goatModelData != null && goatModelData.getPhenotype() != null) {
             resetCubes();
 
+            GoatPhenotype phenotype = goatModelData.getPhenotype();
+
             super.renderToBuffer(goatModelData, poseStack, vertexConsumer, packedLightIn, packedOverlayIn, r, g, b, a);
             Map<String, List<Float>> mapOfScale = new HashMap<>(); //Stores transformations for blocks and bones
             poseStack.pushPose();
+
+            mapOfScale.put("upperMouth", ModelHelper.createScalings(1F, phenotype.getUpperMouthHeight(), phenotype.getUpperMouthZScale(), 0F, 0F, 0F));
+            mapOfScale.put("mouth", ModelHelper.createScalings(1F, 1F, phenotype.getUpperMouthZScale(), 0F, 0F, 0F));
 
             float goatScale = ((2F * goatModelData.size * goatModelData.growthAmount) + goatModelData.size) / 3F;
             poseStack.scale(goatScale, goatScale, goatScale);

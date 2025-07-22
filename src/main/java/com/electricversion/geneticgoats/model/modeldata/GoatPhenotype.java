@@ -39,6 +39,30 @@ public class GoatPhenotype implements Phenotype {
         return smallEarPivotZ;
     }
 
+    public float getMuzzlePivotZ() {
+        return muzzlePivotZ;
+    }
+
+    public float getMouthZ() {
+        return mouthZ;
+    }
+
+    public float getMuzzleXRot() {
+        return muzzleXRot;
+    }
+
+    public float getMuzzleY() {
+        return muzzleY;
+    }
+
+    public float getUpperMouthZScale() {
+        return upperMouthZScale;
+    }
+
+    public float getUpperMouthHeight() {
+        return upperMouthHeight;
+    }
+
     public enum EarLength {
         SMALL,
         NORMAL,
@@ -47,6 +71,7 @@ public class GoatPhenotype implements Phenotype {
         LONG3,
     }
 
+    // Ear Settings
     private EarLength earLength;
     private float earXRot;
     private float earYRot;
@@ -55,6 +80,14 @@ public class GoatPhenotype implements Phenotype {
     private float earY;
     private float earZ;
     private float smallEarPivotZ;
+
+    //Muzzle Settings
+    private float muzzlePivotZ;
+    private float mouthZ;
+    private float upperMouthZScale;
+    private float muzzleXRot;
+    private float muzzleY;
+    private float upperMouthHeight;
 
     private void calculateEars(int[] genes) {
         int earLengthCounter = 0;
@@ -167,7 +200,32 @@ public class GoatPhenotype implements Phenotype {
         earZRot *= Mth.HALF_PI;
     }
 
+    private void calculateMuzzle(int[] genes) {
+        float trueMuzzleLength = 4.8F;
+        float trueMuzzleHeight = 2.4F;
+
+//        float muzzleShortness = 1F;
+        muzzleXRot = Mth.HALF_PI * 0.125F;
+        muzzlePivotZ = 0;
+        muzzleY = 1F;
+        float romanNose = (Math.max(genes[30], genes[31]) - 1) / 5F;
+        upperMouthHeight = 1F + (romanNose / 2F);
+        muzzleY -= romanNose;
+        muzzleXRot += Mth.HALF_PI * 0.125F * romanNose;
+
+        float mouthLengthA = trueMuzzleLength * Mth.sin(Mth.HALF_PI - muzzleXRot);
+        float mouthLengthB = trueMuzzleHeight * Mth.cos(Mth.HALF_PI - muzzleXRot);
+        upperMouthZScale = (mouthLengthA - (mouthLengthB + 0.2F))/4F; // the 0.2 block difference just looks better...
+        // ...total is divided by 4F because the mouth is originally 4 pixels
+
+        mouthZ = upperMouthZScale;
+
+//            muzzlePivotZ = 0.6F * muzzleShortness;
+//            upperMouthZ += (0.5F * muzzleShortness);
+    }
+
     public GoatPhenotype(int[] genes, boolean isFemale) {
         calculateEars(genes);
+        calculateMuzzle(genes);
     }
 }
