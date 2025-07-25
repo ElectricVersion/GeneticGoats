@@ -48,7 +48,7 @@ import javax.annotation.Nullable;
 
 public class EnhancedGoat extends EnhancedAnimalAbstract {
 
-    public static final int AUTOSOMAL_GENES_LENGTH = 34;
+    public static final int AUTOSOMAL_GENES_LENGTH = 36;
     public static final int SEXLINKED_GENES_LENGTH = 2;
 
     @OnlyIn(Dist.CLIENT)

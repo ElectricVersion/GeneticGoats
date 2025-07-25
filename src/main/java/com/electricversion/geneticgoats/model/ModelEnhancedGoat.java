@@ -551,16 +551,14 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bMuzzle.setY(phenotype.getMuzzleY());
         bMuzzle.setXRot(phenotype.getMuzzleXRot());
 
+        mouth.setXRot(phenotype.getMouthXRot());
+
         if (phenotype.isShortMuzzled()) {
             muzzleShort.show();
             muzzleLong.hide();
-            mouth.setZ(phenotype.getUpperMouthScaleZ());
-            upperMouth.setZ(-6F + phenotype.getUpperMouthScaleZ());
         } else {
             muzzleShort.hide();
             muzzleLong.show();
-            upperMouth.setZ(-6F);
-            mouth.setZ(0F);
         }
 
     }
@@ -576,7 +574,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             Map<String, List<Float>> mapOfScale = new HashMap<>(); //Stores transformations for blocks and bones
             poseStack.pushPose();
 
-            mapOfScale.put("upperMouth", ModelHelper.createScalings(1F, 1F, phenotype.getUpperMouthScaleZ(), 0F, 0F, 0F));
+            mapOfScale.put("upperMouth", ModelHelper.createScalings(0.999F, 1F, phenotype.getUpperMouthScaleZ(), 0F, 0F, 0F));
             mapOfScale.put("mouth", ModelHelper.createScalings(1F, 1F, phenotype.getUpperMouthScaleZ(), 0F, 0F, 0F));
 
             float goatScale = ((2F * goatModelData.size * goatModelData.growthAmount) + goatModelData.size) / 3F;
