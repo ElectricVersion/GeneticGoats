@@ -64,6 +64,7 @@ public class GoatPhenotype implements Phenotype {
     }
 
     public enum EarLength {
+        GOPHER,
         SMALL,
         NORMAL,
         LONG1,
@@ -205,9 +206,9 @@ public class GoatPhenotype implements Phenotype {
         float originalMuzzleHeight = 2.4F;
         float originalMouthLength = 4F;
 
-        float romanNose = (Math.max(genes[30], genes[31]) - 1) / 5F;
+        float romanNose = (Math.max(genes[32], genes[33]) - 1) / 5F;
         romanNose -= 0.35F * ((Math.max(genes[34], genes[35]) - 1) / 2F);
-        float muzzleShortness = (Math.max(genes[32], genes[33]) - 1) / 2F;
+        float muzzleShortness = (Math.max(genes[36], genes[37]) - 1) / 2F;
 
         mouthXRot = romanNose < 0F ? (romanNose * Mth.HALF_PI * 0.175F) : 0F;
 
