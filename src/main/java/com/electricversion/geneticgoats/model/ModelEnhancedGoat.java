@@ -63,6 +63,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     private final WrappedModelPart eyeL;
     private final WrappedModelPart eyeR;
 
+    private final WrappedModelPart earLG;
+    private final WrappedModelPart earRG;
     private final WrappedModelPart earL4;
     private final WrappedModelPart earR4;
     private final WrappedModelPart earL5;
@@ -127,6 +129,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         mouth = new WrappedModelPart("mouth", basePart);
         eyeL = new WrappedModelPart("eyeL", basePart);
         eyeR = new WrappedModelPart("eyeR", basePart);
+        earLG = new WrappedModelPart("earLG", basePart);
+        earRG = new WrappedModelPart("earRG", basePart);
         earL4 = new WrappedModelPart("earL4", basePart);
         earR4 = new WrappedModelPart("earR4", basePart);
         earL5 = new WrappedModelPart("earL5", basePart);
@@ -169,6 +173,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         head.addChild(eyeR);
         bHead.addChild(bEarL);
         bHead.addChild(bEarR);
+        bEarL.addChild(earLG);
+        bEarR.addChild(earRG);
         bEarL.addChild(earL4);
         bEarR.addChild(earR4);
         bEarL.addChild(earL5);
@@ -285,6 +291,16 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                         .texOffs(44, 68)
                         .addBox(-4.505F, -5.5F, -7.505F, 4, 4, 4, new CubeDeformation(-1.5F)),
                 PartPose.ZERO);
+
+        baseDef.addOrReplaceChild("earLG", CubeListBuilder.create()
+                        .texOffs(87, 64)
+                        .addBox(-0.5F, -2F, -1F, 3, 2, 1, new CubeDeformation(-0.5F, 0F, 0F)),
+                PartPose.rotation(0F, 0F, Mth.HALF_PI));
+
+        baseDef.addOrReplaceChild("earRG", CubeListBuilder.create()
+                        .texOffs(78, 64)
+                        .addBox(-2.5F, -2F, -1F, 3, 2, 1, new CubeDeformation(-0.5F, 0F, 0F)),
+                PartPose.rotation(0F, 0F, -Mth.HALF_PI));
 
         baseDef.addOrReplaceChild("earL4", CubeListBuilder.create()
                         .texOffs(87, 64)
@@ -488,6 +504,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
     private void resetCubes() {
         // Hide all swappable blocks
+        earLG.hide();
+        earRG.hide();
         earL4.hide();
         earR4.hide();
         earL5.hide();
@@ -507,6 +525,10 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         GoatPhenotype phenotype = goatModelData.getPhenotype();
         // Enable the necessary blocks
         switch (phenotype.getEarLength()) {
+            case GOPHER -> {
+                earLG.show();
+                earRG.show();
+            }
             case SMALL -> {
                 earL4.show();
                 earR4.show();
