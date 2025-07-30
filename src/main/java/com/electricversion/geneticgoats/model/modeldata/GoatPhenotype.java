@@ -65,6 +65,7 @@ public class GoatPhenotype implements Phenotype {
 
     public enum EarLength {
         GOPHER,
+        ELF,
         SMALL,
         NORMAL,
         LONG1,
@@ -92,8 +93,8 @@ public class GoatPhenotype implements Phenotype {
 
     private void calculateEars(int[] genes) {
         if (genes[30] == 2 || genes[31] == 2) {
-            // Gopher Ears
-            earLength = EarLength.GOPHER;
+            // Gopher Ears when homozygous, Elf Ears when heterozygous
+            earLength = genes[30] == genes[31] ? EarLength.GOPHER : EarLength.ELF;
         } else {
             int earLengthCounter = 0;
             // Ear Size 1
@@ -140,67 +141,74 @@ public class GoatPhenotype implements Phenotype {
         earZ = -1.05F;
         smallEarPivotZ = 0F;
 
-        if (earLength == EarLength.GOPHER) {
-            earZRot = 0F;
-            earX = 2F;
-        } else {
-            switch (earLength) {
-                case SMALL, NORMAL -> {
-                    earZRot = (earZRot * 0.8F);
-                    earY += earLowering / 2F;
-                    if (earZRot > 0.5F) {
-                        // High Flop
-                        earXRot = 1F;
-                        earZ -= 1F;
-                        smallEarPivotZ = 1F - earForward;
-                        if (earForward > 0F) {
-                            earXRot += 0.75F * earForward;
-                            earYRot += 0.35F * earForward * earFlop;
-                            earZRot += 0.1F * earForward;
-                        }
-                    } else if (earZRot > -0.25F) {
-                        // Medium Flop
-                        earXRot = 0.5F;
-                        earZ -= 1F;
-                        if (earForward > 0F) {
-                            earXRot += (0.2F * earFlop) + earForward * earFlop;
-                            earYRot += 0.25F * earForward * earFlop;
-                            earZRot += 0.1F;
-                        }
-                    }
-                }
-                case LONG1 -> {
-                    earZRot = (earZRot * 0.2F) + 0.6F;
-                    earY += earLowering / 2F;
-                    earZ -= 2F;
+        switch (earLength) {
+            case GOPHER -> {
+                earZRot = -0.1F;
+                earX = 3F;
+                earY = 0F;
+            }
+            case ELF -> {
+                earZRot = -0.5F;
+                earX = 3F;
+                earY = 1F;
+            }
+            case SMALL, NORMAL -> {
+                earZRot = (earZRot * 0.8F);
+                earY += earLowering / 2F;
+                if (earZRot > 0.5F) {
+                    // High Flop
+                    earXRot = 1F;
+                    earZ -= 1F;
+                    smallEarPivotZ = 1F - earForward;
                     if (earForward > 0F) {
-                        earXRot += 0.75F * earForward * earFlop;
+                        earXRot += 0.75F * earForward;
+                        earYRot += 0.35F * earForward * earFlop;
+                        earZRot += 0.1F * earForward;
+                    }
+                } else if (earZRot > -0.25F) {
+                    // Medium Flop
+                    earXRot = 0.5F;
+                    earZ -= 1F;
+                    if (earForward > 0F) {
+                        earXRot += (0.2F * earFlop) + earForward * earFlop;
                         earYRot += 0.25F * earForward * earFlop;
-                        earZRot += 0.1F * earForward * earFlop;
-                    }
-                }
-                case LONG2 -> {
-                    earZRot = (earZRot * 0.1F) + 0.7F;
-                    earY += earLowering;
-                    earZ -= 2F;
-                    if (earForward > 0F) {
-                        earXRot += 0.5F * earForward * earFlop;
-                        earYRot += 0.125F * earForward * earFlop;
-                        earZRot += 0.05F * earForward * earFlop;
-                    }
-                }
-                case LONG3 -> {
-                    earZRot = (earZRot * 0.1F) + 0.8F;
-                    earY += earLowering;
-                    earZ -= 2F;
-                    if (earForward > 0F) {
-                        earXRot += 0.25F * earForward * earFlop;
-                        earYRot += 0.05F * earForward * earFlop;
-                        earZRot += 0.02F * earForward * earFlop;
+                        earZRot += 0.1F;
                     }
                 }
             }
+            case LONG1 -> {
+                earZRot = (earZRot * 0.2F) + 0.6F;
+                earY += earLowering / 2F;
+                earZ -= 2F;
+                if (earForward > 0F) {
+                    earXRot += 0.75F * earForward * earFlop;
+                    earYRot += 0.25F * earForward * earFlop;
+                    earZRot += 0.1F * earForward * earFlop;
+                }
+            }
+            case LONG2 -> {
+                earZRot = (earZRot * 0.1F) + 0.7F;
+                earY += earLowering;
+                earZ -= 2F;
+                if (earForward > 0F) {
+                    earXRot += 0.5F * earForward * earFlop;
+                    earYRot += 0.125F * earForward * earFlop;
+                    earZRot += 0.05F * earForward * earFlop;
+                }
+            }
+            case LONG3 -> {
+                earZRot = (earZRot * 0.1F) + 0.8F;
+                earY += earLowering;
+                earZ -= 2F;
+                if (earForward > 0F) {
+                    earXRot += 0.25F * earForward * earFlop;
+                    earYRot += 0.05F * earForward * earFlop;
+                    earZRot += 0.02F * earForward * earFlop;
+                }
+            }
+        }
 
+        if (earLength != EarLength.GOPHER && earLength != EarLength.ELF) {
             earX = earZRot < -0.5F ? 1F : earZRot < 0F ? 2F : 3F;
         }
 
