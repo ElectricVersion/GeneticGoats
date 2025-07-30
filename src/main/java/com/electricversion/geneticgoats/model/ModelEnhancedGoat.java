@@ -437,12 +437,26 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     private void setupInitialAnimationValues(AnimalModelData data, float netHeadYaw, float headPitch) {
         Map<String, Vector3f> map = data.offsets;
         if (map.isEmpty()) {
+            GoatPhenotype phenotype = goatModelData.getPhenotype();
             bLegFL.setRotation(0F, 0F, 0F);
             bLegFR.setRotation(0F, 0F, 0F);
             bLegBL.setRotation(0F, 0F, 0F);
             bLegBR.setRotation(0F, 0F, 0F);
             bNeck.setRotation(baseNeckAngle, 0F, 0F);
             bHead.setRotation(-baseNeckAngle, 0F, 0F);
+            // Set genetic ear rotation
+            bEarL.setXRot(phenotype.getEarXRot());
+            bEarR.setXRot(phenotype.getEarXRot());
+
+            bEarL.setYRot(phenotype.getEarYRot());
+            bEarR.setYRot(-phenotype.getEarYRot());
+
+            bEarL.setZRot(phenotype.getEarZRot());
+            bEarR.setZRot(-phenotype.getEarZRot());
+            // Set genetic muzzle & mouth rotation
+            bMuzzle.setXRot(phenotype.getMuzzleXRot());
+            mouth.setXRot(phenotype.getMouthXRot());
+
         } else {
             setRotationFromVector(bLegFL, map.get("bLegFL"));
             setRotationFromVector(bLegFR, map.get("bLegFR"));
@@ -450,10 +464,14 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             setRotationFromVector(bLegBR, map.get("bLegBR"));
             setRotationFromVector(bNeck, map.get("bNeck"));
             setRotationFromVector(bHead, map.get("bHead"));
+            setRotationFromVector(bEarL, map.get("bEarLRot"));
+            setRotationFromVector(bEarR, map.get("bEarRRot"));
+            setRotationFromVector(bMuzzle, map.get("bMuzzleRot"));
         }
     }
 
     protected void saveAnimationValues(AnimalModelData data) {
+        // TODO: Look into the prospect of using an EnumMap instead. Might be faster
         Map<String, Vector3f> map = data.offsets;
         map.put("bLegFL", getRotationVector(bLegFL));
         map.put("bLegFR", getRotationVector(bLegFR));
@@ -461,6 +479,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         map.put("bLegBR", getRotationVector(bLegBR));
         map.put("bNeck", getRotationVector(bNeck));
         map.put("bHead", getRotationVector(bHead));
+        map.put("bEarLRot", getRotationVector(bEarL));
+        map.put("bEarRRot", getRotationVector(bEarR));
+        map.put("bMuzzleRot", getRotationVector(bMuzzle));
     }
 
     private void lookAnim(float netHeadYaw, float headPitch) {
@@ -536,6 +557,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         earL12.hide();
         earR12.hide();
 
+        //Enable the appropriate blocks
         setupEars();
         setupMuzzle();
     }
@@ -577,27 +599,13 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                 earR12.show();
             }
         }
-        // Set Ear Positioning and Rotation
         bEarL.setPos(phenotype.getEarX(), phenotype.getEarY(), phenotype.getEarZ());
         bEarR.setPos(-phenotype.getEarX(), phenotype.getEarY(), phenotype.getEarZ());
-
-        bEarL.setXRot(phenotype.getEarXRot());
-        bEarR.setXRot(phenotype.getEarXRot());
-
-        bEarL.setYRot(phenotype.getEarYRot());
-        bEarR.setYRot(-phenotype.getEarYRot());
-
-        bEarL.setZRot(phenotype.getEarZRot());
-        bEarR.setZRot(-phenotype.getEarZRot());
     }
 
     private void setupMuzzle() {
         GoatPhenotype phenotype = goatModelData.getPhenotype();
         bMuzzle.setY(phenotype.getMuzzleY());
-        bMuzzle.setXRot(phenotype.getMuzzleXRot());
-
-        mouth.setXRot(phenotype.getMouthXRot());
-
         if (phenotype.isShortMuzzled()) {
             muzzleShort.show();
             muzzleLong.hide();
