@@ -1,7 +1,10 @@
 package com.electricversion.geneticgoats.model.modeldata;
 
 import mokiyoki.enhancedanimals.model.modeldata.Phenotype;
+import mokiyoki.enhancedanimals.model.util.ModelHelper;
 import net.minecraft.util.Mth;
+
+import java.util.List;
 
 import static net.minecraft.util.Mth.clamp;
 
@@ -51,16 +54,32 @@ public class GoatPhenotype implements Phenotype {
         return upperMouthScaleZ;
     }
 
-    public float getUpperMouthHeight() {
-        return upperMouthHeight;
-    }
-
     public boolean isShortMuzzled() {
         return shortMuzzled;
     }
 
     public float getMouthXRot() {
         return mouthXRot;
+    }
+
+    public List<Float> getBodyScalings() {
+        return bodyScalings;
+    }
+
+    public float getbNeckY() {
+        return bNeckY;
+    }
+
+    public List<Float> getGoatScalings() {
+        return goatScalings;
+    }
+
+    public List<Float> getNeckScalings() {
+        return neckScalings;
+    }
+
+    public List<Float> getLegScalings() {
+        return legScalings;
     }
 
     public enum EarLength {
@@ -87,9 +106,15 @@ public class GoatPhenotype implements Phenotype {
     private float upperMouthScaleZ;
     private float muzzleXRot;
     private float muzzleY;
-    private float upperMouthHeight;
     private boolean shortMuzzled;
     private float mouthXRot;
+
+    //Body Settings
+    private List<Float> bodyScalings;
+    private List<Float> legScalings;
+    private List<Float> goatScalings;
+    private List<Float> neckScalings;
+    private float bNeckY;
 
     private void calculateEars(int[] genes) {
         if (genes[30] == 2 || genes[31] == 2) {
@@ -123,7 +148,7 @@ public class GoatPhenotype implements Phenotype {
         earFlop -= 0.25F * ((genes[22] + genes[23] - 2)/4F);
         earFlop = clamp(earFlop, 0F, 1F); // 0 to 1
 
-        float earForward = clamp((genes[18] + genes[19] - 2) / 4F, 0F, 1F);  // 0 to 1
+        float earForward = clamp((genes[24] + genes[25] - 2) / 4F, 0F, 1F);  // 0 to 1
         float earLowering = 0;
         if (genes[26] == 2 || genes[27] == 2) {
             // Ear Height 1
@@ -235,7 +260,6 @@ public class GoatPhenotype implements Phenotype {
 
         muzzleXRot = Mth.HALF_PI * 0.125F;
         muzzleY = 1F;
-        upperMouthHeight = 1F + (romanNose / 2F);
         muzzleY -= romanNose;
         muzzleXRot += Mth.HALF_PI * 0.25F * romanNose;
 
@@ -244,8 +268,22 @@ public class GoatPhenotype implements Phenotype {
         upperMouthScaleZ = (mouthLengthA - (mouthLengthB + 0.2F))/originalMouthLength; // the 0.2 block difference just looks better
     }
 
+    private void calculateBody(int[] genes) {
+        float fatness = 1F;
+
+        float bodyHeight = 1F + (fatness * 0.125F);
+        bNeckY = -16 + fatness;
+        float goatWidth = 1F + (fatness * 0.25F);
+        float neckThickness = 1F + (0.1F * fatness);
+        legScalings = ModelHelper.createScalings(1F, 1F, 1F, 0F, 0F, 0F);
+        bodyScalings = ModelHelper.createScalings(1F, bodyHeight, 1F, 0F, 0F, 0F);
+        neckScalings = ModelHelper.createScalings(neckThickness, 1F, neckThickness, 0F, 0F, 0F);
+        goatScalings = ModelHelper.createScalings(goatWidth, 1F, 1F, 0F, 0F, 0F);
+    }
+
     public GoatPhenotype(int[] genes, boolean isFemale) {
         calculateEars(genes);
         calculateMuzzle(genes);
+        calculateBody(genes);
     }
 }

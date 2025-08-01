@@ -259,8 +259,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         baseDef.addOrReplaceChild("neck", CubeListBuilder.create()
                            .texOffs(0, 40)
-                     .addBox(-2.5F, -12F, -3F, 5, 12, 6),
-                PartPose.ZERO);
+                     .addBox(-2.5F, -12F, -6F, 5, 12, 6),
+                PartPose.offset(0F, 0F, 3F));
 
         // Head
         baseDef.addOrReplaceChild("head", CubeListBuilder.create()
@@ -464,9 +464,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             setRotationFromVector(bLegBR, map.get("bLegBR"));
             setRotationFromVector(bNeck, map.get("bNeck"));
             setRotationFromVector(bHead, map.get("bHead"));
-            setRotationFromVector(bEarL, map.get("bEarLRot"));
-            setRotationFromVector(bEarR, map.get("bEarRRot"));
-            setRotationFromVector(bMuzzle, map.get("bMuzzleRot"));
+            setRotationFromVector(bEarL, map.get("bEarL"));
+            setRotationFromVector(bEarR, map.get("bEarR"));
+            setRotationFromVector(bMuzzle, map.get("bMuzzle"));
         }
     }
 
@@ -479,9 +479,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         map.put("bLegBR", getRotationVector(bLegBR));
         map.put("bNeck", getRotationVector(bNeck));
         map.put("bHead", getRotationVector(bHead));
-        map.put("bEarLRot", getRotationVector(bEarL));
-        map.put("bEarRRot", getRotationVector(bEarR));
-        map.put("bMuzzleRot", getRotationVector(bMuzzle));
+        map.put("bEarL", getRotationVector(bEarL));
+        map.put("bEarR", getRotationVector(bEarR));
+        map.put("bMuzzle", getRotationVector(bMuzzle));
     }
 
     private void lookAnim(float netHeadYaw, float headPitch) {
@@ -558,12 +558,13 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         earR12.hide();
 
         //Enable the appropriate blocks
-        setupEars();
-        setupMuzzle();
+        GoatPhenotype phenotype = goatModelData.getPhenotype();
+        setupEars(phenotype);
+        setupMuzzle(phenotype);
+        setupBody(phenotype);
     }
 
-    private void setupEars() {
-        GoatPhenotype phenotype = goatModelData.getPhenotype();
+    private void setupEars(GoatPhenotype phenotype) {
         // Enable the necessary blocks
         switch (phenotype.getEarLength()) {
             case GOPHER -> {
@@ -603,8 +604,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bEarR.setPos(-phenotype.getEarX(), phenotype.getEarY(), phenotype.getEarZ());
     }
 
-    private void setupMuzzle() {
-        GoatPhenotype phenotype = goatModelData.getPhenotype();
+    private void setupMuzzle(GoatPhenotype phenotype) {
         bMuzzle.setY(phenotype.getMuzzleY());
         if (phenotype.isShortMuzzled()) {
             muzzleShort.show();
@@ -613,10 +613,13 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             muzzleShort.hide();
             muzzleLong.show();
         }
-
     }
 
-        @Override
+    private void setupBody(GoatPhenotype phenotype) {
+        bNeck.setY(phenotype.getbNeckY());
+    }
+
+    @Override
     public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer, int packedLightIn, int packedOverlayIn, float r, float g, float b, float a) {
         if (goatModelData != null && goatModelData.getPhenotype() != null) {
             resetCubes();
@@ -627,6 +630,10 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             Map<String, List<Float>> mapOfScale = new HashMap<>(); //Stores transformations for blocks and bones
             poseStack.pushPose();
 
+            mapOfScale.put("base", phenotype.getGoatScalings());
+            mapOfScale.put("bodyF", phenotype.getBodyScalings());
+            mapOfScale.put("bodyB", phenotype.getBodyScalings());
+//            mapOfScale.put("neck", phenotype.getNeckScalings());
             mapOfScale.put("upperMouth", ModelHelper.createScalings(0.999F, 1F, phenotype.getUpperMouthScaleZ(), 0F, 0F, 0F));
             mapOfScale.put("mouth", ModelHelper.createScalings(1F, 1F, phenotype.getUpperMouthScaleZ(), 0F, 0F, 0F));
 
