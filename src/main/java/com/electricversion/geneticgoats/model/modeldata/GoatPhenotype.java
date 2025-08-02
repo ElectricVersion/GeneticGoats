@@ -168,17 +168,17 @@ public class GoatPhenotype implements Phenotype {
         earYRot = 0F;
         earZRot = (earFlop * 2F) - 1;
         earY = 0F;
-        earZ = -1.05F;
+        earZ = -2.05F;
         smallEarPivotZ = 0F;
 
         switch (earLength) {
             case GOPHER -> {
-                earZRot = -0.1F;
+                earZRot = -1.1F;
                 earX = 3F;
                 earY = 0F;
             }
             case ELF -> {
-                earZRot = -0.5F;
+                earZRot = -1.5F;
                 earX = 3F;
                 earY = 1F;
             }
