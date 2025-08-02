@@ -26,6 +26,7 @@ import java.util.Map;
 @OnlyIn(Dist.CLIENT)
 public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalModel<T> {
     private static final float baseNeckAngle = Mth.HALF_PI*0.30F;
+    private static final float baseHeadAngle = -Mth.HALF_PI*0.225F;
 
     private GoatModelData goatModelData;
 
@@ -222,7 +223,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("bNeck", CubeListBuilder.create(),
                 PartPose.offsetAndRotation(0F, -16F, -6F, baseNeckAngle, 0F, 0F));
         baseDef.addOrReplaceChild("bHead", CubeListBuilder.create(),
-                PartPose.offsetAndRotation(0F, -11F, 3F, -baseNeckAngle, 0F, 0F));
+                PartPose.offsetAndRotation(0F, -11F, 3F, baseHeadAngle, 0F, 0F));
         baseDef.addOrReplaceChild("bMuzzle", CubeListBuilder.create(),
                 PartPose.offsetAndRotation(0F, 1F, -6F, Mth.HALF_PI * 0.125F, 0F, 0F));
         baseDef.addOrReplaceChild("bMouth", CubeListBuilder.create(),
@@ -442,7 +443,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             bLegBL.setRotation(0F, 0F, 0F);
             bLegBR.setRotation(0F, 0F, 0F);
             bNeck.setRotation(baseNeckAngle, 0F, 0F);
-            bHead.setRotation(-baseNeckAngle, 0F, 0F);
+            bHead.setRotation(baseHeadAngle, 0F, 0F);
             // Set genetic ear rotation
             bEarL.setXRot(phenotype.getEarXRot());
             bEarR.setXRot(phenotype.getEarXRot());
@@ -484,11 +485,10 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     }
 
     private void lookAnim(float netHeadYaw, float headPitch) {
-        float xRotDefault = baseNeckAngle;
         float xRot = (limit(headPitch, 45) * 0.0025F) * Mth.HALF_PI;
         float yRot = limit(netHeadYaw, 90) * Mth.HALF_PI * 0.005F;
-        bHead.setXRot(lerpTo(bHead.getXRot(), xRot * 0.5F - xRotDefault));
-        bNeck.setXRot(lerpTo(bNeck.getXRot(), xRot + xRotDefault));
+        bHead.setXRot(lerpTo(bHead.getXRot(), xRot * 0.5F + baseHeadAngle));
+        bNeck.setXRot(lerpTo(bNeck.getXRot(), xRot + baseNeckAngle));
         bHead.setYRot(lerpTo(bHead.getYRot(), yRot * 0.125F));
         bNeck.setYRot(lerpTo(bNeck.getYRot(), yRot));
     }
@@ -505,7 +505,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
     private void grazeAnim(float ticksOfGrazing) {
         bNeck.setXRot(lerpTo(bNeck.getXRot(), Mth.HALF_PI*0.9F + baseNeckAngle));
-        bHead.setXRot(lerpTo(bHead.getXRot(), -Mth.HALF_PI*0.075F - baseNeckAngle));
+        bHead.setXRot(lerpTo(bHead.getXRot(), -Mth.HALF_PI*0.075F - baseHeadAngle));
     }
 
     @Override
