@@ -9,7 +9,6 @@ import com.mojang.math.Vector3f;
 import mokiyoki.enhancedanimals.model.EnhancedAnimalModel;
 import mokiyoki.enhancedanimals.model.modeldata.AnimalModelData;
 import mokiyoki.enhancedanimals.model.modeldata.Phenotype;
-import mokiyoki.enhancedanimals.model.util.ModelHelper;
 import mokiyoki.enhancedanimals.model.util.WrappedModelPart;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -505,7 +504,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
     private void grazeAnim(float ticksOfGrazing) {
         bNeck.setXRot(lerpTo(bNeck.getXRot(), Mth.HALF_PI*0.9F + baseNeckAngle));
-        bHead.setXRot(lerpTo(bHead.getXRot(), -Mth.HALF_PI*0.075F - baseHeadAngle));
+        bHead.setXRot(lerpTo(bHead.getXRot(), -Mth.HALF_PI*0.075F + baseHeadAngle));
     }
 
     @Override
