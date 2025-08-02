@@ -50,10 +50,6 @@ public class GoatPhenotype implements Phenotype {
         return muzzleY;
     }
 
-    public float getUpperMouthScaleZ() {
-        return upperMouthScaleZ;
-    }
-
     public boolean isShortMuzzled() {
         return shortMuzzled;
     }
@@ -66,16 +62,24 @@ public class GoatPhenotype implements Phenotype {
         return bodyScalings;
     }
 
-    public float getbNeckY() {
-        return bNeckY;
-    }
-
     public List<Float> getFullBodyScalings() {
         return fullBodyScalings;
     }
 
     public List<Float> getUpperLegScalings() {
         return upperLegScalings;
+    }
+
+    public List<Float> getHeadScalings() {
+        return headScalings;
+    }
+
+    public List<Float> getUpperMouthScalings() {
+        return upperMouthScalings;
+    }
+
+    public List<Float> getMouthScalings() {
+        return mouthScalings;
     }
 
     public enum EarLength {
@@ -106,10 +110,15 @@ public class GoatPhenotype implements Phenotype {
     private float mouthXRot;
 
     //Body Settings
+    private float fatness;
+    private float bodyWidth;
+    private float headWidth;
     private List<Float> bodyScalings;
     private List<Float> upperLegScalings;
     private List<Float> fullBodyScalings;
-    private float bNeckY;
+    private List<Float> headScalings;
+    private List<Float> upperMouthScalings;
+    private List<Float> mouthScalings;
 
     private void calculateEars(int[] genes) {
         if (genes[30] == 2 || genes[31] == 2) {
@@ -264,20 +273,23 @@ public class GoatPhenotype implements Phenotype {
     }
 
     private void calculateBody(int[] genes) {
-        float fatness = (genes[38] + genes[39] - 2F)/4F;
-        bNeckY = -16 + fatness;
-        float goatWidth = 1F + (fatness * 0.3F);
+        fatness = (genes[38] + genes[39] - 2F)/4F;
+        headWidth = 1F + (fatness * 0.2F);
+        bodyWidth = 1F + (fatness * 0.3F);
 
-        earX += (goatWidth * 3) - 3; // Move the ears to account for the difference
-
-        upperLegScalings = ModelHelper.createScalings(1F, (5F - (fatness * 0.5F))/5F, 1F, 0F, 0F, 0F);
-        bodyScalings = ModelHelper.createScalings(1F, (9F + fatness * 0.5F)/9F, 1F, 0F, 0F, 0F);
-        fullBodyScalings = ModelHelper.createScalings(goatWidth, 1F, 1F, 0F, 0F, 0F);
+        earX += (headWidth * 3) - 3; // Move the ears to account for the difference
     }
 
     public GoatPhenotype(int[] genes, boolean isFemale) {
         calculateEars(genes);
         calculateMuzzle(genes);
         calculateBody(genes);
+        // Generate Scalings
+        upperLegScalings = ModelHelper.createScalings(1F, (5F - (fatness * 0.5F))/5F, 1F, 0F, 0F, 0F);
+        bodyScalings = ModelHelper.createScalings(1F, (9F + fatness * 0.5F)/9F, 1F, 0F, 0F, 0F);
+        fullBodyScalings = ModelHelper.createScalings(bodyWidth, 1F, 1F, 0F, 0F, 0F);
+        headScalings = ModelHelper.createScalings(headWidth, 1F, 1F, 0F, 0F, 0F);
+        upperMouthScalings = ModelHelper.createScalings(0.999F*headWidth, 1F, upperMouthScaleZ, 0F, 0F, 0F);
+        mouthScalings = ModelHelper.createScalings(headWidth, 1F, upperMouthScaleZ, 0F, 0F, 0F);
     }
 }

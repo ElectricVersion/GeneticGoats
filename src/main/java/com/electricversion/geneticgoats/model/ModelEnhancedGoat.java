@@ -615,7 +615,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     }
 
     private void setupBody(GoatPhenotype phenotype) {
-        bNeck.setY(phenotype.getbNeckY());
+//        bNeck.setY(phenotype.getbNeckY());
     }
 
     @Override
@@ -632,9 +632,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             mapOfScale.put("bBodyF", phenotype.getFullBodyScalings());
             mapOfScale.put("bBodyB", phenotype.getFullBodyScalings());
             mapOfScale.put("neck", phenotype.getFullBodyScalings());
-            mapOfScale.put("head", phenotype.getFullBodyScalings());
-            mapOfScale.put("bMuzzle", phenotype.getFullBodyScalings());
-            mapOfScale.put("bMouth", phenotype.getFullBodyScalings());
+            mapOfScale.put("head", phenotype.getHeadScalings());
+            mapOfScale.put("bMuzzle", phenotype.getHeadScalings());
 
             mapOfScale.put("bodyF", phenotype.getBodyScalings());
             mapOfScale.put("bodyB", phenotype.getBodyScalings());
@@ -643,8 +642,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             mapOfScale.put("legFR", phenotype.getUpperLegScalings());
             mapOfScale.put("legBL", phenotype.getUpperLegScalings());
             mapOfScale.put("legBR", phenotype.getUpperLegScalings());
-            mapOfScale.put("upperMouth", ModelHelper.createScalings(0.999F, 1F, phenotype.getUpperMouthScaleZ(), 0F, 0F, 0F));
-            mapOfScale.put("mouth", ModelHelper.createScalings(1F, 1F, phenotype.getUpperMouthScaleZ(), 0F, 0F, 0F));
+            mapOfScale.put("upperMouth", phenotype.getUpperMouthScalings());
+            mapOfScale.put("mouth", phenotype.getMouthScalings());
 
             float goatScale = ((2F * goatModelData.size * goatModelData.growthAmount) + goatModelData.size) / 3F;
             poseStack.scale(goatScale, goatScale, goatScale);
