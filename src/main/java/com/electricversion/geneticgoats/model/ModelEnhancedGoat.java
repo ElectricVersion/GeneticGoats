@@ -200,10 +200,10 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bLegFR.addChild(legFR);
         bLegBL.addChild(legBL);
         bLegBR.addChild(legBR);
-        legFL.addChild(legBFL);
-        legFR.addChild(legBFR);
-        legBL.addChild(legBBL);
-        legBR.addChild(legBBR);
+        bLegFL.addChild(legBFL);
+        bLegFR.addChild(legBFR);
+        bLegBL.addChild(legBBL);
+        bLegBR.addChild(legBBR);
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -373,44 +373,44 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         // Upper Legs
         baseDef.addOrReplaceChild("legFL", CubeListBuilder.create()
                         .texOffs(13, 59)
-                        .addBox(0F, 6F, 0F, 3, 6, 3),
-                PartPose.offset(0F, -6F, -3F));
+                        .addBox(0F, -6F, 0F, 3, 6, 3),
+                PartPose.offset(0F, 6F, -3F));
 
         baseDef.addOrReplaceChild("legFR", CubeListBuilder.create()
                         .texOffs(0, 59)
-                        .addBox(0F, 6F, 0F, 3, 6, 3),
-                PartPose.offset(0F, -6F, -3F));
+                        .addBox(0F, -6F, 0F, 3, 6, 3),
+                PartPose.offset(0F, 6F, -3F));
 
         baseDef.addOrReplaceChild("legBL", CubeListBuilder.create()
                         .texOffs(13, 69)
-                        .addBox(0F, 6F, 0F, 3, 6, 3),
-                PartPose.offset(0F, -6F, -3F));
+                        .addBox(0F, -6F, 0F, 3, 6, 3),
+                PartPose.offset(0F, 6F, -3F));
 
         baseDef.addOrReplaceChild("legBR", CubeListBuilder.create()
                         .texOffs(0, 69)
-                        .addBox(0F, 6F, 0F, 3, 6, 3),
-                PartPose.offset(0F, -6F, -3F));
+                        .addBox(0F, -6F, 0F, 3, 6, 3),
+                PartPose.offset(0F, 6F, -3F));
 
         // Lower Legs
         baseDef.addOrReplaceChild("legBFL", CubeListBuilder.create()
                         .texOffs(13, 79)
                         .addBox(0F, 5F, 0F, 3, 5, 3),
-                PartPose.offset(0F, 7F, 0F));
+                PartPose.offset(0F, 1F, -3F));
 
         baseDef.addOrReplaceChild("legBFR", CubeListBuilder.create()
                         .texOffs(0, 79)
                         .addBox(0F, 5F, 0F, 3, 5, 3),
-                PartPose.offset(0F, 7F, 0F));
+                PartPose.offset(0F, 1F, -3F));
 
         baseDef.addOrReplaceChild("legBBL", CubeListBuilder.create()
                         .texOffs(13, 88)
                         .addBox(0F, 5F, 0F, 3, 5, 3),
-                PartPose.offset(0F, 7F, 0F));
+                PartPose.offset(0F, 1F, -3F));
 
         baseDef.addOrReplaceChild("legBBR", CubeListBuilder.create()
                         .texOffs(0, 88)
                         .addBox(0F, 5F, 0F, 3, 5, 3),
-                PartPose.offset(0F, 7F, 0F));
+                PartPose.offset(0F, 1F, -3F));
 
         return LayerDefinition.create(meshDefinition, 128, 128);
     }
@@ -633,6 +633,10 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             mapOfScale.put("base", phenotype.getGoatScalings());
             mapOfScale.put("bodyF", phenotype.getBodyScalings());
             mapOfScale.put("bodyB", phenotype.getBodyScalings());
+            mapOfScale.put("legFL", phenotype.getLegScalings());
+            mapOfScale.put("legFR", phenotype.getLegScalings());
+            mapOfScale.put("legBL", phenotype.getLegScalings());
+            mapOfScale.put("legBR", phenotype.getLegScalings());
 //            mapOfScale.put("neck", phenotype.getNeckScalings());
             mapOfScale.put("upperMouth", ModelHelper.createScalings(0.999F, 1F, phenotype.getUpperMouthScaleZ(), 0F, 0F, 0F));
             mapOfScale.put("mouth", ModelHelper.createScalings(1F, 1F, phenotype.getUpperMouthScaleZ(), 0F, 0F, 0F));

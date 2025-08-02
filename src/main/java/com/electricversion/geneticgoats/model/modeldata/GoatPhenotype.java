@@ -271,12 +271,11 @@ public class GoatPhenotype implements Phenotype {
     private void calculateBody(int[] genes) {
         float fatness = 1F;
 
-        float bodyHeight = 1F + (fatness * 0.125F);
         bNeckY = -16 + fatness;
         float goatWidth = 1F + (fatness * 0.25F);
         float neckThickness = 1F + (0.1F * fatness);
-        legScalings = ModelHelper.createScalings(1F, 1F, 1F, 0F, 0F, 0F);
-        bodyScalings = ModelHelper.createScalings(1F, bodyHeight, 1F, 0F, 0F, 0F);
+        legScalings = ModelHelper.createScalings(1F, 1F - (fatness/12F), 1F, 0F, 0F, 0F);
+        bodyScalings = ModelHelper.createScalings(1F, 1F + (fatness/18F), 1F, 0F, 0F, 0F);
         neckScalings = ModelHelper.createScalings(neckThickness, 1F, neckThickness, 0F, 0F, 0F);
         goatScalings = ModelHelper.createScalings(goatWidth, 1F, 1F, 0F, 0F, 0F);
     }
