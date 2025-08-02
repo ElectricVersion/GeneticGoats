@@ -161,6 +161,18 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bBodyF.addChild(bodyF);
         bBodyB.addChild(bodyB);
         bBodyB.addChild(tail);
+        bBodyF.addChild(bLegFL);
+        bBodyF.addChild(bLegFR);
+        bBodyB.addChild(bLegBL);
+        bBodyB.addChild(bLegBR);
+        bLegFL.addChild(legFL);
+        bLegFR.addChild(legFR);
+        bLegBL.addChild(legBL);
+        bLegBR.addChild(legBR);
+        bLegFL.addChild(legBFL);
+        bLegFR.addChild(legBFR);
+        bLegBL.addChild(legBBL);
+        bLegBR.addChild(legBBR);
 
         base.addChild(bNeck);
         bNeck.addChild(neck);
@@ -191,19 +203,6 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bEarR.addChild(earR9);
         bEarL.addChild(earL12);
         bEarR.addChild(earR12);
-
-        base.addChild(bLegFL);
-        base.addChild(bLegFR);
-        base.addChild(bLegBL);
-        base.addChild(bLegBR);
-        bLegFL.addChild(legFL);
-        bLegFR.addChild(legFR);
-        bLegBL.addChild(legBL);
-        bLegBR.addChild(legBR);
-        bLegFL.addChild(legBFL);
-        bLegFR.addChild(legBFR);
-        bLegBL.addChild(legBBL);
-        bLegBR.addChild(legBBR);
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -229,13 +228,13 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("bMouth", CubeListBuilder.create(),
                 PartPose.offset(0F, 5F, -6F));
         baseDef.addOrReplaceChild("bLegFL", CubeListBuilder.create(),
-                PartPose.offset(1.49F, -11F, -5.99F));
+                PartPose.offset(1.49F, 8F, 3.01F));
         baseDef.addOrReplaceChild("bLegFR", CubeListBuilder.create(),
-                PartPose.offset(-1.49F, -11F, -5.99F));
+                PartPose.offset(-1.49F, 8F, 3.0F));
         baseDef.addOrReplaceChild("bLegBL", CubeListBuilder.create(),
-                PartPose.offset(1.49F, -11F, 10.99F));
+                PartPose.offset(1.49F, 8F, 9.99F));
         baseDef.addOrReplaceChild("bLegBR", CubeListBuilder.create(),
-                PartPose.offset(-1.49F, -11F, 10.99F));
+                PartPose.offset(-1.49F, 8F, 9.99F));
         baseDef.addOrReplaceChild("bEarL", CubeListBuilder.create(),
                 PartPose.offset(3F, 0F, -1.05F));
         baseDef.addOrReplaceChild("bEarR", CubeListBuilder.create(),
@@ -559,7 +558,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         //Enable the appropriate blocks
         GoatPhenotype phenotype = goatModelData.getPhenotype();
-        setupEars(phenotype);
+        setupEars(phenotype); // Must be called before setupBody since the latter modifies ear placement with scaling
         setupMuzzle(phenotype);
         setupBody(phenotype);
     }
@@ -630,14 +629,20 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             Map<String, List<Float>> mapOfScale = new HashMap<>(); //Stores transformations for blocks and bones
             poseStack.pushPose();
 
-            mapOfScale.put("base", phenotype.getGoatScalings());
+            mapOfScale.put("bBodyF", phenotype.getFullBodyScalings());
+            mapOfScale.put("bBodyB", phenotype.getFullBodyScalings());
+            mapOfScale.put("neck", phenotype.getFullBodyScalings());
+            mapOfScale.put("head", phenotype.getFullBodyScalings());
+            mapOfScale.put("bMuzzle", phenotype.getFullBodyScalings());
+            mapOfScale.put("bMouth", phenotype.getFullBodyScalings());
+
             mapOfScale.put("bodyF", phenotype.getBodyScalings());
             mapOfScale.put("bodyB", phenotype.getBodyScalings());
-            mapOfScale.put("legFL", phenotype.getLegScalings());
-            mapOfScale.put("legFR", phenotype.getLegScalings());
-            mapOfScale.put("legBL", phenotype.getLegScalings());
-            mapOfScale.put("legBR", phenotype.getLegScalings());
-//            mapOfScale.put("neck", phenotype.getNeckScalings());
+
+            mapOfScale.put("legFL", phenotype.getUpperLegScalings());
+            mapOfScale.put("legFR", phenotype.getUpperLegScalings());
+            mapOfScale.put("legBL", phenotype.getUpperLegScalings());
+            mapOfScale.put("legBR", phenotype.getUpperLegScalings());
             mapOfScale.put("upperMouth", ModelHelper.createScalings(0.999F, 1F, phenotype.getUpperMouthScaleZ(), 0F, 0F, 0F));
             mapOfScale.put("mouth", ModelHelper.createScalings(1F, 1F, phenotype.getUpperMouthScaleZ(), 0F, 0F, 0F));
 

@@ -70,16 +70,12 @@ public class GoatPhenotype implements Phenotype {
         return bNeckY;
     }
 
-    public List<Float> getGoatScalings() {
-        return goatScalings;
+    public List<Float> getFullBodyScalings() {
+        return fullBodyScalings;
     }
 
-    public List<Float> getNeckScalings() {
-        return neckScalings;
-    }
-
-    public List<Float> getLegScalings() {
-        return legScalings;
+    public List<Float> getUpperLegScalings() {
+        return upperLegScalings;
     }
 
     public enum EarLength {
@@ -111,9 +107,8 @@ public class GoatPhenotype implements Phenotype {
 
     //Body Settings
     private List<Float> bodyScalings;
-    private List<Float> legScalings;
-    private List<Float> goatScalings;
-    private List<Float> neckScalings;
+    private List<Float> upperLegScalings;
+    private List<Float> fullBodyScalings;
     private float bNeckY;
 
     private void calculateEars(int[] genes) {
@@ -269,15 +264,15 @@ public class GoatPhenotype implements Phenotype {
     }
 
     private void calculateBody(int[] genes) {
-        float fatness = 1F;
-
+        float fatness = (genes[38] + genes[39] - 2F)/4F;
         bNeckY = -16 + fatness;
-        float goatWidth = 1F + (fatness * 0.25F);
-        float neckThickness = 1F + (0.1F * fatness);
-        legScalings = ModelHelper.createScalings(1F, 1F - (fatness/12F), 1F, 0F, 0F, 0F);
-        bodyScalings = ModelHelper.createScalings(1F, 1F + (fatness/18F), 1F, 0F, 0F, 0F);
-        neckScalings = ModelHelper.createScalings(neckThickness, 1F, neckThickness, 0F, 0F, 0F);
-        goatScalings = ModelHelper.createScalings(goatWidth, 1F, 1F, 0F, 0F, 0F);
+        float goatWidth = 1F + (fatness * 0.3F);
+
+        earX += (goatWidth * 3) - 3; // Move the ears to account for the difference
+
+        upperLegScalings = ModelHelper.createScalings(1F, (5F - (fatness * 0.5F))/5F, 1F, 0F, 0F, 0F);
+        bodyScalings = ModelHelper.createScalings(1F, (9F + fatness * 0.5F)/9F, 1F, 0F, 0F, 0F);
+        fullBodyScalings = ModelHelper.createScalings(goatWidth, 1F, 1F, 0F, 0F, 0F);
     }
 
     public GoatPhenotype(int[] genes, boolean isFemale) {
