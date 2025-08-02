@@ -625,7 +625,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
             mapOfScale.put("bBodyF", phenotype.getFullBodyScalings());
             mapOfScale.put("bBodyB", phenotype.getFullBodyScalings());
-            mapOfScale.put("neck", phenotype.getFullBodyScalings());
+            mapOfScale.put("neck", phenotype.getNeckScalings());
             mapOfScale.put("head", phenotype.getHeadScalings());
             mapOfScale.put("bMuzzle", phenotype.getHeadScalings());
 
