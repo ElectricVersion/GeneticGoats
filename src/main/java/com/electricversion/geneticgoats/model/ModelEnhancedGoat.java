@@ -222,7 +222,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("bNeck", CubeListBuilder.create(),
                 PartPose.offsetAndRotation(0F, -16F, -6F, baseNeckAngle, 0F, 0F));
         baseDef.addOrReplaceChild("bHead", CubeListBuilder.create(),
-                PartPose.offsetAndRotation(0F, -12F, 3F, -baseNeckAngle, 0F, 0F));
+                PartPose.offsetAndRotation(0F, -11F, 3F, -baseNeckAngle, 0F, 0F));
         baseDef.addOrReplaceChild("bMuzzle", CubeListBuilder.create(),
                 PartPose.offsetAndRotation(0F, 1F, -6F, Mth.HALF_PI * 0.125F, 0F, 0F));
         baseDef.addOrReplaceChild("bMouth", CubeListBuilder.create(),
@@ -258,7 +258,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         baseDef.addOrReplaceChild("neck", CubeListBuilder.create()
                            .texOffs(0, 40)
-                     .addBox(-2.5F, -12F, -6F, 5, 12, 6),
+                     .addBox(-2.5F, -11F, -6F, 5, 11, 6),
                 PartPose.offset(0F, 0F, 3F));
 
         // Head
