@@ -560,7 +560,6 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         GoatPhenotype phenotype = goatModelData.getPhenotype();
         setupEars(phenotype); // Must be called before setupBody since the latter modifies ear placement with scaling
         setupMuzzle(phenotype);
-        setupBody(phenotype);
     }
 
     private void setupEars(GoatPhenotype phenotype) {
@@ -612,10 +611,6 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             muzzleShort.hide();
             muzzleLong.show();
         }
-    }
-
-    private void setupBody(GoatPhenotype phenotype) {
-//        bNeck.setY(phenotype.getbNeckY());
     }
 
     @Override
