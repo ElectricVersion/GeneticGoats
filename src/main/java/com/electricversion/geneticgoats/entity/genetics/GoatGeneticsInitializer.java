@@ -198,6 +198,12 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[36] = randomizeGene(2);
         autosomalGenes[37] = randomizeGene(2);
 
+        /* Placeholder Body Fat
+         * 1 - 3
+         */
+        autosomalGenes[38] = randomizeGene(3);
+        autosomalGenes[39] = randomizeGene(3);
+
         return new Genes(sexlinkedGenes, autosomalGenes);
     }
 }
