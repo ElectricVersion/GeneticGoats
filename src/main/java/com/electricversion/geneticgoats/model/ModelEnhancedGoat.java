@@ -267,7 +267,11 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         baseDef.addOrReplaceChild("udder", CubeListBuilder.create()
                         .texOffs(40, 0)
-                        .addBox(-3.5F, 4F, 3F, 7, 7, 8),
+                        .addBox(-3.5F, 4F, 3F, 7, 7, 8)
+                        .texOffs(63, 2)
+                        .addBox(-2.5F, 11F, 5.5F, 1, 1, 1)
+                        .texOffs(63, 5)
+                        .addBox(1.5F, 11F, 5.5F, 1, 1, 1),
                 PartPose.ZERO);
 
 
