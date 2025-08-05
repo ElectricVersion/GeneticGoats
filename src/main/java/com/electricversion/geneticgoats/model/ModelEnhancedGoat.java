@@ -6,6 +6,7 @@ import com.electricversion.geneticgoats.model.modeldata.GoatPhenotype;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
+import mokiyoki.enhancedanimals.entity.EntityState;
 import mokiyoki.enhancedanimals.model.EnhancedAnimalModel;
 import mokiyoki.enhancedanimals.model.modeldata.AnimalModelData;
 import mokiyoki.enhancedanimals.model.modeldata.Phenotype;
@@ -91,7 +92,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     private final WrappedModelPart bodyF;
     private final WrappedModelPart bodyB;
 
+    private final WrappedModelPart bUdder;
     private final WrappedModelPart udder;
+    private final WrappedModelPart nipples;
 
     /* Part Setup */
 
@@ -118,6 +121,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bLegFR = new WrappedModelPart("bLegFR", basePart);
         bLegBL = new WrappedModelPart("bLegBL", basePart);
         bLegBR = new WrappedModelPart("bLegBR", basePart);
+
+        bUdder = new WrappedModelPart("bUdder", basePart);
 
         /* BLOCKS */
         bodyF = new WrappedModelPart("bodyF", basePart);
@@ -158,6 +163,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         legBBR = new WrappedModelPart("legBBR", basePart);
 
         udder = new WrappedModelPart("udder", basePart);
+        nipples = new WrappedModelPart("nipples", basePart);
 
         base.addChild(bBodyF);
         base.addChild(bBodyB);
@@ -165,7 +171,10 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bBodyB.addChild(bodyB);
 
         bBodyB.addChild(tail);
-        bBodyB.addChild(udder);
+        bBodyB.addChild(bUdder);
+
+        bUdder.addChild(udder);
+        bUdder.addChild(nipples);
 
         bBodyF.addChild(bLegFL);
         bBodyF.addChild(bLegFR);
@@ -180,8 +189,6 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bLegFR.addChild(legBFR);
         bLegBL.addChild(legBBL);
         bLegBR.addChild(legBBR);
-
-
 
         base.addChild(bNeck);
         bNeck.addChild(neck);
@@ -248,6 +255,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                 PartPose.offset(3F, 0F, -1.05F));
         baseDef.addOrReplaceChild("bEarR", CubeListBuilder.create(),
                 PartPose.offset(-3F, 0F, -1.05F));
+        baseDef.addOrReplaceChild("bUdder", CubeListBuilder.create(),
+                PartPose.offset(0F, -3F, -5F));
 
         // Body
         baseDef.addOrReplaceChild("bodyF", CubeListBuilder.create()
@@ -267,13 +276,15 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         baseDef.addOrReplaceChild("udder", CubeListBuilder.create()
                         .texOffs(40, 0)
-                        .addBox(-3.5F, 4F, 3F, 7, 7, 8)
-                        .texOffs(63, 2)
-                        .addBox(-2.5F, 11F, 5.5F, 1, 1, 1)
-                        .texOffs(63, 5)
-                        .addBox(1.5F, 11F, 5.5F, 1, 1, 1),
+                        .addBox(-3.5F, 7F, 8F, 7, 7, 8),
                 PartPose.ZERO);
 
+        baseDef.addOrReplaceChild("nipples", CubeListBuilder.create()
+                        .texOffs(63, 2)
+                        .addBox(-2.5F, 14F, 10.5F, 1, 1, 1)
+                        .texOffs(63, 5)
+                        .addBox(1.5F, 14F, 10.5F, 1, 1, 1),
+                PartPose.ZERO);
 
         baseDef.addOrReplaceChild("neck", CubeListBuilder.create()
                            .texOffs(0, 40)
@@ -450,6 +461,23 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         setBaseInitialModelData(goatModelData, goat);
     }
 
+    private void updateUdderSize(AnimalModelData animalModelData, T enhancedAnimal) {
+        ((GoatModelData) animalModelData).setUdderSize(
+                (enhancedAnimal.getEntityStatus().equals(EntityState.MOTHER.toString()) || enhancedAnimal.getEntityStatus().equals(EntityState.PREGNANT.toString()))
+                        ? enhancedAnimal.getBagSize()
+                        : -1.0F);
+    }
+
+    @Override
+    protected void additionalModelDataInfo(AnimalModelData animalModelData, T enhancedAnimal) {
+        updateUdderSize(animalModelData, enhancedAnimal);
+    }
+
+    @Override
+    protected void additionalUpdateModelDataInfo(AnimalModelData animalModelData, T enhancedAnimal) {
+        updateUdderSize(animalModelData, enhancedAnimal);
+    }
+
     /* Animation */
 
     private void setupInitialAnimationValues(AnimalModelData data, float netHeadYaw, float headPitch) {
@@ -573,7 +601,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         earR9.hide();
         earL12.hide();
         earR12.hide();
-        udder.show(goatModelData.getUdderSize() > 0F);
+        bUdder.show(goatModelData.getUdderSize() > 0F);
 
         //Enable the appropriate blocks
         GoatPhenotype phenotype = goatModelData.getPhenotype();

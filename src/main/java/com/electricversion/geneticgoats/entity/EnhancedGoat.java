@@ -138,7 +138,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
 
     @Override
     protected boolean canBePregnant() {
-        return false;
+        return true;
     }
 
     @Override
