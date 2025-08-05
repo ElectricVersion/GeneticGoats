@@ -573,10 +573,11 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         earR9.hide();
         earL12.hide();
         earR12.hide();
+        udder.show(goatModelData.getUdderSize() > 0F);
 
         //Enable the appropriate blocks
         GoatPhenotype phenotype = goatModelData.getPhenotype();
-        setupEars(phenotype); // Must be called before setupBody since the latter modifies ear placement with scaling
+        setupEars(phenotype);
         setupMuzzle(phenotype);
     }
 

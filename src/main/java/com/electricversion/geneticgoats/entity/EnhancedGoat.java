@@ -247,6 +247,21 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
             if (getHunger() > hungerLimit) {
                 getBrain().setMemory(ModMemoryModuleTypes.HUNGRY.get(), true);
             }
+
+            // Dairy Functionality
+            if (getEntityStatus().equals(EntityState.MOTHER.toString())) {
+                if (hunger <= 24000) {  
+                    if (timeUntilNextMilk-- <= 0) {
+                        int milk = getMilkAmount();
+                        if (milk < maxBagSize * 30) {
+                            milk++;
+                            setMilkAmount(milk);
+                            timeUntilNextMilk = 2400;
+                            setBagSize(milk / (maxBagSize * 30));
+                        }
+                    }
+                }
+            }
             GoatAi.updateActivity(this);
         }
     }
