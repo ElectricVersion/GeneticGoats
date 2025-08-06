@@ -91,7 +91,6 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
         return commonInitialSpawnSetup(inWorld, livingData, getAdultAge(), 0, 0, spawnReason);
     }
 
-
     @Override
     protected EnhancedAnimalAbstract createEnhancedChild(Level level, EnhancedAnimalAbstract otherParent) {
         EnhancedGoat goat = AddonEntities.ENHANCED_GOAT.get().create(level);
@@ -135,7 +134,6 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
     protected void runExtraIdleTimeTick() {
     }
 
-
     @Override
     protected boolean canBePregnant() {
         return true;
@@ -161,6 +159,11 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
         }
 
         return super.mobInteract(player, hand);
+    }
+
+    public void readAdditionalSaveData(CompoundTag compound) {
+        super.readAdditionalSaveData(compound);
+        setBagSize(getMilkAmount() / 30F);
     }
 
     /* Gene Related Code */

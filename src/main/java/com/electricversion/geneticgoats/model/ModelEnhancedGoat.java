@@ -10,6 +10,7 @@ import mokiyoki.enhancedanimals.entity.EntityState;
 import mokiyoki.enhancedanimals.model.EnhancedAnimalModel;
 import mokiyoki.enhancedanimals.model.modeldata.AnimalModelData;
 import mokiyoki.enhancedanimals.model.modeldata.Phenotype;
+import mokiyoki.enhancedanimals.model.util.ModelHelper;
 import mokiyoki.enhancedanimals.model.util.WrappedModelPart;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -276,8 +277,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         baseDef.addOrReplaceChild("udder", CubeListBuilder.create()
                         .texOffs(40, 0)
-                        .addBox(-3.5F, 7F, 8F, 7, 7, 8),
-                PartPose.ZERO);
+                        .addBox(-3.5F, 0F, 0F, 7, 7, 8),
+                PartPose.offset(0F, 7F, 8F));
 
         baseDef.addOrReplaceChild("nipples", CubeListBuilder.create()
                         .texOffs(63, 2)
@@ -464,7 +465,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     private void updateUdderSize(AnimalModelData animalModelData, T enhancedAnimal) {
         ((GoatModelData) animalModelData).setUdderSize(
                 (enhancedAnimal.getEntityStatus().equals(EntityState.MOTHER.toString()) || enhancedAnimal.getEntityStatus().equals(EntityState.PREGNANT.toString()))
-                        ? enhancedAnimal.getBagSize()
+                        ? (0.625F + (enhancedAnimal.getBagSize() * 0.5F))
                         : -1.0F);
     }
 
@@ -687,6 +688,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             mapOfScale.put("legFR", phenotype.getUpperLegScalings());
             mapOfScale.put("legBL", phenotype.getUpperLegScalings());
             mapOfScale.put("legBR", phenotype.getUpperLegScalings());
+
+            mapOfScale.put("udder", ModelHelper.createScalings(1F, 1F, goatModelData.getUdderSize(), 0F, 0F, 0F));
 
             float goatScale = ((2F * goatModelData.size * goatModelData.growthAmount) + goatModelData.size) / 3F;
             poseStack.scale(goatScale, goatScale, goatScale);
