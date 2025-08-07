@@ -28,3 +28,4 @@ forge*changelog.txt
 /script/agouti_generator/out
 /script/coordinate_generator/in
 /script/coordinate_generator/out
+/script/coordinate_mapper/in
