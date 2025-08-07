@@ -30,7 +30,14 @@ public class GoatTexture {
 
         GoatColors color = GoatColors.calculateColors(goat, gene, uuidArry);
 
-        TextureGrouping rootGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
+        TextureGrouping rootGroup = new TextureGrouping(TexturingType.MASK_GROUP);
+
+        // Alpha Mask Layer
+        TextureGrouping alphaGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
+        goat.addTextureToAnimalTextureGrouping(alphaGroup, "misc/mask/body.png");
+        goat.addTextureToAnimalTextureGrouping(alphaGroup, "misc/mask/hair_long.png");
+
+        rootGroup.addGrouping(alphaGroup);
 
         // Red Layer
         TextureGrouping redGroup = new TextureGrouping(TexturingType.MASK_GROUP);
@@ -59,6 +66,7 @@ public class GoatTexture {
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/udder.png");
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/hooves.png");
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/eyes.png");
+//        goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/long_hair.png");
         rootGroup.addGrouping(detailGroup);
 
         goat.setTextureGrouping(rootGroup);

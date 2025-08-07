@@ -51,6 +51,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     private final WrappedModelPart bLegBL;
     private final WrappedModelPart bLegBR;
 
+    private final WrappedModelPart bUdder;
+
     /* Blocks */
 
     private final WrappedModelPart tail;
@@ -58,6 +60,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     private final WrappedModelPart neck;
 
     private final WrappedModelPart head;
+    private final WrappedModelPart headHair;
     private final WrappedModelPart muzzleLong;
     private final WrappedModelPart muzzleShort;
     private final WrappedModelPart upperMouth;
@@ -92,8 +95,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
     private final WrappedModelPart bodyF;
     private final WrappedModelPart bodyB;
+    private final WrappedModelPart bodyHairF;
+    private final WrappedModelPart bodyHairB;
 
-    private final WrappedModelPart bUdder;
     private final WrappedModelPart udder;
     private final WrappedModelPart nipples;
 
@@ -130,9 +134,13 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bodyB = new WrappedModelPart("bodyB", basePart);
         tail = new WrappedModelPart("tail", basePart);
 
+        bodyHairF = new WrappedModelPart("bodyHairF", basePart);
+        bodyHairB = new WrappedModelPart("bodyHairB", basePart);
+
         neck = new WrappedModelPart("neck", basePart);
 
         head = new WrappedModelPart("head", basePart);
+        headHair = new WrappedModelPart("headHair", basePart);
         muzzleLong = new WrappedModelPart("muzzleLong", basePart);
         muzzleShort = new WrappedModelPart("muzzleShort", basePart);
         upperMouth = new WrappedModelPart("upperMouth", basePart);
@@ -169,7 +177,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         base.addChild(bBodyF);
         base.addChild(bBodyB);
         bBodyF.addChild(bodyF);
+        bBodyF.addChild(bodyHairF);
         bBodyB.addChild(bodyB);
+        bBodyB.addChild(bodyHairB);
 
         bBodyB.addChild(tail);
         bBodyB.addChild(bUdder);
@@ -196,6 +206,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         bNeck.addChild(bHead);
         bHead.addChild(head);
+        bHead.addChild(headHair);
         bHead.addChild(bMuzzle);
         bMuzzle.addChild(muzzleLong);
         bMuzzle.addChild(muzzleShort);
@@ -270,6 +281,16 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                         .addBox(-4.5F, 0F, 0F, 9, 9, 10),
                 PartPose.offset(0F, 0F, 0F));
 
+        baseDef.addOrReplaceChild("bodyHairF", CubeListBuilder.create()
+                        .texOffs(71, 0)
+                        .addBox(-4.5F, 0F, 0F, 9, 6, 10),
+                PartPose.offset(0F, 9F, 0F));
+
+        baseDef.addOrReplaceChild("bodyHairB", CubeListBuilder.create()
+                        .texOffs(71, 17)
+                        .addBox(-4.5F, 0F, 0F, 9, 6, 10),
+                PartPose.offset(0F, 9F, 0F));
+
         baseDef.addOrReplaceChild("tail", CubeListBuilder.create()
                         .texOffs(39, 30)
                         .addBox(-1F, 0F, -2F, 2, 3, 6),
@@ -296,6 +317,11 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("head", CubeListBuilder.create()
                         .texOffs(50, 44)
                         .addBox(-3F, -5F, -6F, 6, 5, 6),
+                PartPose.offset(0F, 5F, 0F));
+
+        baseDef.addOrReplaceChild("headHair", CubeListBuilder.create()
+                        .texOffs(76, 34)
+                        .addBox(-3F, -5F, -6F, 6, 6, 6, new CubeDeformation(0.5F)),
                 PartPose.offset(0F, 5F, 0F));
 
         baseDef.addOrReplaceChild("muzzleLong", CubeListBuilder.create()
@@ -602,6 +628,11 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         earR9.hide();
         earL12.hide();
         earR12.hide();
+
+        headHair.hide();
+        bodyHairF.hide();
+        bodyHairB.hide();
+
         bUdder.show(goatModelData.getUdderSize() > 0F);
 
         //Enable the appropriate blocks
