@@ -10,7 +10,7 @@ def generate_coordinates(in1, out):
     pixels_out = img_out.load()
     for x in range(img1.size[0]):
         for y in range(img1.size[1]):
-            pixels_out[x, y] = (x*2,y*2,0,(pixels1[x, y][3]))
+            pixels_out[x, y] = (x*2,y*2,64,(pixels1[x, y][3]))
     img_out.save(out)
 
 
