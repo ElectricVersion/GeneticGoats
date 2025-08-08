@@ -7,7 +7,6 @@ def map_coordinates(in1, in2, out):
     coord_map = Image.open(in1)
     target_img = Image.open(in2)
     img_out = coord_map.copy()
-    map_pixels = coord_map.load()
     target_pixels = target_img.load()
     pixels_out = img_out.load()
     for x in range(coord_map.size[0]):
