@@ -7,20 +7,23 @@ import mokiyoki.enhancedanimals.renderer.texture.TexturingType;
 
 public class GoatTexture {
 
+    private static final String[] TX_HAIR_PREFIX = new String[] {
+            "shorthair/", "longhair/",
+    };
 
-    private static final String[] TX_AGOUTI_BLACK = new String[]{
+    private static final String[] TX_AGOUTI_BLACK = new String[] {
             "", "agouti/bezoar_light.png", "", "agouti/buckskin_light.png", "agouti/chamoisee_light.png",
             "agouti/swiss_light.png", "agouti/cou_clair_light.png", "agouti/sundgau_light.png",
             "agouti/tanhead_light.png", "agouti/caramel_light.png",
     };
 
-    private static final String[] TX_AGOUTI_CREAM = new String[]{
+    private static final String[] TX_AGOUTI_CREAM = new String[] {
             "", "agouti/bezoar_cream.png", "", "", "",
             "agouti/swiss_cream.png", "", "agouti/sundgau_cream.png",
             "", "",
     };
 
-    private static final String[] TX_KIT = new String[]{
+    private static final String[] TX_KIT = new String[] {
             "misc/transparent.png", "misc/solid.png"
     };
 
@@ -32,23 +35,25 @@ public class GoatTexture {
 
         TextureGrouping rootGroup = new TextureGrouping(TexturingType.MASK_GROUP);
 
+        // Most textures have a longhaired and shorthaired variant, so we'll need to determine which hair type to use first
+        int hairType = gene[42] == 2 && gene[43] == 2 ? 1 : 0;
+
         // Alpha Mask Layer
         TextureGrouping alphaGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         goat.addTextureToAnimalTextureGrouping(alphaGroup, "misc/mask/body.png");
-        goat.addTextureToAnimalTextureGrouping(alphaGroup, "misc/mask/hair_long.png");
-
+        goat.addTextureToAnimalTextureGrouping(alphaGroup, "misc/mask/hair_long.png", hairType == 1);
         rootGroup.addGrouping(alphaGroup);
 
         // Red Layer
         TextureGrouping redGroup = new TextureGrouping(TexturingType.MASK_GROUP);
         redGroup.addGrouping(makeRedMask(goat, gene, uuidArry));
-        redGroup.addGrouping(makeRedColor(goat, gene, uuidArry, color));
+        redGroup.addGrouping(makeRedColor(goat, gene, uuidArry, color, hairType));
 
         rootGroup.addGrouping(redGroup);
 
         // Black Layer
         TextureGrouping blackGroup = new TextureGrouping(TexturingType.MASK_GROUP);
-        blackGroup.addGrouping(makeBlackMask(goat, gene, uuidArry));
+        blackGroup.addGrouping(makeBlackMask(goat, gene, uuidArry, hairType));
         blackGroup.addGrouping(makeBlackColor(goat, gene, uuidArry, color));
 
         rootGroup.addGrouping(blackGroup);
@@ -63,10 +68,10 @@ public class GoatTexture {
         // Detail Layer
         TextureGrouping detailGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/noise.png");
+        goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/long_hair_overlay.png", hairType == 1);
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/udder.png");
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/hooves.png");
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/eyes.png");
-//        goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/long_hair.png");
         rootGroup.addGrouping(detailGroup);
 
         goat.setTextureGrouping(rootGroup);
@@ -75,15 +80,10 @@ public class GoatTexture {
     private static TextureGrouping makeRedMask(EnhancedGoat goat, int[] gene, char[] uuidArry) {
         TextureGrouping redGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         goat.addTextureToAnimalTextureGrouping(redGroup, "misc/solid.png");
-        int agouti1 = gene[0];
-        int agouti2 = gene[1];
-        goat.addTextureToAnimalTextureGrouping(redGroup, TX_AGOUTI_CREAM, agouti1, !TX_AGOUTI_CREAM[agouti1].isEmpty());
-        goat.addTextureToAnimalTextureGrouping(redGroup, TX_AGOUTI_CREAM, agouti2, !TX_AGOUTI_CREAM[agouti2].isEmpty());
-
         return redGroup;
     }
 
-    private static TextureGrouping makeRedColor(EnhancedGoat goat, int[] gene, char[] uuidArry, GoatColors color) {
+    private static TextureGrouping makeRedColor(EnhancedGoat goat, int[] gene, char[] uuidArry, GoatColors color, int hairType) {
         TextureGrouping redColorGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         int agouti1 = gene[0];
         int agouti2 = gene[1];
@@ -91,10 +91,10 @@ public class GoatTexture {
         if (agouti1 != 2 && agouti2 != 2) {
             // Gold agouti is dominant and blocks the cream highlights, so require that it's not present
             if (!TX_AGOUTI_CREAM[agouti1].isEmpty()) {
-                goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RGB, TX_AGOUTI_CREAM[agouti1], "ac2", color.getCreamColor());
+                goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RGB, TX_HAIR_PREFIX[hairType] + TX_AGOUTI_CREAM[agouti1], ("ac1" + hairType) + agouti1, color.getCreamColor());
             }
             if (!TX_AGOUTI_CREAM[agouti2].isEmpty()) {
-                goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RGB, TX_AGOUTI_CREAM[agouti2], "ac2", color.getCreamColor());
+                goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RGB, TX_HAIR_PREFIX[hairType] + TX_AGOUTI_CREAM[agouti2], ("ac2" + hairType) + agouti2, color.getCreamColor());
             }
         }
         goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RGB, "misc/nose.png", "nr", color.getNoseRedColor());
@@ -102,7 +102,7 @@ public class GoatTexture {
         return redColorGroup;
     }
 
-    private static TextureGrouping makeBlackMask(EnhancedGoat goat, int[] gene, char[] uuidArry) {
+    private static TextureGrouping makeBlackMask(EnhancedGoat goat, int[] gene, char[] uuidArry, int hairType) {
         TextureGrouping blackGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         int agouti1 = gene[0];
         int agouti2 = gene[1];
@@ -113,8 +113,8 @@ public class GoatTexture {
             return blackGroup;
         }
         TextureGrouping agoutiGroup = new TextureGrouping(TexturingType.MASK_GROUP);
-        goat.addTextureToAnimalTextureGrouping(agoutiGroup, TX_AGOUTI_BLACK, agouti1, true);
-        goat.addTextureToAnimalTextureGrouping(agoutiGroup, TX_AGOUTI_BLACK, agouti2, agouti1 != agouti2);
+        goat.addTextureToAnimalTextureGrouping(agoutiGroup, TX_HAIR_PREFIX, hairType, TX_AGOUTI_BLACK, agouti1, true);
+        goat.addTextureToAnimalTextureGrouping(agoutiGroup, TX_HAIR_PREFIX, hairType, TX_AGOUTI_BLACK, agouti2, agouti1 != agouti2);
         blackGroup.addGrouping(agoutiGroup);
 
         return blackGroup;

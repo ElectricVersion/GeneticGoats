@@ -14,6 +14,8 @@ import mokiyoki.enhancedanimals.entity.EntityState;
 import mokiyoki.enhancedanimals.init.FoodSerialiser;
 import mokiyoki.enhancedanimals.init.ModMemoryModuleTypes;
 import mokiyoki.enhancedanimals.model.modeldata.AnimalModelData;
+import mokiyoki.enhancedanimals.renderer.texture.TextureGrouping;
+import mokiyoki.enhancedanimals.renderer.texture.TextureLayer;
 import mokiyoki.enhancedanimals.util.Genes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -48,7 +50,7 @@ import javax.annotation.Nullable;
 
 public class EnhancedGoat extends EnhancedAnimalAbstract {
 
-    public static final int AUTOSOMAL_GENES_LENGTH = 42;
+    public static final int AUTOSOMAL_GENES_LENGTH = 44;
     public static final int SEXLINKED_GENES_LENGTH = 2;
 
     @OnlyIn(Dist.CLIENT)
@@ -222,6 +224,15 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
     @OnlyIn(Dist.CLIENT)
     public void setModelData(AnimalModelData modelData) {
         goatModelData = (GoatModelData) modelData;
+    }
+
+    // Utility method to add a texture with a prefix based on a certain index
+    public void addTextureToAnimalTextureGrouping(TextureGrouping textureGroup, String[] prefix, int geneValue0, String[] texture, int geneValue1, boolean check) {
+        if (check) {
+            textureGroup.addTextureLayers(new TextureLayer(prefix[geneValue0] + texture[geneValue1]));
+            this.texturesIndexes.add(String.valueOf(geneValue0)+String.valueOf(geneValue1));
+        }
+        this.texturesIndexes.add(CACHE_DELIMITER);
     }
 
     /* Brain/AI Related Code */
