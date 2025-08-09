@@ -287,7 +287,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                 PartPose.offset(0F, 9F, 0F));
 
         baseDef.addOrReplaceChild("bodyHairB", CubeListBuilder.create()
-                        .texOffs(71, 17)
+                        .texOffs(71, 18)
                         .addBox(-4.5F, 0F, 0F, 9, 6, 10),
                 PartPose.offset(0F, 9F, 0F));
 
@@ -320,7 +320,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                 PartPose.offset(0F, 5F, 0F));
 
         baseDef.addOrReplaceChild("headHair", CubeListBuilder.create()
-                        .texOffs(76, 34)
+                        .texOffs(76, 36)
                         .addBox(-3F, -5F, -6F, 6, 6, 6, new CubeDeformation(0.5F)),
                 PartPose.offset(0F, 5F, 0F));
 
@@ -629,9 +629,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         earL12.hide();
         earR12.hide();
 
-        headHair.hide();
-        bodyHairF.hide();
-        bodyHairB.hide();
+//        headHair.hide();
+//        bodyHairF.hide();
+//        bodyHairB.hide();
 
         bUdder.show(goatModelData.getUdderSize() > 0F);
 
