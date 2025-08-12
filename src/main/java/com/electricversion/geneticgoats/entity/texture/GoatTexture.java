@@ -1,7 +1,6 @@
 package com.electricversion.geneticgoats.entity.texture;
 
 import com.electricversion.geneticgoats.entity.EnhancedGoat;
-import mokiyoki.enhancedanimals.entity.util.Colouration;
 import mokiyoki.enhancedanimals.renderer.texture.TextureGrouping;
 import mokiyoki.enhancedanimals.renderer.texture.TexturingType;
 
