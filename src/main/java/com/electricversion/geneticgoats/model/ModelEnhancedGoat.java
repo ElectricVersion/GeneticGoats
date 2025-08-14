@@ -15,6 +15,7 @@ import mokiyoki.enhancedanimals.model.util.WrappedModelPart;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -105,7 +106,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     /* Part Setup */
 
     public ModelEnhancedGoat(ModelPart modelPart) {
-        super(modelPart);
+        super(modelPart, RenderType::entityCutout);
 
         ModelPart basePart = modelPart.getChild("base");
 
