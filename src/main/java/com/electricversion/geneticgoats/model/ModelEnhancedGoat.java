@@ -61,6 +61,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
     private final WrappedModelPart head;
     private final WrappedModelPart headHair;
+    private final WrappedModelPart beard;
     private final WrappedModelPart muzzleLong;
     private final WrappedModelPart muzzleShort;
     private final WrappedModelPart upperMouth;
@@ -141,12 +142,14 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         head = new WrappedModelPart("head", basePart);
         headHair = new WrappedModelPart("headHair", basePart);
+        beard = new WrappedModelPart("beard", basePart);
         muzzleLong = new WrappedModelPart("muzzleLong", basePart);
         muzzleShort = new WrappedModelPart("muzzleShort", basePart);
         upperMouth = new WrappedModelPart("upperMouth", basePart);
         mouth = new WrappedModelPart("mouth", basePart);
         eyeL = new WrappedModelPart("eyeL", basePart);
         eyeR = new WrappedModelPart("eyeR", basePart);
+
         earLG = new WrappedModelPart("earLG", basePart);
         earRG = new WrappedModelPart("earRG", basePart);
         earLE = new WrappedModelPart("earLE", basePart);
@@ -207,6 +210,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bNeck.addChild(bHead);
         bHead.addChild(head);
         bHead.addChild(headHair);
+        mouth.addChild(beard);
         bHead.addChild(bMuzzle);
         bMuzzle.addChild(muzzleLong);
         bMuzzle.addChild(muzzleShort);
@@ -215,6 +219,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bHead.addChild(upperMouth);
         head.addChild(eyeL);
         head.addChild(eyeR);
+
         bHead.addChild(bEarL);
         bHead.addChild(bEarR);
         bEarL.addChild(earLG);
@@ -342,6 +347,11 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("mouth", CubeListBuilder.create()
                         .texOffs(28, 62)
                         .addBox(-1.5F, -1F, -4F, 3, 1, 4),
+                PartPose.offset(0F, 0F, 0F));
+
+        baseDef.addOrReplaceChild("beard", CubeListBuilder.create()
+                        .texOffs(29, 62)
+                        .addBox(0F, 0F, -4F, 0, 8, 6),
                 PartPose.offset(0F, 0F, 0F));
 
         baseDef.addOrReplaceChild("eyeL", CubeListBuilder.create()
@@ -537,6 +547,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             setRotationFromVector(bLegBR, map.get("bLegBR"));
             setRotationFromVector(bNeck, map.get("bNeck"));
             setRotationFromVector(bHead, map.get("bHead"));
+            setRotationFromVector(mouth, map.get("mouth"));
             setRotationFromVector(bEarL, map.get("bEarL"));
             setRotationFromVector(bEarR, map.get("bEarR"));
             setRotationFromVector(bMuzzle, map.get("bMuzzle"));
@@ -552,6 +563,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         map.put("bLegBR", getRotationVector(bLegBR));
         map.put("bNeck", getRotationVector(bNeck));
         map.put("bHead", getRotationVector(bHead));
+        map.put("mouth", getRotationVector(mouth));
         map.put("bEarL", getRotationVector(bEarL));
         map.put("bEarR", getRotationVector(bEarR));
         map.put("bMuzzle", getRotationVector(bMuzzle));
