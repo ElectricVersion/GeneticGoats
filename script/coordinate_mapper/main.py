@@ -17,9 +17,17 @@ def map_coordinates(in1, in2, out):
 
 
 if __name__ == '__main__':
+    map_dir = "map"
     src_dir = "in"
     dst_dir = "out"
-    for filename1 in os.listdir(src_dir):
-        src_name1 = src_dir + '/' + filename1
-        dst_name = dst_dir + '/' + filename1
-        map_coordinates("map.png", src_name1, dst_name)
+    for map_name in os.listdir(map_dir):
+        map_subdir = map_name.removesuffix(".png")
+        try:
+            os.mkdir(dst_dir + "/" + map_subdir)
+        except FileExistsError:
+            print("Directory", map_subdir, "already exists.")
+
+        for file_name in os.listdir(src_dir):
+            src_name = src_dir + '/' + file_name
+            dst_name = dst_dir + '/' + map_name.removesuffix(".png") + '/' + file_name
+            map_coordinates("map/" + map_name, src_name, dst_name)
