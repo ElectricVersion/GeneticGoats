@@ -60,7 +60,7 @@ public class GoatColors {
         float[] white = {0.094F, 0.10F, 0.93F};
 
         float[] noseRed = {0.047F, 0.52F, 0.20F};
-        float[] noseBlack = {0.047F, 0.52F, 0.04F};
+        float[] noseBlack = {0.047F, 0.32F, 0.21F};
         float[] noseWhite = {0.016F, 0.28F, 0.81F};
 
         // Brown Locus/TYRP1
