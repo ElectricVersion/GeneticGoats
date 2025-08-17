@@ -214,8 +214,8 @@ public class GoatPhenotype implements Phenotype {
                 }
             }
             case LONG1 -> {
-                earZRot = (earZRot * 0.2F) + 0.6F;
-                earY += earLowering / 2F;
+                earZRot = (earZRot * 0.2F) + 0.75F;
+                earY += 0.5F + earLowering;
                 earZ -= 2F;
                 if (earForward > 0F) {
                     earXRot += 0.75F * earForward * earFlop;
@@ -224,8 +224,8 @@ public class GoatPhenotype implements Phenotype {
                 }
             }
             case LONG2 -> {
-                earZRot = (earZRot * 0.1F) + 0.7F;
-                earY += earLowering;
+                earZRot = (earZRot * 0.1F) + 0.8F;
+                earY += 0.5F + earLowering;
                 earZ -= 2F;
                 if (earForward > 0F) {
                     earXRot += 0.5F * earForward * earFlop;
@@ -234,8 +234,8 @@ public class GoatPhenotype implements Phenotype {
                 }
             }
             case LONG3 -> {
-                earZRot = (earZRot * 0.1F) + 0.8F;
-                earY += earLowering;
+                earZRot = (earZRot * 0.1F) + 0.85F;
+                earY += 0.5F + earLowering;
                 earZ -= 2F;
                 if (earForward > 0F) {
                     earXRot += 0.25F * earForward * earFlop;
