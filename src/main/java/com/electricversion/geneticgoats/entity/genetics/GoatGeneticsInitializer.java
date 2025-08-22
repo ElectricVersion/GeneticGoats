@@ -182,23 +182,23 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[31] = randomizeGene(2);
 
         /* HIGHER MUZZLE ANGLE
-         * Total Range: 1 - 6
+         * Total Range: 0 - 5
          */
-        for (int i = 32; i < 44; i++) {
+        for (int i = 32; i < 42; i++) {
             autosomalGenes[i] = randomizeGene(2);
         }
 
         /* LOWER MUZZLE ANGLE
-         * Total Range: 1 - 3
+         * Total Range: 0 - 2
          */
-        for (int i = 44; i < 50; i++) {
+        for (int i = 42; i < 46; i++) {
             autosomalGenes[i] = randomizeGene(2);
         }
 
         /* MUZZLE SHORTNESS
-         * Total Range: 1 - 3
+         * Total Range: 0 - 2
          */
-        for (int i = 50; i < 56; i++) {
+        for (int i = 46; i < 50; i++) {
             autosomalGenes[i] = randomizeGene(2);
         }
 
@@ -206,8 +206,8 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
          * 1 - Wildtype
          * 2 - Long Hair
          */
-        autosomalGenes[56] = randomizeGene(2);
-        autosomalGenes[57] = randomizeGene(2);
+        autosomalGenes[50] = randomizeGene(2);
+        autosomalGenes[51] = randomizeGene(2);
 
 
         // TODO: Implement proper hair length, body fat and dairy polygenes genes

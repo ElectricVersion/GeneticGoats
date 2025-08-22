@@ -260,22 +260,22 @@ public class GoatPhenotype implements Phenotype {
         float originalMouthLength = 4F;
 
         float romanNose = 0F;
-        for (int i = 32; i < 44; i++) {
+        for (int i = 32; i < 42; i++) {
             // Higher Snout Angle
             if (genes[i] == 2) {
-                romanNose += 0.5F;
+                romanNose += 0.1F;
             }
         }
-        for (int i = 44; i < 50; i++) {
+        for (int i = 42; i < 46; i++) {
             // Lower Snout Angle
             if (genes[i] == 2) {
-                romanNose -= 0.175F;
+                romanNose -= 0.0875F;
             }
         }
         float muzzleShortness = 0F;
-        for (int i = 50; i < 56; i++) {
+        for (int i = 46; i < 50; i++) {
             if (genes[i] == 2) {
-                muzzleShortness += 0.5F;
+                muzzleShortness += 0.25F;
             }
         }
 
