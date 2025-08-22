@@ -181,23 +181,26 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[30] = randomizeGene(2);
         autosomalGenes[31] = randomizeGene(2);
 
-        /* Placeholder Muzzle Angle
-         * 1 - 6
+        /* HIGHER MUZZLE ANGLE
+         * Total Range: 1 - 6
          */
-        autosomalGenes[32] = randomizeGene(6);
-        autosomalGenes[33] = randomizeGene(6);
+        for (int i = 32; i < 44; i++) {
+            autosomalGenes[i] = randomizeGene(2);
+        }
 
-        /* Placeholder Muzzle De-Angle
-         * 1 - 3
+        /* LOWER MUZZLE ANGLE
+         * Total Range: 1 - 3
          */
-        autosomalGenes[34] = randomizeGene(3);
-        autosomalGenes[35] = randomizeGene(3);
+        for (int i = 44; i < 50; i++) {
+            autosomalGenes[i] = randomizeGene(2);
+        }
 
-        /* Placeholder Muzzle Shortness
-         * 1 - 3
+        /* MUZZLE SHORTNESS
+         * Total Range: 1 - 3
          */
-        autosomalGenes[36] = randomizeGene(2);
-        autosomalGenes[37] = randomizeGene(2);
+        for (int i = 50; i < 56; i++) {
+            autosomalGenes[i] = randomizeGene(2);
+        }
 
         /* Placeholder Body Fat
          * 1 - 3

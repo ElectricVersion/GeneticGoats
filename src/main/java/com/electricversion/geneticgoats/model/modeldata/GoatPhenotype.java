@@ -259,9 +259,25 @@ public class GoatPhenotype implements Phenotype {
         float originalMuzzleHeight = 2.4F;
         float originalMouthLength = 4F;
 
-        float romanNose = (Math.max(genes[32], genes[33]) - 1) / 5F;
-        romanNose -= 0.35F * ((Math.max(genes[34], genes[35]) - 1) / 2F);
-        float muzzleShortness = (Math.max(genes[36], genes[37]) - 1) / 2F;
+        float romanNose = 0F;
+        for (int i = 32; i < 44; i++) {
+            // Higher Snout Angle
+            if (genes[i] == 2) {
+                romanNose += 0.5F;
+            }
+        }
+        for (int i = 44; i < 50; i++) {
+            // Lower Snout Angle
+            if (genes[i] == 2) {
+                romanNose -= 0.175F;
+            }
+        }
+        float muzzleShortness = 0F;
+        for (int i = 50; i < 56; i++) {
+            if (genes[i] == 2) {
+                muzzleShortness += 0.5F;
+            }
+        }
 
         mouthXRot = romanNose < 0F ? (romanNose * Mth.HALF_PI * 0.175F) : 0F;
 
