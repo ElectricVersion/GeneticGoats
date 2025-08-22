@@ -35,7 +35,7 @@ public class GoatTexture {
         TextureGrouping rootGroup = new TextureGrouping(TexturingType.MASK_GROUP);
 
         // Most textures have a longhaired and shorthaired variant, so we'll need to determine which hair type to use first
-        int hairType = gene[42] == 2 && gene[43] == 2 ? 1 : 0;
+        int hairType = gene[56] == 2 && gene[57] == 2 ? 1 : 0;
 
         // Alpha Mask Layer
         TextureGrouping alphaGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
@@ -59,7 +59,7 @@ public class GoatTexture {
 
         // White Layer
         TextureGrouping whiteGroup = new TextureGrouping(TexturingType.MASK_GROUP);
-        whiteGroup.addGrouping(makeWhiteMask(goat, gene, uuidArry));
+        whiteGroup.addGrouping(makeWhiteMask(goat, gene, uuidArry, hairType));
         whiteGroup.addGrouping(makeWhiteColor(goat, gene, uuidArry, color));
 
         rootGroup.addGrouping(whiteGroup);
@@ -126,7 +126,7 @@ public class GoatTexture {
         return blackColorGroup;
     }
 
-    private static TextureGrouping makeWhiteMask(EnhancedGoat goat, int[] gene, char[] uuidArry) {
+    private static TextureGrouping makeWhiteMask(EnhancedGoat goat, int[] gene, char[] uuidArry, int hairType) {
         TextureGrouping whiteGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         int white = 0;
         if (gene[4] == 2 || gene[5] == 2) {
