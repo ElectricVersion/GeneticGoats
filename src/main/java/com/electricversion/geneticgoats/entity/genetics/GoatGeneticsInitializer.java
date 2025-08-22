@@ -73,9 +73,10 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         /* WHITE SPOTTING/KIT
          * 1 - Wildtype
          * 2 - Dominant White
+         * 3 - Flowery
          */
-        autosomalGenes[4] = randomizeGene(2);
-        autosomalGenes[5] = randomizeGene(2);
+        autosomalGenes[4] = randomizeGene(3);
+        autosomalGenes[5] = randomizeGene(3);
 
         /* BROWN/TYRP1
          * 1 - Wildtype
@@ -211,7 +212,7 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[41] = randomizeGene(3);
 
         /* Placeholder Longhaired
-         * 1 - 2
+         * 1 - 3
          */
         autosomalGenes[42] = randomizeGene(3);
         autosomalGenes[43] = randomizeGene(3);

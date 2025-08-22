@@ -132,6 +132,8 @@ public class GoatTexture {
         if (gene[4] == 2 || gene[5] == 2) {
             // Dominant White
             white = 1;
+        } else if (gene[4] == 3 || gene[5] == 3) {
+            // TODO: Flowery
         }
 
         goat.addTextureToAnimalTextureGrouping(whiteGroup, TX_KIT, white, true);
