@@ -297,7 +297,8 @@ public class GoatPhenotype implements Phenotype {
     }
 
     private void calculateBody(int[] genes) {
-        fatness = ((genes[38] + genes[39]) - (genes[40] + genes[41]))/4F;
+        fatness = 0F;
+//        fatness = ((genes[38] + genes[39]) - (genes[40] + genes[41]))/4F;
         if (fatness >= 0) {
             headWidth = 1F + (fatness * 0.2F);
             bodyWidth = 1F + (fatness * 0.3F);
