@@ -10,6 +10,10 @@ public class GoatTexture {
             "shorthair/", "longhair/",
     };
 
+    private static final String[] TX_HAIR_LENGTH = new String[] {
+            "", "misc/mask/hair_short.png", "misc/mask/hair_medium.png", "misc/mask/hair_long.png", "misc/mask/hair_longest.png",
+    };
+
     private static final String[] TX_AGOUTI_BLACK = new String[] {
             "", "agouti/bezoar_light.png", "", "agouti/buckskin_light.png", "agouti/chamoisee_light.png",
             "agouti/swiss_light.png", "agouti/cou_clair_light.png", "agouti/sundgau_light.png",
@@ -35,12 +39,26 @@ public class GoatTexture {
         TextureGrouping rootGroup = new TextureGrouping(TexturingType.MASK_GROUP);
 
         // Most textures have a longhaired and shorthaired variant, so we'll need to determine which hair type to use first
-        int hairType = gene[56] == 2 && gene[57] == 2 ? 1 : 0;
+        int hairType = 0; // Long or short hair. Stored as an int for texture indexing reasons
+        int hairLength = 0; // If long-haired, the polygenic length of the hair
+        if (gene[50] == 2 && gene[51] == 2) {
+            hairType = 1;
+            hairLength = 1;
+            if (gene[52] == 2 || gene[53] == 2) {
+                hairLength++;
+            }
+            if (gene[54] == 2 || gene[55] == 2) {
+                hairLength++;
+            }
+            if (gene[56] == 2 || gene[57] == 2) {
+                hairLength++;
+            }
+        }
 
         // Alpha Mask Layer
         TextureGrouping alphaGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         goat.addTextureToAnimalTextureGrouping(alphaGroup, "misc/mask/body.png");
-        goat.addTextureToAnimalTextureGrouping(alphaGroup, "misc/mask/hair_long.png", hairType == 1);
+        goat.addTextureToAnimalTextureGrouping(alphaGroup, TX_HAIR_LENGTH, hairLength, hairType != 0);
         rootGroup.addGrouping(alphaGroup);
 
         // Red Layer

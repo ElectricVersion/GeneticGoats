@@ -209,14 +209,14 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[50] = randomizeGene(2);
         autosomalGenes[51] = randomizeGene(2);
 
+        /* LONG HAIR MODIFIERS
+         * 0 - 3
+         */
+        for (int i = 52; i < 58; i++) {
+            autosomalGenes[i] = randomizeGene(2);
+        }
 
-        // TODO: Implement proper hair length, body fat and dairy polygenes genes
-//        /* Placeholder Longhaired
-//         * 1 - 3
-//         */
-//        autosomalGenes[57] = randomizeGene(3);
-//        autosomalGenes[58] = randomizeGene(3);
-//
+        // TODO: Implement body fat and dairy polygenes
 //        /* Placeholder Body Fat
 //         * 1 - 3
 //         */
