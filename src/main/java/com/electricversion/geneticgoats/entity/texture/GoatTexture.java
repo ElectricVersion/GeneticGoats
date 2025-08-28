@@ -30,6 +30,43 @@ public class GoatTexture {
             "misc/transparent.png", "misc/solid.png"
     };
 
+    private static final String[][][] TX_BELT = new String[][][] {
+            {},
+            { //LOW
+                    {
+                            "white/belt/belt_low_poor1.png"
+                    },
+                    {
+                            "white/belt/belt_low_decent1.png"
+                    },
+                    {
+                            "white/belt/belt_low_good1.png"
+                    }
+            },
+            { //MEDIUM
+                    {
+                            "white/belt/belt_med_poor1.png"
+                    },
+                    {
+                            "white/belt/belt_med_decent1.png"
+                    },
+                    {
+                            "white/belt/belt_med_good1.png"
+                    }
+            },
+            { //HIGH
+                    {
+                            "white/belt/belt_high_poor1.png"
+                    },
+                    {
+                            "white/belt/belt_high_decent1.png"
+                    },
+                    {
+                            "white/belt/belt_high_good1.png"
+                    }
+            }
+    };
+
     // This method handles the logic of how individual texture components and genes should
     // interact to create a single, "compiled" texture.
     public static void calculateTexture(EnhancedGoat goat, int[] gene, char[] uuidArry) {
@@ -147,13 +184,31 @@ public class GoatTexture {
     private static TextureGrouping makeWhiteMask(EnhancedGoat goat, int[] gene, char[] uuidArry, int hairType) {
         TextureGrouping whiteGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         int white = 0;
+        int beltSize = 0;
+        int beltQuality = 0;
+        int beltRandom = 0;
+
+        boolean whiteExt1 = gene[62] == 2 && gene[63] == 2;
+        boolean whiteExt2 = gene[64] == 2 && gene[65] == 2;
+
         if (gene[4] == 2 || gene[5] == 2) {
             // Dominant White
             white = 1;
-        } else if (gene[4] == 3 || gene[5] == 3) {
-            // TODO: Flowery
+        } else {
+            // Not Dom White
+            if (gene[4] == 3 || gene[5] == 3) {
+                // TODO: Flowery
+            }
+            if (gene[58] != 1 || gene[59] != 1) {
+                // Belted
+                beltSize = 1;
+                // Each level of white extension increases belt size
+                if (whiteExt1) beltSize++;
+                if (whiteExt2) beltSize++;
+            }
         }
 
+        goat.addTextureToAnimalTextureGrouping(whiteGroup, TX_HAIR_PREFIX, hairType, TX_BELT, beltSize, beltQuality, beltRandom, beltSize != 0);
         goat.addTextureToAnimalTextureGrouping(whiteGroup, TX_KIT, white, true);
 
         return whiteGroup;
