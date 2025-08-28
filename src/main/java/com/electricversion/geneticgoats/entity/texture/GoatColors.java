@@ -57,7 +57,7 @@ public class GoatColors {
         float[] pheomelanin = {0.064F, 0.525F, 0.578F};
         float[] cream = pheomelanin.clone();
 
-        float[] white = {0.094F, 0.10F, 0.93F};
+        float[] white = {0.094F, 0.08F, 0.96F};
 
         float[] noseRed = {0.047F, 0.52F, 0.20F};
         float[] noseBlack = {0.047F, 0.32F, 0.21F};
