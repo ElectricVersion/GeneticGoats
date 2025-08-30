@@ -205,6 +205,13 @@ public class GoatTexture {
                 // Each level of white extension increases belt size
                 if (whiteExt1) beltSize++;
                 if (whiteExt2) beltSize++;
+                
+                if (Math.min(gene[60], gene[61]) == 2) {
+                    beltQuality = 1;
+                }
+                else if (Math.min(gene[60], gene[61]) == 3) {
+                    beltQuality = 2;
+                }
             }
         }
 
