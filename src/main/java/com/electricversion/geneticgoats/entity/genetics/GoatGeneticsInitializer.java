@@ -234,21 +234,21 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
 
         /* WHITE EXTENSION 1
          * 1 - Wildtype
-         * 2 - Higher White (Recessive)
+         * 2 - Higher White (Dominant)
          */
         autosomalGenes[62] = randomizeGene(2);
         autosomalGenes[63] = randomizeGene(2);
 
         /* WHITE EXTENSION 2
          * 1 - Wildtype
-         * 2 - Higher White (Recessive)
+         * 2 - Higher White (Dominant)
          */
         autosomalGenes[64] = randomizeGene(2);
         autosomalGenes[65] = randomizeGene(2);
 
         /* SOCKS ENHANCER
          * 1 - Wildtype
-         * 2 - Higher White (Recessive)
+         * 2 - Higher White (Dominant)
          */
         autosomalGenes[66] = randomizeGene(2);
         autosomalGenes[67] = randomizeGene(2);

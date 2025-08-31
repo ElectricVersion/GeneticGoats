@@ -249,8 +249,8 @@ public class GoatTexture {
         int sockFrontRandom = 0;
         int sockBackRandom = 0;
 
-        boolean whiteExt1 = gene[62] == 2 && gene[63] == 2;
-        boolean whiteExt2 = gene[64] == 2 && gene[65] == 2;
+        boolean whiteExt1 = gene[62] == 2 || gene[63] == 2;
+        boolean whiteExt2 = gene[64] == 2 || gene[65] == 2;
 
         if (gene[4] == 2 || gene[5] == 2) {
             // Dominant White
@@ -284,10 +284,11 @@ public class GoatTexture {
                         sockBackSize++;
                     }
 
-                    if (gene[66] == 2 && gene[67] == 2) {
+                    if (gene[66] == 2 || gene[67] == 2) {
+                        // Sock Enhancer also increases sock size
                         sockFrontSize++;
                         sockBackSize++;
-                    } // Sock Enhancer also increases sock size
+                    }
 
                     if (gene[68] == 2 && gene[69] == 2) sockQuality = 1; // Sock Quality Modifier
                 }
