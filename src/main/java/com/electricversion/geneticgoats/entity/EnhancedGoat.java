@@ -16,6 +16,7 @@ import mokiyoki.enhancedanimals.init.ModMemoryModuleTypes;
 import mokiyoki.enhancedanimals.model.modeldata.AnimalModelData;
 import mokiyoki.enhancedanimals.renderer.texture.TextureGrouping;
 import mokiyoki.enhancedanimals.renderer.texture.TextureLayer;
+import mokiyoki.enhancedanimals.renderer.texture.TexturingType;
 import mokiyoki.enhancedanimals.util.Genes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -50,7 +51,7 @@ import javax.annotation.Nullable;
 
 public class EnhancedGoat extends EnhancedAnimalAbstract {
 
-    public static final int AUTOSOMAL_GENES_LENGTH = 68;
+    public static final int AUTOSOMAL_GENES_LENGTH = 70;
     public static final int SEXLINKED_GENES_LENGTH = 2;
 
     @OnlyIn(Dist.CLIENT)
@@ -235,11 +236,20 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
         this.texturesIndexes.add(CACHE_DELIMITER);
     }
 
-    // Utility method to add a texture with a prefix based on a certain index and two keys
+    // Utility method to add a texture with a prefix based on a certain index and three keys
     public void addTextureToAnimalTextureGrouping(TextureGrouping textureGroup, String[] prefix, int prefixIndex, String[][][] texture, int geneValue0, int geneValue1, int geneValue2, boolean check) {
         if (check) {
             textureGroup.addTextureLayers(new TextureLayer(prefix[prefixIndex] + texture[geneValue0][geneValue1][geneValue2]));
             this.texturesIndexes.add(String.valueOf(prefixIndex) + String.valueOf(geneValue0) + String.valueOf(geneValue1) + String.valueOf(geneValue2));
+        }
+        this.texturesIndexes.add(CACHE_DELIMITER);
+    }
+
+    // Utility method to add a texture with three keys. Copied from Core GA for addon use since it's protected
+    public void addTextureToAnimalTextureGrouping(TextureGrouping textureGroup, TexturingType texturingType, String[][][] texture, int geneValue0, int geneValue1, int geneValue2, boolean check) {
+        if(check) {
+            textureGroup.addTextureLayers(new TextureLayer(texturingType, texture[geneValue0][geneValue1][geneValue2]));
+            this.texturesIndexes.add(String.valueOf(geneValue0)+String.valueOf(geneValue1)+String.valueOf(geneValue2));
         }
         this.texturesIndexes.add(CACHE_DELIMITER);
     }

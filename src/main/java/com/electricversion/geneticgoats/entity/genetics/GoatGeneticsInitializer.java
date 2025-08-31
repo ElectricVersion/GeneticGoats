@@ -219,7 +219,7 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         /* BELTED
          * 1 - Wildtype
          * 2 - Belted with Socks
-         * 2 - Belted
+         * 3 - Belted
          * (Belted w/ Socks > Belted > Wildtype)
          */
         autosomalGenes[58] = randomizeGene(3);
@@ -250,8 +250,16 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
          * 1 - Wildtype
          * 2 - Higher White (Recessive)
          */
-        autosomalGenes[66] = randomizeGene(3);
-        autosomalGenes[67] = randomizeGene(3);
+        autosomalGenes[66] = randomizeGene(2);
+        autosomalGenes[67] = randomizeGene(2);
+
+        /* SOCKS QUALITY
+         * 1 - Wildtype
+         * 2 - Higher Quality (Recessive)
+         */
+        autosomalGenes[68] = randomizeGene(2);
+        autosomalGenes[69] = randomizeGene(2);
+
 
         // TODO: Implement body fat and dairy polygenes
 //        /* Placeholder Body Fat

@@ -67,6 +67,62 @@ public class GoatTexture {
             }
     };
 
+    private static final String[][][] TX_SOCKS_FRONT = new String[][][] {
+            {},
+            { // LOW
+                    {
+                            "shared/white/socks/socks_low_broken_front1.png",
+                    },
+                    {
+                            "shared/white/socks/socks_low_clean_front1.png",
+                    }
+            },
+            { // MEDIUM
+                    {
+                            "shared/white/socks/socks_med_broken_front1.png",
+                    },
+                    {
+                            "shared/white/socks/socks_med_clean_front1.png",
+                    }
+            },
+            { // HIGH
+                    {
+                            "shared/white/socks/socks_high_broken_front1.png",
+                    },
+                    {
+                            "shared/white/socks/socks_high_clean_front1.png",
+                    }
+            }
+    };
+
+    private static final String[][][] TX_SOCKS_BACK = new String[][][] {
+            {},
+            { // LOW
+                    {
+                            "shared/white/socks/socks_low_broken_back1.png",
+                    },
+                    {
+                            "shared/white/socks/socks_low_clean_back1.png",
+                    }
+            },
+            { // MEDIUM
+                    {
+                            "shared/white/socks/socks_med_broken_back1.png",
+                    },
+                    {
+                            "shared/white/socks/socks_med_clean_back1.png",
+                    }
+            },
+            { // HIGH
+                    {
+                            "shared/white/socks/socks_high_broken_back1.png",
+                    },
+                    {
+                            "shared/white/socks/socks_high_clean_back1.png",
+                    }
+            }
+    };
+
     // This method handles the logic of how individual texture components and genes should
     // interact to create a single, "compiled" texture.
     public static void calculateTexture(EnhancedGoat goat, int[] gene, char[] uuidArry) {
@@ -187,6 +243,11 @@ public class GoatTexture {
         int beltSize = 0;
         int beltQuality = 0;
         int beltRandom = 0;
+        int sockFrontSize = 0;
+        int sockBackSize = 0;
+        int sockQuality = 0;
+        int sockFrontRandom = 0;
+        int sockBackRandom = 0;
 
         boolean whiteExt1 = gene[62] == 2 && gene[63] == 2;
         boolean whiteExt2 = gene[64] == 2 && gene[65] == 2;
@@ -212,10 +273,32 @@ public class GoatTexture {
                 else if (Math.min(gene[60], gene[61]) == 3) {
                     beltQuality = 2;
                 }
+                if (gene[58] == 2 || gene[59] == 2) {
+                    // Socked Belted
+                    sockFrontSize = 1;
+                    sockBackSize = 1;
+
+                    if (beltSize == 3) {
+                        // Max white level increases sock size
+                        sockFrontSize++;
+                        sockBackSize++;
+                    }
+
+                    if (gene[66] == 2 && gene[67] == 2) {
+                        sockFrontSize++;
+                        sockBackSize++;
+                    } // Sock Enhancer also increases sock size
+
+                    if (gene[68] == 2 && gene[69] == 2) sockQuality = 1; // Sock Quality Modifier
+                }
             }
         }
 
         goat.addTextureToAnimalTextureGrouping(whiteGroup, TX_HAIR_PREFIX, hairType, TX_BELT, beltSize, beltQuality, beltRandom, beltSize != 0);
+
+        goat.addTextureToAnimalTextureGrouping(whiteGroup, TexturingType.NONE, TX_SOCKS_FRONT, sockFrontSize, sockQuality, sockFrontRandom, sockFrontSize != 0);
+        goat.addTextureToAnimalTextureGrouping(whiteGroup, TexturingType.NONE, TX_SOCKS_BACK, sockBackSize, sockQuality, sockBackRandom, sockBackSize != 0);
+
         goat.addTextureToAnimalTextureGrouping(whiteGroup, TX_KIT, white, true);
 
         return whiteGroup;
