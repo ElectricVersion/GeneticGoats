@@ -16,6 +16,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
 
+    public static final int AUTOSOMAL_GENES_LENGTH = 70;
+    public static final int SEXLINKED_GENES_LENGTH = 2;
+
     int WTC = GoatsCommonConfig.COMMON.wildTypeChance.get();
     List<Breed> breeds = new ArrayList<>();
 
@@ -39,8 +42,8 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
     @Override
     protected Genes generateLocalWildGenetics(Holder<Biome> biomeHolder, boolean b) {
         Biome biome = biomeHolder.value();
-        int[] sexlinkedGenes = new int[EnhancedGoat.SEXLINKED_GENES_LENGTH];
-        int[] autosomalGenes = new int[EnhancedGoat.AUTOSOMAL_GENES_LENGTH];
+        int[] sexlinkedGenes = new int[SEXLINKED_GENES_LENGTH];
+        int[] autosomalGenes = new int[AUTOSOMAL_GENES_LENGTH];
 
         /* Sexlinked Genes */
         sexlinkedGenes[0] = 1;

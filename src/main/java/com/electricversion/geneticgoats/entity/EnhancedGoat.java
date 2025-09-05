@@ -51,15 +51,12 @@ import javax.annotation.Nullable;
 
 public class EnhancedGoat extends EnhancedAnimalAbstract {
 
-    public static final int AUTOSOMAL_GENES_LENGTH = 70;
-    public static final int SEXLINKED_GENES_LENGTH = 2;
-
     @OnlyIn(Dist.CLIENT)
     private GoatModelData goatModelData;
 
     /* Initialization & General Properties */
     public EnhancedGoat(EntityType<? extends EnhancedAnimalAbstract> type, Level worldIn) {
-        super(type, worldIn, SEXLINKED_GENES_LENGTH, AUTOSOMAL_GENES_LENGTH, true);
+        super(type, worldIn, GoatGeneticsInitializer.SEXLINKED_GENES_LENGTH, GoatGeneticsInitializer.AUTOSOMAL_GENES_LENGTH, true);
         this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
         this.moveControl = new MoveControl(this);
         this.lookControl = new LookControl(this);
