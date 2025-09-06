@@ -67,16 +67,16 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
 
         /* EXTENSION/MC1R
          * 1 - Wildtype
-         * 2 - Dominant black
-         * 3 - Recessive Red
+         * 2 - Black; Dominant
+         * 3 - Red; Recessive
          */
         autosomalGenes[2] = randomizeGene(3);
         autosomalGenes[3] = randomizeGene(3);
 
         /* WHITE SPOTTING/KIT
          * 1 - Wildtype
-         * 2 - Dominant White
-         * 3 - Flowery
+         * 2 - White; Dominant
+         * 3 - Flowery; Dominant
          */
         autosomalGenes[4] = randomizeGene(3);
         autosomalGenes[5] = randomizeGene(3);
@@ -165,21 +165,21 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
 
         /* EAR HEIGHT 1
          * 1 - Wildtype
-         * 2 - Lower (Dominant)
+         * 2 - Lower; Dominant
          */
         autosomalGenes[26] = randomizeGene(3);
         autosomalGenes[27] = randomizeGene(3);
 
         /* EAR HEIGHT 2
          * 1 - Wildtype
-         * 2 - Lower (Dominant)
+         * 2 - Lower; Dominant
          */
         autosomalGenes[28] = randomizeGene(3);
         autosomalGenes[29] = randomizeGene(3);
 
         /* GOPHER EAR
          * 1 - Wildtype
-         * 2 - Gopher (Incomplete Dominant?)
+         * 2 - Gopher; Incomplete Dominant
          */
         autosomalGenes[30] = randomizeGene(2);
         autosomalGenes[31] = randomizeGene(2);
@@ -207,7 +207,7 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
 
         /* LONG HAIR
          * 1 - Wildtype
-         * 2 - Long Hair
+         * 2 - Long Hair; Recessive
          */
         autosomalGenes[50] = randomizeGene(2);
         autosomalGenes[51] = randomizeGene(2);
@@ -221,8 +221,8 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
 
         /* BELTED
          * 1 - Wildtype
-         * 2 - Belted with Socks
-         * 3 - Belted
+         * 2 - Belted with Socks; Dominant
+         * 3 - Belted; Dominant
          * (Belted w/ Socks > Belted > Wildtype)
          */
         autosomalGenes[58] = randomizeGene(3);
@@ -237,28 +237,28 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
 
         /* WHITE EXTENSION 1
          * 1 - Wildtype
-         * 2 - Higher White (Dominant)
+         * 2 - Higher White; Dominant
          */
         autosomalGenes[62] = randomizeGene(2);
         autosomalGenes[63] = randomizeGene(2);
 
         /* WHITE EXTENSION 2
          * 1 - Wildtype
-         * 2 - Higher White (Dominant)
+         * 2 - Higher White; Dominant
          */
         autosomalGenes[64] = randomizeGene(2);
         autosomalGenes[65] = randomizeGene(2);
 
         /* SOCKS ENHANCER
          * 1 - Wildtype
-         * 2 - Higher White (Dominant)
+         * 2 - Higher White; Dominant
          */
         autosomalGenes[66] = randomizeGene(2);
         autosomalGenes[67] = randomizeGene(2);
 
         /* SOCKS QUALITY
          * 1 - Wildtype
-         * 2 - Higher Quality (Recessive)
+         * 2 - Higher Quality; Recessive
          */
         autosomalGenes[68] = randomizeGene(2);
         autosomalGenes[69] = randomizeGene(2);
