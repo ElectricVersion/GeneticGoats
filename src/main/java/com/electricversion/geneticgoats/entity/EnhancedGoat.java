@@ -242,9 +242,18 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
         this.texturesIndexes.add(CACHE_DELIMITER);
     }
 
+    // Utility method to add a texture with a prefix based on a certain index and two keys
+    public void addTextureToAnimalTextureGrouping(TextureGrouping textureGroup, String[] prefix, int prefixIndex, String[][] texture, int geneValue0, int geneValue1,  boolean check) {
+        if (check) {
+            textureGroup.addTextureLayers(new TextureLayer(prefix[prefixIndex] + texture[geneValue0][geneValue1]));
+            this.texturesIndexes.add(String.valueOf(prefixIndex) + String.valueOf(geneValue0) + String.valueOf(geneValue1));
+        }
+        this.texturesIndexes.add(CACHE_DELIMITER);
+    }
+
     // Utility method to add a texture with three keys. Copied from Core GA for addon use since it's protected
     public void addTextureToAnimalTextureGrouping(TextureGrouping textureGroup, TexturingType texturingType, String[][][] texture, int geneValue0, int geneValue1, int geneValue2, boolean check) {
-        if(check) {
+        if (check) {
             textureGroup.addTextureLayers(new TextureLayer(texturingType, texture[geneValue0][geneValue1][geneValue2]));
             this.texturesIndexes.add(String.valueOf(geneValue0)+String.valueOf(geneValue1)+String.valueOf(geneValue2));
         }

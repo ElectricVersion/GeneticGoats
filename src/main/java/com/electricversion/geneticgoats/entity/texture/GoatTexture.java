@@ -6,7 +6,16 @@ import mokiyoki.enhancedanimals.renderer.texture.TexturingType;
 
 public class GoatTexture {
 
-    private static final String[] TX_HAIR_PREFIX = new String[] {
+    private static final String[] SIZE = new String[] {
+            "low", "med", "high"
+    };
+
+    private static final String[] QUALITY = new String[] {
+            "poor", "decent", "good"
+    };
+
+
+    private static final String[] HAIR_PREFIX = new String[] {
             "shorthair/", "longhair/",
     };
 
@@ -26,13 +35,20 @@ public class GoatTexture {
             "", "",
     };
 
-    private static final String[] TX_KIT = new String[] {
-            "misc/transparent.png", "misc/solid.png"
+    private static final String[][] TX_PIEBALD = new String[][] {
+            { // LOW
+                    "white/piebald/piebald_low_1.png"
+            },
+            { // MEDIUM
+                    "white/piebald/piebald_med_1.png"
+            },
+            { // HIGH
+                    "white/piebald/piebald_high_1.png"
+            }
     };
 
     private static final String[][][] TX_BELT = new String[][][] {
-            {},
-            { //LOW
+            { // LOW
                     {
                             "white/belt/belt_low_poor1.png"
                     },
@@ -43,7 +59,7 @@ public class GoatTexture {
                             "white/belt/belt_low_good1.png"
                     }
             },
-            { //MEDIUM
+            { // MEDIUM
                     {
                             "white/belt/belt_med_poor1.png"
                     },
@@ -54,7 +70,7 @@ public class GoatTexture {
                             "white/belt/belt_med_good1.png"
                     }
             },
-            { //HIGH
+            { // HIGH
                     {
                             "white/belt/belt_high_poor1.png"
                     },
@@ -201,10 +217,10 @@ public class GoatTexture {
         if (agouti1 != 2 && agouti2 != 2) {
             // Gold agouti is dominant and blocks the cream highlights, so require that it's not present
             if (!TX_AGOUTI_CREAM[agouti1].isEmpty()) {
-                goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RGB, TX_HAIR_PREFIX[hairType] + TX_AGOUTI_CREAM[agouti1], ("ac1" + hairType) + agouti1, color.getCreamColor());
+                goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RGB, HAIR_PREFIX[hairType] + TX_AGOUTI_CREAM[agouti1], ("ac1" + hairType) + agouti1, color.getCreamColor());
             }
             if (!TX_AGOUTI_CREAM[agouti2].isEmpty()) {
-                goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RGB, TX_HAIR_PREFIX[hairType] + TX_AGOUTI_CREAM[agouti2], ("ac2" + hairType) + agouti2, color.getCreamColor());
+                goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RGB, HAIR_PREFIX[hairType] + TX_AGOUTI_CREAM[agouti2], ("ac2" + hairType) + agouti2, color.getCreamColor());
             }
         }
         goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RGB, "misc/nose.png", "nr", color.getNoseRedColor());
@@ -223,8 +239,8 @@ public class GoatTexture {
             return blackGroup;
         }
         TextureGrouping agoutiGroup = new TextureGrouping(TexturingType.MASK_GROUP);
-        goat.addTextureToAnimalTextureGrouping(agoutiGroup, TX_HAIR_PREFIX, hairType, TX_AGOUTI_BLACK, agouti1, true);
-        goat.addTextureToAnimalTextureGrouping(agoutiGroup, TX_HAIR_PREFIX, hairType, TX_AGOUTI_BLACK, agouti2, agouti1 != agouti2);
+        goat.addTextureToAnimalTextureGrouping(agoutiGroup, HAIR_PREFIX, hairType, TX_AGOUTI_BLACK, agouti1, true);
+        goat.addTextureToAnimalTextureGrouping(agoutiGroup, HAIR_PREFIX, hairType, TX_AGOUTI_BLACK, agouti2, agouti1 != agouti2);
         blackGroup.addGrouping(agoutiGroup);
 
         return blackGroup;
@@ -239,34 +255,51 @@ public class GoatTexture {
 
     private static TextureGrouping makeWhiteMask(EnhancedGoat goat, int[] gene, char[] uuidArry, int hairType) {
         TextureGrouping whiteGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
-        int white = 0;
-        int beltSize = 0;
-        int beltQuality = 0;
-        int beltRandom = 0;
-        int sockFrontSize = 0;
-        int sockBackSize = 0;
-        int sockQuality = 0;
-        int sockFrontRandom = 0;
-        int sockBackRandom = 0;
+
+        // Blank texture to avoid issues when group is empty
+        goat.addTextureToAnimalTextureGrouping(whiteGroup, "misc/transparent.png");
 
         boolean whiteExt1 = gene[62] == 2 || gene[63] == 2;
         boolean whiteExt2 = gene[64] == 2 || gene[65] == 2;
+        int whiteSize = 0;
+        if (whiteExt1) whiteSize++;
+        if (whiteExt2) whiteSize++;
 
         if (gene[4] == 2 || gene[5] == 2) {
             // Dominant White
-            white = 1;
+            goat.addDelimiter("w");
+            goat.addTextureToAnimalTextureGrouping(whiteGroup, "misc/solid.png");
         } else {
             // Not Dom White
             if (gene[4] == 3 || gene[5] == 3) {
                 // TODO: Flowery
+                goat.addDelimiter("f");
+
             }
-            if (gene[58] != 1 || gene[59] != 1) {
-                // Belted
-                beltSize = 1;
-                // Each level of white extension increases belt size
-                if (whiteExt1) beltSize++;
-                if (whiteExt2) beltSize++;
-                
+            else if (gene[4] == 4 || gene[5] == 4) {
+                // Piebald
+                if (gene[58] != 1 || gene[59] != 1) {
+                    // Piebald AND belt
+                }
+                else {
+                    // Piebald without belt
+                    int piebaldRandom = 0;
+
+                    goat.addDelimiter("pb");
+                    goat.addTextureToAnimalTextureGrouping(whiteGroup, HAIR_PREFIX, hairType, TX_PIEBALD, whiteSize, piebaldRandom, true);
+                }
+            }
+            else if (gene[58] != 1 || gene[59] != 1) {
+                // Belted without piebald
+
+                int beltQuality = 0;
+                int beltRandom = 0;
+                int sockFrontSize = 0;
+                int sockBackSize = 0;
+                int sockQuality = 0;
+                int sockFrontRandom = 0;
+                int sockBackRandom = 0;
+
                 if (Math.min(gene[60], gene[61]) == 2) {
                     beltQuality = 1;
                 }
@@ -278,7 +311,7 @@ public class GoatTexture {
                     sockFrontSize = 1;
                     sockBackSize = 1;
 
-                    if (beltSize == 3) {
+                    if (whiteSize == 2) {
                         // Max white level increases sock size
                         sockFrontSize++;
                         sockBackSize++;
@@ -292,16 +325,14 @@ public class GoatTexture {
 
                     if (gene[68] == 2 && gene[69] == 2) sockQuality = 1; // Sock Quality Modifier
                 }
+
+                goat.addDelimiter("be");
+                goat.addTextureToAnimalTextureGrouping(whiteGroup, HAIR_PREFIX, hairType, TX_BELT, whiteSize, beltQuality, beltRandom, true);
+
+                goat.addTextureToAnimalTextureGrouping(whiteGroup, TexturingType.NONE, TX_SOCKS_FRONT, sockFrontSize, sockQuality, sockFrontRandom, sockFrontSize != 0);
+                goat.addTextureToAnimalTextureGrouping(whiteGroup, TexturingType.NONE, TX_SOCKS_BACK, sockBackSize, sockQuality, sockBackRandom, sockBackSize != 0);
             }
         }
-
-        goat.addTextureToAnimalTextureGrouping(whiteGroup, TX_HAIR_PREFIX, hairType, TX_BELT, beltSize, beltQuality, beltRandom, beltSize != 0);
-
-        goat.addTextureToAnimalTextureGrouping(whiteGroup, TexturingType.NONE, TX_SOCKS_FRONT, sockFrontSize, sockQuality, sockFrontRandom, sockFrontSize != 0);
-        goat.addTextureToAnimalTextureGrouping(whiteGroup, TexturingType.NONE, TX_SOCKS_BACK, sockBackSize, sockQuality, sockBackRandom, sockBackSize != 0);
-
-        goat.addTextureToAnimalTextureGrouping(whiteGroup, TX_KIT, white, true);
-
         return whiteGroup;
     }
 
