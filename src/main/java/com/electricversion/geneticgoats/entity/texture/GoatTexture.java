@@ -4,16 +4,13 @@ import com.electricversion.geneticgoats.entity.EnhancedGoat;
 import mokiyoki.enhancedanimals.renderer.texture.TextureGrouping;
 import mokiyoki.enhancedanimals.renderer.texture.TexturingType;
 
+import java.util.Arrays;
+
 public class GoatTexture {
 
-    private static final String[] SIZE = new String[] {
-            "low", "med", "high"
+    private static final String[] AGOUTIS = new String[] {
+            "", "bezoar", "gold", "buckskin", "chamoisee", "swiss", "cou_clair", "sundgau", "tanhead", "caramel"
     };
-
-    private static final String[] QUALITY = new String[] {
-            "poor", "decent", "good"
-    };
-
 
     private static final String[] HAIR_PREFIX = new String[] {
             "shorthair/", "longhair/",
@@ -27,6 +24,16 @@ public class GoatTexture {
             "", "agouti/bezoar_light.png", "", "agouti/buckskin_light.png", "agouti/chamoisee_light.png",
             "agouti/swiss_light.png", "agouti/cou_clair_light.png", "agouti/sundgau_light.png",
             "agouti/tanhead_light.png", "agouti/caramel_light.png",
+    };
+
+    private static final String[] TX_AGOUTI_HETS = new String[] {
+            "agouti/hets/bezoar_caramel_light.png", "agouti/hets/bezoar_cou_clair_light.png",
+            "agouti/hets/bezoar_sundgau_light.png", "agouti/hets/buckskin_caramel_light.png",
+            "agouti/hets/buckskin_chamoisee_light.png", "agouti/hets/caramel_sundgau_light.png",
+            "agouti/hets/caramel_swiss_light.png", "agouti/hets/caramel_tanhead_light.png",
+            "agouti/hets/chamoisee_sundgau_light.png", "agouti/hets/chamoisee_swiss_light.png",
+            "agouti/hets/chamoisee_tanhead_light.png", "agouti/hets/cou_clair_sundgau_light.png",
+            "agouti/hets/cou_clair_swiss_light.png",
     };
 
     private static final String[] TX_AGOUTI_CREAM = new String[] {
@@ -239,8 +246,32 @@ public class GoatTexture {
             return blackGroup;
         }
         TextureGrouping agoutiGroup = new TextureGrouping(TexturingType.MASK_GROUP);
-        goat.addTextureToAnimalTextureGrouping(agoutiGroup, HAIR_PREFIX, hairType, TX_AGOUTI_BLACK, agouti1, true);
-        goat.addTextureToAnimalTextureGrouping(agoutiGroup, HAIR_PREFIX, hairType, TX_AGOUTI_BLACK, agouti2, agouti1 != agouti2);
+        if (agouti1 == agouti2) {
+            // Homozygous Agouti
+            goat.addDelimiter("a");
+            goat.addTextureToAnimalTextureGrouping(agoutiGroup, HAIR_PREFIX, hairType, TX_AGOUTI_BLACK, agouti1, true);
+        } else {
+            // Heterozygous Agouti
+            goat.addDelimiter("aa");
+            int hetOverrideIndex = -1;
+            String agouti1Name = AGOUTIS[agouti1];
+            String agouti2Name = AGOUTIS[agouti2];
+            // TODO: Maybe figure out a better way to do this. This feels messy
+            // Test if a het override texture is listed for this combo
+            for (int i = 0; i < TX_AGOUTI_HETS.length; i++) {
+                if (TX_AGOUTI_HETS[i].equals("agouti/hets/"+agouti1Name+"_"+agouti2Name+"_light.png") ||
+                        TX_AGOUTI_HETS[i].equals("agouti/hets/"+agouti2Name+"_"+agouti1Name+"_light.png")) {
+                    hetOverrideIndex = i;
+                    break;
+                }
+            }
+            if (hetOverrideIndex > -1) {
+                goat.addTextureToAnimalTextureGrouping(agoutiGroup, HAIR_PREFIX, hairType, TX_AGOUTI_HETS, hetOverrideIndex, true);
+            } else {
+                goat.addTextureToAnimalTextureGrouping(agoutiGroup, HAIR_PREFIX, hairType, TX_AGOUTI_BLACK, agouti1, true);
+                goat.addTextureToAnimalTextureGrouping(agoutiGroup, HAIR_PREFIX, hairType, TX_AGOUTI_BLACK, agouti2, true);
+            }
+        }
         blackGroup.addGrouping(agoutiGroup);
 
         return blackGroup;
@@ -274,12 +305,12 @@ public class GoatTexture {
             if (gene[4] == 3 || gene[5] == 3) {
                 // TODO: Flowery
                 goat.addDelimiter("f");
-
             }
             else if (gene[4] == 4 || gene[5] == 4) {
                 // Piebald
                 if (gene[58] != 1 || gene[59] != 1) {
                     // Piebald AND belt
+                    goat.addDelimiter("pbe");
                 }
                 else {
                     // Piebald without belt
