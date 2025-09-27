@@ -26,16 +26,6 @@ public class GoatTexture {
             "agouti/tanhead_light.png", "agouti/caramel_light.png",
     };
 
-    private static final String[] TX_AGOUTI_HETS = new String[] {
-            "agouti/hets/bezoar_caramel_light.png", "agouti/hets/bezoar_cou_clair_light.png",
-            "agouti/hets/bezoar_sundgau_light.png", "agouti/hets/buckskin_caramel_light.png",
-            "agouti/hets/buckskin_chamoisee_light.png", "agouti/hets/caramel_sundgau_light.png",
-            "agouti/hets/caramel_swiss_light.png", "agouti/hets/caramel_tanhead_light.png",
-            "agouti/hets/chamoisee_sundgau_light.png", "agouti/hets/chamoisee_swiss_light.png",
-            "agouti/hets/chamoisee_tanhead_light.png", "agouti/hets/cou_clair_sundgau_light.png",
-            "agouti/hets/cou_clair_swiss_light.png",
-    };
-
     private static final String[] TX_AGOUTI_CREAM = new String[] {
             "", "agouti/bezoar_cream.png", "", "", "",
             "agouti/swiss_cream.png", "", "agouti/sundgau_cream.png",
@@ -253,23 +243,16 @@ public class GoatTexture {
         } else {
             // Heterozygous Agouti
             goat.addDelimiter("aa");
-            int hetOverrideIndex = -1;
-            String agouti1Name = AGOUTIS[agouti1];
-            String agouti2Name = AGOUTIS[agouti2];
-            // TODO: Maybe figure out a better way to do this. This feels messy
-            // Test if a het override texture is listed for this combo
-            for (int i = 0; i < TX_AGOUTI_HETS.length; i++) {
-                if (TX_AGOUTI_HETS[i].equals("agouti/hets/"+agouti1Name+"_"+agouti2Name+"_light.png") ||
-                        TX_AGOUTI_HETS[i].equals("agouti/hets/"+agouti2Name+"_"+agouti1Name+"_light.png")) {
-                    hetOverrideIndex = i;
-                    break;
+            if (agouti1 < AGOUTIS.length && agouti2 < AGOUTIS.length) { // Should always be true but just in case
+                String agouti1Name = AGOUTIS[agouti1];
+                String agouti2Name = AGOUTIS[agouti2];
+                String hetTextureString;
+                if (agouti1Name.compareToIgnoreCase(agouti2Name) < 0) {
+                    hetTextureString = HAIR_PREFIX[hairType]+"agouti/hets/"+agouti1Name+"_"+agouti2Name+"_light.png";
+                } else {
+                    hetTextureString = HAIR_PREFIX[hairType]+"agouti/hets/"+agouti2Name+"_"+agouti1Name+"_light.png";
                 }
-            }
-            if (hetOverrideIndex > -1) {
-                goat.addTextureToAnimalTextureGrouping(agoutiGroup, HAIR_PREFIX, hairType, TX_AGOUTI_HETS, hetOverrideIndex, true);
-            } else {
-                goat.addTextureToAnimalTextureGrouping(agoutiGroup, HAIR_PREFIX, hairType, TX_AGOUTI_BLACK, agouti1, true);
-                goat.addTextureToAnimalTextureGrouping(agoutiGroup, HAIR_PREFIX, hairType, TX_AGOUTI_BLACK, agouti2, true);
+                goat.addTextureToAnimalTextureGrouping(agoutiGroup, hetTextureString, hairType+"-"+agouti1+"-"+agouti2);
             }
         }
         blackGroup.addGrouping(agoutiGroup);
