@@ -9,7 +9,7 @@ import java.util.Arrays;
 public class GoatTexture {
 
     private static final String[] AGOUTIS = new String[] {
-            "", "bezoar", "gold", "buckskin", "chamoisee", "swiss", "cou_clair", "sundgau", "tanhead", "caramel"
+            "", "bezoar", "gold", "buckskin", "chamoisee", "swiss", "cou_clair", "sundgau", "tanhead", "caramel", "sable"
     };
 
     private static final String[] HAIR_PREFIX = new String[] {
@@ -23,13 +23,13 @@ public class GoatTexture {
     private static final String[] TX_AGOUTI_BLACK = new String[] {
             "", "agouti/bezoar_light.png", "", "agouti/buckskin_light.png", "agouti/chamoisee_light.png",
             "agouti/swiss_light.png", "agouti/cou_clair_light.png", "agouti/sundgau_light.png",
-            "agouti/tanhead_light.png", "agouti/caramel_light.png",
+            "agouti/tanhead_light.png", "agouti/caramel_light.png", "agouti/sable_light.png",
     };
 
     private static final String[] TX_AGOUTI_CREAM = new String[] {
             "", "agouti/bezoar_cream.png", "", "", "",
             "agouti/swiss_cream.png", "", "agouti/sundgau_cream.png",
-            "", "",
+            "", "", "agouti/sable_cream.png"
     };
 
     private static final String[][] TX_PIEBALD = new String[][] {
