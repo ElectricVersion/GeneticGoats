@@ -62,9 +62,10 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
          * 8 - Tanhead; Incomplete Dom
          * 9 - Caramel; Incomplete Dom
          * 10 - Sable; Incomplete Dom
+         * 11 - Masked; Incomplete Dom
          */
-        autosomalGenes[0] = randomizeGene(10);
-        autosomalGenes[1] = randomizeGene(10);
+        autosomalGenes[0] = randomizeGene(11);
+        autosomalGenes[1] = randomizeGene(11);
 
         /* EXTENSION/MC1R
          * 1 - Wildtype
