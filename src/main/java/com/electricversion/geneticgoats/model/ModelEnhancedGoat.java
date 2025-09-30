@@ -648,8 +648,10 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         bUdder.show(goatModelData.getUdderSize() > 0F);
 
+
         //Enable the appropriate blocks
         GoatPhenotype phenotype = goatModelData.getPhenotype();
+        beard.show(phenotype.isBearded());
         setupEars(phenotype);
         setupMuzzle(phenotype);
     }
