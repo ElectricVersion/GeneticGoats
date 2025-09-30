@@ -260,7 +260,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("bMuzzle", CubeListBuilder.create(),
                 PartPose.offsetAndRotation(0F, 1F, -6F, Mth.HALF_PI * 0.125F, 0F, 0F));
         baseDef.addOrReplaceChild("bMouth", CubeListBuilder.create(),
-                PartPose.offset(0F, 5F, -6F));
+                PartPose.offset(0F, 4F, -6F));
         baseDef.addOrReplaceChild("bLegFL", CubeListBuilder.create(),
                 PartPose.offset(1.49F, 8F, 3.01F));
         baseDef.addOrReplaceChild("bLegFR", CubeListBuilder.create(),
@@ -348,7 +348,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("mouth", CubeListBuilder.create()
                         .texOffs(28, 62)
                         .addBox(-1.5F, -1F, -4F, 3, 1, 4),
-                PartPose.offset(0F, 0F, 0F));
+                PartPose.offset(0F, 1F, 0F));
 
         baseDef.addOrReplaceChild("beard", CubeListBuilder.create()
                         .texOffs(29, 62)
