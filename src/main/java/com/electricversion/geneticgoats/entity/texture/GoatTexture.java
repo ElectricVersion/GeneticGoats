@@ -37,7 +37,7 @@ public class GoatTexture {
             "", "agouti/bezoar_cream.png", "", "", "",
             "agouti/swiss_cream.png", "", "agouti/sundgau_cream.png",
             "", "", "agouti/sable_cream.png",
-            "agouti/masked_cream.pnga"
+            "agouti/masked_cream.png"
     };
 
     private static final String[][] TX_PIEBALD = new String[][] {
