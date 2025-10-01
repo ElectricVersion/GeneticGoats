@@ -1,7 +1,6 @@
 package com.electricversion.geneticgoats.entity.genetics;
 
 import com.electricversion.geneticgoats.config.GoatsCommonConfig;
-import com.electricversion.geneticgoats.entity.EnhancedGoat;
 import mokiyoki.enhancedanimals.entity.genetics.AbstractGeneticsInitialiser;
 import mokiyoki.enhancedanimals.util.Breed;
 import mokiyoki.enhancedanimals.util.Genes;
@@ -16,7 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
 
-    public static final int AUTOSOMAL_GENES_LENGTH = 72;
+    public static final int AUTOSOMAL_GENES_LENGTH = 76;
     public static final int SEXLINKED_GENES_LENGTH = 2;
 
     int WTC = GoatsCommonConfig.COMMON.wildTypeChance.get();
@@ -273,6 +272,19 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[70] = randomizeGene(2);
         autosomalGenes[71] = randomizeGene(2);
 
+        /* BEARD LENGTH MODIFIER 1
+         * 1 - Wildtype
+         * 2 - Longer Beard (Dominant)
+         */
+        autosomalGenes[72] = randomizeGene(2);
+        autosomalGenes[73] = randomizeGene(2);
+
+        /* BEARD LENGTH MODIFIER 2
+         * 1 - Wildtype
+         * 2 - Longer Beard (Dominant)
+         */
+        autosomalGenes[74] = randomizeGene(2);
+        autosomalGenes[75] = randomizeGene(2);
 
         // TODO: Implement body fat and dairy polygenes
 //        /* Placeholder Body Fat

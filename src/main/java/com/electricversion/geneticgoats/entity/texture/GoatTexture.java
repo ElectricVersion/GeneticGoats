@@ -16,6 +16,12 @@ public class GoatTexture {
             "shorthair/", "longhair/",
     };
 
+    private static final String[] TX_BEARD_LENGTH = new String[] {
+            "misc/mask/beard_shortest.png", // Female Exclusive
+            "misc/mask/beard_short.png", "misc/mask/beard_medium.png", "misc/mask/beard_long.png",
+            "misc/mask/beard_longest.png", // Male Exclusive
+    };
+
     private static final String[] TX_HAIR_LENGTH = new String[] {
             "", "misc/mask/hair_short.png", "misc/mask/hair_medium.png", "misc/mask/hair_long.png", "misc/mask/hair_longest.png",
     };
@@ -147,7 +153,7 @@ public class GoatTexture {
         TextureGrouping rootGroup = new TextureGrouping(TexturingType.MASK_GROUP);
 
         // Most textures have a longhaired and shorthaired variant, so we'll need to determine which hair type to use first
-        int hairType = 0; // Long or short hair. Stored as an int for texture indexing reasons
+        int hairType = 0; // Short or long hair. Stored as an int for texture indexing reasons
         int hairLength = 0; // If long-haired, the polygenic length of the hair
         if (gene[50] == 2 && gene[51] == 2) {
             hairType = 1;
@@ -163,10 +169,18 @@ public class GoatTexture {
             }
         }
 
+        int beardLength = goat.getOrSetIsFemale() ? 0 : 1; // Males have longer beards
+
+        if (hairType != 0) beardLength++; // Long hair increases beard length a little
+        // Beard length modifiers
+        if (gene[72] == 2 || gene[73] == 2) beardLength++;
+        if (gene[74] == 2 || gene[75] == 2) beardLength++;
+
         // Alpha Mask Layer
         TextureGrouping alphaGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         goat.addTextureToAnimalTextureGrouping(alphaGroup, "misc/mask/body.png");
         goat.addTextureToAnimalTextureGrouping(alphaGroup, TX_HAIR_LENGTH, hairLength, hairType != 0);
+        goat.addTextureToAnimalTextureGrouping(alphaGroup, TX_BEARD_LENGTH, beardLength, true);
         rootGroup.addGrouping(alphaGroup);
 
         // Red Layer
