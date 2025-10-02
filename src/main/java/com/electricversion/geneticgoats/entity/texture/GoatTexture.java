@@ -16,6 +16,10 @@ public class GoatTexture {
             "shorthair/", "longhair/",
     };
 
+    private static final String[] TX_EYES = new String[] {
+            "misc/eyes_yellow.png", "misc/eyes_blue.png"
+    };
+
     private static final String[] TX_BEARD_LENGTH = new String[] {
             "misc/mask/beard_shortest.png", // Female Exclusive
             "misc/mask/beard_short.png", "misc/mask/beard_medium.png", "misc/mask/beard_long.png",
@@ -210,11 +214,21 @@ public class GoatTexture {
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/long_hair_overlay.png", hairType == 1);
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/udder.png");
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/hooves.png");
-        goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/eyes.png");
         rootGroup.addGrouping(detailGroup);
+
+        rootGroup.addGrouping(makeEyeGroup(goat, gene));
 
         goat.setTextureGrouping(rootGroup);
     }
+
+    private static TextureGrouping makeEyeGroup(EnhancedGoat goat, int[] gene) {
+        int eyeColor = (gene[76] == 2 || gene[77] == 2) ? 1 : 0; // Blue or Yellow eyes
+        TextureGrouping eyeGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
+        goat.addTextureToAnimalTextureGrouping(eyeGroup, TexturingType.APPLY_EYE_LEFT_COLOUR, TX_EYES, eyeColor, l -> true);
+        goat.addTextureToAnimalTextureGrouping(eyeGroup, "misc/eyes_pupil.png");
+        return eyeGroup;
+    }
+
 
     private static TextureGrouping makeRedMask(EnhancedGoat goat, int[] gene, char[] uuidArry) {
         TextureGrouping redGroup = new TextureGrouping(TexturingType.MERGE_GROUP);

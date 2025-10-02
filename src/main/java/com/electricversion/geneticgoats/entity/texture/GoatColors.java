@@ -63,6 +63,8 @@ public class GoatColors {
         float[] noseBlack = {0.047F, 0.32F, 0.21F};
         float[] noseWhite = {0.016F, 0.28F, 0.81F};
 
+        float[] eyes = {0.084F, 0.76F, 0.671F};
+
         // Brown Locus/TYRP1
         if (gene[6] == 2 || gene[7] == 2) {
             // Dark Brown
@@ -101,12 +103,23 @@ public class GoatColors {
             tanModifier = tanModifier+4;
         }
 
+        if (gene[76] == 2 || gene[77] == 2) {
+            // Blue Eyes
+            eyes[0] = 0.572F;
+            eyes[1] = 0.202F;
+            eyes[2] = 0.883F;
+        }
+
         GoatColors.modifyRed(pheomelanin, white, redModifier/6F);
         GoatColors.modifyRed(cream, white, (redModifier+tanModifier+4)/6F);
 
         //Universal Colouration Values (Uses ABGR)
         goat.colouration.setMelaninColour(Colouration.HSBtoABGR(melanin[0], melanin[1], melanin[2]));
         goat.colouration.setPheomelaninColour(Colouration.HSBtoABGR(pheomelanin[0], pheomelanin[1], pheomelanin[2]));
+        // ...except for this one. For some reason eyes use ARGB
+        // Only need to set one eye because goats don't really have heterochromia. Just using left eye for everything
+        goat.colouration.setLeftEyeColour(Colouration.HSBtoARGB(eyes[0], eyes[1], eyes[2]));
+
         //Goat Specific Colors (Uses ARGB)
         color.whiteColor = Colouration.HSBtoARGB(white[0], white[1], white[2]);
         color.creamColor = Colouration.HSBtoARGB(cream[0], cream[1], cream[2]);
