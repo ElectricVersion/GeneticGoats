@@ -150,25 +150,25 @@ public class GoatTexture {
 
     // This method handles the logic of how individual texture components and genes should
     // interact to create a single, "compiled" texture.
-    public static void calculateTexture(EnhancedGoat goat, int[] gene, char[] uuidArry) {
+    public static void calculateTexture(EnhancedGoat goat, int[] genes, char[] uuidArry) {
 
-        GoatColors color = GoatColors.calculateColors(goat, gene, uuidArry);
+        GoatColors color = GoatColors.calculateColors(goat, genes, uuidArry);
 
         TextureGrouping rootGroup = new TextureGrouping(TexturingType.MASK_GROUP);
 
         // Most textures have a longhaired and shorthaired variant, so we'll need to determine which hair type to use first
         int hairType = 0; // Short or long hair. Stored as an int for texture indexing reasons
         int hairLength = 0; // If long-haired, the polygenic length of the hair
-        if (gene[50] == 2 && gene[51] == 2) {
+        if (genes[50] == 2 && genes[51] == 2) {
             hairType = 1;
             hairLength = 1;
-            if (gene[52] == 2 || gene[53] == 2) {
+            if (genes[52] == 2 || genes[53] == 2) {
                 hairLength++;
             }
-            if (gene[54] == 2 || gene[55] == 2) {
+            if (genes[54] == 2 || genes[55] == 2) {
                 hairLength++;
             }
-            if (gene[56] == 2 || gene[57] == 2) {
+            if (genes[56] == 2 || genes[57] == 2) {
                 hairLength++;
             }
         }
@@ -177,8 +177,8 @@ public class GoatTexture {
 
         if (hairType != 0) beardLength++; // Long hair increases beard length a little
         // Beard length modifiers
-        if (gene[72] == 2 || gene[73] == 2) beardLength++;
-        if (gene[74] == 2 || gene[75] == 2) beardLength++;
+        if (genes[72] == 2 || genes[73] == 2) beardLength++;
+        if (genes[74] == 2 || genes[75] == 2) beardLength++;
 
         // Alpha Mask Layer
         TextureGrouping alphaGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
@@ -189,22 +189,22 @@ public class GoatTexture {
 
         // Red Layer
         TextureGrouping redGroup = new TextureGrouping(TexturingType.MASK_GROUP);
-        redGroup.addGrouping(makeRedMask(goat, gene, uuidArry));
-        redGroup.addGrouping(makeRedColor(goat, gene, uuidArry, color, hairType));
+        redGroup.addGrouping(makeRedMask(goat, genes, uuidArry));
+        redGroup.addGrouping(makeRedColor(goat, genes, uuidArry, color, hairType));
 
         rootGroup.addGrouping(redGroup);
 
         // Black Layer
         TextureGrouping blackGroup = new TextureGrouping(TexturingType.MASK_GROUP);
-        blackGroup.addGrouping(makeBlackMask(goat, gene, uuidArry, hairType));
-        blackGroup.addGrouping(makeBlackColor(goat, gene, uuidArry, color));
+        blackGroup.addGrouping(makeBlackMask(goat, genes, uuidArry, hairType));
+        blackGroup.addGrouping(makeBlackColor(goat, genes, uuidArry, color));
 
         rootGroup.addGrouping(blackGroup);
 
         // White Layer
         TextureGrouping whiteGroup = new TextureGrouping(TexturingType.MASK_GROUP);
-        whiteGroup.addGrouping(makeWhiteMask(goat, gene, uuidArry, hairType));
-        whiteGroup.addGrouping(makeWhiteColor(goat, gene, uuidArry, color));
+        whiteGroup.addGrouping(makeWhiteMask(goat, genes, uuidArry, hairType));
+        whiteGroup.addGrouping(makeWhiteColor(goat, genes, uuidArry, color));
 
         rootGroup.addGrouping(whiteGroup);
 
@@ -216,13 +216,13 @@ public class GoatTexture {
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/hooves.png");
         rootGroup.addGrouping(detailGroup);
 
-        rootGroup.addGrouping(makeEyeGroup(goat, gene));
+        rootGroup.addGrouping(makeEyeGroup(goat, genes));
 
         goat.setTextureGrouping(rootGroup);
     }
 
-    private static TextureGrouping makeEyeGroup(EnhancedGoat goat, int[] gene) {
-        int eyeColor = (gene[76] == 2 || gene[77] == 2) ? 1 : 0; // Blue or Yellow eyes
+    private static TextureGrouping makeEyeGroup(EnhancedGoat goat, int[] genes) {
+        int eyeColor = (genes[76] == 2 || genes[77] == 2) ? 1 : 0; // Blue or Yellow eyes
         TextureGrouping eyeGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         goat.addTextureToAnimalTextureGrouping(eyeGroup, TexturingType.APPLY_EYE_LEFT_COLOUR, TX_EYES, eyeColor, l -> true);
         goat.addTextureToAnimalTextureGrouping(eyeGroup, "misc/eyes_pupil.png");
@@ -230,16 +230,16 @@ public class GoatTexture {
     }
 
 
-    private static TextureGrouping makeRedMask(EnhancedGoat goat, int[] gene, char[] uuidArry) {
+    private static TextureGrouping makeRedMask(EnhancedGoat goat, int[] genes, char[] uuidArry) {
         TextureGrouping redGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         goat.addTextureToAnimalTextureGrouping(redGroup, "misc/solid.png");
         return redGroup;
     }
 
-    private static TextureGrouping makeRedColor(EnhancedGoat goat, int[] gene, char[] uuidArry, GoatColors color, int hairType) {
+    private static TextureGrouping makeRedColor(EnhancedGoat goat, int[] genes, char[] uuidArry, GoatColors color, int hairType) {
         TextureGrouping redColorGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
-        int agouti1 = gene[0];
-        int agouti2 = gene[1];
+        int agouti1 = genes[0];
+        int agouti2 = genes[1];
         goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RED, "misc/solid.png");
         if (agouti1 != 2 && agouti2 != 2) {
             // Gold agouti is dominant and blocks the cream highlights, so require that it's not present
@@ -255,10 +255,10 @@ public class GoatTexture {
         return redColorGroup;
     }
 
-    private static TextureGrouping makeBlackMask(EnhancedGoat goat, int[] gene, char[] uuidArry, int hairType) {
+    private static TextureGrouping makeBlackMask(EnhancedGoat goat, int[] genes, char[] uuidArry, int hairType) {
         TextureGrouping blackGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
-        int agouti1 = gene[0];
-        int agouti2 = gene[1];
+        int agouti1 = genes[0];
+        int agouti2 = genes[1];
 
         if (agouti1 == 2 || agouti2 == 2) {
             // Gold agouti. Fully dominant and has no black, so we can stop here
@@ -290,38 +290,38 @@ public class GoatTexture {
         return blackGroup;
     }
 
-    private static TextureGrouping makeBlackColor(EnhancedGoat goat, int[] gene, char[] uuidArry, GoatColors color) {
+    private static TextureGrouping makeBlackColor(EnhancedGoat goat, int[] genes, char[] uuidArry, GoatColors color) {
         TextureGrouping blackColorGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         goat.addTextureToAnimalTextureGrouping(blackColorGroup, TexturingType.APPLY_BLACK, "misc/solid.png");
         goat.addTextureToAnimalTextureGrouping(blackColorGroup, TexturingType.APPLY_RGB, "misc/nose.png", "nb", color.getNoseBlackColor());
         return blackColorGroup;
     }
 
-    private static TextureGrouping makeWhiteMask(EnhancedGoat goat, int[] gene, char[] uuidArry, int hairType) {
+    private static TextureGrouping makeWhiteMask(EnhancedGoat goat, int[] genes, char[] uuidArry, int hairType) {
         TextureGrouping whiteGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
 
         // Blank texture to avoid issues when group is empty
         goat.addTextureToAnimalTextureGrouping(whiteGroup, "misc/transparent.png");
 
-        boolean whiteExt1 = gene[62] == 2 || gene[63] == 2;
-        boolean whiteExt2 = gene[64] == 2 || gene[65] == 2;
+        boolean whiteExt1 = genes[62] == 2 || genes[63] == 2;
+        boolean whiteExt2 = genes[64] == 2 || genes[65] == 2;
         int whiteSize = 0;
         if (whiteExt1) whiteSize++;
         if (whiteExt2) whiteSize++;
 
-        if (gene[4] == 2 || gene[5] == 2) {
+        if (genes[4] == 2 || genes[5] == 2) {
             // Dominant White
             goat.addDelimiter("w");
             goat.addTextureToAnimalTextureGrouping(whiteGroup, "misc/solid.png");
         } else {
             // Not Dom White
-            if (gene[4] == 3 || gene[5] == 3) {
+            if (genes[4] == 3 || genes[5] == 3) {
                 // TODO: Flowery
                 goat.addDelimiter("f");
             }
-            else if (gene[4] == 4 || gene[5] == 4) {
+            else if (genes[4] == 4 || genes[5] == 4) {
                 // Piebald
-                if (gene[58] != 1 || gene[59] != 1) {
+                if (genes[58] != 1 || genes[59] != 1) {
                     // Piebald AND belt
                     goat.addDelimiter("pbe");
                 }
@@ -333,7 +333,7 @@ public class GoatTexture {
                     goat.addTextureToAnimalTextureGrouping(whiteGroup, HAIR_PREFIX, hairType, TX_PIEBALD, whiteSize, piebaldRandom, true);
                 }
             }
-            else if (gene[58] != 1 || gene[59] != 1) {
+            else if (genes[58] != 1 || genes[59] != 1) {
                 // Belted without piebald
 
                 int beltQuality = 0;
@@ -344,13 +344,13 @@ public class GoatTexture {
                 int sockFrontRandom = 0;
                 int sockBackRandom = 0;
 
-                if (Math.min(gene[60], gene[61]) == 2) {
+                if (Math.min(genes[60], genes[61]) == 2) {
                     beltQuality = 1;
                 }
-                else if (Math.min(gene[60], gene[61]) == 3) {
+                else if (Math.min(genes[60], genes[61]) == 3) {
                     beltQuality = 2;
                 }
-                if (gene[58] == 2 || gene[59] == 2) {
+                if (genes[58] == 2 || genes[59] == 2) {
                     // Socked Belted
                     sockFrontSize = 1;
                     sockBackSize = 1;
@@ -361,13 +361,13 @@ public class GoatTexture {
                         sockBackSize++;
                     }
 
-                    if (gene[66] == 2 || gene[67] == 2) {
+                    if (genes[66] == 2 || genes[67] == 2) {
                         // Sock Enhancer also increases sock size
                         sockFrontSize++;
                         sockBackSize++;
                     }
 
-                    if (gene[68] == 2 && gene[69] == 2) sockQuality = 1; // Sock Quality Modifier
+                    if (genes[68] == 2 && genes[69] == 2) sockQuality = 1; // Sock Quality Modifier
                 }
 
                 goat.addDelimiter("be");
@@ -380,7 +380,7 @@ public class GoatTexture {
         return whiteGroup;
     }
 
-    private static TextureGrouping makeWhiteColor(EnhancedGoat goat, int[] gene, char[] uuidArry, GoatColors color) {
+    private static TextureGrouping makeWhiteColor(EnhancedGoat goat, int[] genes, char[] uuidArry, GoatColors color) {
         TextureGrouping whiteColorGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         goat.addTextureToAnimalTextureGrouping(whiteColorGroup, TexturingType.APPLY_RGB, "misc/solid.png", "w", color.getWhiteColor());
         goat.addTextureToAnimalTextureGrouping(whiteColorGroup, TexturingType.APPLY_RGB, "misc/nose.png", "nw", color.getNoseWhiteColor());

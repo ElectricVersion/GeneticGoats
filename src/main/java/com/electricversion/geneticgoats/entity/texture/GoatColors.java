@@ -49,7 +49,7 @@ public class GoatColors {
         red[2] = clamp(red[2], 0.29F, white[2]);
     }
 
-    protected static GoatColors calculateColors(EnhancedGoat goat, int[] gene, char[] uuidArry) {
+    protected static GoatColors calculateColors(EnhancedGoat goat, int[] genes, char[] uuidArry) {
 
         GoatColors color = new GoatColors();
 
@@ -66,9 +66,9 @@ public class GoatColors {
         float[] eyes = {0.084F, 0.76F, 0.671F};
 
         // Brown Locus/TYRP1
-        if (gene[6] == 2 || gene[7] == 2) {
+        if (genes[6] == 2 || genes[7] == 2) {
             // Dark Brown
-            if (gene[6] != gene[7])  {
+            if (genes[6] != genes[7])  {
                 // Heterozygous Dark Brown
                 melanin[0] = 0.044F;
                 melanin[1] = 0.333F;
@@ -80,30 +80,30 @@ public class GoatColors {
                 melanin[1] = 0.351F;
                 melanin[2] = 0.239F;
             }
-        } else if (gene[6] == 3 || gene[7] == 3) {
+        } else if (genes[6] == 3 || genes[7] == 3) {
             // Light Brown
             melanin[0] = 0.060F;
             melanin[1] = 0.421F;
             melanin[2] = 0.671F;
-        } else if (gene[6] == 4 && gene[7] == 4) {
+        } else if (genes[6] == 4 && genes[7] == 4) {
             // Chocolate
             melanin[0] = 0.039F;
             melanin[1] = 0.563F;
             melanin[2] = 0.278F;
         }
 
-        int redModifier = (gene[8] + gene[9] - 2) - (gene[10] + gene[11] - 2);
+        int redModifier = (genes[8] + genes[9] - 2) - (genes[10] + genes[11] - 2);
         int tanModifier = 0;
-        if (gene[12] == 2 || gene[13] == 2) {
+        if (genes[12] == 2 || genes[13] == 2) {
             // "Red Distribution Modifier" - Hypothesized gene to lighten the tan points that appear on some agoutis
-            tanModifier = gene[12] == gene[13] ? 4 : 2;
+            tanModifier = genes[12] == genes[13] ? 4 : 2;
         }
-        if (gene[0] == 5 || gene[1] == 5) {
+        if (genes[0] == 5 || genes[1] == 5) {
             // Swiss specifically seems to have lighter cream points than other agoutis. This includes heterozygotes
             tanModifier = tanModifier+4;
         }
 
-        if (gene[76] == 2 || gene[77] == 2) {
+        if (genes[76] == 2 || genes[77] == 2) {
             // Blue Eyes
             eyes[0] = 0.572F;
             eyes[1] = 0.202F;
