@@ -103,11 +103,24 @@ public class GoatColors {
             tanModifier = tanModifier+4;
         }
 
+        int eyeDarkness = 0;
+        if (genes[78] == 2 || genes[79] == 2) {
+            // Darker Eyes
+            eyeDarkness++;
+        } else if (genes[78] == 3 || genes[79] == 3) {
+            // Lighter Eyes
+            eyeDarkness--;
+        }
+
         if (genes[76] == 2 || genes[77] == 2) {
             // Blue Eyes
             eyes[0] = 0.572F;
-            eyes[1] = 0.202F;
-            eyes[2] = 0.883F;
+            eyes[1] = 0.202F + (eyeDarkness * 0.15F);
+            eyes[2] = 0.883F - (eyeDarkness * 0.15F);
+        } else {
+            // Yellow Eyes
+            eyes[1] += (eyeDarkness * 0.15F);
+            eyes[2] -= (eyeDarkness * 0.10F);
         }
 
         GoatColors.modifyRed(pheomelanin, white, redModifier/6F);
