@@ -44,6 +44,13 @@ public class GoatTexture {
             "agouti/masked_cream.png"
     };
 
+    private static final String[] TX_AGOUTI_MALE_SHADING = new String[] {
+            "", "male_shading_light1.png", "", "male_shading_light1.png", "",
+            "", "male_shading_light1.png", "",
+            "male_shading_light1.png", "male_shading_light1.png", "male_shading_light1.png",
+            "male_shading_light1.png"
+    };
+
     private static final String[][] TX_PIEBALD = new String[][] {
             { // LOW
                     "white/piebald/piebald_low_1.png"
@@ -265,11 +272,17 @@ public class GoatTexture {
             goat.addTextureToAnimalTextureGrouping(blackGroup, "misc/transparent.png");
             return blackGroup;
         }
-        TextureGrouping agoutiGroup = new TextureGrouping(TexturingType.MASK_GROUP);
+        TextureGrouping agoutiGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         if (agouti1 == agouti2) {
             // Homozygous Agouti
             goat.addDelimiter("a");
             goat.addTextureToAnimalTextureGrouping(agoutiGroup, HAIR_PREFIX, hairType, TX_AGOUTI_BLACK, agouti1, true);
+
+            if (!goat.getOrSetIsFemale()) {
+                // Male Shading
+                goat.addDelimiter("m");
+                goat.addTextureToAnimalTextureGrouping(agoutiGroup, HAIR_PREFIX, hairType, TX_AGOUTI_MALE_SHADING, agouti1, !TX_AGOUTI_MALE_SHADING[agouti1].isEmpty());
+            }
         } else {
             // Heterozygous Agouti
             goat.addDelimiter("aa");
