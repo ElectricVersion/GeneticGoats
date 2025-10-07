@@ -29,3 +29,6 @@ forge*changelog.txt
 /script/coordinate_generator/in
 /script/coordinate_generator/out
 /script/coordinate_mapper/in
+/script/copy_area/dst_in
+/script/copy_area/src_in
+script/copy_area/area_map.png
