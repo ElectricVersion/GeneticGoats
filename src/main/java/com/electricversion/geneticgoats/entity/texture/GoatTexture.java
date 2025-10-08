@@ -20,6 +20,11 @@ public class GoatTexture {
             "misc/eyes_yellow.png", "misc/eyes_blue.png"
     };
 
+    private static final String[] TX_SHADING = new String[] {
+            "misc/short_hair_overlay.png", "misc/long_hair_overlay.png"
+    };
+
+
     private static final String[] TX_BEARD_LENGTH = new String[] {
             "misc/mask/beard_shortest.png", // Female Exclusive
             "misc/mask/beard_short.png", "misc/mask/beard_medium.png", "misc/mask/beard_long.png",
@@ -217,8 +222,7 @@ public class GoatTexture {
 
         // Detail Layer
         TextureGrouping detailGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
-        goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/noise.png");
-        goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/long_hair_overlay.png", hairType == 1);
+        goat.addTextureToAnimalTextureGrouping(detailGroup, TX_SHADING, hairType, true);
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/udder.png");
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/hooves.png");
         rootGroup.addGrouping(detailGroup);
