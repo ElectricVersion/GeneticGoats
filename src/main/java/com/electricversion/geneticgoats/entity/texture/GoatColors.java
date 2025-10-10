@@ -81,11 +81,6 @@ public class GoatColors {
                 melanin[2] = 0.239F;
             }
         } else if (genes[6] == 3 || genes[7] == 3) {
-            // Light Brown
-            melanin[0] = 0.063F;
-            melanin[1] = 0.264F;
-            melanin[2] = 0.506F;
-        } else if (genes[6] == 4 && genes[7] == 4) {
             // Chocolate
             melanin[0] = 0.039F;
             melanin[1] = 0.563F;
