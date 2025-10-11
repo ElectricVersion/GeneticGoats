@@ -63,25 +63,25 @@ public class GoatTexture {
 
     private static final String[][] TX_PIEBALD = new String[][] {
             { // LOW
-                    "white/piebald/piebald_low_1.png", "white/piebald/piebald_low_2.png",
-                    "white/piebald/piebald_low_3.png", "white/piebald/piebald_low_4.png",
-                    "white/piebald/piebald_low_5.png", "white/piebald/piebald_low_6.png",
-                    "white/piebald/piebald_low_7.png", "white/piebald/piebald_low_8.png",
+                    "white/piebald/piebald_low1.png", "white/piebald/piebald_low2.png",
+                    "white/piebald/piebald_low3.png", "white/piebald/piebald_low4.png",
+                    "white/piebald/piebald_low5.png", "white/piebald/piebald_low6.png",
+                    "white/piebald/piebald_low7.png", "white/piebald/piebald_low8.png",
             },
             { // MEDIUM
-                    "white/piebald/piebald_med_1.png", "white/piebald/piebald_med_2.png",
-                    "white/piebald/piebald_med_3.png", "white/piebald/piebald_med_4.png",
-                    "white/piebald/piebald_med_5.png", "white/piebald/piebald_med_6.png",
-                    "white/piebald/piebald_med_7.png", "white/piebald/piebald_med_8.png",
+                    "white/piebald/piebald_med1.png", "white/piebald/piebald_med2.png",
+                    "white/piebald/piebald_med3.png", "white/piebald/piebald_med4.png",
+                    "white/piebald/piebald_med5.png", "white/piebald/piebald_med6.png",
+                    "white/piebald/piebald_med7.png", "white/piebald/piebald_med8.png",
             },
             { // HIGH
-                    "white/piebald/piebald_high_1.png", "white/piebald/piebald_high_2.png",
-                    "white/piebald/piebald_high_3.png", "white/piebald/piebald_high_4.png",
-                    "white/piebald/piebald_high_5.png",
+                    "white/piebald/piebald_high1.png", "white/piebald/piebald_high2.png",
+                    "white/piebald/piebald_high3.png", "white/piebald/piebald_high4.png",
+                    "white/piebald/piebald_high5.png",
                     //TODO: Replace these with real textures
-                    "white/piebald/piebald_high_5.png",
-                    "white/piebald/piebald_high_5.png",
-                    "white/piebald/piebald_high_5.png",
+                    "white/piebald/piebald_high5.png",
+                    "white/piebald/piebald_high5.png",
+                    "white/piebald/piebald_high5.png",
             }
     };
 
