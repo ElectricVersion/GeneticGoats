@@ -4,14 +4,12 @@ import com.electricversion.geneticgoats.entity.EnhancedGoat;
 import mokiyoki.enhancedanimals.renderer.texture.TextureGrouping;
 import mokiyoki.enhancedanimals.renderer.texture.TexturingType;
 
-import java.util.Arrays;
-
 public class GoatTexture {
 
     /* UUID SLOTS */
 //    private final int IDX_SEX = 0;
-    private static final int IDX_WHITE_BODY = 1;
-    private static final int IDX_WHITE_HEAD = 2;
+    private static final int IDX_KIT_BODY = 1;
+    private static final int IDX_KIT_HEAD = 2;
 
     private static final String[] AGOUTIS = new String[] {
             "", "bezoar", "gold", "buckskin", "chamoisee", "swiss", "cou_clair", "sundgau", "tanhead", "caramel", "sable", "masked"
@@ -59,6 +57,27 @@ public class GoatTexture {
             "", "male_shading_light1.png", "",
             "male_shading_light1.png", "male_shading_light1.png", "male_shading_light1.png",
             "male_shading_light1.png"
+    };
+
+    private static final String[][] TX_FLOWERY = new String[][]{
+            { // LOW
+                    "white/flowery/flowery_low1.png", "white/flowery/flowery_low2.png",
+                    "white/flowery/flowery_low3.png", "white/flowery/flowery_low4.png",
+            },
+            { // MEDIUM
+                    "white/flowery/flowery_med1.png",
+                    //TODO: Replace these with real textures
+                    "white/flowery/flowery_med1.png",
+                    "white/flowery/flowery_med1.png",
+                    "white/flowery/flowery_med1.png",
+            },
+            { // HIGH
+                    "white/flowery/flowery_high1.png",
+                    //TODO: Replace these with real textures
+                    "white/flowery/flowery_high1.png",
+                    "white/flowery/flowery_high1.png",
+                    "white/flowery/flowery_high1.png",
+            },
     };
 
     private static final String[][] TX_PIEBALD = new String[][] {
@@ -350,8 +369,11 @@ public class GoatTexture {
         } else {
             // Not Dom White
             if (genes[4] == 3 || genes[5] == 3) {
-                // TODO: Flowery
+                // Flowery
                 goat.addDelimiter("f");
+                int floweryRandom = uuidArry[IDX_KIT_BODY] % 4;
+                goat.addTextureToAnimalTextureGrouping(whiteGroup, HAIR_PREFIX, hairType, TX_FLOWERY, whiteSize, floweryRandom, true);
+
             }
             else if (genes[4] == 4 && genes[5] == 4) {
                 // Piebald
@@ -361,7 +383,7 @@ public class GoatTexture {
                 }
                 else {
                     // Piebald without belt
-                    int piebaldRandom = uuidArry[IDX_WHITE_BODY] % 8;
+                    int piebaldRandom = uuidArry[IDX_KIT_BODY] % 8;
 
                     goat.addDelimiter("pb");
                     goat.addTextureToAnimalTextureGrouping(whiteGroup, HAIR_PREFIX, hairType, TX_PIEBALD, whiteSize, piebaldRandom, true);
