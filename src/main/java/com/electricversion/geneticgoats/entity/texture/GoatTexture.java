@@ -8,6 +8,11 @@ import java.util.Arrays;
 
 public class GoatTexture {
 
+    /* UUID SLOTS */
+//    private final int IDX_SEX = 0;
+    private static final int IDX_WHITE_BODY = 1;
+    private static final int IDX_WHITE_HEAD = 2;
+
     private static final String[] AGOUTIS = new String[] {
             "", "bezoar", "gold", "buckskin", "chamoisee", "swiss", "cou_clair", "sundgau", "tanhead", "caramel", "sable", "masked"
     };
@@ -58,13 +63,25 @@ public class GoatTexture {
 
     private static final String[][] TX_PIEBALD = new String[][] {
             { // LOW
-                    "white/piebald/piebald_low_1.png"
+                    "white/piebald/piebald_low_1.png", "white/piebald/piebald_low_2.png",
+                    "white/piebald/piebald_low_3.png", "white/piebald/piebald_low_4.png",
+                    "white/piebald/piebald_low_5.png", "white/piebald/piebald_low_6.png",
+                    "white/piebald/piebald_low_7.png", "white/piebald/piebald_low_8.png",
             },
             { // MEDIUM
-                    "white/piebald/piebald_med_1.png"
+                    "white/piebald/piebald_med_1.png", "white/piebald/piebald_med_2.png",
+                    "white/piebald/piebald_med_3.png", "white/piebald/piebald_med_4.png",
+                    "white/piebald/piebald_med_5.png", "white/piebald/piebald_med_6.png",
+                    "white/piebald/piebald_med_7.png", "white/piebald/piebald_med_8.png",
             },
             { // HIGH
-                    "white/piebald/piebald_high_1.png"
+                    "white/piebald/piebald_high_1.png", "white/piebald/piebald_high_2.png",
+                    "white/piebald/piebald_high_3.png", "white/piebald/piebald_high_4.png",
+                    "white/piebald/piebald_high_5.png",
+                    //TODO: Replace these with real textures
+                    "white/piebald/piebald_high_5.png",
+                    "white/piebald/piebald_high_5.png",
+                    "white/piebald/piebald_high_5.png",
             }
     };
 
@@ -344,7 +361,7 @@ public class GoatTexture {
                 }
                 else {
                     // Piebald without belt
-                    int piebaldRandom = 0;
+                    int piebaldRandom = uuidArry[IDX_WHITE_BODY] % 8;
 
                     goat.addDelimiter("pb");
                     goat.addTextureToAnimalTextureGrouping(whiteGroup, HAIR_PREFIX, hairType, TX_PIEBALD, whiteSize, piebaldRandom, true);
