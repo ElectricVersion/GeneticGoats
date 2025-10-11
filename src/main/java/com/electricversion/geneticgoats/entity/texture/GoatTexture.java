@@ -353,7 +353,7 @@ public class GoatTexture {
                 // TODO: Flowery
                 goat.addDelimiter("f");
             }
-            else if (genes[4] == 4 || genes[5] == 4) {
+            else if (genes[4] == 4 && genes[5] == 4) {
                 // Piebald
                 if (genes[58] != 1 || genes[59] != 1) {
                     // Piebald AND belt
