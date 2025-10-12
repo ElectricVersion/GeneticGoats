@@ -10,6 +10,7 @@ public class GoatTexture {
 //    private final int IDX_SEX = 0;
     private static final int IDX_KIT_BODY = 1;
     private static final int IDX_KIT_HEAD = 2;
+    private static final int IDX_BELT_BODY = 3;
 
     private static final String[] AGOUTIS = new String[] {
             "", "bezoar", "gold", "buckskin", "chamoisee", "swiss", "cou_clair", "sundgau", "tanhead", "caramel", "sable", "masked"
@@ -101,6 +102,31 @@ public class GoatTexture {
                     "white/piebald/piebald_high5.png",
                     "white/piebald/piebald_high5.png",
                     "white/piebald/piebald_high5.png",
+            }
+    };
+
+    private static final String[][] TX_PIEBALD_BELT = new String[][] {
+            { // LOW
+                    "white/piebald_belt/piebelt_low1.png", "white/piebald_belt/piebelt_med2.png",
+                    //TODO: Replace these with real textures
+                    "white/piebald_belt/piebelt_low1.png", "white/piebald_belt/piebelt_med2.png",
+                    "white/piebald_belt/piebelt_low1.png", "white/piebald_belt/piebelt_med2.png",
+                    "white/piebald_belt/piebelt_low1.png", "white/piebald_belt/piebelt_med2.png",
+            },
+            { // MEDIUM
+                    "white/piebald_belt/piebelt_med1.png", "white/piebald_belt/piebelt_med2.png",
+                    "white/piebald_belt/piebelt_med3.png", "white/piebald_belt/piebelt_med4.png",
+                    "white/piebald_belt/piebelt_med5.png",
+                    //TODO: Replace these with real textures
+                    "white/piebald_belt/piebelt_med1.png",
+                    "white/piebald_belt/piebelt_med2.png", "white/piebald_belt/piebelt_med3.png",
+            },
+            { // HIGH
+                    "white/piebald_belt/piebelt_high1.png", "white/piebald_belt/piebelt_high2.png",
+                    //TODO: Replace these with real textures
+                    "white/piebald_belt/piebelt_high1.png", "white/piebald_belt/piebelt_high2.png",
+                    "white/piebald_belt/piebelt_high1.png", "white/piebald_belt/piebelt_high2.png",
+                    "white/piebald_belt/piebelt_high1.png", "white/piebald_belt/piebelt_high2.png",
             }
     };
 
@@ -379,7 +405,10 @@ public class GoatTexture {
                 // Piebald
                 if (genes[58] != 1 || genes[59] != 1) {
                     // Piebald AND belt
+                    int piebaldBeltRandom = uuidArry[IDX_KIT_BODY] % 8;
+
                     goat.addDelimiter("pbe");
+                    goat.addTextureToAnimalTextureGrouping(whiteGroup, HAIR_PREFIX, hairType, TX_PIEBALD_BELT, whiteSize, piebaldBeltRandom, true);
                 }
                 else {
                     // Piebald without belt
