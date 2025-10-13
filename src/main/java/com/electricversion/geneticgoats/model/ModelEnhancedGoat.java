@@ -264,7 +264,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("bLegFL", CubeListBuilder.create(),
                 PartPose.offset(1.49F, 8F, 3.01F));
         baseDef.addOrReplaceChild("bLegFR", CubeListBuilder.create(),
-                PartPose.offset(-1.49F, 8F, 3.0F));
+                PartPose.offset(-1.49F, 8F, 3.01F));
         baseDef.addOrReplaceChild("bLegBL", CubeListBuilder.create(),
                 PartPose.offset(1.49F, 8F, 9.99F));
         baseDef.addOrReplaceChild("bLegBR", CubeListBuilder.create(),
