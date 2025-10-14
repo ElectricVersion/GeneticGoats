@@ -323,7 +323,8 @@ public class GoatTexture {
             if (!TX_AGOUTI_CREAM[agouti1].isEmpty()) {
                 goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RGB, HAIR_PREFIX[hairType] + TX_AGOUTI_CREAM[agouti1], ("ac1" + hairType) + agouti1, color.getCreamColor());
             }
-            if (!TX_AGOUTI_CREAM[agouti2].isEmpty()) {
+            if (!TX_AGOUTI_CREAM[agouti2].isEmpty() && agouti1 != agouti2) {
+                // Only add this one if it's a het - otherwise it's the same texture twice and redundant
                 goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RGB, HAIR_PREFIX[hairType] + TX_AGOUTI_CREAM[agouti2], ("ac2" + hairType) + agouti2, color.getCreamColor());
             }
         }
