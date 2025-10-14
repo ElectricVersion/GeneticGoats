@@ -394,8 +394,7 @@ public class GoatTexture {
 
         if (genes[4] == 2 || genes[5] == 2) {
             // Dominant White
-            goat.addDelimiter("w");
-            goat.addTextureToAnimalTextureGrouping(whiteGroup, "misc/solid.png");
+            goat.addTextureToAnimalTextureGrouping(whiteGroup, "misc/solid.png", "dw");
         } else {
             // Not Dom White
             if (genes[4] == 3 || genes[5] == 3) {
