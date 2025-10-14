@@ -303,11 +303,13 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
 
         /* FROSTING AND POSSIBLY ROAN
          * 1 - Wildtype
-         * 2 - Frosting; Dominant
-         * (Frosting > Wildtype)
+         * 2 - Silver; Dominant
+         * 3 - Roan; Dominant
+         * 4 - Frosting; Dominant
+         * (Roan > Frosting > Wildtype)
          */
-        autosomalGenes[80] = randomizeGene(2);
-        autosomalGenes[81] = randomizeGene(2);
+        autosomalGenes[80] = randomizeGene(4);
+        autosomalGenes[81] = randomizeGene(4);
 
         // TODO: Implement body fat and dairy polygenes
 //        /* Placeholder Body Fat
