@@ -462,6 +462,10 @@ public class GoatTexture {
                 goat.addTextureToAnimalTextureGrouping(whiteGroup, TexturingType.NONE, TX_SOCKS_BACK, sockBackSize, sockQuality, sockBackRandom, sockBackSize != 0);
             }
         }
+
+        if (genes[80] == 2 || genes[81] == 2) {
+            goat.addTextureToAnimalTextureGrouping(whiteGroup,"shared/frosting.png", "fr");
+        }
         return whiteGroup;
     }
 

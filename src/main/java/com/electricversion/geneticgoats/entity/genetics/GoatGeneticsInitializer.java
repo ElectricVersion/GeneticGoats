@@ -15,7 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
 
-    public static final int AUTOSOMAL_GENES_LENGTH = 80;
+    public static final int AUTOSOMAL_GENES_LENGTH = 82;
     public static final int SEXLINKED_GENES_LENGTH = 2;
 
     int WTC = GoatsCommonConfig.COMMON.wildTypeChance.get();
@@ -300,6 +300,14 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
          */
         autosomalGenes[78] = randomizeGene(3);
         autosomalGenes[79] = randomizeGene(3);
+
+        /* FROSTING AND POSSIBLY ROAN
+         * 1 - Wildtype
+         * 2 - Frosting; Dominant
+         * (Frosting > Wildtype)
+         */
+        autosomalGenes[80] = randomizeGene(2);
+        autosomalGenes[81] = randomizeGene(2);
 
         // TODO: Implement body fat and dairy polygenes
 //        /* Placeholder Body Fat
