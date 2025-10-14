@@ -225,7 +225,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
     }
 
     // Utility method to add a texture with a prefix based on a certain index
-    public void addTextureToAnimalTextureGrouping(TextureGrouping textureGroup, String[] prefix, int prefixIndex, String[] texture, int geneValue, boolean check) {
+    public void addPrefixedTexture(TextureGrouping textureGroup, String[] prefix, int prefixIndex, String[] texture, int geneValue, boolean check) {
         if (check) {
             textureGroup.addTextureLayers(new TextureLayer(prefix[prefixIndex] + texture[geneValue]));
             this.texturesIndexes.add(String.valueOf(prefixIndex) + String.valueOf(geneValue));
@@ -234,7 +234,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
     }
 
     // Utility method to add a texture with a prefix based on a certain index and three keys
-    public void addTextureToAnimalTextureGrouping(TextureGrouping textureGroup, String[] prefix, int prefixIndex, String[][][] texture, int geneValue0, int geneValue1, int geneValue2, boolean check) {
+    public void addPrefixedTexture(TextureGrouping textureGroup, String[] prefix, int prefixIndex, String[][][] texture, int geneValue0, int geneValue1, int geneValue2, boolean check) {
         if (check) {
             textureGroup.addTextureLayers(new TextureLayer(prefix[prefixIndex] + texture[geneValue0][geneValue1][geneValue2]));
             this.texturesIndexes.add(String.valueOf(prefixIndex) + String.valueOf(geneValue0) + String.valueOf(geneValue1) + String.valueOf(geneValue2));
@@ -243,7 +243,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
     }
 
     // Utility method to add a texture with a prefix based on a certain index and two keys
-    public void addTextureToAnimalTextureGrouping(TextureGrouping textureGroup, String[] prefix, int prefixIndex, String[][] texture, int geneValue0, int geneValue1,  boolean check) {
+    public void addPrefixedTexture(TextureGrouping textureGroup, String[] prefix, int prefixIndex, String[][] texture, int geneValue0, int geneValue1, boolean check) {
         if (check) {
             textureGroup.addTextureLayers(new TextureLayer(prefix[prefixIndex] + texture[geneValue0][geneValue1]));
             this.texturesIndexes.add(String.valueOf(prefixIndex) + String.valueOf(geneValue0) + String.valueOf(geneValue1));

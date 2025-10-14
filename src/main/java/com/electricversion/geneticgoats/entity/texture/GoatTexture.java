@@ -346,12 +346,12 @@ public class GoatTexture {
         if (agouti1 == agouti2) {
             // Homozygous Agouti
             goat.addDelimiter("a");
-            goat.addTextureToAnimalTextureGrouping(agoutiGroup, HAIR_PREFIX, hairType, TX_AGOUTI_BLACK, agouti1, true);
+            goat.addPrefixedTexture(agoutiGroup, HAIR_PREFIX, hairType, TX_AGOUTI_BLACK, agouti1, true);
 
             if (!goat.getOrSetIsFemale()) {
                 // Male Shading
                 goat.addDelimiter("m");
-                goat.addTextureToAnimalTextureGrouping(agoutiGroup, HAIR_PREFIX, hairType, TX_AGOUTI_MALE_SHADING, agouti1, !TX_AGOUTI_MALE_SHADING[agouti1].isEmpty());
+                goat.addPrefixedTexture(agoutiGroup, HAIR_PREFIX, hairType, TX_AGOUTI_MALE_SHADING, agouti1, !TX_AGOUTI_MALE_SHADING[agouti1].isEmpty());
             }
         } else {
             // Heterozygous Agouti
@@ -401,7 +401,7 @@ public class GoatTexture {
                 // Flowery
                 goat.addDelimiter("f");
                 int floweryRandom = uuidArry[IDX_KIT_BODY] % 4;
-                goat.addTextureToAnimalTextureGrouping(whiteGroup, HAIR_PREFIX, hairType, TX_FLOWERY, whiteSize, floweryRandom, true);
+                goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_FLOWERY, whiteSize, floweryRandom, true);
 
             }
             else if (genes[4] == 4 && genes[5] == 4) {
@@ -411,14 +411,14 @@ public class GoatTexture {
                     int piebaldBeltRandom = uuidArry[IDX_KIT_BODY] % 8;
 
                     goat.addDelimiter("pbe");
-                    goat.addTextureToAnimalTextureGrouping(whiteGroup, HAIR_PREFIX, hairType, TX_PIEBALD_BELT, whiteSize, piebaldBeltRandom, true);
+                    goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_PIEBALD_BELT, whiteSize, piebaldBeltRandom, true);
                 }
                 else {
                     // Piebald without belt
                     int piebaldRandom = uuidArry[IDX_KIT_BODY] % 8;
 
                     goat.addDelimiter("pb");
-                    goat.addTextureToAnimalTextureGrouping(whiteGroup, HAIR_PREFIX, hairType, TX_PIEBALD, whiteSize, piebaldRandom, true);
+                    goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_PIEBALD, whiteSize, piebaldRandom, true);
                 }
             }
             else if (genes[58] != 1 || genes[59] != 1) {
@@ -459,7 +459,7 @@ public class GoatTexture {
                 }
 
                 goat.addDelimiter("be");
-                goat.addTextureToAnimalTextureGrouping(whiteGroup, HAIR_PREFIX, hairType, TX_BELT, whiteSize, beltQuality, beltRandom, true);
+                goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_BELT, whiteSize, beltQuality, beltRandom, true);
 
                 goat.addTextureToAnimalTextureGrouping(whiteGroup, TexturingType.NONE, TX_SOCKS_FRONT, sockFrontSize, sockQuality, sockFrontRandom, sockFrontSize != 0);
                 goat.addTextureToAnimalTextureGrouping(whiteGroup, TexturingType.NONE, TX_SOCKS_BACK, sockBackSize, sockQuality, sockBackRandom, sockBackSize != 0);
@@ -474,7 +474,7 @@ public class GoatTexture {
             // Roan
             int roan = 1;
             goat.addTextureToAnimalTextureGrouping(whiteGroup,"shared/frosting.png", "rn");
-            goat.addTextureToAnimalTextureGrouping(whiteGroup, HAIR_PREFIX, hairType, TX_ROAN, roan, true);
+            goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_ROAN, roan, true);
 
         }
         else if (genes[80] == 4 || genes[81] == 4) {
