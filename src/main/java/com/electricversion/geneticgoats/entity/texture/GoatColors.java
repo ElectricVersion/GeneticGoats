@@ -59,7 +59,7 @@ public class GoatColors {
 
         float[] white = {0.094F, 0.08F, 0.96F};
 
-        float[] noseRed = {0.047F, 0.52F, 0.20F};
+        float[] noseRed = {0.043F, 0.52F, 0.20F};
         float[] noseBlack = {0.047F, 0.32F, 0.21F};
         float[] noseWhite = {0.016F, 0.28F, 0.81F};
 
@@ -73,18 +73,24 @@ public class GoatColors {
                 melanin[0] = 0.044F;
                 melanin[1] = 0.333F;
                 melanin[2] = 0.153F;
+                
+                noseBlack[2] += 0.075F;
             }
             else {
                 // Homozygous Dark Brown
                 melanin[0] = 0.044F;
                 melanin[1] = 0.351F;
                 melanin[2] = 0.239F;
+
+                noseBlack[2] += 0.1F;
             }
         } else if (genes[6] == 3 || genes[7] == 3) {
             // Chocolate
             melanin[0] = 0.039F;
             melanin[1] = 0.563F;
             melanin[2] = 0.278F;
+
+            noseBlack[1] = 0.57F;
         }
 
         int redModifier = (genes[8] + genes[9] - 2) - (genes[10] + genes[11] - 2);
