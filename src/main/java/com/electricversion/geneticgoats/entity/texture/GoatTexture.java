@@ -13,7 +13,8 @@ public class GoatTexture {
     private static final int IDX_BELT_BODY = 3;
 
     private static final String[] AGOUTIS = new String[] {
-            "", "bezoar", "gold", "buckskin", "chamoisee", "swiss", "cou_clair", "sundgau", "tanhead", "caramel", "sable", "masked"
+            "", "bezoar", "gold", "buckskin", "chamoisee", "swiss", "cou_clair",
+            "sundgau", "tanhead", "caramel", "sable", "masked", "redcheek"
     };
 
     private static final String[] HAIR_PREFIX = new String[] {
@@ -43,21 +44,21 @@ public class GoatTexture {
             "", "agouti/bezoar_light.png", "", "agouti/buckskin_light.png", "agouti/chamoisee_light.png",
             "agouti/swiss_light.png", "agouti/cou_clair_light.png", "agouti/sundgau_light.png",
             "agouti/tanhead_light.png", "agouti/caramel_light.png", "agouti/sable_light.png",
-            "agouti/masked_light.png"
+            "agouti/masked_light.png", "agouti/redcheek_light.png"
     };
 
     private static final String[] TX_AGOUTI_CREAM = new String[] {
             "", "agouti/bezoar_cream.png", "", "", "",
             "agouti/swiss_cream.png", "", "agouti/sundgau_cream.png",
             "", "", "agouti/sable_cream.png",
-            "agouti/masked_cream.png"
+            "agouti/masked_cream.png", ""
     };
 
     private static final String[] TX_AGOUTI_MALE_SHADING = new String[] {
             "", "male_shading_light1.png", "", "male_shading_light1.png", "",
             "", "male_shading_light1.png", "",
             "male_shading_light1.png", "male_shading_light1.png", "male_shading_light1.png",
-            "male_shading_light1.png"
+            "male_shading_light1.png", ""
     };
 
     private static final String[][] TX_ROAN = new String[][]{
