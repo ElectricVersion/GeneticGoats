@@ -343,39 +343,49 @@ public class GoatTexture {
         int agouti1 = genes[0];
         int agouti2 = genes[1];
 
-        if (agouti1 == 2 || agouti2 == 2) {
+        if (genes[2] == 2 || genes[3] == 2) {
+            // Dom Black. It's solid black, so agouti doesn't matter
+            goat.addTextureToAnimalTextureGrouping(blackGroup, "misc/solid.png");
+        }
+        else if (genes[2] == 3 && genes[3] == 3) {
+            // Recessive Red. It's solid red, so again, agouti doesn't matter.
+            // Currently identical to gold visually but that maaay change, hence the separate branch
+            goat.addTextureToAnimalTextureGrouping(blackGroup, "misc/transparent.png");
+        }
+        else if (agouti1 == 2 || agouti2 == 2) {
             // Gold agouti. Fully dominant and has no black, so we can stop here
             goat.addTextureToAnimalTextureGrouping(blackGroup, "misc/transparent.png");
-            return blackGroup;
         }
-        TextureGrouping agoutiGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
-        if (agouti1 == agouti2) {
-            // Homozygous Agouti
-            goat.addDelimiter("a");
-            goat.addPrefixedTexture(agoutiGroup, HAIR_PREFIX, hairType, TX_AGOUTI_BLACK, agouti1, true);
+        else {
+            // Agouti
+            TextureGrouping agoutiGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
+            if (agouti1 == agouti2) {
+                // Homozygous Agouti
+                goat.addDelimiter("a");
+                goat.addPrefixedTexture(agoutiGroup, HAIR_PREFIX, hairType, TX_AGOUTI_BLACK, agouti1, true);
 
-            if (!goat.getOrSetIsFemale()) {
-                // Male Shading
-                goat.addDelimiter("m");
-                goat.addPrefixedTexture(agoutiGroup, HAIR_PREFIX, hairType, TX_AGOUTI_MALE_SHADING, agouti1, !TX_AGOUTI_MALE_SHADING[agouti1].isEmpty());
-            }
-        } else {
-            // Heterozygous Agouti
-            goat.addDelimiter("aa");
-            if (agouti1 < AGOUTIS.length && agouti2 < AGOUTIS.length) { // Should always be true but just in case
-                String agouti1Name = AGOUTIS[agouti1];
-                String agouti2Name = AGOUTIS[agouti2];
-                String hetTextureString;
-                if (agouti1Name.compareToIgnoreCase(agouti2Name) < 0) {
-                    hetTextureString = HAIR_PREFIX[hairType]+"agouti/hets/"+agouti1Name+"_"+agouti2Name+"_light.png";
-                } else {
-                    hetTextureString = HAIR_PREFIX[hairType]+"agouti/hets/"+agouti2Name+"_"+agouti1Name+"_light.png";
+                if (!goat.getOrSetIsFemale()) {
+                    // Male Shading
+                    goat.addDelimiter("m");
+                    goat.addPrefixedTexture(agoutiGroup, HAIR_PREFIX, hairType, TX_AGOUTI_MALE_SHADING, agouti1, !TX_AGOUTI_MALE_SHADING[agouti1].isEmpty());
                 }
-                goat.addTextureToAnimalTextureGrouping(agoutiGroup, hetTextureString, hairType+"-"+agouti1+"-"+agouti2);
+            } else {
+                // Heterozygous Agouti
+                goat.addDelimiter("aa");
+                if (agouti1 < AGOUTIS.length && agouti2 < AGOUTIS.length) { // Should always be true but just in case
+                    String agouti1Name = AGOUTIS[agouti1];
+                    String agouti2Name = AGOUTIS[agouti2];
+                    String hetTextureString;
+                    if (agouti1Name.compareToIgnoreCase(agouti2Name) < 0) {
+                        hetTextureString = HAIR_PREFIX[hairType] + "agouti/hets/" + agouti1Name + "_" + agouti2Name + "_light.png";
+                    } else {
+                        hetTextureString = HAIR_PREFIX[hairType] + "agouti/hets/" + agouti2Name + "_" + agouti1Name + "_light.png";
+                    }
+                    goat.addTextureToAnimalTextureGrouping(agoutiGroup, hetTextureString, hairType + "-" + agouti1 + "-" + agouti2);
+                }
             }
+            blackGroup.addGrouping(agoutiGroup);
         }
-        blackGroup.addGrouping(agoutiGroup);
-
         return blackGroup;
     }
 
