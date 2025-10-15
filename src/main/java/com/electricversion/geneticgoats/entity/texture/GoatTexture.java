@@ -60,8 +60,13 @@ public class GoatTexture {
             "male_shading_light1.png"
     };
 
-    private static final String[] TX_ROAN = new String[]{
-        "", "white/roan.png"
+    private static final String[][] TX_ROAN = new String[][]{
+            {
+                    "white/roan/roan_low1.png",
+            },
+            {
+                    "white/roan/roan_high1.png",
+            },
     };
 
     private static final String[][] TX_FLOWERY = new String[][]{
@@ -473,10 +478,13 @@ public class GoatTexture {
         }
         else if (genes[80] == 3 || genes[81] == 3) {
             // Roan
-            int roan = 1;
+            int roan = 0;
+            if (genes[80] == genes[81]) {
+                roan = 1;
+            }
+            int roanRandom = 0;
             goat.addTextureToAnimalTextureGrouping(whiteGroup,"shared/frosting.png", "rn");
-            goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_ROAN, roan, true);
-
+            goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_ROAN, roan, roanRandom,true);
         }
         else if (genes[80] == 4 || genes[81] == 4) {
             // Frosting
