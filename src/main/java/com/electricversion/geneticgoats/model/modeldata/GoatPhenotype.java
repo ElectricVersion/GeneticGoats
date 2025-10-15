@@ -350,6 +350,6 @@ public class GoatPhenotype implements Phenotype {
         neckScalings = ModelHelper.createScalings(neckWidth, 1F, neckDepth, 0F, 0F, 0F);
         headScalings = ModelHelper.createScalings(headWidth, 1F, 1F, 0F, 0F, 0F);
         upperMouthScalings = ModelHelper.createScalings(0.999F*headWidth, 1F, upperMouthScaleZ, 0F, 0F, 0F);
-        mouthScalings = ModelHelper.createScalings(headWidth, 1F, upperMouthScaleZ, 0F, 0F, 0F);
+        mouthScalings = ModelHelper.createScalings(0.999F*headWidth, 1F, upperMouthScaleZ, 0F, 0F, 0F);
     }
 }
