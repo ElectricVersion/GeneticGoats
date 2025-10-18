@@ -324,8 +324,10 @@ public class GoatTexture {
         int agouti1 = genes[0];
         int agouti2 = genes[1];
         goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RED, "misc/solid.png");
-        if (agouti1 != 2 && agouti2 != 2) {
-            // Gold agouti is dominant and blocks the cream highlights, so require that it's not present
+        // Gold agouti is dominant and blocks the cream highlights, so require that it's not present.
+        // Tentatively same with rec. red, although I still wonder if it might behave differently
+        boolean hasCreamLayer = agouti1 != 2 && agouti2 != 2 && (genes[2] != 3 || genes[3] != 3);
+        if (hasCreamLayer) {
             if (!TX_AGOUTI_CREAM[agouti1].isEmpty()) {
                 goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RGB, HAIR_PREFIX[hairType] + TX_AGOUTI_CREAM[agouti1], ("ac1" + hairType) + agouti1, color.getCreamColor());
             }
