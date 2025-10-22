@@ -3,6 +3,7 @@ package com.electricversion.geneticgoats.entity.texture;
 import com.electricversion.geneticgoats.entity.EnhancedGoat;
 import mokiyoki.enhancedanimals.renderer.texture.TextureGrouping;
 import mokiyoki.enhancedanimals.renderer.texture.TexturingType;
+import net.minecraft.util.Mth;
 
 public class GoatTexture {
 
@@ -229,6 +230,21 @@ public class GoatTexture {
                     {
                             "shared/white/socks/socks_high_clean_back1.png",
                     }
+            }
+    };
+
+    private static final String[][] TX_SCHWARTZAL = new String[][] {
+            { // LOW
+                    "white/schwartzal/schwartzal_low1.png",
+            },
+            { // MEDIUM
+                    "white/schwartzal/schwartzal_med1.png",
+            },
+            { // HIGH
+                    "white/schwartzal/schwartzal_high1.png",
+            },
+            { // MAX
+                    "white/schwartzal/schwartzal_max1.png",
             }
     };
 
@@ -483,6 +499,15 @@ public class GoatTexture {
                 goat.addTextureToAnimalTextureGrouping(whiteGroup, TexturingType.NONE, TX_SOCKS_FRONT, sockFrontSize, sockQuality, sockFrontRandom, sockFrontSize != 0);
                 goat.addTextureToAnimalTextureGrouping(whiteGroup, TexturingType.NONE, TX_SOCKS_BACK, sockBackSize, sockQuality, sockBackRandom, sockBackSize != 0);
             }
+        }
+
+        if (genes[82] != 1 || genes[83] != 1) {
+            int schwartzalSize = genes[82] + genes[83] - 3; // Since WT is 1, homozygous WT = 2. Min expression = 3
+            // Clamp value to prevent crashes in case of user error (aka gene data modification)
+            schwartzalSize = Mth.clamp(schwartzalSize, 0, 3);
+            int schwartzalRandom = 0;
+            goat.addDelimiter("sz");
+            goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_SCHWARTZAL, schwartzalSize, schwartzalRandom, true);
         }
 
         if (genes[80] == 2 || genes[81] == 2) {
