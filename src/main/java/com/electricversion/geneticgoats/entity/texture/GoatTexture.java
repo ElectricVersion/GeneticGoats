@@ -301,8 +301,10 @@ public class GoatTexture {
 
         rootGroup.addGrouping(blackGroup);
 
-        TextureGrouping moonspotGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
+        // Moonspot Layer
+        TextureGrouping moonspotGroup = new TextureGrouping(TexturingType.MASK_GROUP);
         moonspotGroup.addGrouping(makeMoonspotMask(goat, genes, uuidArry, hairType));
+        moonspotGroup.addGrouping(makeMoonspotColor(goat, genes, uuidArry, color));
         rootGroup.addGrouping(moonspotGroup);
 
         // White Layer
@@ -563,11 +565,22 @@ public class GoatTexture {
 
             String texturePath = HAIR_PREFIX[hairType] + "moonspots/moonspots_" +
                     quantityDescriptors[moonspotQuantity] + "_" + sizeDescriptors[moonspotSize] + (moonspotRandom + 1) + ".png";
+
             String textureName = "ms" + hairType + "-" + moonspotQuantity +  "-" + moonspotSize +  "-" + moonspotRandom;
 
             goat.addTextureToAnimalTextureGrouping(moonspotGroup, texturePath, textureName);
 
+        } else {
+            // Blank texture to avoid issues when group is empty
+            goat.addTextureToAnimalTextureGrouping(moonspotGroup, "misc/transparent.png");
         }
         return moonspotGroup;
     }
+
+    private static TextureGrouping makeMoonspotColor(EnhancedGoat goat, int[] genes, char[] uuidArry, GoatColors color) {
+        TextureGrouping moonspotColorGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
+        goat.addTextureToAnimalTextureGrouping(moonspotColorGroup, "misc/solid.png");
+        return moonspotColorGroup;
+    }
+
 }
