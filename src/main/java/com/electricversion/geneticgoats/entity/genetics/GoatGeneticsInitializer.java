@@ -15,7 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
 
-    public static final int AUTOSOMAL_GENES_LENGTH = 84;
+    public static final int AUTOSOMAL_GENES_LENGTH = 90;
     public static final int SEXLINKED_GENES_LENGTH = 2;
 
     int WTC = GoatsCommonConfig.COMMON.wildTypeChance.get();
@@ -312,13 +312,39 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[80] = randomizeGene(4);
         autosomalGenes[81] = randomizeGene(4);
 
-        /* Schwartzal (EDNRA?)
+        /* SCHWARTZAL (EDNRA?)
          * 1 - Wildtype
          * 2 - Medium Schwartzal; Incomplete Dominant
          * 3 - High Schwartzal; Incomplete Dominant
          */
         autosomalGenes[82] = randomizeGene(3);
         autosomalGenes[83] = randomizeGene(3);
+
+        /* MOONSPOTS
+         * 1 - Wildtype
+         * 2 - Moonspots (Dominant)
+         */
+        autosomalGenes[84] = randomizeGene(2);
+        autosomalGenes[85] = randomizeGene(2);
+
+        /* MOONSPOT QUANTITY MODIFIER
+         * 1 - Some Moonspots
+         * 2 - Many Moonspots; Incomplete Dominant
+         * 3 - Few Moonspots; Incomplete Dominant
+         * (Many/Some will produce Many; Few/Some will produce Few; Many/Few will produce Some)
+        */
+        autosomalGenes[86] = randomizeGene(3);
+        autosomalGenes[87] = randomizeGene(3);
+
+        /* MOONSPOT SIZE MODIFIER
+         * 1 - Medium Size (Wildtype)
+         * 2 - Large Moonspots; Incomplete Dominant
+         * 3 - Small Moonspots; Incomplete Dominant
+         * (Heterozygotes produce a mixture of sizes - e.g. normal/large will produce goats with both normal and large spots)
+         * Implementation of the above currently undecided - may need to be adjusted or simplified somehow
+         */
+        autosomalGenes[88] = randomizeGene(3);
+        autosomalGenes[89] = randomizeGene(3);
 
         // TODO: Implement body fat and dairy polygenes
 //        /* Placeholder Body Fat

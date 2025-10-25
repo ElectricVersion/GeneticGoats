@@ -62,7 +62,7 @@ public class GoatTexture {
             "male_shading_light1.png", ""
     };
 
-    private static final String[][] TX_ROAN = new String[][]{
+    private static final String[][] TX_ROAN = new String[][] {
             {
                     "white/roan/roan_low1.png",
             },
@@ -71,7 +71,7 @@ public class GoatTexture {
             },
     };
 
-    private static final String[][] TX_FLOWERY = new String[][]{
+    private static final String[][] TX_FLOWERY = new String[][] {
             { // LOW
                     "white/flowery/flowery_low1.png", "white/flowery/flowery_low2.png",
                     "white/flowery/flowery_low3.png", "white/flowery/flowery_low4.png",
@@ -301,6 +301,10 @@ public class GoatTexture {
 
         rootGroup.addGrouping(blackGroup);
 
+        TextureGrouping moonspotGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
+        moonspotGroup.addGrouping(makeMoonspotMask(goat, genes, uuidArry, hairType));
+        rootGroup.addGrouping(moonspotGroup);
+
         // White Layer
         TextureGrouping whiteGroup = new TextureGrouping(TexturingType.MASK_GROUP);
         whiteGroup.addGrouping(makeWhiteMask(goat, genes, uuidArry, hairType));
@@ -365,17 +369,14 @@ public class GoatTexture {
         if (genes[2] == 2 || genes[3] == 2) {
             // Dom Black. It's solid black, so agouti doesn't matter
             goat.addTextureToAnimalTextureGrouping(blackGroup, "misc/solid.png");
-        }
-        else if (genes[2] == 3 && genes[3] == 3) {
+        } else if (genes[2] == 3 && genes[3] == 3) {
             // Recessive Red. It's solid red, so again, agouti doesn't matter.
             // Currently identical to gold visually but that maaay change, hence the separate branch
             goat.addTextureToAnimalTextureGrouping(blackGroup, "misc/transparent.png");
-        }
-        else if (agouti1 == 2 || agouti2 == 2) {
+        } else if (agouti1 == 2 || agouti2 == 2) {
             // Gold agouti. Fully dominant and has no black, so we can stop here
             goat.addTextureToAnimalTextureGrouping(blackGroup, "misc/transparent.png");
-        }
-        else {
+        } else {
             // Agouti
             TextureGrouping agoutiGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
             if (agouti1 == agouti2) {
@@ -438,8 +439,7 @@ public class GoatTexture {
                 int floweryRandom = uuidArry[IDX_KIT_BODY] % 4;
                 goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_FLOWERY, whiteSize, floweryRandom, true);
 
-            }
-            else if (genes[4] == 4 && genes[5] == 4) {
+            } else if (genes[4] == 4 && genes[5] == 4) {
                 // Piebald
                 if (genes[58] != 1 || genes[59] != 1) {
                     // Piebald AND belt
@@ -447,16 +447,14 @@ public class GoatTexture {
 
                     goat.addDelimiter("pbe");
                     goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_PIEBALD_BELT, whiteSize, piebaldBeltRandom, true);
-                }
-                else {
+                } else {
                     // Piebald without belt
                     int piebaldRandom = uuidArry[IDX_KIT_BODY] % 8;
 
                     goat.addDelimiter("pb");
                     goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_PIEBALD, whiteSize, piebaldRandom, true);
                 }
-            }
-            else if (genes[58] != 1 || genes[59] != 1) {
+            } else if (genes[58] != 1 || genes[59] != 1) {
                 // Belted without piebald
 
                 int beltQuality = 0;
@@ -469,8 +467,7 @@ public class GoatTexture {
 
                 if (Math.min(genes[60], genes[61]) == 2) {
                     beltQuality = 1;
-                }
-                else if (Math.min(genes[60], genes[61]) == 3) {
+                } else if (Math.min(genes[60], genes[61]) == 3) {
                     beltQuality = 2;
                 }
                 if (genes[58] == 2 || genes[59] == 2) {
@@ -513,20 +510,18 @@ public class GoatTexture {
         if (genes[80] == 2 || genes[81] == 2) {
             // Silver
             goat.addDelimiter("sv");
-        }
-        else if (genes[80] == 3 || genes[81] == 3) {
+        } else if (genes[80] == 3 || genes[81] == 3) {
             // Roan
             int roan = 0;
             if (genes[80] == genes[81]) {
                 roan = 1;
             }
             int roanRandom = 0;
-            goat.addTextureToAnimalTextureGrouping(whiteGroup,"shared/frosting.png", "rn");
-            goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_ROAN, roan, roanRandom,true);
-        }
-        else if (genes[80] == 4 || genes[81] == 4) {
+            goat.addTextureToAnimalTextureGrouping(whiteGroup, "shared/frosting.png", "rn");
+            goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_ROAN, roan, roanRandom, true);
+        } else if (genes[80] == 4 || genes[81] == 4) {
             // Frosting
-            goat.addTextureToAnimalTextureGrouping(whiteGroup,"shared/frosting.png", "fr");
+            goat.addTextureToAnimalTextureGrouping(whiteGroup, "shared/frosting.png", "fr");
         }
         return whiteGroup;
     }
@@ -538,4 +533,41 @@ public class GoatTexture {
         return whiteColorGroup;
     }
 
+    private static TextureGrouping makeMoonspotMask(EnhancedGoat goat, int[] genes, char[] uuidArry, int hairType) {
+        TextureGrouping moonspotGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
+        if (genes[84] == 2 || genes[85] == 2) {
+            // Because of the sheer quantity of moonspots textures, making a 3-dimensional array of them all feels excessive.
+            // Instead, just piece together the texture name based on fixed descriptors
+            String[] quantityDescriptors = { "few", "some", "many" };
+            String[] sizeDescriptors = { "small", "med", "large" };
+            int moonspotQuantity = 1;
+            int moonspotSize = 1;
+            int moonspotRandom = 0;
+            if (genes[86] == 2 || genes[87] == 2) {
+                // Many Moonspots
+                moonspotQuantity++;
+            }
+            if (genes[86] == 3 | genes[87] == 3) { // Note that many and some are not mutually exclusive
+                // Some Moonspots
+                moonspotQuantity--;
+            }
+
+            if (genes[88] == 2 || genes[89] == 2) {
+                // Larger Moonspots
+                moonspotSize++;
+            }
+            if (genes[88] == 3 | genes[89] == 3) { // Again, not mutually exclusive
+                // Smaller Moonspots
+                moonspotSize--;
+            }
+
+            String texturePath = HAIR_PREFIX[hairType] + "moonspots/moonspots_" +
+                    quantityDescriptors[moonspotQuantity] + "_" + sizeDescriptors[moonspotSize] + (moonspotRandom + 1) + ".png";
+            String textureName = "ms" + hairType + "-" + moonspotQuantity +  "-" + moonspotSize +  "-" + moonspotRandom;
+
+            goat.addTextureToAnimalTextureGrouping(moonspotGroup, texturePath, textureName);
+
+        }
+        return moonspotGroup;
+    }
 }
