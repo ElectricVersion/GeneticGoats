@@ -319,6 +319,7 @@ public class GoatTexture {
         goat.addTextureToAnimalTextureGrouping(detailGroup, TX_SHADING, hairType, true);
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/udder.png");
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/hooves.png");
+        goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/horns_gray.png");
         rootGroup.addGrouping(detailGroup);
 
         rootGroup.addGrouping(makeEyeGroup(goat, genes));

@@ -54,6 +54,11 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
     private final WrappedModelPart bUdder;
 
+    private final WrappedModelPart bHornL;
+    private final WrappedModelPart bHornR;
+
+
+
     /* Blocks */
 
     private final WrappedModelPart tail;
@@ -85,7 +90,6 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     private final WrappedModelPart earL12;
     private final WrappedModelPart earR12;
 
-
     private final WrappedModelPart legFL;
     private final WrappedModelPart legFR;
     private final WrappedModelPart legBL;
@@ -102,6 +106,11 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
     private final WrappedModelPart udder;
     private final WrappedModelPart nipples;
+
+    private final WrappedModelPart[] hornL;
+    private final WrappedModelPart[] hornR;
+
+
 
     /* Part Setup */
 
@@ -130,6 +139,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bLegBR = new WrappedModelPart("bLegBR", basePart);
 
         bUdder = new WrappedModelPart("bUdder", basePart);
+
+        bHornL = new WrappedModelPart("bHornL", basePart);
+        bHornR = new WrappedModelPart("bHornR", basePart);
 
         /* BLOCKS */
         bodyF = new WrappedModelPart("bodyF", basePart);
@@ -178,6 +190,13 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         udder = new WrappedModelPart("udder", basePart);
         nipples = new WrappedModelPart("nipples", basePart);
 
+        hornL = new WrappedModelPart[14];
+        hornR = new WrappedModelPart[14];
+        for (int i = 0; i < 14; i++) {
+            hornL[i] = new WrappedModelPart("hornL" + i, basePart);
+            hornR[i] = new WrappedModelPart("hornR" + i, basePart);
+        }
+
         base.addChild(bBodyF);
         base.addChild(bBodyB);
         bBodyF.addChild(bodyF);
@@ -221,6 +240,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         head.addChild(eyeL);
         head.addChild(eyeR);
 
+        bHead.addChild(bHornL);
+        bHead.addChild(bHornR);
+
         bHead.addChild(bEarL);
         bHead.addChild(bEarR);
         bEarL.addChild(earLG);
@@ -237,6 +259,13 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bEarR.addChild(earR9);
         bEarL.addChild(earL12);
         bEarR.addChild(earR12);
+
+        bHornL.addChild(hornL[0]);
+        bHornR.addChild(hornR[0]);
+        for (int i = 1; i < 14; i++) {
+            hornL[i-1].addChild(hornL[i]);
+            hornR[i-1].addChild(hornR[i]);
+        }
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -257,6 +286,10 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                 PartPose.offsetAndRotation(0F, -16F, -6F, baseNeckAngle, 0F, 0F));
         baseDef.addOrReplaceChild("bHead", CubeListBuilder.create(),
                 PartPose.offsetAndRotation(0F, -11F, 3F, baseHeadAngle, 0F, 0F));
+        baseDef.addOrReplaceChild("bHornL", CubeListBuilder.create(),
+                PartPose.offsetAndRotation(2F, -2F, 0F, 0F, 0F, 0F));
+        baseDef.addOrReplaceChild("bHornR", CubeListBuilder.create(),
+                PartPose.offsetAndRotation(-2F, -2F, 0F, 0F, 0F, 0F));
         baseDef.addOrReplaceChild("bMuzzle", CubeListBuilder.create(),
                 PartPose.offsetAndRotation(0F, 1F, -6F, Mth.HALF_PI * 0.125F, 0F, 0F));
         baseDef.addOrReplaceChild("bMouth", CubeListBuilder.create(),
@@ -479,6 +512,18 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                         .addBox(-3F, 5F, 0F, 3, 5, 3),
                 PartPose.offset(0F, 1F, -3F));
 
+        // Horns
+        for (int i = 0; i < 14; i++) {
+            int verticalOffset = i == 0 ? 0 : -1;
+            baseDef.addOrReplaceChild("hornL" + i, CubeListBuilder.create()
+                            .texOffs(119, 123)
+                            .addBox(-0.5F, 0.5F, -1.5F, 2, 2, 2, new CubeDeformation(-0.5F, -0.5F, -0.5F)),
+                    PartPose.offset(0, verticalOffset, 0));
+            baseDef.addOrReplaceChild("hornR" + i, CubeListBuilder.create()
+                            .texOffs(110, 123)
+                            .addBox(-1.5F, 0.5F, -1.5F, 2, 2, 2, new CubeDeformation(-0.5F, -0.5F, -0.5F)),
+                    PartPose.offset(0, verticalOffset, 0));
+        }
         return LayerDefinition.create(meshDefinition, 128, 128);
     }
 
