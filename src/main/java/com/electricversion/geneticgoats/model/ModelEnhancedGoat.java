@@ -287,9 +287,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("bHead", CubeListBuilder.create(),
                 PartPose.offsetAndRotation(0F, -11F, 3F, baseHeadAngle, 0F, 0F));
         baseDef.addOrReplaceChild("bHornL", CubeListBuilder.create(),
-                PartPose.offsetAndRotation(2F, -2F, 0F, 0F, 0F, 0F));
+                PartPose.offsetAndRotation(2F, 0F, 0F, 0F, 0F, 0F));
         baseDef.addOrReplaceChild("bHornR", CubeListBuilder.create(),
-                PartPose.offsetAndRotation(-2F, -2F, 0F, 0F, 0F, 0F));
+                PartPose.offsetAndRotation(-2F, 0F, 0F, 0F, 0F, 0F));
         baseDef.addOrReplaceChild("bMuzzle", CubeListBuilder.create(),
                 PartPose.offsetAndRotation(0F, 1F, -6F, Mth.HALF_PI * 0.125F, 0F, 0F));
         baseDef.addOrReplaceChild("bMouth", CubeListBuilder.create(),
@@ -514,15 +514,15 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         // Horns
         for (int i = 0; i < 14; i++) {
-            int verticalOffset = i == 0 ? 0 : -1;
+            float verticalOffset = i == 0 ? 0F : -1F;
             baseDef.addOrReplaceChild("hornL" + i, CubeListBuilder.create()
                             .texOffs(119, 123)
-                            .addBox(-0.5F, 0.5F, -1.5F, 2, 2, 2, new CubeDeformation(-0.5F, -0.5F, -0.5F)),
-                    PartPose.offset(0, verticalOffset, 0));
+                            .addBox(-0.5F, -1.5F, -1F, 2, 2, 2, new CubeDeformation(-0.5F, -0.5F, -0.5F)),
+                    PartPose.offsetAndRotation(0, verticalOffset, 0, -0.1F * Mth.HALF_PI, 0F, 0F));
             baseDef.addOrReplaceChild("hornR" + i, CubeListBuilder.create()
                             .texOffs(110, 123)
-                            .addBox(-1.5F, 0.5F, -1.5F, 2, 2, 2, new CubeDeformation(-0.5F, -0.5F, -0.5F)),
-                    PartPose.offset(0, verticalOffset, 0));
+                            .addBox(-1.5F, -1.5F, -1F, 2, 2, 2, new CubeDeformation(-0.5F, -0.5F, -0.5F)),
+                    PartPose.offsetAndRotation(0, verticalOffset, 0, -0.1F * Mth.HALF_PI, 0F, 0F));
         }
         return LayerDefinition.create(meshDefinition, 128, 128);
     }
