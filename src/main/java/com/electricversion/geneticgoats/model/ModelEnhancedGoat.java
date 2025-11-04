@@ -514,8 +514,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         // Horns
         for (int i = 0; i < 14; i++) {
-//            float deform = -0.5F;
-            float deform = ((-i / 14F) + -0.5F) / 2F; // Could be simplified, but written in this form so logic is clearer
+            float deform = ((-2 * i / 14F) + -0.5F) / 3F; // Could be simplified, but written in this form so logic is clearer
             float verticalOffset = i == 0 ? 0F : -(2F+(2F*deform));
             float boxSize = 2F + deform;
             baseDef.addOrReplaceChild("hornL" + i, CubeListBuilder.create()
