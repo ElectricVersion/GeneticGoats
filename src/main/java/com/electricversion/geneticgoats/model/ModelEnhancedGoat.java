@@ -287,9 +287,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("bHead", CubeListBuilder.create(),
                 PartPose.offsetAndRotation(0F, -11F, 3F, baseHeadAngle, 0F, 0F));
         baseDef.addOrReplaceChild("bHornL", CubeListBuilder.create(),
-                PartPose.offsetAndRotation(2F, 0F, 0F, 0F, 0F, 0F));
+                PartPose.offsetAndRotation(1.5F, 0F, -2F, 0F, 0F, 0F));
         baseDef.addOrReplaceChild("bHornR", CubeListBuilder.create(),
-                PartPose.offsetAndRotation(-2F, 0F, 0F, 0F, 0F, 0F));
+                PartPose.offsetAndRotation(-1.5F, 0F, -2F, 0F, 0F, 0F));
         baseDef.addOrReplaceChild("bMuzzle", CubeListBuilder.create(),
                 PartPose.offsetAndRotation(0F, 1F, -6F, Mth.HALF_PI * 0.125F, 0F, 0F));
         baseDef.addOrReplaceChild("bMouth", CubeListBuilder.create(),
@@ -514,16 +514,20 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         // Horns
         for (int i = 0; i < 14; i++) {
-            float deform = -0.5F;
+//            float deform = -0.5F;
+            float deform = ((-i / 14F) + -0.5F) / 2F; // Could be simplified, but written in this form so logic is clearer
             float verticalOffset = i == 0 ? 0F : -(2F+(2F*deform));
+            float boxSize = 2F + deform;
             baseDef.addOrReplaceChild("hornL" + i, CubeListBuilder.create()
                             .texOffs(119, 123)
-                            .addBox(-0.5F, -2F-deform, -1F, 2, 2, 2, new CubeDeformation(deform)),
-                    PartPose.offsetAndRotation(0, verticalOffset, 0, -0.1F * Mth.HALF_PI, 0F, 0F));
+                            .addBox(-1F, -boxSize, -1F, 2, 2, 2, new CubeDeformation(deform)),
+                    PartPose.offsetAndRotation(0, verticalOffset, 0,
+                            -0.1F * Mth.HALF_PI, 0F, 0.05F * Mth.HALF_PI));
             baseDef.addOrReplaceChild("hornR" + i, CubeListBuilder.create()
                             .texOffs(110, 123)
-                            .addBox(-1.5F, -2F-deform, -1F, 2, 2, 2, new CubeDeformation(deform)),
-                    PartPose.offsetAndRotation(0, verticalOffset, 0, -0.1F * Mth.HALF_PI, 0F, 0F));
+                            .addBox(-1F, -boxSize, -1F, 2, 2, 2, new CubeDeformation(deform)),
+                    PartPose.offsetAndRotation(0, verticalOffset, 0,
+                            -0.1F * Mth.HALF_PI, 0F, -0.05F * Mth.HALF_PI));
         }
         return LayerDefinition.create(meshDefinition, 128, 128);
     }
