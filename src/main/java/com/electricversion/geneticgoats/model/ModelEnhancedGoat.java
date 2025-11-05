@@ -30,6 +30,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     private static final float baseNeckAngle = Mth.HALF_PI*0.30F;
     private static final float baseHeadAngle = -Mth.HALF_PI*0.225F;
 
+    private static final int MAX_HORN_LENGTH = 14;
+
     private GoatModelData goatModelData;
 
     /* Bones */
@@ -190,9 +192,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         udder = new WrappedModelPart("udder", basePart);
         nipples = new WrappedModelPart("nipples", basePart);
 
-        hornL = new WrappedModelPart[14];
-        hornR = new WrappedModelPart[14];
-        for (int i = 0; i < 14; i++) {
+        hornL = new WrappedModelPart[MAX_HORN_LENGTH];
+        hornR = new WrappedModelPart[MAX_HORN_LENGTH];
+        for (int i = 0; i < MAX_HORN_LENGTH; i++) {
             hornL[i] = new WrappedModelPart("hornL" + i, basePart);
             hornR[i] = new WrappedModelPart("hornR" + i, basePart);
         }
@@ -262,7 +264,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         bHornL.addChild(hornL[0]);
         bHornR.addChild(hornR[0]);
-        for (int i = 1; i < 14; i++) {
+        for (int i = 1; i < MAX_HORN_LENGTH; i++) {
             hornL[i-1].addChild(hornL[i]);
             hornR[i-1].addChild(hornR[i]);
         }
@@ -513,8 +515,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                 PartPose.offset(0F, 1F, -3F));
 
         // Horns
-        for (int i = 0; i < 14; i++) {
-            float deform = ((-2 * i / 14F) + -0.5F) / 3F; // Could be simplified, but written in this form so logic is clearer
+        for (int i = 0; i < MAX_HORN_LENGTH; i++) {
+            float deform = ((-2 * i / (float) MAX_HORN_LENGTH) + -0.5F) / 3F; // Could be simplified, but written in this form so logic is clearer
             float verticalOffset = i == 0 ? 0F : -(2F+(2F*deform));
             float boxSize = 2F + deform;
             baseDef.addOrReplaceChild("hornL" + i, CubeListBuilder.create()
