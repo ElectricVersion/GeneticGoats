@@ -30,7 +30,11 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     private static final float baseNeckAngle = Mth.HALF_PI*0.30F;
     private static final float baseHeadAngle = -Mth.HALF_PI*0.225F;
 
-    private static final int MAX_HORN_LENGTH = 14;
+    public static final int MAX_HORN_LENGTH = 14;
+
+    public static float getHornSegmentDeform(int segment) {
+        return ((-2 * segment / (float) MAX_HORN_LENGTH) + -0.5F) / 3F; // Could be simplified, but written in this form so logic is clearer
+    }
 
     private GoatModelData goatModelData;
 
@@ -516,19 +520,19 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         // Horns
         for (int i = 0; i < MAX_HORN_LENGTH; i++) {
-            float deform = ((-2 * i / (float) MAX_HORN_LENGTH) + -0.5F) / 3F; // Could be simplified, but written in this form so logic is clearer
+            float deform = getHornSegmentDeform(i);
             float verticalOffset = i == 0 ? 0F : -(2F+(2F*deform));
             float boxSize = 2F + deform;
             baseDef.addOrReplaceChild("hornL" + i, CubeListBuilder.create()
                             .texOffs(119, 123)
                             .addBox(-1F, -boxSize, -1F, 2, 2, 2, new CubeDeformation(deform)),
                     PartPose.offsetAndRotation(0, verticalOffset, 0,
-                            -0.1F * Mth.HALF_PI, 0F, 0.05F * Mth.HALF_PI));
+                            0F, 0F, 0F));
             baseDef.addOrReplaceChild("hornR" + i, CubeListBuilder.create()
                             .texOffs(110, 123)
                             .addBox(-1F, -boxSize, -1F, 2, 2, 2, new CubeDeformation(deform)),
                     PartPose.offsetAndRotation(0, verticalOffset, 0,
-                            -0.1F * Mth.HALF_PI, 0F, -0.05F * Mth.HALF_PI));
+                            0F, 0F, 0F));
         }
         return LayerDefinition.create(meshDefinition, 128, 128);
     }
@@ -705,6 +709,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         beard.show(phenotype.isBearded());
         setupEars(phenotype);
         setupMuzzle(phenotype);
+        setupHorns(phenotype);
     }
 
     private void setupEars(GoatPhenotype phenotype) {
@@ -755,6 +760,26 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         } else {
             muzzleShort.hide();
             muzzleLong.show();
+        }
+    }
+
+    private void setupHorns(GoatPhenotype phenotype) {
+        for (int i = 0; i < MAX_HORN_LENGTH; i++) {
+            // Left Horn
+            hornL[i].boxIsRendered = i >= MAX_HORN_LENGTH - phenotype.getHornLeftLength();
+            if (i > MAX_HORN_LENGTH - phenotype.getHornLeftLength()) {
+                hornL[i].setPosYAndRot(phenotype.getHornYOffset(i), phenotype.getHornLeftRotation(i));
+            } else {
+                hornL[i].setPosYAndRot(Vector3f.ZERO, Vector3f.ZERO);
+            }
+
+            // Right Horn
+            hornR[i].boxIsRendered = i >= MAX_HORN_LENGTH - phenotype.getHornRightLength();
+            if (i > MAX_HORN_LENGTH - phenotype.getHornRightLength()) {
+                hornR[i].setPosYAndRot(phenotype.getHornYOffset(i), phenotype.getHornRightRotation(i));
+            } else {
+                hornR[i].setPosYAndRot(Vector3f.ZERO, Vector3f.ZERO);
+            }
         }
     }
 

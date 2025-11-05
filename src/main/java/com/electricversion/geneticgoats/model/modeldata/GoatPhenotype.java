@@ -1,11 +1,19 @@
 package com.electricversion.geneticgoats.model.modeldata;
 
+import com.electricversion.geneticgoats.model.ModelEnhancedGoat;
+import com.mojang.math.Vector3f;
 import mokiyoki.enhancedanimals.model.modeldata.Phenotype;
 import mokiyoki.enhancedanimals.model.util.ModelHelper;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.util.Mth;
 
 import java.util.List;
+import java.util.Random;
+import java.util.Vector;
 
+import static com.electricversion.geneticgoats.model.ModelEnhancedGoat.MAX_HORN_LENGTH;
 import static net.minecraft.util.Mth.clamp;
 
 // The phenotype class is used for storing model data related to immutable genetic traits that need to be accessed by the model
@@ -90,6 +98,26 @@ public class GoatPhenotype implements Phenotype {
         return bearded;
     }
 
+    public int getHornLeftLength() {
+        return hornLeftLength;
+    }
+
+    public int getHornRightLength() {
+        return hornRightLength;
+    }
+
+    public Vector3f getHornLeftRotation(int segment) {
+        return hornLeftRotations[segment];
+    }
+
+    public Vector3f getHornRightRotation(int segment) {
+        return hornRightRotations[segment];
+    }
+
+    public Vector3f getHornYOffset(int segment) {
+        return hornOffsets[segment];
+    }
+
     public enum EarLength {
         GOPHER,
         ELF,
@@ -134,6 +162,13 @@ public class GoatPhenotype implements Phenotype {
     private List<Float> neckScalings;
     private List<Float> upperMouthScalings;
     private List<Float> mouthScalings;
+
+    // Horn Settings
+    private int hornLeftLength;
+    private int hornRightLength;
+    private Vector3f[] hornLeftRotations;
+    private Vector3f[] hornRightRotations;
+    private Vector3f[] hornOffsets;
 
     private void calculateEars(int[] genes) {
         if (genes[30] == 2 || genes[31] == 2) {
@@ -338,11 +373,26 @@ public class GoatPhenotype implements Phenotype {
         }
     }
 
+    private void calculateHorns(int[] genes) {
+        hornLeftLength = (int) Mth.randomBetween(new Random(), 0, 14); // Placeholder for testing a variety of horn lengths
+        hornRightLength = hornLeftLength; // As far as I know, they should always be symmetrical.
+        hornOffsets = new Vector3f[MAX_HORN_LENGTH];
+        hornLeftRotations = new Vector3f[MAX_HORN_LENGTH];
+        hornRightRotations = new Vector3f[MAX_HORN_LENGTH];
+        for (int i = 0; i < MAX_HORN_LENGTH; i++) {
+            float deform = ModelEnhancedGoat.getHornSegmentDeform(i);
+            hornOffsets[i] = new Vector3f(0F, i == 0 ? 0F : -(2F+(2F*deform)), 0F);
+            hornLeftRotations[i] = new Vector3f(-0.1F * Mth.HALF_PI, 0F, 0.1F * Mth.HALF_PI);
+            hornRightRotations[i] = new Vector3f(-0.1F * Mth.HALF_PI, 0F, -0.1F * Mth.HALF_PI);
+        }
+    }
+
     public GoatPhenotype(int[] genes, boolean isFemale) {
         calculateBeard(genes, isFemale);
         calculateEars(genes);
         calculateMuzzle(genes);
         calculateBody(genes);
+        calculateHorns(genes);
         // Generate Scalings
         upperLegScalings = ModelHelper.createScalings(1F, (5F - bodyHeight)/5F, 1F, 0F, 0F, 0F);
         bodyScalings = ModelHelper.createScalings(1F, (9F + bodyHeight)/9F, 1F, 0F, 0F, 0F);
