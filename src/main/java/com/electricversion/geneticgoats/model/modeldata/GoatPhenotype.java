@@ -4,14 +4,9 @@ import com.electricversion.geneticgoats.model.ModelEnhancedGoat;
 import com.mojang.math.Vector3f;
 import mokiyoki.enhancedanimals.model.modeldata.Phenotype;
 import mokiyoki.enhancedanimals.model.util.ModelHelper;
-import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.util.Mth;
 
 import java.util.List;
-import java.util.Random;
-import java.util.Vector;
 
 import static com.electricversion.geneticgoats.model.ModelEnhancedGoat.MAX_HORN_LENGTH;
 import static net.minecraft.util.Mth.clamp;
@@ -98,12 +93,8 @@ public class GoatPhenotype implements Phenotype {
         return bearded;
     }
 
-    public int getHornLeftLength() {
-        return hornLeftLength;
-    }
-
-    public int getHornRightLength() {
-        return hornRightLength;
+    public int getHornLength() {
+        return hornLength;
     }
 
     public Vector3f getHornLeftRotation(int segment) {
@@ -116,6 +107,10 @@ public class GoatPhenotype implements Phenotype {
 
     public Vector3f getHornYOffset(int segment) {
         return hornOffsets[segment];
+    }
+
+    public List<Float> getHornScalings() {
+        return hornScalings;
     }
 
     public enum EarLength {
@@ -164,11 +159,12 @@ public class GoatPhenotype implements Phenotype {
     private List<Float> mouthScalings;
 
     // Horn Settings
-    private int hornLeftLength;
-    private int hornRightLength;
+    private int hornLength;
     private Vector3f[] hornLeftRotations;
     private Vector3f[] hornRightRotations;
     private Vector3f[] hornOffsets;
+    private List<Float> hornScalings;
+
 
     private void calculateEars(int[] genes) {
         if (genes[30] == 2 || genes[31] == 2) {
@@ -374,17 +370,19 @@ public class GoatPhenotype implements Phenotype {
     }
 
     private void calculateHorns(int[] genes) {
-        hornLeftLength = (int) Mth.randomBetween(new Random(), 0, 14); // Placeholder for testing a variety of horn lengths
-        hornRightLength = hornLeftLength; // As far as I know, they should always be symmetrical.
+        hornLength = MAX_HORN_LENGTH;
+        float hornThickness = 1F;
         hornOffsets = new Vector3f[MAX_HORN_LENGTH];
         hornLeftRotations = new Vector3f[MAX_HORN_LENGTH];
         hornRightRotations = new Vector3f[MAX_HORN_LENGTH];
         for (int i = 0; i < MAX_HORN_LENGTH; i++) {
             float deform = ModelEnhancedGoat.getHornSegmentDeform(i);
             hornOffsets[i] = new Vector3f(0F, i == 0 ? 0F : -(2F+(2F*deform)), 0F);
-            hornLeftRotations[i] = new Vector3f(-0.1F * Mth.HALF_PI, 0F, 0.1F * Mth.HALF_PI);
-            hornRightRotations[i] = new Vector3f(-0.1F * Mth.HALF_PI, 0F, -0.1F * Mth.HALF_PI);
+            hornLeftRotations[i] = new Vector3f(-0.15F * Mth.HALF_PI, 0F, 0.1F * Mth.HALF_PI);
+            hornRightRotations[i] = new Vector3f(-0.15F * Mth.HALF_PI, 0F, -0.1F * Mth.HALF_PI);
         }
+
+        hornScalings = ModelHelper.createScalings(hornThickness, 0F, 0F, 0F);
     }
 
     public GoatPhenotype(int[] genes, boolean isFemale) {
