@@ -371,15 +371,43 @@ public class GoatPhenotype implements Phenotype {
 
     private void calculateHorns(int[] genes) {
         hornLength = MAX_HORN_LENGTH;
-        float hornThickness = 1F;
+        float hornThickness = 1.25F;
         hornOffsets = new Vector3f[MAX_HORN_LENGTH];
         hornLeftRotations = new Vector3f[MAX_HORN_LENGTH];
         hornRightRotations = new Vector3f[MAX_HORN_LENGTH];
+
+        float[] hornXRots = new float[MAX_HORN_LENGTH];
+        float[] hornYRots = new float[MAX_HORN_LENGTH];
+        float[] hornZRots = new float[MAX_HORN_LENGTH];
+
+        hornXRots[0] = 0.125F * Mth.HALF_PI;
+        hornXRots[2] = -0.15F * Mth.HALF_PI;
+        hornXRots[4] = -0.125F * Mth.HALF_PI;
+        hornXRots[6] = -0.12F * Mth.HALF_PI;
+        hornXRots[8] = -0.12F * Mth.HALF_PI;
+        hornXRots[10] = -0.15F * Mth.HALF_PI;
+        hornXRots[12] = -0.15F * Mth.HALF_PI;
+        hornXRots[14] = -0.15F * Mth.HALF_PI;
+        hornXRots[16] = -0.15F * Mth.HALF_PI;
+
+        hornZRots[0] = 0.15F * Mth.HALF_PI;
+
+
         for (int i = 0; i < MAX_HORN_LENGTH; i++) {
+            if (i == 1) { // Index 1 shouldn't interpolate the rotation of 0 because it's the root
+                hornXRots[i] = hornXRots[i+1]/2F;
+                hornYRots[i] = hornYRots[i+1]/2F;
+                hornZRots[i] = hornZRots[i+1]/2F;
+            }
+            else if (i % 2 != 0) { // Other odd numbered indices should be interpolated
+                hornXRots[i] = (hornXRots[i-1] + hornXRots[i+1])/2F;
+                hornYRots[i] = (hornYRots[i-1] + hornYRots[i+1])/2F;
+                hornZRots[i] = (hornZRots[i-1] + hornZRots[i+1])/2F;
+            }
             float deform = ModelEnhancedGoat.getHornSegmentDeform(i);
             hornOffsets[i] = new Vector3f(0F, i == 0 ? 0F : -(2F+(2F*deform)), 0F);
-            hornLeftRotations[i] = new Vector3f(-0.15F * Mth.HALF_PI, 0F, 0.1F * Mth.HALF_PI);
-            hornRightRotations[i] = new Vector3f(-0.15F * Mth.HALF_PI, 0F, -0.1F * Mth.HALF_PI);
+            hornLeftRotations[i] = new Vector3f(hornXRots[i], hornYRots[i], hornZRots[i]);
+            hornRightRotations[i] = new Vector3f(hornXRots[i], -hornYRots[i], -hornZRots[i]);
         }
 
         hornScalings = ModelHelper.createScalings(hornThickness, 0F, 0F, 0F);

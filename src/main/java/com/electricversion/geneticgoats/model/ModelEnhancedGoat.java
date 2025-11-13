@@ -30,7 +30,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     private static final float baseNeckAngle = Mth.HALF_PI*0.30F;
     private static final float baseHeadAngle = -Mth.HALF_PI*0.225F;
 
-    public static final int MAX_HORN_LENGTH = 18;
+    public static final int MAX_HORN_LENGTH = 17;
 
     public static float getHornSegmentDeform(int segment) {
         return ((-2 * segment / (float) MAX_HORN_LENGTH) + -0.5F) / 3F; // Could be simplified, but written in this form so logic is clearer
@@ -765,11 +765,10 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
     private void setupHorns(GoatPhenotype phenotype) {
         for (int i = 0; i < MAX_HORN_LENGTH; i++) {
-            // Left Horn
             boolean isSegmentRendered = i >= MAX_HORN_LENGTH - phenotype.getHornLength();
             hornL[i].boxIsRendered = isSegmentRendered;
             hornR[i].boxIsRendered = isSegmentRendered;
-            if (i > MAX_HORN_LENGTH - phenotype.getHornLength()) {
+            if (i >= MAX_HORN_LENGTH - phenotype.getHornLength()) {
                 hornL[i].setPosYAndRot(phenotype.getHornYOffset(i), phenotype.getHornLeftRotation(i));
                 hornR[i].setPosYAndRot(phenotype.getHornYOffset(i), phenotype.getHornRightRotation(i));
             } else {
