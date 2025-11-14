@@ -9,6 +9,7 @@ import net.minecraft.util.Mth;
 import java.util.List;
 
 import static com.electricversion.geneticgoats.model.ModelEnhancedGoat.MAX_HORN_LENGTH;
+import static com.electricversion.geneticgoats.util.AddonUtils.getDigit;
 import static net.minecraft.util.Mth.clamp;
 
 // The phenotype class is used for storing model data related to immutable genetic traits that need to be accessed by the model
@@ -380,29 +381,42 @@ public class GoatPhenotype implements Phenotype {
         float[] hornYRots = new float[MAX_HORN_LENGTH];
         float[] hornZRots = new float[MAX_HORN_LENGTH];
 
-        hornXRots[0] = 0.125F * Mth.HALF_PI;
-        hornXRots[2] = -0.15F * Mth.HALF_PI;
-        hornXRots[4] = -0.125F * Mth.HALF_PI;
-        hornXRots[6] = -0.12F * Mth.HALF_PI;
-        hornXRots[8] = -0.12F * Mth.HALF_PI;
-        hornXRots[10] = -0.15F * Mth.HALF_PI;
-        hornXRots[12] = -0.15F * Mth.HALF_PI;
-        hornXRots[14] = -0.15F * Mth.HALF_PI;
-        hornXRots[16] = -0.15F * Mth.HALF_PI;
+//        hornXRots[0] = 0.125F * Mth.HALF_PI;
+//        hornXRots[2] = -0.15F * Mth.HALF_PI;
+//        hornXRots[4] = -0.125F * Mth.HALF_PI;
+//        hornXRots[6] = -0.12F * Mth.HALF_PI;
+//        hornXRots[8] = -0.12F * Mth.HALF_PI;
+//        hornXRots[10] = -0.15F * Mth.HALF_PI;
+//        hornXRots[12] = -0.15F * Mth.HALF_PI;
+//        hornXRots[14] = -0.15F * Mth.HALF_PI;
+//        hornXRots[16] = -0.15F * Mth.HALF_PI;
 
-        hornZRots[0] = 0.15F * Mth.HALF_PI;
+//        hornZRots[0] = 0.15F * Mth.HALF_PI;
 
+        float[] digitRotations = {
+                0F, 0F,
+                -0.25F * Mth.HALF_PI, -0.1875F * Mth.HALF_PI, -0.125F * Mth.HALF_PI, -0.0625F * Mth.HALF_PI,
+                0.0625F * Mth.HALF_PI, 0.125F * Mth.HALF_PI, 0.1875F * Mth.HALF_PI, 0.25F * Mth.HALF_PI,
+        };
+
+        for (int i = 0; i < 9; i++) {
+            int geneIndex = 90 + (i*2);
+            hornXRots[i*2] = (digitRotations[getDigit(genes[geneIndex], 0)] + digitRotations[getDigit(genes[geneIndex+1], 0)])/2F;
+            hornZRots[i*2] = (digitRotations[getDigit(genes[geneIndex], 1)] + digitRotations[getDigit(genes[geneIndex+1], 1)])/2F;
+        }
 
         for (int i = 0; i < MAX_HORN_LENGTH; i++) {
-            if (i == 1) { // Index 1 shouldn't interpolate the rotation of 0 because it's the root
-                hornXRots[i] = hornXRots[i+1]/2F;
-                hornYRots[i] = hornYRots[i+1]/2F;
-                hornZRots[i] = hornZRots[i+1]/2F;
-            }
-            else if (i % 2 != 0) { // Other odd numbered indices should be interpolated
-                hornXRots[i] = (hornXRots[i-1] + hornXRots[i+1])/2F;
-                hornYRots[i] = (hornYRots[i-1] + hornYRots[i+1])/2F;
-                hornZRots[i] = (hornZRots[i-1] + hornZRots[i+1])/2F;
+            if (i % 2 != 0) { // Odd numbered indices should be interpolated
+                if (i == (MAX_HORN_LENGTH - hornLength) + 1) { // Index 1 shouldn't interpolate the rotation of 0 because it's the root
+                    hornXRots[i] = hornXRots[i+1]/2F;
+                    hornYRots[i] = hornYRots[i+1]/2F;
+                    hornZRots[i] = hornZRots[i+1]/2F;
+                }
+                else {
+                    hornXRots[i] = (hornXRots[i - 1] + hornXRots[i + 1]) / 2F;
+                    hornYRots[i] = (hornYRots[i - 1] + hornYRots[i + 1]) / 2F;
+                    hornZRots[i] = (hornZRots[i - 1] + hornZRots[i + 1]) / 2F;
+                }
             }
             float deform = ModelEnhancedGoat.getHornSegmentDeform(i);
             hornOffsets[i] = new Vector3f(0F, i == 0 ? 0F : -(2F+(2F*deform)), 0F);
