@@ -293,9 +293,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("bHead", CubeListBuilder.create(),
                 PartPose.offsetAndRotation(0F, -11F, 3F, baseHeadAngle, 0F, 0F));
         baseDef.addOrReplaceChild("bHornL", CubeListBuilder.create(),
-                PartPose.offsetAndRotation(1.5F, 0F, -3F, 0F, 0F, 0F));
+                PartPose.offsetAndRotation(1.5F, 0F, -1F, 0F, 0F, 0F));
         baseDef.addOrReplaceChild("bHornR", CubeListBuilder.create(),
-                PartPose.offsetAndRotation(-1.5F, 0F, -3F, 0F, 0F, 0F));
+                PartPose.offsetAndRotation(-1.5F, 0F, -1F, 0F, 0F, 0F));
         baseDef.addOrReplaceChild("bMuzzle", CubeListBuilder.create(),
                 PartPose.offsetAndRotation(0F, 1F, -6F, Mth.HALF_PI * 0.125F, 0F, 0F));
         baseDef.addOrReplaceChild("bMouth", CubeListBuilder.create(),

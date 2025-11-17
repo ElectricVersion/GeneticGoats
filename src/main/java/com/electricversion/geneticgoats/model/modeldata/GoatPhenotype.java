@@ -381,17 +381,18 @@ public class GoatPhenotype implements Phenotype {
         float[] hornYRots = new float[MAX_HORN_LENGTH];
         float[] hornZRots = new float[MAX_HORN_LENGTH];
 
-//        hornXRots[0] = 0.125F * Mth.HALF_PI;
-//        hornXRots[2] = -0.15F * Mth.HALF_PI;
-//        hornXRots[4] = -0.125F * Mth.HALF_PI;
-//        hornXRots[6] = -0.12F * Mth.HALF_PI;
-//        hornXRots[8] = -0.12F * Mth.HALF_PI;
-//        hornXRots[10] = -0.15F * Mth.HALF_PI;
-//        hornXRots[12] = -0.15F * Mth.HALF_PI;
-//        hornXRots[14] = -0.15F * Mth.HALF_PI;
-//        hornXRots[16] = -0.15F * Mth.HALF_PI;
+        // Default/Wildtype values
+        hornXRots[0] =  0.125F * Mth.HALF_PI;
+        hornXRots[2] = -0.125F * Mth.HALF_PI;
+        hornXRots[4] = -0.125F * Mth.HALF_PI;
+        hornXRots[6] = -0.125F * Mth.HALF_PI;
+        hornXRots[8] = -0.125F * Mth.HALF_PI;
+        hornXRots[10] = -0.1875F * Mth.HALF_PI;
+        hornXRots[12] = -0.1875F * Mth.HALF_PI;
+        hornXRots[14] = -0.1875F * Mth.HALF_PI;
+        hornXRots[16] = -0.1875F * Mth.HALF_PI;
 
-//        hornZRots[0] = 0.15F * Mth.HALF_PI;
+        hornZRots[0] = 0.1875F * Mth.HALF_PI;
 
         float[] digitRotations = {
                 0F, 0F,
@@ -401,8 +402,20 @@ public class GoatPhenotype implements Phenotype {
 
         for (int i = 0; i < 9; i++) {
             int geneIndex = 90 + (i*2);
-            hornXRots[i*2] = (digitRotations[getDigit(genes[geneIndex], 0)] + digitRotations[getDigit(genes[geneIndex+1], 0)])/2F;
-            hornZRots[i*2] = (digitRotations[getDigit(genes[geneIndex], 1)] + digitRotations[getDigit(genes[geneIndex+1], 1)])/2F;
+            int gene1 = genes[geneIndex];
+            int gene2 = genes[geneIndex+1];
+            float segmentXRot1, segmentXRot2, segmentZRot1, segmentZRot2;
+
+            // First Allele
+            segmentXRot1 = digitRotations[getDigit(gene1, 0)];
+            segmentZRot1 = digitRotations[getDigit(gene1, 1)];
+
+            // Second Allele
+            segmentXRot2 = digitRotations[getDigit(gene2, 0)];
+            segmentZRot2 = digitRotations[getDigit(gene2, 1)];
+
+            hornXRots[i*2] += (segmentXRot1 + segmentXRot2)/2F;
+            hornZRots[i*2] += (segmentZRot1 + segmentZRot2)/2F;
         }
 
         for (int i = 0; i < MAX_HORN_LENGTH; i++) {
