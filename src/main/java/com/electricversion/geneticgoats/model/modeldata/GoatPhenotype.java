@@ -396,8 +396,8 @@ public class GoatPhenotype implements Phenotype {
 
         float[] digitRotations = {
                 0F, 0F,
-                -0.25F * Mth.HALF_PI, -0.1875F * Mth.HALF_PI, -0.125F * Mth.HALF_PI, -0.0625F * Mth.HALF_PI,
-                0.0625F * Mth.HALF_PI, 0.125F * Mth.HALF_PI, 0.1875F * Mth.HALF_PI, 0.25F * Mth.HALF_PI,
+                -0.375F * Mth.HALF_PI, -0.25F * Mth.HALF_PI, -0.125F * Mth.HALF_PI, -0.125F * Mth.HALF_PI,
+                0.125F * Mth.HALF_PI, 0.125F * Mth.HALF_PI, 0.25F * Mth.HALF_PI, 0.375F * Mth.HALF_PI,
         };
 
         for (int i = 0; i < 9; i++) {
@@ -431,8 +431,8 @@ public class GoatPhenotype implements Phenotype {
                     hornZRots[i] = (hornZRots[i - 1] + hornZRots[i + 1]) / 2F;
                 }
             }
-            float deform = ModelEnhancedGoat.getHornSegmentDeform(i);
-            hornOffsets[i] = new Vector3f(0F, i == 0 ? 0F : -(2F+(2F*deform)), 0F);
+            float parentDeform = i == 0 ? 0F : ModelEnhancedGoat.getHornSegmentDeform(i-1);
+            hornOffsets[i] = new Vector3f(0F, i == 0 ? 0F : -(2F+(2F*parentDeform)), 0F);
             hornLeftRotations[i] = new Vector3f(hornXRots[i], hornYRots[i], hornZRots[i]);
             hornRightRotations[i] = new Vector3f(hornXRots[i], -hornYRots[i], -hornZRots[i]);
         }
