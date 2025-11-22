@@ -382,15 +382,11 @@ public class GoatPhenotype implements Phenotype {
         float[] hornZRots = new float[MAX_HORN_LENGTH];
 
         // Default/Wildtype values
-        hornXRots[0] =  0.125F * Mth.HALF_PI;
-//        hornXRots[2] = -0.125F * Mth.HALF_PI;
+//        hornXRots[0] =  0.125F * Mth.HALF_PI;
 //        hornXRots[4] = -0.125F * Mth.HALF_PI;
-//        hornXRots[6] = -0.125F * Mth.HALF_PI;
-        hornXRots[8] = -0.125F * Mth.HALF_PI;
-//        hornXRots[10] = -0.1875F * Mth.HALF_PI;
+//        hornXRots[8] = -0.125F * Mth.HALF_PI;
 //        hornXRots[12] = -0.1875F * Mth.HALF_PI;
-//        hornXRots[14] = -0.1875F * Mth.HALF_PI;
-        hornXRots[16] = -0.1875F * Mth.HALF_PI;
+//        hornXRots[16] = -0.1875F * Mth.HALF_PI;
 
 //        hornZRots[0] = 0.1875F * Mth.HALF_PI;
 
@@ -428,30 +424,32 @@ public class GoatPhenotype implements Phenotype {
         hornXRots[0] += (digitXRotations[getDigit(genes[90], 0)] + digitXRotations[getDigit(genes[91], 0)])/2F;
         hornZRots[0] += (digitZRotations[getDigit(genes[90], 1)] + digitZRotations[getDigit(genes[91], 1)])/2F;
 
-        // Horn Middle
-        hornXRots[8] += (digitXRotations[getDigit(genes[92], 0)] + digitXRotations[getDigit(genes[93], 0)])/2F;
-        hornZRots[8] += (digitZRotations[getDigit(genes[92], 1)] + digitZRotations[getDigit(genes[93], 1)])/2F;
+        // Horn Middle 1
+        hornXRots[4] += (digitXRotations[getDigit(genes[92], 0)] + digitXRotations[getDigit(genes[93], 0)])/2F;
+        hornZRots[4] += (digitZRotations[getDigit(genes[92], 1)] + digitZRotations[getDigit(genes[93], 1)])/2F;
 
-        // Horn Middle
-        hornXRots[16] += (digitXRotations[getDigit(genes[94], 0)] + digitXRotations[getDigit(genes[95], 0)])/2F;
-        hornZRots[16] += (digitZRotations[getDigit(genes[94], 1)] + digitZRotations[getDigit(genes[95], 1)])/2F;
+        // Horn Middle 2
+        hornXRots[8] += (digitXRotations[getDigit(genes[94], 0)] + digitXRotations[getDigit(genes[95], 0)])/2F;
+        hornZRots[8] += (digitZRotations[getDigit(genes[94], 1)] + digitZRotations[getDigit(genes[95], 1)])/2F;
 
-        // Manually interpolate the odd numbered midpoints
-        hornXRots[2] = Mth.lerp(0.25F, hornXRots[0], hornXRots[8]);
-        hornXRots[4] = Mth.lerp(0.5F, hornXRots[0], hornXRots[8]);
-        hornXRots[6] = Mth.lerp(0.75F, hornXRots[0], hornXRots[8]);
+        // Horn Middle 3
+        hornXRots[12] += (digitXRotations[getDigit(genes[96], 0)] + digitXRotations[getDigit(genes[97], 0)])/2F;
+        hornZRots[12] += (digitZRotations[getDigit(genes[96], 1)] + digitZRotations[getDigit(genes[97], 1)])/2F;
 
-        hornXRots[10] = Mth.lerp(0.25F, hornXRots[8], hornXRots[16]);
-        hornXRots[12] = Mth.lerp(0.5F, hornXRots[8], hornXRots[16]);
-        hornXRots[14] = Mth.lerp(0.75F, hornXRots[8], hornXRots[16]);
+        // Horn Tip
+        hornXRots[16] += (digitXRotations[getDigit(genes[98], 0)] + digitXRotations[getDigit(genes[99], 0)])/2F;
+        hornZRots[16] += (digitZRotations[getDigit(genes[98], 1)] + digitZRotations[getDigit(genes[99], 1)])/2F;
 
-        hornZRots[2] = Mth.lerp(0.25F, hornZRots[0], hornZRots[8]);
-        hornZRots[4] = Mth.lerp(0.5F, hornZRots[0], hornZRots[8]);
-        hornZRots[6] = Mth.lerp(0.75F, hornZRots[0], hornZRots[8]);
+        // Manually interpolate the even numbered midpoints
+        hornXRots[2] = Mth.lerp(0.25F, hornXRots[0], hornXRots[4]);
+        hornXRots[6] = Mth.lerp(0.75F, hornXRots[4], hornXRots[8]);
+        hornXRots[10] = Mth.lerp(0.25F, hornXRots[8], hornXRots[12]);
+        hornXRots[14] = Mth.lerp(0.75F, hornXRots[12], hornXRots[16]);
 
-        hornZRots[10] = Mth.lerp(0.25F, hornZRots[8], hornZRots[16]);
-        hornZRots[12] = Mth.lerp(0.5F, hornZRots[8], hornZRots[16]);
-        hornZRots[14] = Mth.lerp(0.75F, hornZRots[8], hornZRots[16]);
+        hornZRots[2] = Mth.lerp(0.25F, hornZRots[0], hornZRots[4]);
+        hornZRots[6] = Mth.lerp(0.75F, hornZRots[4], hornZRots[8]);
+        hornZRots[10] = Mth.lerp(0.25F, hornZRots[8], hornZRots[12]);
+        hornZRots[14] = Mth.lerp(0.75F, hornZRots[12], hornZRots[16]);
 
 
         for (int i = 0; i < MAX_HORN_LENGTH; i++) {
