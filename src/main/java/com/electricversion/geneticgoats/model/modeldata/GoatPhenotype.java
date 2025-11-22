@@ -383,53 +383,82 @@ public class GoatPhenotype implements Phenotype {
 
         // Default/Wildtype values
         hornXRots[0] =  0.125F * Mth.HALF_PI;
-        hornXRots[2] = -0.125F * Mth.HALF_PI;
-        hornXRots[4] = -0.125F * Mth.HALF_PI;
-        hornXRots[6] = -0.125F * Mth.HALF_PI;
+//        hornXRots[2] = -0.125F * Mth.HALF_PI;
+//        hornXRots[4] = -0.125F * Mth.HALF_PI;
+//        hornXRots[6] = -0.125F * Mth.HALF_PI;
         hornXRots[8] = -0.125F * Mth.HALF_PI;
-        hornXRots[10] = -0.1875F * Mth.HALF_PI;
-        hornXRots[12] = -0.1875F * Mth.HALF_PI;
-        hornXRots[14] = -0.1875F * Mth.HALF_PI;
+//        hornXRots[10] = -0.1875F * Mth.HALF_PI;
+//        hornXRots[12] = -0.1875F * Mth.HALF_PI;
+//        hornXRots[14] = -0.1875F * Mth.HALF_PI;
         hornXRots[16] = -0.1875F * Mth.HALF_PI;
 
-        hornZRots[0] = 0.1875F * Mth.HALF_PI;
+//        hornZRots[0] = 0.1875F * Mth.HALF_PI;
 
-        float[] digitRotations = {
+        float[] digitXRotations = {
                 0F, 0F,
-                -0.375F * Mth.HALF_PI, -0.25F * Mth.HALF_PI, -0.125F * Mth.HALF_PI, -0.125F * Mth.HALF_PI,
+                -0.0625F * Mth.HALF_PI, -0.1F * Mth.HALF_PI, -0.125F * Mth.HALF_PI, -0.1875F * Mth.HALF_PI,
+                -0.225F * Mth.HALF_PI, -0.25F * Mth.HALF_PI, -0.3125F * Mth.HALF_PI, -0.375F * Mth.HALF_PI,
+        };
+
+        float[] digitZRotations = {
+                0F, 0F,
+                -0.225F * Mth.HALF_PI, -0.1875F * Mth.HALF_PI, -0.125F * Mth.HALF_PI, -0.0625F * Mth.HALF_PI,
                 0.125F * Mth.HALF_PI, 0.125F * Mth.HALF_PI, 0.25F * Mth.HALF_PI, 0.375F * Mth.HALF_PI,
         };
 
-        for (int i = 0; i < 9; i++) {
-            int geneIndex = 90 + (i*2);
-            int gene1 = genes[geneIndex];
-            int gene2 = genes[geneIndex+1];
-            float segmentXRot1, segmentXRot2, segmentZRot1, segmentZRot2;
+//        for (int i = 0; i < 9; i++) {
+//            int geneIndex = 90 + (i*2);
+//            int gene1 = genes[geneIndex];
+//            int gene2 = genes[geneIndex+1];
+//            float segmentXRot1, segmentXRot2, segmentZRot1, segmentZRot2;
+//
+//            // First Allele
+//            segmentXRot1 = digitRotations[getDigit(gene1, 0)];
+//            segmentZRot1 = digitRotations[getDigit(gene1, 1)];
+//
+//            // Second Allele
+//            segmentXRot2 = digitRotations[getDigit(gene2, 0)];
+//            segmentZRot2 = digitRotations[getDigit(gene2, 1)];
+//
+//            hornXRots[i*2] += (segmentXRot1 + segmentXRot2)/2F;
+//            hornZRots[i*2] += (segmentZRot1 + segmentZRot2)/2F;
+//        }
 
-            // First Allele
-            segmentXRot1 = digitRotations[getDigit(gene1, 0)];
-            segmentZRot1 = digitRotations[getDigit(gene1, 1)];
+        // Horn Root
+        hornXRots[0] += (digitXRotations[getDigit(genes[90], 0)] + digitXRotations[getDigit(genes[91], 0)])/2F;
+        hornZRots[0] += (digitZRotations[getDigit(genes[90], 1)] + digitZRotations[getDigit(genes[91], 1)])/2F;
 
-            // Second Allele
-            segmentXRot2 = digitRotations[getDigit(gene2, 0)];
-            segmentZRot2 = digitRotations[getDigit(gene2, 1)];
+        // Horn Middle
+        hornXRots[8] += (digitXRotations[getDigit(genes[92], 0)] + digitXRotations[getDigit(genes[93], 0)])/2F;
+        hornZRots[8] += (digitZRotations[getDigit(genes[92], 1)] + digitZRotations[getDigit(genes[93], 1)])/2F;
 
-            hornXRots[i*2] += (segmentXRot1 + segmentXRot2)/2F;
-            hornZRots[i*2] += (segmentZRot1 + segmentZRot2)/2F;
-        }
+        // Horn Middle
+        hornXRots[16] += (digitXRotations[getDigit(genes[94], 0)] + digitXRotations[getDigit(genes[95], 0)])/2F;
+        hornZRots[16] += (digitZRotations[getDigit(genes[94], 1)] + digitZRotations[getDigit(genes[95], 1)])/2F;
+
+        // Manually interpolate the odd numbered midpoints
+        hornXRots[2] = Mth.lerp(0.25F, hornXRots[0], hornXRots[8]);
+        hornXRots[4] = Mth.lerp(0.5F, hornXRots[0], hornXRots[8]);
+        hornXRots[6] = Mth.lerp(0.75F, hornXRots[0], hornXRots[8]);
+
+        hornXRots[10] = Mth.lerp(0.25F, hornXRots[8], hornXRots[16]);
+        hornXRots[12] = Mth.lerp(0.5F, hornXRots[8], hornXRots[16]);
+        hornXRots[14] = Mth.lerp(0.75F, hornXRots[8], hornXRots[16]);
+
+        hornZRots[2] = Mth.lerp(0.25F, hornZRots[0], hornZRots[8]);
+        hornZRots[4] = Mth.lerp(0.5F, hornZRots[0], hornZRots[8]);
+        hornZRots[6] = Mth.lerp(0.75F, hornZRots[0], hornZRots[8]);
+
+        hornZRots[10] = Mth.lerp(0.25F, hornZRots[8], hornZRots[16]);
+        hornZRots[12] = Mth.lerp(0.5F, hornZRots[8], hornZRots[16]);
+        hornZRots[14] = Mth.lerp(0.75F, hornZRots[8], hornZRots[16]);
+
 
         for (int i = 0; i < MAX_HORN_LENGTH; i++) {
             if (i % 2 != 0) { // Odd numbered indices should be interpolated
-                if (i == (MAX_HORN_LENGTH - hornLength) + 1) { // Index 1 shouldn't interpolate the rotation of 0 because it's the root
-                    hornXRots[i] = hornXRots[i+1]/2F;
-                    hornYRots[i] = hornYRots[i+1]/2F;
-                    hornZRots[i] = hornZRots[i+1]/2F;
-                }
-                else {
-                    hornXRots[i] = (hornXRots[i - 1] + hornXRots[i + 1]) / 2F;
-                    hornYRots[i] = (hornYRots[i - 1] + hornYRots[i + 1]) / 2F;
-                    hornZRots[i] = (hornZRots[i - 1] + hornZRots[i + 1]) / 2F;
-                }
+                hornXRots[i] = (hornXRots[i - 1] + hornXRots[i + 1]) / 2F;
+                hornYRots[i] = (hornYRots[i - 1] + hornYRots[i + 1]) / 2F;
+                hornZRots[i] = (hornZRots[i - 1] + hornZRots[i + 1]) / 2F;
             }
             float parentDeform = i == 0 ? 0F : ModelEnhancedGoat.getHornSegmentDeform(i-1);
             hornOffsets[i] = new Vector3f(0F, i == 0 ? 0F : -(2F+(2F*parentDeform)), 0F);
