@@ -370,25 +370,10 @@ public class GoatPhenotype implements Phenotype {
         }
     }
 
-    private void calculateHorns(int[] genes) {
-        hornLength = MAX_HORN_LENGTH;
-        float hornThickness = 1.25F;
-        hornOffsets = new Vector3f[MAX_HORN_LENGTH];
-        hornLeftRotations = new Vector3f[MAX_HORN_LENGTH];
-        hornRightRotations = new Vector3f[MAX_HORN_LENGTH];
-
-        float[] hornXRots = new float[MAX_HORN_LENGTH];
-        float[] hornYRots = new float[MAX_HORN_LENGTH];
-        float[] hornZRots = new float[MAX_HORN_LENGTH];
-
-        // Default/Wildtype values
-//        hornXRots[0] =  0.125F * Mth.HALF_PI;
-//        hornXRots[4] = -0.125F * Mth.HALF_PI;
-//        hornXRots[8] = -0.125F * Mth.HALF_PI;
-//        hornXRots[12] = -0.1875F * Mth.HALF_PI;
-//        hornXRots[16] = -0.1875F * Mth.HALF_PI;
-
-//        hornZRots[0] = 0.1875F * Mth.HALF_PI;
+    private float[] calculateHornSegment(int geneValue, float wildtypeX, float wildtypeZ) {
+        if (geneValue == 1) {
+            return new float[] {wildtypeX, wildtypeZ};
+        }
 
         float[] digitXRotations = {
                 0F, 0F,
@@ -401,44 +386,52 @@ public class GoatPhenotype implements Phenotype {
                 -0.225F * Mth.HALF_PI, -0.1875F * Mth.HALF_PI, -0.125F * Mth.HALF_PI, -0.0625F * Mth.HALF_PI,
                 0.125F * Mth.HALF_PI, 0.125F * Mth.HALF_PI, 0.25F * Mth.HALF_PI, 0.375F * Mth.HALF_PI,
         };
+        float xRot = digitXRotations[getDigit(geneValue, 0)];
+        float zRot = digitZRotations[getDigit(geneValue, 1)];
 
-//        for (int i = 0; i < 9; i++) {
-//            int geneIndex = 90 + (i*2);
-//            int gene1 = genes[geneIndex];
-//            int gene2 = genes[geneIndex+1];
-//            float segmentXRot1, segmentXRot2, segmentZRot1, segmentZRot2;
-//
-//            // First Allele
-//            segmentXRot1 = digitRotations[getDigit(gene1, 0)];
-//            segmentZRot1 = digitRotations[getDigit(gene1, 1)];
-//
-//            // Second Allele
-//            segmentXRot2 = digitRotations[getDigit(gene2, 0)];
-//            segmentZRot2 = digitRotations[getDigit(gene2, 1)];
-//
-//            hornXRots[i*2] += (segmentXRot1 + segmentXRot2)/2F;
-//            hornZRots[i*2] += (segmentZRot1 + segmentZRot2)/2F;
-//        }
+        return new float[] {xRot, zRot};
+    }
+
+    private void calculateHorns(int[] genes) {
+        hornLength = MAX_HORN_LENGTH;
+        float hornThickness = 1.25F;
+        hornOffsets = new Vector3f[MAX_HORN_LENGTH];
+        hornLeftRotations = new Vector3f[MAX_HORN_LENGTH];
+        hornRightRotations = new Vector3f[MAX_HORN_LENGTH];
+
+        float[] hornXRots = new float[MAX_HORN_LENGTH];
+        float[] hornYRots = new float[MAX_HORN_LENGTH];
+        float[] hornZRots = new float[MAX_HORN_LENGTH];
 
         // Horn Root
-        hornXRots[0] += (digitXRotations[getDigit(genes[90], 0)] + digitXRotations[getDigit(genes[91], 0)])/2F;
-        hornZRots[0] += (digitZRotations[getDigit(genes[90], 1)] + digitZRotations[getDigit(genes[91], 1)])/2F;
+        float[] rootRots1 = calculateHornSegment(genes[90], 0, 0);
+        float[] rootRots2 = calculateHornSegment(genes[91], 0, 0);
+        hornXRots[0] = (rootRots1[0] + rootRots2[0])/2F;
+        hornZRots[0] = (rootRots1[1] + rootRots2[1])/2F;
 
         // Horn Middle 1
-        hornXRots[4] += (digitXRotations[getDigit(genes[92], 0)] + digitXRotations[getDigit(genes[93], 0)])/2F;
-        hornZRots[4] += (digitZRotations[getDigit(genes[92], 1)] + digitZRotations[getDigit(genes[93], 1)])/2F;
+        float[] middle1Rots1 = calculateHornSegment(genes[92], -0.125F * Mth.HALF_PI, 0);
+        float[] middle1Rots2 = calculateHornSegment(genes[93], -0.125F * Mth.HALF_PI, 0);
+        hornXRots[4] = (middle1Rots1[0] + middle1Rots2[0])/2F;
+        hornZRots[4] = (middle1Rots1[1] + middle1Rots2[1])/2F;
 
         // Horn Middle 2
-        hornXRots[8] += (digitXRotations[getDigit(genes[94], 0)] + digitXRotations[getDigit(genes[95], 0)])/2F;
-        hornZRots[8] += (digitZRotations[getDigit(genes[94], 1)] + digitZRotations[getDigit(genes[95], 1)])/2F;
+        float[] middle2Rots1 = calculateHornSegment(genes[94], -0.125F * Mth.HALF_PI, 0);
+        float[] middle2Rots2 = calculateHornSegment(genes[95], -0.125F * Mth.HALF_PI, 0);
+        hornXRots[8] = (middle2Rots1[0] + middle2Rots2[0])/2F;
+        hornZRots[8] = (middle2Rots1[1] + middle2Rots2[1])/2F;
 
         // Horn Middle 3
-        hornXRots[12] += (digitXRotations[getDigit(genes[96], 0)] + digitXRotations[getDigit(genes[97], 0)])/2F;
-        hornZRots[12] += (digitZRotations[getDigit(genes[96], 1)] + digitZRotations[getDigit(genes[97], 1)])/2F;
+        float[] middle3Rots1 = calculateHornSegment(genes[96], -0.1875F * Mth.HALF_PI, 0);
+        float[] middle3Rots2 = calculateHornSegment(genes[97], -0.1875F * Mth.HALF_PI, 0);
+        hornXRots[12] = (middle3Rots1[0] + middle3Rots2[0])/2F;
+        hornZRots[12] = (middle3Rots1[1] + middle3Rots2[1])/2F;
 
         // Horn Tip
-        hornXRots[16] += (digitXRotations[getDigit(genes[98], 0)] + digitXRotations[getDigit(genes[99], 0)])/2F;
-        hornZRots[16] += (digitZRotations[getDigit(genes[98], 1)] + digitZRotations[getDigit(genes[99], 1)])/2F;
+        float[] tipRots1 = calculateHornSegment(genes[98], -0.1875F * Mth.HALF_PI, 0);
+        float[] tipRots2 = calculateHornSegment(genes[99], -0.1875F * Mth.HALF_PI, 0);
+        hornXRots[16] = (tipRots1[0] + tipRots2[0])/2F;
+        hornZRots[16] = (tipRots1[1] + tipRots2[1])/2F;
 
         // Manually interpolate the even numbered midpoints
         hornXRots[2] = Mth.lerp(0.25F, hornXRots[0], hornXRots[4]);
