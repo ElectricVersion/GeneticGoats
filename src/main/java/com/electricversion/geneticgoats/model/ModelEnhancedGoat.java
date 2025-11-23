@@ -293,9 +293,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("bHead", CubeListBuilder.create(),
                 PartPose.offsetAndRotation(0F, -11F, 3F, baseHeadAngle, 0F, 0F));
         baseDef.addOrReplaceChild("bHornL", CubeListBuilder.create(),
-                PartPose.offsetAndRotation(1.5F, 1F, -3F, 0F, 0F, 0F));
+                PartPose.offsetAndRotation(1.5F, 1F, -3F, 0F, 0F, 0.1875F * Mth.HALF_PI));
         baseDef.addOrReplaceChild("bHornR", CubeListBuilder.create(),
-                PartPose.offsetAndRotation(-1.5F, 1F, -3F, 0F, 0F, 0F));
+                PartPose.offsetAndRotation(-1.5F, 1F, -3F, 0F, 0F, -0.1875F * Mth.HALF_PI));
         baseDef.addOrReplaceChild("bMuzzle", CubeListBuilder.create(),
                 PartPose.offsetAndRotation(0F, 1F, -6F, Mth.HALF_PI * 0.125F, 0F, 0F));
         baseDef.addOrReplaceChild("bMouth", CubeListBuilder.create(),
@@ -765,10 +765,14 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             boolean isSegmentRendered = i >= MAX_HORN_LENGTH - phenotype.getHornLength();
             hornL[i].boxIsRendered = isSegmentRendered;
             hornR[i].boxIsRendered = isSegmentRendered;
-            if (i >= MAX_HORN_LENGTH - phenotype.getHornLength()) {
+            if (i > MAX_HORN_LENGTH - phenotype.getHornLength()) {
                 hornL[i].setPosYAndRot(phenotype.getHornYOffset(i), phenotype.getHornLeftRotation(i));
                 hornR[i].setPosYAndRot(phenotype.getHornYOffset(i), phenotype.getHornRightRotation(i));
-            } else {
+            } else if (i == MAX_HORN_LENGTH - phenotype.getHornLength()) {
+                hornL[i].setPosYAndRot(Vector3f.ZERO, phenotype.getHornLeftRotation(i));
+                hornR[i].setPosYAndRot(Vector3f.ZERO, phenotype.getHornRightRotation(i));
+            }
+            else {
                 hornL[i].setPosYAndRot(Vector3f.ZERO, Vector3f.ZERO);
                 hornR[i].setPosYAndRot(Vector3f.ZERO, Vector3f.ZERO);
             }

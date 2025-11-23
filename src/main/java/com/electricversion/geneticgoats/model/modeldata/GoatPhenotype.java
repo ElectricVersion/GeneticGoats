@@ -383,7 +383,7 @@ public class GoatPhenotype implements Phenotype {
 
         float[] digitZRotations = {
                 0F, 0F,
-                -0.225F * Mth.HALF_PI, -0.1875F * Mth.HALF_PI, -0.125F * Mth.HALF_PI, -0.0625F * Mth.HALF_PI,
+                -0.125F * Mth.HALF_PI, -0.0625F * Mth.HALF_PI, -0.03125F * Mth.HALF_PI, 0.0625F * Mth.HALF_PI,
                 0.125F * Mth.HALF_PI, 0.125F * Mth.HALF_PI, 0.25F * Mth.HALF_PI, 0.375F * Mth.HALF_PI,
         };
         float xRot = digitXRotations[getDigit(geneValue, 0)];
@@ -444,6 +444,9 @@ public class GoatPhenotype implements Phenotype {
         hornZRots[10] = Mth.lerp(0.25F, hornZRots[8], hornZRots[12]);
         hornZRots[14] = Mth.lerp(0.75F, hornZRots[12], hornZRots[16]);
 
+        if (genes[100] == 2 || genes[101] == 2) {
+            hornLength -= 2;
+        }
 
         for (int i = 0; i < MAX_HORN_LENGTH; i++) {
             if (i % 2 != 0) { // Odd numbered indices should be interpolated

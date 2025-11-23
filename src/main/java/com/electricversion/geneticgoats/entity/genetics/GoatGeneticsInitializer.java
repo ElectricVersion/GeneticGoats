@@ -376,6 +376,13 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[98] = randomizeGene(99);
         autosomalGenes[99] = randomizeGene(99);
 
+        /* HORN SHORTENER 1
+         * 1 - Wildtype
+         * 2 - Shorter Horns (Dominant)
+         */
+        autosomalGenes[100] = randomizeGene(2);
+        autosomalGenes[101] = randomizeGene(2);
+
         // TODO: Implement body fat and dairy polygenes
 //        /* Placeholder Body Fat
 //         * 1 - 3
