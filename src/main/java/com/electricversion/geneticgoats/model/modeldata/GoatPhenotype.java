@@ -392,9 +392,9 @@ public class GoatPhenotype implements Phenotype {
         return new float[] {xRot, zRot};
     }
 
-    private void calculateHorns(int[] genes) {
-        hornLength = MAX_HORN_LENGTH;
-        float hornThickness = 1.25F;
+    private void calculateHorns(int[] genes, boolean isFemale) {
+        hornLength = isFemale ? MAX_HORN_LENGTH - 2 : MAX_HORN_LENGTH;
+        float hornThickness = 1F;
         hornOffsets = new Vector3f[MAX_HORN_LENGTH];
         hornLeftRotations = new Vector3f[MAX_HORN_LENGTH];
         hornRightRotations = new Vector3f[MAX_HORN_LENGTH];
@@ -444,9 +444,12 @@ public class GoatPhenotype implements Phenotype {
         hornZRots[10] = Mth.lerp(0.25F, hornZRots[8], hornZRots[12]);
         hornZRots[14] = Mth.lerp(0.75F, hornZRots[12], hornZRots[16]);
 
-        if (genes[100] != 1 || genes[101] != 1) {
-            hornLength -= (genes[100] == 3 || genes[101] == 3) ? 4 : 2;
+        // Horn Length
+
+        if (genes[100] == 2 || genes[101] == 2) {
+            hornLength -= 2;
         }
+
         if (genes[102] != 1 || genes[103] != 1) {
             hornLength -= 4;
             if (genes[102] == 3 || genes[103] == 3) {
@@ -481,7 +484,7 @@ public class GoatPhenotype implements Phenotype {
         calculateEars(genes);
         calculateMuzzle(genes);
         calculateBody(genes);
-        calculateHorns(genes);
+        calculateHorns(genes, isFemale);
         // Generate Scalings
         upperLegScalings = ModelHelper.createScalings(1F, (5F - bodyHeight)/5F, 1F, 0F, 0F, 0F);
         bodyScalings = ModelHelper.createScalings(1F, (9F + bodyHeight)/9F, 1F, 0F, 0F, 0F);
