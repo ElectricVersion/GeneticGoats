@@ -444,9 +444,22 @@ public class GoatPhenotype implements Phenotype {
         hornZRots[10] = Mth.lerp(0.25F, hornZRots[8], hornZRots[12]);
         hornZRots[14] = Mth.lerp(0.75F, hornZRots[12], hornZRots[16]);
 
-        if (genes[100] == 2 || genes[101] == 2) {
-            hornLength -= 2;
+        if (genes[100] != 1 || genes[101] != 1) {
+            hornLength -= (genes[100] == 3 || genes[101] == 3) ? 4 : 2;
         }
+        if (genes[102] != 1 || genes[103] != 1) {
+            hornLength -= 4;
+            if (genes[102] == 3 || genes[103] == 3) {
+                hornThickness += 0.5F;
+            }
+        }
+        if (genes[104] != 1 || genes[105] != 1) {
+            hornLength -= 4;
+            if (genes[104] == 3 || genes[105] == 3) {
+                hornThickness += 0.5F;
+            }
+        }
+
 
         for (int i = 0; i < MAX_HORN_LENGTH; i++) {
             if (i % 2 != 0) { // Odd numbered indices should be interpolated
