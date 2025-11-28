@@ -92,6 +92,25 @@ public class GoatTexture {
             },
     };
 
+    private static final String[][] TX_GOULET = new String[][] {
+            { // LOW
+                    "white/goulet/goulet_low1.png", "white/goulet/goulet_low2.png", "white/goulet/goulet_low3.png", "white/goulet/goulet_low4.png",
+                    "white/goulet/goulet_low5.png", "white/goulet/goulet_low6.png",
+                    //TODO: Replace these with real textures
+                    "white/goulet/goulet_low1.png", "white/goulet/goulet_low2.png",
+            },
+            { // MEDIUM
+                    "white/goulet/goulet_med1.png", "white/goulet/goulet_med2.png", "white/goulet/goulet_med3.png", "white/goulet/goulet_med4.png",
+                    "white/goulet/goulet_med5.png", "white/goulet/goulet_med6.png", "white/goulet/goulet_med7.png", "white/goulet/goulet_med8.png",
+            },
+            { // HIGH
+                    "white/goulet/goulet_high1.png", "white/goulet/goulet_high2.png",
+                    "white/goulet/goulet_high3.png",
+                    //TODO: Replace these with real textures
+                    "white/goulet/goulet_high1.png",
+            },
+    };
+
     private static final String[][] TX_PIEBALD = new String[][] {
             { // LOW
                     "white/piebald/piebald_low1.png", "white/piebald/piebald_low2.png",
@@ -437,10 +456,10 @@ public class GoatTexture {
         } else {
             // Not Dom White
             if (genes[4] == 3 || genes[5] == 3) {
-                // Flowery
-                goat.addDelimiter("f");
-                int floweryRandom = uuidArry[IDX_KIT_BODY] % 4;
-                goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_FLOWERY, whiteSize, floweryRandom, true);
+                // Goulet
+                goat.addDelimiter("g");
+                int gouletRandom = uuidArry[IDX_KIT_BODY] % (whiteSize == 2 ? 4 : 8);
+                goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_GOULET, whiteSize, gouletRandom, true);
 
             } else if (genes[4] == 4 && genes[5] == 4) {
                 // Piebald

@@ -78,7 +78,7 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         /* WHITE SPOTTING/KIT
          * 1 - Wildtype
          * 2 - White; Dominant
-         * 3 - Flowery; Dominant
+         * 3 - Goulet; Dominant
          * 4 - Piebald; Recessive
          */
         autosomalGenes[4] = randomizeGene(4);
