@@ -306,8 +306,9 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
          * 1 - Wildtype
          * 2 - Silver; Dominant
          * 3 - Roan; Dominant
-         * 4 - Frosting; Dominant
-         * (Roan > Frosting > Wildtype)
+         * 4 - Flowery; Dominant
+         * 5 - Frosting; Dominant
+         * (Silver <> Roan <> Flowery <> Frosting > Wildtype)
          */
         autosomalGenes[80] = randomizeGene(4);
         autosomalGenes[81] = randomizeGene(4);

@@ -12,6 +12,7 @@ public class GoatTexture {
     private static final int IDX_KIT_BODY = 1;
     private static final int IDX_KIT_HEAD = 2;
     private static final int IDX_BELT_BODY = 3;
+    private static final int IDX_FLOWERY = 4;
 
     private static final String[] AGOUTIS = new String[] {
             "", "bezoar", "gold", "buckskin", "chamoisee", "swiss", "cou_clair",
@@ -450,6 +451,7 @@ public class GoatTexture {
         if (whiteExt1) whiteSize++;
         if (whiteExt2) whiteSize++;
 
+        // KIT locus
         if (genes[4] == 2 || genes[5] == 2) {
             // Dominant White
             goat.addTextureToAnimalTextureGrouping(whiteGroup, "misc/solid.png", "dw");
@@ -529,10 +531,20 @@ public class GoatTexture {
             goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_SCHWARTZAL, schwartzalSize, schwartzalRandom, true);
         }
 
+        // KITLG Locus
+        // Note the lack of "else if"s.
+        // All of these genes can coexist in het form except roan/flowery since roan overrides/includes flowery.
         if (genes[80] == 2 || genes[81] == 2) {
             // Silver
             goat.addDelimiter("sv");
-        } else if (genes[80] == 3 || genes[81] == 3) {
+        }
+        if (genes[80] == 4 || genes[81] == 4) {
+            // Flowery
+            goat.addDelimiter("f");
+            int floweryRandom = uuidArry[IDX_FLOWERY] % 4;
+            goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_FLOWERY, whiteSize, floweryRandom, true);
+        }
+        if (genes[80] == 3 || genes[81] == 3) {
             // Roan
             int roan = 0;
             if (genes[80] == genes[81]) {
@@ -541,10 +553,11 @@ public class GoatTexture {
             int roanRandom = 0;
             goat.addTextureToAnimalTextureGrouping(whiteGroup, "shared/frosting.png", "rn");
             goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_ROAN, roan, roanRandom, true);
-        } else if (genes[80] == 4 || genes[81] == 4) {
+        } else if (genes[80] == 5 || genes[81] == 5) {
             // Frosting
             goat.addTextureToAnimalTextureGrouping(whiteGroup, "shared/frosting.png", "fr");
         }
+
         return whiteGroup;
     }
 
