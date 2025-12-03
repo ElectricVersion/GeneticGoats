@@ -13,6 +13,7 @@ public class GoatTexture {
     private static final int IDX_KIT_HEAD = 2;
     private static final int IDX_BELT_BODY = 3;
     private static final int IDX_FLOWERY = 4;
+    private static final int IDX_BLAZE = 5;
 
     private static final String[] AGOUTIS = new String[] {
             "", "bezoar", "gold", "buckskin", "chamoisee", "swiss", "cou_clair",
@@ -268,6 +269,31 @@ public class GoatTexture {
             }
     };
 
+    private static final String[][] TX_BLAZE = new String[][] {
+            { // LOW
+                    "shared/white/blaze/blaze_low1.png", "shared/white/blaze/blaze_low2.png",
+                    "shared/white/blaze/blaze_low3.png", "shared/white/blaze/blaze_low4.png",
+            },
+            { // MEDIUM
+                    "shared/white/blaze/blaze_med1.png", "shared/white/blaze/blaze_med2.png",
+                    "shared/white/blaze/blaze_med3.png", "shared/white/blaze/blaze_med4.png",
+                    "shared/white/blaze/blaze_med5.png", "shared/white/blaze/blaze_med6.png",
+                    "shared/white/blaze/blaze_med7.png", "shared/white/blaze/blaze_med8.png",
+            },
+            { // HIGH
+                    "shared/white/blaze/blaze_med1.png", "shared/white/blaze/blaze_med2.png",
+                    "shared/white/blaze/blaze_med3.png",
+                    //TODO: Replace these with real textures
+                    "shared/white/blaze/blaze_med1.png",
+            }
+    };
+
+    private static final String[] TX_WHITE_POLL = new String[] {
+            "shared/white/white_poll/white_poll_low.png",
+            "shared/white/white_poll/white_poll_med.png",
+            "shared/white/white_poll/white_poll_high.png",
+    };
+
     // This method handles the logic of how individual texture components and genes should
     // interact to create a single, "compiled" texture.
     public static void calculateTexture(EnhancedGoat goat, int[] genes, char[] uuidArry) {
@@ -519,6 +545,18 @@ public class GoatTexture {
 
                 goat.addTextureToAnimalTextureGrouping(whiteGroup, TexturingType.NONE, TX_SOCKS_FRONT, sockFrontSize, sockQuality, sockFrontRandom, sockFrontSize != 0);
                 goat.addTextureToAnimalTextureGrouping(whiteGroup, TexturingType.NONE, TX_SOCKS_BACK, sockBackSize, sockQuality, sockBackRandom, sockBackSize != 0);
+            }
+
+            // Blaze or White Poll
+            if (genes[106] == 2 || genes[107] == 2) {
+                // Blaze
+                int blazeRandom = uuidArry[IDX_BLAZE] % (whiteSize == 1 ? 8 : 4);
+                goat.addDelimiter("bz");
+                goat.addTextureToAnimalTextureGrouping(whiteGroup, TexturingType.NONE, TX_BLAZE, whiteSize, blazeRandom, true);
+            } else if (genes[106] == 3 || genes[107] == 3) {
+                // White Poll
+                goat.addDelimiter("wp");
+                goat.addTextureToAnimalTextureGrouping(whiteGroup, TX_WHITE_POLL, whiteSize, true);
             }
         }
 
