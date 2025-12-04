@@ -453,13 +453,13 @@ public class GoatPhenotype implements Phenotype {
         if (genes[102] != 1 || genes[103] != 1) {
             hornLength -= 4;
             if (genes[102] == 3 || genes[103] == 3) {
-                hornThickness += 0.5F;
+                hornThickness += 0.75F;
             }
         }
         if (genes[104] != 1 || genes[105] != 1) {
             hornLength -= 4;
             if (genes[104] == 3 || genes[105] == 3) {
-                hornThickness += 0.5F;
+                hornThickness += 0.75F;
             }
         }
 
