@@ -477,6 +477,17 @@ public class GoatTexture {
         if (whiteExt1) whiteSize++;
         if (whiteExt2) whiteSize++;
 
+        // EDNRA. Because it potentially boosts white level, it has to be processed before KIT etc.
+        if (genes[82] != 1 || genes[83] != 1) {
+            int schwartzalSize = genes[82] + genes[83] - 3; // Since WT is 1, homozygous WT = 2. Min expression = 3
+            // Clamp value to prevent crashes in case of user error (aka gene data modification)
+            schwartzalSize = Mth.clamp(schwartzalSize, 0, 3);
+            if (schwartzalSize > 0) whiteSize = Math.min(2, whiteSize+1); // Anything above low expression boosts overall white
+            int schwartzalRandom = 0;
+            goat.addDelimiter("sz");
+            goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_SCHWARTZAL, schwartzalSize, schwartzalRandom, true);
+        }
+
         // KIT locus
         if (genes[4] == 2 || genes[5] == 2) {
             // Dominant White
@@ -558,15 +569,6 @@ public class GoatTexture {
                 goat.addDelimiter("wp");
                 goat.addTextureToAnimalTextureGrouping(whiteGroup, TX_WHITE_POLL, whiteSize, true);
             }
-        }
-
-        if (genes[82] != 1 || genes[83] != 1) {
-            int schwartzalSize = genes[82] + genes[83] - 3; // Since WT is 1, homozygous WT = 2. Min expression = 3
-            // Clamp value to prevent crashes in case of user error (aka gene data modification)
-            schwartzalSize = Mth.clamp(schwartzalSize, 0, 3);
-            int schwartzalRandom = 0;
-            goat.addDelimiter("sz");
-            goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_SCHWARTZAL, schwartzalSize, schwartzalRandom, true);
         }
 
         // KITLG Locus
