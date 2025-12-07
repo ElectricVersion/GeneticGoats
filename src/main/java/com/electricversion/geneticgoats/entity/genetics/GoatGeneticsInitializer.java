@@ -15,7 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
 
-    public static final int AUTOSOMAL_GENES_LENGTH = 108;
+    public static final int AUTOSOMAL_GENES_LENGTH = 120;
     public static final int SEXLINKED_GENES_LENGTH = 2;
 
     int WTC = GoatsCommonConfig.COMMON.wildTypeChance.get();
@@ -408,19 +408,41 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[106] = randomizeGene(3);
         autosomalGenes[107] = randomizeGene(3);
 
-        // TODO: Implement body fat and dairy polygenes
-//        /* Placeholder Body Fat
-//         * 1 - 3
-//         */
-//        autosomalGenes[38] = randomizeGene(3);
-//        autosomalGenes[39] = randomizeGene(3);
-//
-//        /* Placeholder Dairy
-//         * 1 - 3
-//         */
-//        autosomalGenes[40] = randomizeGene(3);
-//        autosomalGenes[41] = randomizeGene(3);
+        /* Meat Adder 1
+         * 1 - 5
+         */
+        autosomalGenes[108] = randomizeGene(5);
+        autosomalGenes[109] = randomizeGene(5);
 
+        /* Meat Adder 2
+         * 1 - 5
+         */
+        autosomalGenes[110] = randomizeGene(5);
+        autosomalGenes[111] = randomizeGene(5);
+
+        /* Meat Adder 3
+         * 1 - 5
+         */
+        autosomalGenes[112] = randomizeGene(5);
+        autosomalGenes[113] = randomizeGene(5);
+
+        /* Dairy Adder 1
+         * 1 - 5
+         */
+        autosomalGenes[114] = randomizeGene(5);
+        autosomalGenes[115] = randomizeGene(5);
+
+        /* Dairy Adder 2
+         * 1 - 5
+         */
+        autosomalGenes[116] = randomizeGene(5);
+        autosomalGenes[117] = randomizeGene(5);
+
+        /* Dairy Adder 3
+         * 1 - 5
+         */
+        autosomalGenes[118] = randomizeGene(5);
+        autosomalGenes[119] = randomizeGene(5);
 
 
         return new Genes(sexlinkedGenes, autosomalGenes);

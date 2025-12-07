@@ -336,15 +336,25 @@ public class GoatPhenotype implements Phenotype {
     }
 
     private void calculateBody(int[] genes) {
-        fatness = 0F;
-//        fatness = ((genes[38] + genes[39]) - (genes[40] + genes[41]))/4F;
+        int meatGeneTotal = 0;
+        for (int i = 108; i < 114; i++) {
+            // Fatter
+            meatGeneTotal += genes[i];
+        }
+        for (int i = 114; i < 120; i++) {
+            // Thinner
+            meatGeneTotal -= genes[i];
+        }
+        fatness = (meatGeneTotal)/24F; // Fatness: -1 to 1 (thin/dairy to fat/meaty)
         if (fatness >= 0) {
+            // Meaty
             headWidth = 1F + (fatness * 0.2F);
             bodyWidth = 1F + (fatness * 0.3F);
             neckDepth = 1F;
             neckWidth = bodyWidth;
             bodyHeight = fatness * 0.5F;
         } else {
+            // Dairy body
             headWidth = 1F + (fatness * 0.025F);
             bodyWidth = 1F + (fatness * 0.1F);
             neckDepth = 1F + (fatness * 0.1F);
