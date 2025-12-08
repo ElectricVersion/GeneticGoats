@@ -15,7 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
 
-    public static final int AUTOSOMAL_GENES_LENGTH = 120;
+    public static final int AUTOSOMAL_GENES_LENGTH = 124;
     public static final int SEXLINKED_GENES_LENGTH = 2;
 
     int WTC = GoatsCommonConfig.COMMON.wildTypeChance.get();
@@ -444,6 +444,17 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[118] = randomizeGene(5);
         autosomalGenes[119] = randomizeGene(5);
 
+        /* Udder Size/Milk Production 1
+         * 1 - 10
+         */
+        autosomalGenes[120] = randomizeGene(10);
+        autosomalGenes[121] = randomizeGene(10);
+
+        /* Udder Size/Milk Production 2
+         * 1 - 10
+         */
+        autosomalGenes[122] = randomizeGene(10);
+        autosomalGenes[123] = randomizeGene(10);
 
         return new Genes(sexlinkedGenes, autosomalGenes);
     }
