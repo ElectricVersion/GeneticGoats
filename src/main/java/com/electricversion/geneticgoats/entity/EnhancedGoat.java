@@ -217,7 +217,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
 
         switch (resultAmount) {
             case 0:
-                player.playSound(SoundEvents.COW_HURT, 1.0F, 1.0F);
+                player.playSound(SoundEvents.GOAT_HURT, 1.0F, 1.0F);
                 return InteractionResult.SUCCESS;
             case 1:
                 if (isBottle) {
