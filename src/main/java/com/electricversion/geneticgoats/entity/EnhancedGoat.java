@@ -61,9 +61,9 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
     /* Initialization & General Properties */
     public EnhancedGoat(EntityType<? extends EnhancedAnimalAbstract> type, Level worldIn) {
         super(type, worldIn, GoatGeneticsInitializer.SEXLINKED_GENES_LENGTH, GoatGeneticsInitializer.AUTOSOMAL_GENES_LENGTH, true);
-        this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
-        this.moveControl = new MoveControl(this);
-        this.lookControl = new LookControl(this);
+        setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
+        moveControl = new MoveControl(this);
+        lookControl = new LookControl(this);
         initilizeAnimalSize();
     }
 
@@ -161,7 +161,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
         if (item == AddonItems.ENHANCED_GOAT_EGG.get()) {
             return InteractionResult.SUCCESS;
         }
-        if ((item == Items.BUCKET || item == ModItems.ONESIXTH_MILK_BUCKET.get() || item == ModItems.ONETHIRD_MILK_BUCKET.get() || item == ModItems.HALF_MILK_BUCKET.get() || item == ModItems.TWOTHIRDS_MILK_BUCKET.get() || item == ModItems.FIVESIXTHS_MILK_BUCKET.get() || item == ModItems.HALF_MILK_BOTTLE.get() || item == Items.GLASS_BOTTLE) && !this.isBaby() && getEntityStatus().equals(EntityState.MOTHER.toString())) {
+        if ((item == Items.BUCKET || item == ModItems.ONESIXTH_MILK_BUCKET.get() || item == ModItems.ONETHIRD_MILK_BUCKET.get() || item == ModItems.HALF_MILK_BUCKET.get() || item == ModItems.TWOTHIRDS_MILK_BUCKET.get() || item == ModItems.FIVESIXTHS_MILK_BUCKET.get() || item == ModItems.HALF_MILK_BOTTLE.get() || item == Items.GLASS_BOTTLE) && !isBaby() && getEntityStatus().equals(EntityState.MOTHER.toString())) {
             return handleMilkingInteraction(player, hand);
         }
 
@@ -206,9 +206,9 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
             int resultingMilkAmount = currentMilk - refillAmount;
             setMilkAmount(resultingMilkAmount);
 
-            float milkBagSize = resultingMilkAmount / (30*(getAnimalSize()/1.5F)*(maxBagSize/1.5F));
+            float milkBagSize = resultingMilkAmount / (30 * (getAnimalSize() / 1.5F) * (maxBagSize / 1.5F));
 
-            setBagSize((1.1F*milkBagSize*(maxBagSize-1.0F))+1.0F);
+            setBagSize((1.1F * milkBagSize * (maxBagSize - 1.0F)) + 1.0F);
         }
 
         int resultAmount = bucketSize - maxRefill + refillAmount;
@@ -269,7 +269,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
             int[] genes = getGenes().getAutosomalGenes();
 
             float bagSize = 0.5F;
-            float udderSizeGenes = (genes[120] + genes[121] + genes[122] + genes[123] - 4)/36F;
+            float udderSizeGenes = (genes[120] + genes[121] + genes[122] + genes[123] - 4) / 36F;
             bagSize += udderSizeGenes * 0.5F; // Add a maximum of 0.5 for a total of 1.0
 
             //TODO: Set up scale
@@ -340,45 +340,45 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
     public void addPrefixedTexture(TextureGrouping textureGroup, String[] prefix, int prefixIndex, String[] texture, int geneValue, boolean check) {
         if (check) {
             textureGroup.addTextureLayers(new TextureLayer(prefix[prefixIndex] + texture[geneValue]));
-            this.texturesIndexes.add(String.valueOf(prefixIndex) + String.valueOf(geneValue));
+            texturesIndexes.add(String.valueOf(prefixIndex) + geneValue);
         }
-        this.texturesIndexes.add(CACHE_DELIMITER);
+        texturesIndexes.add(CACHE_DELIMITER);
     }
 
     // Utility method to add a texture with a prefix based on a certain index and three keys
     public void addPrefixedTexture(TextureGrouping textureGroup, String[] prefix, int prefixIndex, String[][][] texture, int geneValue0, int geneValue1, int geneValue2, boolean check) {
         if (check) {
             textureGroup.addTextureLayers(new TextureLayer(prefix[prefixIndex] + texture[geneValue0][geneValue1][geneValue2]));
-            this.texturesIndexes.add(String.valueOf(prefixIndex) + String.valueOf(geneValue0) + String.valueOf(geneValue1) + String.valueOf(geneValue2));
+            texturesIndexes.add(String.valueOf(prefixIndex) + geneValue0 + geneValue1 + geneValue2);
         }
-        this.texturesIndexes.add(CACHE_DELIMITER);
+        texturesIndexes.add(CACHE_DELIMITER);
     }
 
     // Utility method to add a texture with a prefix based on a certain index and two keys
     public void addPrefixedTexture(TextureGrouping textureGroup, String[] prefix, int prefixIndex, String[][] texture, int geneValue0, int geneValue1, boolean check) {
         if (check) {
             textureGroup.addTextureLayers(new TextureLayer(prefix[prefixIndex] + texture[geneValue0][geneValue1]));
-            this.texturesIndexes.add(String.valueOf(prefixIndex) + String.valueOf(geneValue0) + String.valueOf(geneValue1));
+            texturesIndexes.add(String.valueOf(prefixIndex) + geneValue0 + geneValue1);
         }
-        this.texturesIndexes.add(CACHE_DELIMITER);
+        texturesIndexes.add(CACHE_DELIMITER);
     }
 
     // Utility method to add a texture with two keys. Copied from Core GA for addon use since it's protected
     public void addTextureToAnimalTextureGrouping(TextureGrouping textureGroup, TexturingType texturingType, String[][] texture, int geneValue0, int geneValue1, boolean check) {
         if (check) {
             textureGroup.addTextureLayers(new TextureLayer(texturingType, texture[geneValue0][geneValue1]));
-            this.texturesIndexes.add(String.valueOf(geneValue0)+String.valueOf(geneValue1));
+            texturesIndexes.add(String.valueOf(geneValue0) + geneValue1);
         }
-        this.texturesIndexes.add(CACHE_DELIMITER);
+        texturesIndexes.add(CACHE_DELIMITER);
     }
 
     // Utility method to add a texture with three keys. Copied from Core GA for addon use since it's protected
     public void addTextureToAnimalTextureGrouping(TextureGrouping textureGroup, TexturingType texturingType, String[][][] texture, int geneValue0, int geneValue1, int geneValue2, boolean check) {
         if (check) {
             textureGroup.addTextureLayers(new TextureLayer(texturingType, texture[geneValue0][geneValue1][geneValue2]));
-            this.texturesIndexes.add(String.valueOf(geneValue0)+String.valueOf(geneValue1)+String.valueOf(geneValue2));
+            texturesIndexes.add(String.valueOf(geneValue0) + geneValue1 + geneValue2);
         }
-        this.texturesIndexes.add(CACHE_DELIMITER);
+        texturesIndexes.add(CACHE_DELIMITER);
     }
 
     /* Brain/AI Related Code */
@@ -401,15 +401,15 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
 
     @Override
     protected void customServerAiStep() {
-        this.getBrain().tick((ServerLevel) this.level, this);
-        if (!this.isNoAi()) {
+        getBrain().tick((ServerLevel) getLevel(), this);
+        if (!isNoAi()) {
             if (getHunger() > hungerLimit) {
                 getBrain().setMemory(ModMemoryModuleTypes.HUNGRY.get(), true);
             }
 
             // Dairy Functionality
             if (getEntityStatus().equals(EntityState.MOTHER.toString())) {
-                if (hunger <= 24000) {  
+                if (hunger <= 24000) {
                     if (timeUntilNextMilk-- <= 0) {
                         int milk = getMilkAmount();
                         if (milk < maxBagSize * 30) {
@@ -432,7 +432,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
 
     @Override
     protected Brain<?> makeBrain(Dynamic<?> dynamic) {
-        return GoatAi.makeBrain(this.brainProvider().makeBrain(dynamic));
+        return GoatAi.makeBrain(brainProvider().makeBrain(dynamic));
     }
 
     @Override
