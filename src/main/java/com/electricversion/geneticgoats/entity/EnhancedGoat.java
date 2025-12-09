@@ -9,9 +9,11 @@ import com.electricversion.geneticgoats.init.AddonItems;
 import com.electricversion.geneticgoats.model.modeldata.GoatModelData;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Dynamic;
+import mokiyoki.enhancedanimals.config.GeneticAnimalsConfig;
 import mokiyoki.enhancedanimals.entity.EnhancedAnimalAbstract;
 import mokiyoki.enhancedanimals.entity.EntityState;
 import mokiyoki.enhancedanimals.init.FoodSerialiser;
+import mokiyoki.enhancedanimals.init.ModItems;
 import mokiyoki.enhancedanimals.init.ModMemoryModuleTypes;
 import mokiyoki.enhancedanimals.model.modeldata.AnimalModelData;
 import mokiyoki.enhancedanimals.renderer.texture.TextureGrouping;
@@ -21,6 +23,7 @@ import mokiyoki.enhancedanimals.util.Genes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -39,6 +42,7 @@ import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -157,13 +161,121 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
         if (item == AddonItems.ENHANCED_GOAT_EGG.get()) {
             return InteractionResult.SUCCESS;
         }
+        if ((item == Items.BUCKET || item == ModItems.ONESIXTH_MILK_BUCKET.get() || item == ModItems.ONETHIRD_MILK_BUCKET.get() || item == ModItems.HALF_MILK_BUCKET.get() || item == ModItems.TWOTHIRDS_MILK_BUCKET.get() || item == ModItems.FIVESIXTHS_MILK_BUCKET.get() || item == ModItems.HALF_MILK_BOTTLE.get() || item == Items.GLASS_BOTTLE) && !this.isBaby() && getEntityStatus().equals(EntityState.MOTHER.toString())) {
+            return handleMilkingInteraction(player, hand);
+        }
 
         return super.mobInteract(player, hand);
+    }
+
+    private @NotNull InteractionResult handleMilkingInteraction(Player player, InteractionHand hand) {
+        ItemStack itemStack = player.getItemInHand(hand);
+        Item item = itemStack.getItem();
+
+        // Partially copied from Core GA for consistency
+        int maxRefill = 0;
+        int bucketSize = 6;
+        int currentMilk = getMilkAmount();
+        int refillAmount = 0;
+        boolean isBottle = false;
+        if (item == Items.BUCKET) {
+            maxRefill = 6;
+        } else if (item == ModItems.ONESIXTH_MILK_BUCKET.get()) {
+            maxRefill = 5;
+        } else if (item == ModItems.ONETHIRD_MILK_BUCKET.get()) {
+            maxRefill = 4;
+        } else if (item == ModItems.HALF_MILK_BUCKET.get()) {
+            maxRefill = 3;
+        } else if (item == ModItems.TWOTHIRDS_MILK_BUCKET.get()) {
+            maxRefill = 2;
+        } else if (item == ModItems.FIVESIXTHS_MILK_BUCKET.get()) {
+            maxRefill = 1;
+        } else if (item == ModItems.HALF_MILK_BOTTLE.get()) {
+            maxRefill = 1;
+            isBottle = true;
+            bucketSize = 2;
+        } else if (item == Items.GLASS_BOTTLE) {
+            maxRefill = 2;
+            isBottle = true;
+            bucketSize = 2;
+        }
+
+        refillAmount = Math.min(currentMilk, maxRefill);
+
+        if (!getLevel().isClientSide) {
+            int resultingMilkAmount = currentMilk - refillAmount;
+            setMilkAmount(resultingMilkAmount);
+
+            float milkBagSize = resultingMilkAmount / (30*(getAnimalSize()/1.5F)*(maxBagSize/1.5F));
+
+            setBagSize((1.1F*milkBagSize*(maxBagSize-1.0F))+1.0F);
+        }
+
+        int resultAmount = bucketSize - maxRefill + refillAmount;
+
+        ItemStack resultItem = new ItemStack(Items.BUCKET);
+
+        switch (resultAmount) {
+            case 0:
+                player.playSound(SoundEvents.COW_HURT, 1.0F, 1.0F);
+                return InteractionResult.SUCCESS;
+            case 1:
+                if (isBottle) {
+                    resultItem = new ItemStack(ModItems.HALF_MILK_BOTTLE.get());
+                } else {
+                    resultItem = new ItemStack(ModItems.ONESIXTH_MILK_BUCKET.get());
+                }
+                break;
+            case 2:
+                if (isBottle) {
+                    resultItem = new ItemStack(ModItems.MILK_BOTTLE.get());
+                } else {
+                    resultItem = new ItemStack(ModItems.ONETHIRD_MILK_BUCKET.get());
+                }
+                break;
+            case 3:
+                resultItem = new ItemStack(ModItems.HALF_MILK_BUCKET.get());
+                break;
+            case 4:
+                resultItem = new ItemStack(ModItems.TWOTHIRDS_MILK_BUCKET.get());
+                break;
+            case 5:
+                resultItem = new ItemStack(ModItems.FIVESIXTHS_MILK_BUCKET.get());
+                break;
+            case 6:
+                resultItem = new ItemStack(Items.MILK_BUCKET);
+                break;
+        }
+
+        player.playSound(SoundEvents.GOAT_MILK, 1.0F, 1.0F);
+        itemStack.shrink(1);
+        if (itemStack.isEmpty()) {
+            player.setItemInHand(hand, resultItem);
+        } else if (!player.getInventory().add(resultItem)) {
+            player.drop(resultItem, false);
+        }
+
+        return InteractionResult.SUCCESS;
     }
 
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         setBagSize(getMilkAmount() / 30F);
+    }
+
+    @Override
+    protected void setMaxBagSize() {
+        if (getOrSetIsFemale() || GeneticAnimalsConfig.COMMON.omnigenders.get()) {
+            int[] genes = getGenes().getAutosomalGenes();
+
+            float bagSize = 0.5F;
+            float udderSizeGenes = (genes[120] + genes[121] + genes[122] + genes[123] - 4)/36F;
+            bagSize += udderSizeGenes * 0.5F; // Add a maximum of 0.5 for a total of 1.0
+
+            //TODO: Set up scale
+
+            maxBagSize = bagSize;
+        }
     }
 
     /* Gene Related Code */
