@@ -114,6 +114,10 @@ public class GoatPhenotype implements Phenotype {
         return hornScalings;
     }
 
+    public boolean isLongHaired() {
+        return longHaired;
+    }
+
     public enum EarLength {
         GOPHER,
         ELF,
@@ -141,8 +145,9 @@ public class GoatPhenotype implements Phenotype {
     private boolean shortMuzzled;
     private float mouthXRot;
 
-    //Beard Settings
+    //Beard & Hair Settings
     private boolean bearded;
+    private boolean longHaired;
 
     //Body Settings
     private float fatness;
@@ -364,7 +369,8 @@ public class GoatPhenotype implements Phenotype {
         earX += (headWidth * 3) - 3; // Move the ears to account for the difference
     }
 
-    private void calculateBeard(int[] genes, boolean isFemale) {
+    private void calculateHair(int[] genes, boolean isFemale) {
+        // Beard
         if (genes[70] == 2 || genes[71] == 2) {
             // At least one copy of the beardless gene
             if (isFemale) {
@@ -378,6 +384,8 @@ public class GoatPhenotype implements Phenotype {
             // No copies of beardless, thus the goat has a beard
             bearded = true;
         }
+        // Overall Hair Length
+        longHaired = genes[50] == 2 && genes[51] == 2;
     }
 
     private float[] calculateHornSegment(int geneValue, float wildtypeX, float wildtypeZ) {
@@ -490,7 +498,7 @@ public class GoatPhenotype implements Phenotype {
     }
 
     public GoatPhenotype(int[] genes, boolean isFemale) {
-        calculateBeard(genes, isFemale);
+        calculateHair(genes, isFemale);
         calculateEars(genes);
         calculateMuzzle(genes);
         calculateBody(genes);
