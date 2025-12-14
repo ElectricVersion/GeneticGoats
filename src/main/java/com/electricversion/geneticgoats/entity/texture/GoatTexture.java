@@ -364,6 +364,7 @@ public class GoatTexture {
         TextureGrouping detailGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         goat.addTextureToAnimalTextureGrouping(detailGroup, TX_SHADING, hairType, true);
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/udder.png");
+        goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/udder_overlay.png");
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/hooves.png");
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/horns_gray.png");
         rootGroup.addGrouping(detailGroup);
