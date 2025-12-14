@@ -55,6 +55,8 @@ import javax.annotation.Nullable;
 
 public class EnhancedGoat extends EnhancedAnimalAbstract {
 
+    private static final float maxPossibleMilk = 24;
+
     @OnlyIn(Dist.CLIENT)
     private GoatModelData goatModelData;
 
@@ -205,7 +207,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
             int resultingMilkAmount = currentMilk - refillAmount;
             setMilkAmount(resultingMilkAmount);
 
-            float milkBagSize = resultingMilkAmount / 30F;
+            float milkBagSize = resultingMilkAmount / maxPossibleMilk;
 
             setBagSize(milkBagSize * maxBagSize);
         }
@@ -259,7 +261,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
 
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        setBagSize(getMilkAmount() / 30F);
+        setBagSize(getMilkAmount() / maxPossibleMilk);
     }
 
     @Override
@@ -275,6 +277,17 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
 
             maxBagSize = bagSize;
         }
+    }
+
+    @Override
+    protected void initialMilk() {
+        lactationTimer = -48000;
+        // Since there are certain scenarios where maxBagSize isn't properly calculated, lets just be safe
+        setMaxBagSize();
+        int milk = Math.round(maxBagSize * maxPossibleMilk * 0.75F);
+        setMilkAmount(milk);
+
+        setBagSize(milk / (maxBagSize * maxPossibleMilk));
     }
 
     /* Gene Related Code */
@@ -411,11 +424,11 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
                 if (hunger <= 24000) {
                     if (timeUntilNextMilk-- <= 0) {
                         int milk = getMilkAmount();
-                        if (milk < maxBagSize * 30) {
+                        if (milk < maxBagSize * maxPossibleMilk) {
                             milk++;
                             setMilkAmount(milk);
                             timeUntilNextMilk = 2400;
-                            setBagSize(milk / (maxBagSize * 30));
+                            setBagSize(milk / (maxBagSize * maxPossibleMilk));
                         }
                     }
                 }
