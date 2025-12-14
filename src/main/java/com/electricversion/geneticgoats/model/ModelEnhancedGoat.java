@@ -698,7 +698,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bodyHairF.hide();
         bodyHairB.hide();
 
-        bUdder.show(goatModelData.getUdderSize() > 0F);
+        bUdder.show(goatModelData.getUdderSize() != -1F);
 
 
         //Enable the appropriate blocks
@@ -815,8 +815,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             mapOfScale.put("bHornL", phenotype.getHornScalings());
             mapOfScale.put("bHornR", phenotype.getHornScalings());
 
-            mapOfScale.put("udder", ModelHelper.createScalings(1F, 1F, goatModelData.getUdderSize(), 0F, 0F, 0F));
-
+            mapOfScale.put("udder", ModelHelper.createScalings(goatModelData.getUdderSize(), 1F, goatModelData.getUdderSize(), 0F, 0F, 0F));
+    
             float goatScale = ((2F * goatModelData.size * goatModelData.growthAmount) + goatModelData.size) / 3F;
             poseStack.scale(goatScale, goatScale, goatScale);
             poseStack.translate(0.0F, -1.5F + 1.5F / goatScale, 0.0F);

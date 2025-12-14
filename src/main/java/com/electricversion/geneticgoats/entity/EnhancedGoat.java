@@ -176,7 +176,6 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
         int maxRefill = 0;
         int bucketSize = 6;
         int currentMilk = getMilkAmount();
-        int refillAmount = 0;
         boolean isBottle = false;
         if (item == Items.BUCKET) {
             maxRefill = 6;
@@ -200,15 +199,15 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
             bucketSize = 2;
         }
 
-        refillAmount = Math.min(currentMilk, maxRefill);
+        int refillAmount = Math.min(currentMilk, maxRefill);
 
-        if (!getLevel().isClientSide) {
+        if (!getLevel().isClientSide()) {
             int resultingMilkAmount = currentMilk - refillAmount;
             setMilkAmount(resultingMilkAmount);
 
-            float milkBagSize = resultingMilkAmount / (30 * (getAnimalSize() / 1.5F) * (maxBagSize / 1.5F));
+            float milkBagSize = resultingMilkAmount / 30F;
 
-            setBagSize((1.1F * milkBagSize * (maxBagSize - 1.0F)) + 1.0F);
+            setBagSize(milkBagSize * maxBagSize);
         }
 
         int resultAmount = bucketSize - maxRefill + refillAmount;
