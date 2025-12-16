@@ -269,9 +269,24 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
         if (getOrSetIsFemale() || GeneticAnimalsConfig.COMMON.omnigenders.get()) {
             int[] genes = getGenes().getAutosomalGenes();
 
-            float bagSize = 0.5F;
-            float udderSizeGenes = (genes[120] + genes[121] + genes[122] + genes[123] - 4) / 36F;
-            bagSize += udderSizeGenes * 0.5F; // Add a maximum of 0.5 for a total of 1.0
+            float bagSize = 0.125F; // Once calculations are complete this should add up to a max of 1.0
+
+            // Dairy added by the udder capacity
+            float udderSizeMult = (genes[120] + genes[121] + genes[122] + genes[123] - 4) / 36F;
+            bagSize += udderSizeMult * 0.5F;
+
+            // Dairy added by the body type
+            int bodyTypeGenes = 24;
+            for (int i = 108; i < 114; i++) {
+                // Less dairy-bodied
+                bodyTypeGenes -= genes[i];
+            }
+            for (int i = 114; i < 120; i++) {
+                // More dairy-bodied
+                bodyTypeGenes += genes[i];
+            }
+            float bodyTypeMult = bodyTypeGenes/48F;
+            bagSize += bodyTypeMult * 0.375F;
 
             //TODO: Set up scale
 
