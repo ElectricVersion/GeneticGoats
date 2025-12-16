@@ -16,4 +16,8 @@ public class GoatModelData extends AnimalModelData {
     public void setUdderSize(float udderSize) {
         this.udderSize = udderSize;
     }
+
+    public float getNippleSize() {
+        return udderSize >= 1 ? udderSize * 1.375F : 1F ;
+    }
 }

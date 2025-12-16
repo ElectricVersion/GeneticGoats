@@ -348,10 +348,10 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         baseDef.addOrReplaceChild("nipples", CubeListBuilder.create()
                         .texOffs(63, 2)
-                        .addBox(-2.5F, 14F, 10.5F, 1, 1, 1)
+                        .addBox(-2.5F, 0F, 10.5F, 1, 1, 1)
                         .texOffs(63, 5)
-                        .addBox(1.5F, 14F, 10.5F, 1, 1, 1),
-                PartPose.ZERO);
+                        .addBox(1.5F, 0F, 10.5F, 1, 1, 1),
+                PartPose.offset(0F, 14F, 0F));
 
         baseDef.addOrReplaceChild("neck", CubeListBuilder.create()
                            .texOffs(0, 40)
@@ -554,7 +554,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     private void updateUdderSize(AnimalModelData animalModelData, T enhancedAnimal) {
         ((GoatModelData) animalModelData).setUdderSize(
                 (enhancedAnimal.getEntityStatus().equals(EntityState.MOTHER.toString()) || enhancedAnimal.getEntityStatus().equals(EntityState.PREGNANT.toString()))
-                        ? (0.625F + (enhancedAnimal.getBagSize() * 0.5F))
+                        ? (0.55F + (enhancedAnimal.getBagSize() * 0.5F))
                         : -1.0F);
     }
 
@@ -817,6 +817,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
             if (goatModelData.getUdderSize() != -1F) {
                 mapOfScale.put("udder", ModelHelper.createScalings(0.5F + (goatModelData.getUdderSize() * 0.5F), 1F, goatModelData.getUdderSize(), 0F, 0F, 0F));
+                mapOfScale.put("nipples", ModelHelper.createScalings(1F, goatModelData.getNippleSize(), 1F, 0F, 0F, 0F));
             }
 
             float goatScale = ((2F * goatModelData.size * goatModelData.growthAmount) + goatModelData.size) / 3F;
