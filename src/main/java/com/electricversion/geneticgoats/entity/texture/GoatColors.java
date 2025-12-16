@@ -13,6 +13,10 @@ public class GoatColors {
     private int noseBlackColor = -1;
     private int noseWhiteColor = -1;
 
+    private int skinRedColor = -1;
+    private int skinBlackColor = -1;
+    private int skinWhiteColor = -1;
+
     public int getWhiteColor() {
         return whiteColor;
     }
@@ -31,6 +35,18 @@ public class GoatColors {
 
     public int getNoseWhiteColor() {
         return noseWhiteColor;
+    }
+
+    public int getSkinRedColor() {
+        return skinRedColor;
+    }
+
+    public int getSkinBlackColor() {
+        return skinBlackColor;
+    }
+
+    public int getSkinWhiteColor() {
+        return skinWhiteColor;
     }
 
     private static void modifyRed(float[] red, float[] white, float percent) {
@@ -62,6 +78,10 @@ public class GoatColors {
         float[] noseRed = {0.043F, 0.52F, 0.20F};
         float[] noseBlack = {0.047F, 0.32F, 0.21F};
         float[] noseWhite = {0.016F, 0.28F, 0.81F};
+
+        float[] skinRed = {0.035F, 0.30F, 0.66F};
+        float[] skinBlack = {0.025F, 0.32F, 0.48F};
+        float[] skinWhite = {0.004F, 0.17F, 0.79F};
 
         float[] eyes = {0.084F, 0.76F, 0.671F};
 
@@ -141,6 +161,10 @@ public class GoatColors {
         color.noseRedColor = Colouration.HSBtoARGB(noseRed[0], noseRed[1], noseRed[2]);
         color.noseBlackColor = Colouration.HSBtoARGB(noseBlack[0], noseBlack[1], noseBlack[2]);
         color.noseWhiteColor = Colouration.HSBtoARGB(noseWhite[0], noseWhite[1], noseWhite[2]);
+
+        color.skinRedColor = Colouration.HSBtoARGB(skinRed[0], skinRed[1], skinRed[2]);
+        color.skinBlackColor = Colouration.HSBtoARGB(skinBlack[0], skinBlack[1], skinBlack[2]);
+        color.skinWhiteColor = Colouration.HSBtoARGB(skinWhite[0], skinWhite[1], skinWhite[2]);
 
         return color;
     }

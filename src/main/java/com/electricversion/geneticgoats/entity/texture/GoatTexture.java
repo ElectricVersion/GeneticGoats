@@ -363,7 +363,6 @@ public class GoatTexture {
         // Detail Layer
         TextureGrouping detailGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         goat.addTextureToAnimalTextureGrouping(detailGroup, TX_SHADING, hairType, true);
-        goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/udder.png");
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/udder_overlay.png");
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/hooves.png");
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/horns_gray.png");
@@ -407,6 +406,8 @@ public class GoatTexture {
             }
         }
         goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RGB, "misc/nose.png", "nr", color.getNoseRedColor());
+
+        goat.addTextureToAnimalTextureGrouping(redColorGroup, TexturingType.APPLY_RGB, "misc/udder.png", "sr", color.getSkinRedColor());
 
         return redColorGroup;
     }
@@ -463,6 +464,7 @@ public class GoatTexture {
         TextureGrouping blackColorGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         goat.addTextureToAnimalTextureGrouping(blackColorGroup, TexturingType.APPLY_BLACK, "misc/solid.png");
         goat.addTextureToAnimalTextureGrouping(blackColorGroup, TexturingType.APPLY_RGB, "misc/nose.png", "nb", color.getNoseBlackColor());
+        goat.addTextureToAnimalTextureGrouping(blackColorGroup, TexturingType.APPLY_RGB, "misc/udder.png", "sb", color.getSkinBlackColor());
         return blackColorGroup;
     }
 
@@ -606,6 +608,7 @@ public class GoatTexture {
         TextureGrouping whiteColorGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         goat.addTextureToAnimalTextureGrouping(whiteColorGroup, TexturingType.APPLY_RGB, "misc/solid.png", "w", color.getWhiteColor());
         goat.addTextureToAnimalTextureGrouping(whiteColorGroup, TexturingType.APPLY_RGB, "misc/nose.png", "nw", color.getNoseWhiteColor());
+        goat.addTextureToAnimalTextureGrouping(whiteColorGroup, TexturingType.APPLY_RGB, "misc/udder.png", "sw", color.getSkinWhiteColor());
         return whiteColorGroup;
     }
 
