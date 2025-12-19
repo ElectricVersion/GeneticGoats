@@ -820,7 +820,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                 mapOfScale.put("nipples", ModelHelper.createScalings(1F, goatModelData.getNippleSize(), 1F, 0F, 0F, 0F));
             }
 
-            float goatScale = ((2F * goatModelData.size * goatModelData.growthAmount) + goatModelData.size) / 3F;
+            float size = goatModelData.size;
+            if (phenotype.isFemale()) size -= 0.05F;
+            float goatScale = ((2F * size * goatModelData.growthAmount) + size) / 3F;
             poseStack.scale(goatScale, goatScale, goatScale);
             poseStack.translate(0.0F, -1.5F + 1.5F / goatScale, 0.0F);
             gaRender(base, mapOfScale, poseStack, vertexConsumer, packedLightIn, packedOverlayIn, r, g, b, a);

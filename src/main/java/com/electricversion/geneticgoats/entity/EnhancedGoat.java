@@ -88,7 +88,11 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
 
     @Override
     public void initilizeAnimalSize() {
-        setAnimalSize(1F);
+        int[] genes = genetics.getAutosomalGenes();
+        float size = 0.75F;
+        size -= 0.20F * ((genes[124] + genes[125] + genes[126] + genes[127] - 4) / 16F);
+        size += 0.10F * ((genes[128] + genes[129] - 2) / 8F);
+        setAnimalSize(size);
     }
 
     @Override

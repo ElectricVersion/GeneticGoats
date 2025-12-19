@@ -118,6 +118,10 @@ public class GoatPhenotype implements Phenotype {
         return longHaired;
     }
 
+    public boolean isFemale() {
+        return female;
+    }
+
     public enum EarLength {
         GOPHER,
         ELF,
@@ -171,6 +175,8 @@ public class GoatPhenotype implements Phenotype {
     private Vector3f[] hornOffsets;
     private List<Float> hornScalings;
 
+    // General
+    private final boolean female;
 
     private void calculateEars(int[] genes) {
         if (genes[30] == 2 || genes[31] == 2) {
@@ -369,11 +375,11 @@ public class GoatPhenotype implements Phenotype {
         earX += (headWidth * 3) - 3; // Move the ears to account for the difference
     }
 
-    private void calculateHair(int[] genes, boolean isFemale) {
+    private void calculateHair(int[] genes) {
         // Beard
         if (genes[70] == 2 || genes[71] == 2) {
             // At least one copy of the beardless gene
-            if (isFemale) {
+            if (female) {
                 // One copy is all we need to suppress the beard in females
                 bearded = false;
             } else {
@@ -410,8 +416,8 @@ public class GoatPhenotype implements Phenotype {
         return new float[] {xRot, zRot};
     }
 
-    private void calculateHorns(int[] genes, boolean isFemale) {
-        hornLength = isFemale ? MAX_HORN_LENGTH - 2 : MAX_HORN_LENGTH;
+    private void calculateHorns(int[] genes) {
+        hornLength = female ? MAX_HORN_LENGTH - 2 : MAX_HORN_LENGTH;
         float hornThickness = 1F;
         hornOffsets = new Vector3f[MAX_HORN_LENGTH];
         hornLeftRotations = new Vector3f[MAX_HORN_LENGTH];
@@ -498,11 +504,12 @@ public class GoatPhenotype implements Phenotype {
     }
 
     public GoatPhenotype(int[] genes, boolean isFemale) {
-        calculateHair(genes, isFemale);
+        female = isFemale;
+        calculateHair(genes);
         calculateEars(genes);
         calculateMuzzle(genes);
         calculateBody(genes);
-        calculateHorns(genes, isFemale);
+        calculateHorns(genes);
         // Generate Scalings
         upperLegScalings = ModelHelper.createScalings(1F, (5F - bodyHeight)/5F, 1F, 0F, 0F, 0F);
         bodyScalings = ModelHelper.createScalings(1F, (9F + bodyHeight)/9F, 1F, 0F, 0F, 0F);
