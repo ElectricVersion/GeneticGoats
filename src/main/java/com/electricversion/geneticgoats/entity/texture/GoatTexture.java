@@ -97,9 +97,7 @@ public class GoatTexture {
     private static final String[][] TX_GOULET = new String[][] {
             { // LOW
                     "white/goulet/goulet_low1.png", "white/goulet/goulet_low2.png", "white/goulet/goulet_low3.png", "white/goulet/goulet_low4.png",
-                    "white/goulet/goulet_low5.png", "white/goulet/goulet_low6.png",
-                    //TODO: Replace these with real textures
-                    "white/goulet/goulet_low1.png", "white/goulet/goulet_low2.png",
+                    "white/goulet/goulet_low5.png", "white/goulet/goulet_low6.png", "white/goulet/goulet_low7.png", "white/goulet/goulet_low8.png",
             },
             { // MEDIUM
                     "white/goulet/goulet_med1.png", "white/goulet/goulet_med2.png", "white/goulet/goulet_med3.png", "white/goulet/goulet_med4.png",
