@@ -127,11 +127,8 @@ public class GoatTexture {
             { // HIGH
                     "white/piebald/piebald_high1.png", "white/piebald/piebald_high2.png",
                     "white/piebald/piebald_high3.png", "white/piebald/piebald_high4.png",
-                    "white/piebald/piebald_high5.png",
-                    //TODO: Replace these with real textures
-                    "white/piebald/piebald_high5.png",
-                    "white/piebald/piebald_high5.png",
-                    "white/piebald/piebald_high5.png",
+                    "white/piebald/piebald_high5.png", "white/piebald/piebald_high6.png",
+                    "white/piebald/piebald_high7.png", "white/piebald/piebald_high8.png",
             }
     };
 
