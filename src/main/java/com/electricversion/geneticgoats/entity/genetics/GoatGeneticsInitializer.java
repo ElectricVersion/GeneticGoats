@@ -274,14 +274,14 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
 
         /* BEARD LENGTH MODIFIER 1
          * 1 - Wildtype
-         * 2 - Longer Beard (Dominant)
+         * 2 - Longer Beard; Dominant
          */
         autosomalGenes[72] = randomizeGene(2);
         autosomalGenes[73] = randomizeGene(2);
 
         /* BEARD LENGTH MODIFIER 2
          * 1 - Wildtype
-         * 2 - Longer Beard (Dominant)
+         * 2 - Longer Beard; Dominant
          */
         autosomalGenes[74] = randomizeGene(2);
         autosomalGenes[75] = randomizeGene(2);
@@ -323,7 +323,7 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
 
         /* MOONSPOTS
          * 1 - Wildtype
-         * 2 - Moonspots (Dominant)
+         * 2 - Moonspots; Dominant
          */
         autosomalGenes[84] = randomizeGene(2);
         autosomalGenes[85] = randomizeGene(2);
@@ -379,23 +379,23 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
 
         /* HORN SHORTENER 1
          * 1 - Wildtype
-         * 2 - Shorter Horns (Dominant)
+         * 2 - Shorter Horns; Dominant
          */
         autosomalGenes[100] = randomizeGene(2);
         autosomalGenes[101] = randomizeGene(2);
 
         /* HORN SHORTENER 2
          * 1 - Wildtype
-         * 2 - Shorter Horns (Dominant)
-         * 3 - Shorter Thicker Horns (Dominant)
+         * 2 - Shorter Horns; Dominant
+         * 3 - Shorter Thicker Horns; Dominant
          */
         autosomalGenes[102] = randomizeGene(3);
         autosomalGenes[103] = randomizeGene(3);
 
         /* HORN SHORTENER 3
          * 1 - Wildtype
-         * 2 - Shorter Horns (Dominant)
-         * 3 - Shorter Thicker Horns (Dominant)
+         * 2 - Shorter Horns; Dominant
+         * 3 - Shorter Thicker Horns; Dominant
          */
         autosomalGenes[104] = randomizeGene(2);
         autosomalGenes[105] = randomizeGene(2);
