@@ -289,6 +289,13 @@ public class GoatTexture {
             "shared/white/white_poll/white_poll_high.png",
     };
 
+    private static final String[] TX_HALFWHITE = new String[] {
+            "white/belt/halfwhite/halfwhite_low.png",
+            "white/belt/halfwhite/halfwhite_med.png",
+            "white/belt/halfwhite/halfwhite_high.png",
+    };
+
+
     // This method handles the logic of how individual texture components and genes should
     // interact to create a single, "compiled" texture.
     public static void calculateTexture(EnhancedGoat goat, int[] genes, char[] uuidArry) {
@@ -549,8 +556,15 @@ public class GoatTexture {
                     if (genes[68] == 2 && genes[69] == 2) sockQuality = 1; // Sock Quality Modifier
                 }
 
-                goat.addDelimiter("be");
-                goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_BELT, whiteSize, beltQuality, beltRandom, true);
+                if (genes[130] == 2 && genes[131] == 2) {
+                    // Half-white modifier
+                    goat.addDelimiter("hw");
+                    goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_HALFWHITE, whiteSize,true);
+                } else {
+                    // Normal belt
+                    goat.addDelimiter("be");
+                    goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_BELT, whiteSize, beltQuality, beltRandom, true);
+                }
 
                 goat.addTextureToAnimalTextureGrouping(whiteGroup, TexturingType.NONE, TX_SOCKS_FRONT, sockFrontSize, sockQuality, sockFrontRandom, sockFrontSize != 0);
                 goat.addTextureToAnimalTextureGrouping(whiteGroup, TexturingType.NONE, TX_SOCKS_BACK, sockBackSize, sockQuality, sockBackRandom, sockBackSize != 0);
