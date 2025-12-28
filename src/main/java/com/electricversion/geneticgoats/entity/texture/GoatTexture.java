@@ -357,7 +357,9 @@ public class GoatTexture {
 
         // White Layer
         TextureGrouping whiteGroup = new TextureGrouping(TexturingType.MASK_GROUP);
-        whiteGroup.addGrouping(makeWhiteMask(goat, genes, uuidArry, hairType));
+        // White mask group needs to be saved as a variable for reuse later with the keratin group
+        TextureGrouping whiteMaskGroup = makeWhiteMask(goat, genes, uuidArry, hairType);
+        whiteGroup.addGrouping(whiteMaskGroup);
         whiteGroup.addGrouping(makeWhiteColor(goat, genes, uuidArry, color));
 
         rootGroup.addGrouping(whiteGroup);
@@ -366,9 +368,18 @@ public class GoatTexture {
         TextureGrouping detailGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         goat.addTextureToAnimalTextureGrouping(detailGroup, TX_SHADING, hairType, true);
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/udder_overlay.png");
-        goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/hooves.png");
-        goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/horns_gray.png");
+        goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/hooves_black.png");
+        goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/horns_black.png");
         rootGroup.addGrouping(detailGroup);
+
+        // White Keratin Layer; only technically separate from the detail layer for masking purposes
+        TextureGrouping whiteKeratinGroup = new TextureGrouping(TexturingType.MASK_GROUP);
+        whiteKeratinGroup.addGrouping(whiteMaskGroup);
+        TextureGrouping whiteKeratinColorGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
+        goat.addTextureToAnimalTextureGrouping(whiteKeratinColorGroup, "misc/hooves_white.png");
+        goat.addTextureToAnimalTextureGrouping(whiteKeratinColorGroup, "misc/horns_white.png");
+        whiteKeratinGroup.addGrouping(whiteKeratinColorGroup);
+        rootGroup.addGrouping(whiteKeratinGroup);
 
         rootGroup.addGrouping(makeEyeGroup(goat, genes));
 
