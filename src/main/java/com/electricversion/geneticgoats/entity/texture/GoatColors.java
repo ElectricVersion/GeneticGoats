@@ -4,6 +4,7 @@ import com.electricversion.geneticgoats.entity.EnhancedGoat;
 import mokiyoki.enhancedanimals.entity.util.Colouration;
 
 import static net.minecraft.util.Mth.clamp;
+import static com.electricversion.geneticgoats.util.AddonUtils.clamp;
 
 public class GoatColors {
     private int whiteColor = -1;
@@ -163,23 +164,29 @@ public class GoatColors {
         GoatColors.modifyRed(cream, white, (redModifier+tanModifier+4)/6F);
 
         //Universal Colouration Values (Uses ABGR)
-        goat.colouration.setMelaninColour(Colouration.HSBtoABGR(melanin[0], melanin[1], melanin[2]));
-        goat.colouration.setPheomelaninColour(Colouration.HSBtoABGR(pheomelanin[0], pheomelanin[1], pheomelanin[2]));
+        goat.colouration.setMelaninColour(
+                Colouration.HSBtoABGR(clamp(melanin[0]), clamp(melanin[1]), clamp(melanin[2]))
+        );
+        goat.colouration.setPheomelaninColour(
+                Colouration.HSBtoABGR(clamp(pheomelanin[0]), clamp(pheomelanin[1]), clamp(pheomelanin[2])
+        ));
         // ...except for this one. For some reason eyes use ARGB
         // Only need to set one eye because goats don't really have heterochromia. Just using left eye for everything
-        goat.colouration.setLeftEyeColour(Colouration.HSBtoARGB(eyes[0], eyes[1], eyes[2]));
+        goat.colouration.setLeftEyeColour(
+                Colouration.HSBtoARGB(clamp(eyes[0]), clamp(eyes[1]), clamp(eyes[2]))
+        );
 
         //Goat Specific Colors (Uses ARGB)
-        color.whiteColor = Colouration.HSBtoARGB(white[0], white[1], white[2]);
-        color.creamColor = Colouration.HSBtoARGB(cream[0], cream[1], cream[2]);
+        color.whiteColor = Colouration.HSBtoARGB(clamp(white[0]), clamp(white[1]), clamp(white[2]));
+        color.creamColor = Colouration.HSBtoARGB(clamp(cream[0]), clamp(cream[1]), clamp(cream[2]));
 
-        color.noseRedColor = Colouration.HSBtoARGB(noseRed[0], noseRed[1], noseRed[2]);
-        color.noseBlackColor = Colouration.HSBtoARGB(noseBlack[0], noseBlack[1], noseBlack[2]);
-        color.noseWhiteColor = Colouration.HSBtoARGB(noseWhite[0], noseWhite[1], noseWhite[2]);
+        color.noseRedColor = Colouration.HSBtoARGB(clamp(noseRed[0]), clamp(noseRed[1]), clamp(noseRed[2]));
+        color.noseBlackColor = Colouration.HSBtoARGB(clamp(noseBlack[0]), clamp(noseBlack[1]), clamp(noseBlack[2]));
+        color.noseWhiteColor = Colouration.HSBtoARGB(clamp(noseWhite[0]), clamp(noseWhite[1]), clamp(noseWhite[2]));
 
-        color.skinRedColor = Colouration.HSBtoARGB(skinRed[0], skinRed[1], skinRed[2]);
-        color.skinBlackColor = Colouration.HSBtoARGB(skinBlack[0], skinBlack[1], skinBlack[2]);
-        color.skinWhiteColor = Colouration.HSBtoARGB(skinWhite[0], skinWhite[1], skinWhite[2]);
+        color.skinRedColor = Colouration.HSBtoARGB(clamp(skinRed[0]), clamp(skinRed[1]), clamp(skinRed[2]));
+        color.skinBlackColor = Colouration.HSBtoARGB(clamp(skinBlack[0]), clamp(skinBlack[1]), clamp(skinBlack[2]));
+        color.skinWhiteColor = Colouration.HSBtoARGB(clamp(skinWhite[0]), clamp(skinWhite[1]), clamp(skinWhite[2]));
 
         return color;
     }
