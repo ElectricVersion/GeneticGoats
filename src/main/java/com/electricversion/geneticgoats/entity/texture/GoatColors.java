@@ -144,6 +144,21 @@ public class GoatColors {
             eyes[2] -= (eyeDarkness * 0.10F);
         }
 
+        // MLPH
+        if (genes[132] == 2 && genes[133] == 2) {
+            // Blue Dilute
+            pheomelanin[0] += 0.0024F;
+            pheomelanin[1] += -0.156F;
+            pheomelanin[2] += 0.127F;
+
+            cream[0] += 0.0024F;
+            cream[1] += -0.156F;
+            cream[2] += 0.127F;
+
+            melanin[1] += -0.156F;
+            melanin[2] += 0.2F;
+        }
+        
         GoatColors.modifyRed(pheomelanin, white, redModifier/6F);
         GoatColors.modifyRed(cream, white, (redModifier+tanModifier+4)/6F);
 
