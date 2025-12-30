@@ -154,7 +154,6 @@ public class GoatPhenotype implements Phenotype {
     private boolean longHaired;
 
     //Body Settings
-    private float fatness;
     private float bodyWidth;
     private float bodyHeight;
     private float neckDepth;
@@ -356,7 +355,8 @@ public class GoatPhenotype implements Phenotype {
             // Thinner
             meatGeneTotal -= genes[i];
         }
-        fatness = (meatGeneTotal)/24F; // Fatness: -1 to 1 (thin/dairy to fat/meaty)
+
+        float fatness = (meatGeneTotal) / 24F; // Fatness: -1 to 1 (thin/dairy to fat/meaty)
         if (fatness >= 0) {
             // Meaty
             headWidth = 1F + (fatness * 0.2F);
@@ -369,8 +369,14 @@ public class GoatPhenotype implements Phenotype {
             headWidth = 1F + (fatness * 0.025F);
             bodyWidth = 1F + (fatness * 0.1F);
             neckDepth = 1F + (fatness * 0.1F);
-            neckWidth = headWidth;
+            neckWidth = 1F + (fatness * 0.0125F);
             bodyHeight = fatness * 0.25F;
+        }
+        if (!female) {
+            // Male goats should be a little thicker
+            headWidth += 0.0125F;
+            bodyWidth += 0.05F;
+            neckWidth += 0.025F;
         }
         earX += (headWidth * 3) - 3; // Move the ears to account for the difference
     }
@@ -417,7 +423,7 @@ public class GoatPhenotype implements Phenotype {
     }
 
     private void calculateHorns(int[] genes) {
-        hornLength = female ? MAX_HORN_LENGTH - 2 : MAX_HORN_LENGTH;
+        hornLength = female ? MAX_HORN_LENGTH - 4 : MAX_HORN_LENGTH;
         float hornThickness = 1F;
         hornOffsets = new Vector3f[MAX_HORN_LENGTH];
         hornLeftRotations = new Vector3f[MAX_HORN_LENGTH];
@@ -475,15 +481,15 @@ public class GoatPhenotype implements Phenotype {
         }
 
         if (genes[102] != 1 || genes[103] != 1) {
-            hornLength -= 4;
+            hornLength -= 3;
             if (genes[102] == 3 || genes[103] == 3) {
-                hornThickness += 0.75F;
+                hornThickness += 0.5F;
             }
         }
         if (genes[104] != 1 || genes[105] != 1) {
-            hornLength -= 4;
+            hornLength -= 3;
             if (genes[104] == 3 || genes[105] == 3) {
-                hornThickness += 0.75F;
+                hornThickness += 0.5F;
             }
         }
 
