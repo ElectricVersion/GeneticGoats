@@ -156,7 +156,7 @@ public class GoatColors {
             cream[1] += -0.156F;
             cream[2] += 0.127F;
 
-            melanin[1] += -0.156F;
+            melanin[1] += -0.25F;
             melanin[2] += 0.2F;
         }
         
