@@ -134,19 +134,17 @@ public class GoatTexture {
 
     private static final String[][] TX_PIEBALD_BELT = new String[][] {
             { // LOW
-                    "white/piebald_belt/piebelt_low1.png", "white/piebald_belt/piebelt_med2.png",
-                    //TODO: Replace these with real textures
-                    "white/piebald_belt/piebelt_low1.png", "white/piebald_belt/piebelt_med2.png",
-                    "white/piebald_belt/piebelt_low1.png", "white/piebald_belt/piebelt_med2.png",
-                    "white/piebald_belt/piebelt_low1.png", "white/piebald_belt/piebelt_med2.png",
+                    "white/piebald_belt/piebelt_low1.png", "white/piebald_belt/piebelt_low2.png",
+                    "white/piebald_belt/piebelt_low3.png", "white/piebald_belt/piebelt_low4.png",
+                    "white/piebald_belt/piebelt_low5.png", "white/piebald_belt/piebelt_low6.png",
+                    "white/piebald_belt/piebelt_low7.png", "white/piebald_belt/piebelt_low8.png",
+
             },
             { // MEDIUM
                     "white/piebald_belt/piebelt_med1.png", "white/piebald_belt/piebelt_med2.png",
                     "white/piebald_belt/piebelt_med3.png", "white/piebald_belt/piebelt_med4.png",
-                    "white/piebald_belt/piebelt_med5.png",
-                    //TODO: Replace these with real textures
-                    "white/piebald_belt/piebelt_med1.png",
-                    "white/piebald_belt/piebelt_med2.png", "white/piebald_belt/piebelt_med3.png",
+                    "white/piebald_belt/piebelt_med5.png", "white/piebald_belt/piebelt_med6.png",
+                    "white/piebald_belt/piebelt_med7.png", "white/piebald_belt/piebelt_med8.png",
             },
             { // HIGH
                     "white/piebald_belt/piebelt_high1.png", "white/piebald_belt/piebelt_high2.png",
