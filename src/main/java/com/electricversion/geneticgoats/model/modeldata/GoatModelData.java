@@ -4,6 +4,7 @@ import mokiyoki.enhancedanimals.model.modeldata.AnimalModelData;
 
 public class GoatModelData extends AnimalModelData {
     private float udderSize = 0.0F;
+    private float woolLength = 0.0F;
 
     public GoatPhenotype getPhenotype() {
         return (GoatPhenotype) phenotype;
@@ -19,5 +20,13 @@ public class GoatModelData extends AnimalModelData {
 
     public float getNippleSize() {
         return udderSize >= 1 ? udderSize * 1.375F : 1F ;
+    }
+
+    public float getWoolLength() {
+        return woolLength;
+    }
+
+    public void setWoolLength(float woolLength) {
+        this.woolLength = woolLength;
     }
 }

@@ -62,16 +62,16 @@ public class GoatPhenotype implements Phenotype {
         return mouthXRot;
     }
 
-    public List<Float> getBodyScalings() {
-        return bodyScalings;
+    public float getBodyHeight() {
+        return bodyHeight;
     }
 
     public List<Float> getFullBodyScalings() {
         return fullBodyScalings;
     }
 
-    public List<Float> getUpperLegScalings() {
-        return upperLegScalings;
+    public float getUpperLegHeight() {
+        return upperLegHeight;
     }
 
     public List<Float> getHeadScalings() {
@@ -159,8 +159,7 @@ public class GoatPhenotype implements Phenotype {
     private float neckDepth;
     private float neckWidth;
     private float headWidth;
-    private List<Float> bodyScalings;
-    private List<Float> upperLegScalings;
+    private float upperLegHeight;
     private List<Float> fullBodyScalings;
     private List<Float> headScalings;
     private List<Float> neckScalings;
@@ -517,8 +516,7 @@ public class GoatPhenotype implements Phenotype {
         calculateBody(genes);
         calculateHorns(genes);
         // Generate Scalings
-        upperLegScalings = ModelHelper.createScalings(1F, (5F - bodyHeight)/5F, 1F, 0F, 0F, 0F);
-        bodyScalings = ModelHelper.createScalings(1F, (9F + bodyHeight)/9F, 1F, 0F, 0F, 0F);
+        upperLegHeight = (5F - bodyHeight)/5F;
         fullBodyScalings = ModelHelper.createScalings(bodyWidth, 1F, 1F, 0F, 0F, 0F);
         neckScalings = ModelHelper.createScalings(neckWidth, 1F, neckDepth, 0F, 0F, 0F);
         headScalings = ModelHelper.createScalings(headWidth, 1F, 1F, 0F, 0F, 0F);

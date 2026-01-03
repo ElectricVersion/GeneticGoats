@@ -318,8 +318,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         // Body
         baseDef.addOrReplaceChild("bodyF", CubeListBuilder.create()
                         .texOffs(0, 0)
-                        .addBox(-4.5F, 0F, 0F, 9, 9, 10),
-                PartPose.offset(0F, 0F, 0F));
+                        .addBox(-4.5F, 0F, -10F, 9, 9, 10),
+                PartPose.offset(0F, 0F, 10F));
 
         baseDef.addOrReplaceChild("bodyB", CubeListBuilder.create()
                         .texOffs(0, 20)
@@ -796,10 +796,12 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             Map<String, List<Float>> mapOfScale = new HashMap<>(); //Stores transformations for blocks and bones
             poseStack.pushPose();
 
+            float woolScale = 1F + (0.125F * goatModelData.getWoolLength());
             mapOfScale.put("bBodyF", phenotype.getFullBodyScalings());
             mapOfScale.put("bBodyB", phenotype.getFullBodyScalings());
-            mapOfScale.put("bodyF", phenotype.getBodyScalings());
-            mapOfScale.put("bodyB", phenotype.getBodyScalings());
+            List<Float> bodyScalings = ModelHelper.createScalings(woolScale, woolScale * (9F + phenotype.getBodyHeight()) / 9F, woolScale, 0F, 0F, 0F);
+            mapOfScale.put("bodyF", bodyScalings);
+            mapOfScale.put("bodyB", bodyScalings);
 
             mapOfScale.put("neck", phenotype.getNeckScalings());
 
@@ -808,10 +810,12 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             mapOfScale.put("upperMouth", phenotype.getUpperMouthScalings());
             mapOfScale.put("mouth", phenotype.getMouthScalings());
 
-            mapOfScale.put("legFL", phenotype.getUpperLegScalings());
-            mapOfScale.put("legFR", phenotype.getUpperLegScalings());
-            mapOfScale.put("legBL", phenotype.getUpperLegScalings());
-            mapOfScale.put("legBR", phenotype.getUpperLegScalings());
+            List<Float> upperLegScalings = ModelHelper.createScalings(woolScale, phenotype.getUpperLegHeight(), woolScale, 0F, 0F, 0F);
+
+            mapOfScale.put("legFL", upperLegScalings);
+            mapOfScale.put("legFR", upperLegScalings);
+            mapOfScale.put("legBL", upperLegScalings);
+            mapOfScale.put("legBR", upperLegScalings);
             mapOfScale.put("bHornL", phenotype.getHornScalings());
             mapOfScale.put("bHornR", phenotype.getHornScalings());
 
