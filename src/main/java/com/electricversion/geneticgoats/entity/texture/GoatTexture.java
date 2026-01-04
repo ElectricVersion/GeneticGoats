@@ -365,7 +365,7 @@ public class GoatTexture {
         // Detail Layer
         TextureGrouping detailGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         if (genes[134] == 2 || genes[135] == 2) {
-            goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/angora_lightness.png", "ag");
+            goat.addTextureToAnimalTextureGrouping(detailGroup, TexturingType.APPLY_RGB, "misc/angora_lightness.png", "an", color.getWhiteColor());
             goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/angora_curly.png", true);
         } else {
             goat.addTextureToAnimalTextureGrouping(detailGroup, TX_SHADING, hairType, true);
