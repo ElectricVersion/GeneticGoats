@@ -72,6 +72,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     private final WrappedModelPart neck;
 
     private final WrappedModelPart head;
+    private final WrappedModelPart headWool;
     private final WrappedModelPart headHair;
     private final WrappedModelPart beard;
     private final WrappedModelPart muzzleLong;
@@ -160,6 +161,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         neck = new WrappedModelPart("neck", basePart);
 
         head = new WrappedModelPart("head", basePart);
+        headWool = new WrappedModelPart("headWool", basePart);
         headHair = new WrappedModelPart("headHair", basePart);
         beard = new WrappedModelPart("beard", basePart);
         muzzleLong = new WrappedModelPart("muzzleLong", basePart);
@@ -235,6 +237,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         bNeck.addChild(bHead);
         bHead.addChild(head);
+        bHead.addChild(headWool);
         bHead.addChild(headHair);
         mouth.addChild(beard);
         bHead.addChild(bMuzzle);
@@ -362,6 +365,11 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("head", CubeListBuilder.create()
                         .texOffs(50, 44)
                         .addBox(-3F, -5F, -6F, 6, 5, 6),
+                PartPose.offset(0F, 5F, 0F));
+
+        baseDef.addOrReplaceChild("headWool", CubeListBuilder.create()
+                        .texOffs(101, 36)
+                        .addBox(-3F, -5F, -6F, 6, 5, 6, new CubeDeformation(0.25F)),
                 PartPose.offset(0F, 5F, 0F));
 
         baseDef.addOrReplaceChild("headHair", CubeListBuilder.create()
