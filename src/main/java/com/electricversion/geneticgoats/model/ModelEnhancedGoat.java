@@ -706,11 +706,11 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bodyHairF.hide();
         bodyHairB.hide();
 
-        bUdder.show(goatModelData.getUdderSize() != -1F);
-
-
         //Enable the appropriate blocks
         GoatPhenotype phenotype = goatModelData.getPhenotype();
+
+        bUdder.show(goatModelData.getUdderSize() != -1F);
+        headWool.show(goatModelData.getWoolLength() > 0F && phenotype.isHeadWooled());
 
         beard.show(phenotype.isBearded());
         if (phenotype.isLongHaired()) {

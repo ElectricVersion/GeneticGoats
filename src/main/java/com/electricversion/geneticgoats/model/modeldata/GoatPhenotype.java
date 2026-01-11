@@ -122,6 +122,10 @@ public class GoatPhenotype implements Phenotype {
         return female;
     }
 
+    public boolean isHeadWooled() {
+        return headWooled;
+    }
+
     public enum EarLength {
         GOPHER,
         ELF,
@@ -152,6 +156,7 @@ public class GoatPhenotype implements Phenotype {
     //Beard & Hair Settings
     private boolean bearded;
     private boolean longHaired;
+    private boolean headWooled;
 
     //Body Settings
     private float bodyWidth;
@@ -397,6 +402,8 @@ public class GoatPhenotype implements Phenotype {
         }
         // Overall Hair Length
         longHaired = genes[50] == 2 && genes[51] == 2;
+        // Angora Wool
+        headWooled = true; // TODO: Implement actual genes for this
     }
 
     private float[] calculateHornSegment(int geneValue, float wildtypeX, float wildtypeZ) {

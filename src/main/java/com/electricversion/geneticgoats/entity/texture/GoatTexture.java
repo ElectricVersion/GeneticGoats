@@ -362,12 +362,15 @@ public class GoatTexture {
 
         rootGroup.addGrouping(whiteGroup);
 
+        // Angora-specific shading and details
+        boolean angora = genes[134] == 2 || genes[135] == 2;
+        if (angora) {
+            rootGroup.addGrouping(makeAngoraDetailGroup(goat, genes, color));
+        }
+
         // Detail Layer
         TextureGrouping detailGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
-        if (genes[134] == 2 || genes[135] == 2) {
-            goat.addTextureToAnimalTextureGrouping(detailGroup, TexturingType.APPLY_RGB, "misc/angora_lightness.png", "an", color.getWhiteColor());
-            goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/angora_curly.png", true);
-        } else {
+        if (!angora) { // Since angora has its own shading texture, we can omit the normal one if angora is present
             goat.addTextureToAnimalTextureGrouping(detailGroup, TX_SHADING, hairType, true);
         }
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/udder_overlay.png");
@@ -683,4 +686,11 @@ public class GoatTexture {
         return moonspotColorGroup;
     }
 
+    private static TextureGrouping makeAngoraDetailGroup(EnhancedGoat goat, int[] genes, GoatColors color) {
+        TextureGrouping angoraDetailGroup = new TextureGrouping(TexturingType.MASK_GROUP);
+        goat.addTextureToAnimalTextureGrouping(angoraDetailGroup, "misc/angora_full_mask.png");
+        goat.addTextureToAnimalTextureGrouping(angoraDetailGroup, TexturingType.APPLY_RGB, "misc/angora_lightness.png", "an", color.getWhiteColor());
+        goat.addTextureToAnimalTextureGrouping(angoraDetailGroup, "misc/angora_curly.png", true);
+        return angoraDetailGroup;
+    }
 }
