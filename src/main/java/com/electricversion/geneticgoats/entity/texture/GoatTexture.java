@@ -327,6 +327,9 @@ public class GoatTexture {
         if (genes[74] == 2 || genes[75] == 2) beardLength++;
 
         boolean angora = genes[134] == 2 || genes[135] == 2;
+        if (angora) {
+            hairType = 0;
+        }
 
         // Alpha Mask Layer
         TextureGrouping alphaGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
