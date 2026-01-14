@@ -375,7 +375,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("headHair", CubeListBuilder.create()
                         .texOffs(76, 36)
                         .addBox(-3F, 0F, -6F, 6, 6, 6, new CubeDeformation(0.5F)),
-                PartPose.offset(0F, -0.5F, 0F)); // TODO: Make offset conditional to angora head wool
+                PartPose.offset(0F, 0F, 0F));
 
         baseDef.addOrReplaceChild("muzzleLong", CubeListBuilder.create()
                         .texOffs(23, 43)
@@ -717,8 +717,10 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         if (phenotype.isAngora() && phenotype.isHeadWooled()) {
             headWool.show();
             headHair.show();
+            headHair.setY(-0.5F); // Offset the head hair to add visual floofiness!
         } else if (phenotype.isLongHaired()) {
             headHair.show();
+            headHair.setY(0F);
             bodyHairF.show();
             bodyHairB.show();
         }
