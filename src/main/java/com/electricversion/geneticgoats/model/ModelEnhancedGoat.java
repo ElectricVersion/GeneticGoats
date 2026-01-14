@@ -369,13 +369,13 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         baseDef.addOrReplaceChild("headWool", CubeListBuilder.create()
                         .texOffs(101, 36)
-                        .addBox(-3F, -5F, -6F, 6, 5, 6, new CubeDeformation(0.25F)),
-                PartPose.offset(0F, 5F, 0F));
+                        .addBox(-3F, 0F, -6F, 6, 5, 6, new CubeDeformation(0.25F)),
+                PartPose.offset(0F, 0F, 0F));
 
         baseDef.addOrReplaceChild("headHair", CubeListBuilder.create()
                         .texOffs(76, 36)
-                        .addBox(-3F, -5F, -6F, 6, 6, 6, new CubeDeformation(0.5F)),
-                PartPose.offset(0F, 5F, 0F));
+                        .addBox(-3F, 0F, -6F, 6, 6, 6, new CubeDeformation(0.5F)),
+                PartPose.offset(0F, -0.5F, 0F)); // TODO: Make offset conditional to angora head wool
 
         baseDef.addOrReplaceChild("muzzleLong", CubeListBuilder.create()
                         .texOffs(23, 43)
@@ -703,6 +703,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         earR12.hide();
 
         headHair.hide();
+        headWool.hide();
         bodyHairF.hide();
         bodyHairB.hide();
 
@@ -710,10 +711,13 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         GoatPhenotype phenotype = goatModelData.getPhenotype();
 
         bUdder.show(goatModelData.getUdderSize() != -1F);
-        headWool.show(goatModelData.getWoolLength() > 0F && phenotype.isHeadWooled());
 
         beard.show(phenotype.isBearded());
-        if (phenotype.isLongHaired()) {
+
+        if (phenotype.isAngora() && phenotype.isHeadWooled()) {
+            headWool.show();
+            headHair.show();
+        } else if (phenotype.isLongHaired()) {
             headHair.show();
             bodyHairF.show();
             bodyHairB.show();

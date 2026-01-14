@@ -326,11 +326,14 @@ public class GoatTexture {
         if (genes[72] == 2 || genes[73] == 2) beardLength++;
         if (genes[74] == 2 || genes[75] == 2) beardLength++;
 
+        boolean angora = genes[134] == 2 || genes[135] == 2;
+
         // Alpha Mask Layer
         TextureGrouping alphaGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         goat.addTextureToAnimalTextureGrouping(alphaGroup, "misc/mask/body.png");
         goat.addTextureToAnimalTextureGrouping(alphaGroup, TX_HAIR_LENGTH, hairLength, hairType != 0);
         goat.addTextureToAnimalTextureGrouping(alphaGroup, TX_BEARD_LENGTH, beardLength, true);
+        goat.addTextureToAnimalTextureGrouping(alphaGroup, "misc/mask/hair_angora.png", angora);
         rootGroup.addGrouping(alphaGroup);
 
         // Red Layer
@@ -363,16 +366,13 @@ public class GoatTexture {
         rootGroup.addGrouping(whiteGroup);
 
         // Angora-specific shading and details
-        boolean angora = genes[134] == 2 || genes[135] == 2;
         if (angora) {
             rootGroup.addGrouping(makeAngoraDetailGroup(goat, genes, color));
         }
 
         // Detail Layer
         TextureGrouping detailGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
-        if (!angora) { // Since angora has its own shading texture, we can omit the normal one if angora is present
-            goat.addTextureToAnimalTextureGrouping(detailGroup, TX_SHADING, hairType, true);
-        }
+        goat.addTextureToAnimalTextureGrouping(detailGroup, TX_SHADING, hairType, true);
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/udder_overlay.png");
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/hooves_black.png");
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/horns_black.png");
