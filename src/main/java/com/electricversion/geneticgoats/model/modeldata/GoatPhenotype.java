@@ -66,6 +66,15 @@ public class GoatPhenotype implements Phenotype {
         return bodyHeight;
     }
 
+    public float getNeckDepth() {
+        return neckDepth;
+    }
+
+    public float getNeckWidth() {
+        return neckWidth;
+    }
+
+
     public List<Float> getFullBodyScalings() {
         return fullBodyScalings;
     }
@@ -84,10 +93,6 @@ public class GoatPhenotype implements Phenotype {
 
     public List<Float> getMouthScalings() {
         return mouthScalings;
-    }
-
-    public List<Float> getNeckScalings() {
-        return neckScalings;
     }
 
     public boolean isBearded() {
@@ -172,7 +177,6 @@ public class GoatPhenotype implements Phenotype {
     private float upperLegHeight;
     private List<Float> fullBodyScalings;
     private List<Float> headScalings;
-    private List<Float> neckScalings;
     private List<Float> upperMouthScalings;
     private List<Float> mouthScalings;
 
@@ -536,7 +540,6 @@ public class GoatPhenotype implements Phenotype {
         // Generate Scalings
         upperLegHeight = (5F - bodyHeight)/5F;
         fullBodyScalings = ModelHelper.createScalings(bodyWidth, 1F, 1F, 0F, 0F, 0F);
-        neckScalings = ModelHelper.createScalings(neckWidth, 1F, neckDepth, 0F, 0F, 0F);
         headScalings = ModelHelper.createScalings(headWidth, 1F, 1F, 0F, 0F, 0F);
         upperMouthScalings = ModelHelper.createScalings(0.999F*headWidth, 1F, upperMouthScaleZ, 0F, 0F, 0F);
         mouthScalings = ModelHelper.createScalings(0.999F*headWidth, 1F, upperMouthScaleZ, 0F, 0F, 0F);
