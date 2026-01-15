@@ -566,14 +566,20 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                         : -1.0F);
     }
 
+    private void updateWoolLength(AnimalModelData animalModelData, T enhancedAnimal) {
+        ((GoatModelData) animalModelData).setWoolLength(enhancedAnimal.getWoolLength()/EnhancedGoat.maxPossibleWool);
+    }
+
     @Override
     protected void additionalModelDataInfo(AnimalModelData animalModelData, T enhancedAnimal) {
         updateUdderSize(animalModelData, enhancedAnimal);
+        updateWoolLength(animalModelData, enhancedAnimal);
     }
 
     @Override
     protected void additionalUpdateModelDataInfo(AnimalModelData animalModelData, T enhancedAnimal) {
         updateUdderSize(animalModelData, enhancedAnimal);
+        updateWoolLength(animalModelData, enhancedAnimal);
     }
 
     /* Animation */

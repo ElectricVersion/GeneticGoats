@@ -22,6 +22,9 @@ import mokiyoki.enhancedanimals.renderer.texture.TexturingType;
 import mokiyoki.enhancedanimals.util.Genes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
@@ -55,7 +58,15 @@ import javax.annotation.Nullable;
 
 public class EnhancedGoat extends EnhancedAnimalAbstract {
 
-    private static final float maxPossibleMilk = 24;
+    private static final EntityDataAccessor<Integer> WOOL_LENGTH = SynchedEntityData.defineId(EnhancedGoat.class, EntityDataSerializers.INT);
+
+    public static final float maxPossibleMilk = 24;
+    public static final float maxPossibleWool = 12;
+
+    private int woolGrowthTimer = 0;
+    private int individualMaxWool;
+    private int woolLength; // Used for getting when possible, should never be modified except by setWoolLength.
+    // It feels messy having two variables for wool length but its probably better than having to access the synched data every time
 
     @OnlyIn(Dist.CLIENT)
     private GoatModelData goatModelData;
@@ -142,6 +153,21 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
 
     @Override
     protected void runExtraIdleTimeTick() {
+        // Wool growth code based on core GA's sheep code for functional consistency.
+
+        // Babies have a lower wool cap so they don't grow out too fast
+        float age = getEnhancedAnimalAge();
+        int currentWoolCap = (age >= getAdultAge()) ? individualMaxWool : (int)(individualMaxWool * (age / (float)getAdultAge()));
+
+        if (currentWoolCap > 0 && currentWoolCap > woolLength) {
+            if (hunger <= 36000) {
+                woolGrowthTimer++;
+            }
+            if (woolGrowthTimer >= (24000/currentWoolCap)) {
+                woolGrowthTimer = 0;
+                setWoolLength(woolLength+1);
+            }
+        }
     }
 
     @Override
@@ -266,6 +292,14 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         setBagSize(getMilkAmount() / maxPossibleMilk);
+
+        setWoolLength(compound.getInt("Wool"));
+        setMaxWool();
+    }
+
+    public void addAdditionalSaveData(CompoundTag compound) {
+        super.addAdditionalSaveData(compound);
+        compound.putInt("Wool", woolLength);
     }
 
     @Override
@@ -307,6 +341,33 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
         setMilkAmount(milk);
 
         setBagSize(milk / (maxBagSize * maxPossibleMilk));
+    }
+
+    public int getWoolLength() {
+        return entityData.get(WOOL_LENGTH);
+    }
+
+    private void setWoolLength(int newWoolLength) {
+        woolLength = newWoolLength; // Both variables should be updated to keep them consistent
+        entityData.set(WOOL_LENGTH, newWoolLength);
+    }
+
+
+    protected void setMaxWool() {
+        int[] genes = getGenes().getAutosomalGenes();
+
+        int maxWool = 0;
+
+        if (genes[134] == 2 || genes[135] == 2) {
+            maxWool = 12; // TODO: Add real math here once actual genes exist
+        }
+
+        individualMaxWool = maxWool;
+    }
+
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(WOOL_LENGTH, 0);
     }
 
     /* Gene Related Code */
