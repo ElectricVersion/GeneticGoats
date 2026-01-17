@@ -816,21 +816,22 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             Map<String, List<Float>> mapOfScale = new HashMap<>(); //Stores transformations for blocks and bones
             poseStack.pushPose();
 
-            float woolScale = 1F + (0.125F * goatModelData.getWoolLength());
+            float woolScale1 = 1F + (0.25F * goatModelData.getWoolLength());
+            float woolScale2 = 1F + (0.125F * goatModelData.getWoolLength());
             mapOfScale.put("bBodyF", phenotype.getFullBodyScalings());
             mapOfScale.put("bBodyB", phenotype.getFullBodyScalings());
-            List<Float> bodyScalings = ModelHelper.createScalings(woolScale, woolScale * (9F + phenotype.getBodyHeight()) / 9F, woolScale, 0F, 0F, 0F);
+            List<Float> bodyScalings = ModelHelper.createScalings(woolScale1, woolScale1 * (9F + phenotype.getBodyHeight()) / 9F, woolScale2, 0F, 0F, 0F);
             mapOfScale.put("bodyF", bodyScalings);
             mapOfScale.put("bodyB", bodyScalings);
 
-            mapOfScale.put("neck", ModelHelper.createScalings(phenotype.getNeckWidth() * woolScale, 1F, phenotype.getNeckDepth() * woolScale, 0F, 0F, 0F));
+            mapOfScale.put("neck", ModelHelper.createScalings(phenotype.getNeckWidth() * woolScale2, 1F, phenotype.getNeckDepth() * woolScale2, 0F, 0F, 0F));
 
             mapOfScale.put("head", phenotype.getHeadScalings());
             mapOfScale.put("bMuzzle", phenotype.getHeadScalings());
             mapOfScale.put("upperMouth", phenotype.getUpperMouthScalings());
             mapOfScale.put("mouth", phenotype.getMouthScalings());
 
-            List<Float> upperLegScalings = ModelHelper.createScalings(woolScale, phenotype.getUpperLegHeight(), woolScale, 0F, 0F, 0F);
+            List<Float> upperLegScalings = ModelHelper.createScalings(woolScale1, phenotype.getUpperLegHeight(), woolScale1, 0F, 0F, 0F);
 
             mapOfScale.put("legFL", upperLegScalings);
             mapOfScale.put("legFR", upperLegScalings);
