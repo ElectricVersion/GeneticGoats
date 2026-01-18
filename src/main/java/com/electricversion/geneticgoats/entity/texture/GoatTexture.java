@@ -293,6 +293,11 @@ public class GoatTexture {
             "white/belt/halfwhite/halfwhite_high.png",
     };
 
+    private static final String[] TX_ANGORA_MASK = new String[] {
+            "misc/angora_partial_mask.png",
+            "misc/angora_full_mask.png",
+    };
+
 
     // This method handles the logic of how individual texture components and genes should
     // interact to create a single, "compiled" texture.
@@ -691,7 +696,8 @@ public class GoatTexture {
 
     private static TextureGrouping makeAngoraDetailGroup(EnhancedGoat goat, int[] genes, GoatColors color) {
         TextureGrouping angoraDetailGroup = new TextureGrouping(TexturingType.MASK_GROUP);
-        goat.addTextureToAnimalTextureGrouping(angoraDetailGroup, "misc/angora_full_mask.png");
+        boolean headWool = genes[136] == 2 && genes[137] == 2;
+        goat.addTextureToAnimalTextureGrouping(angoraDetailGroup, TX_ANGORA_MASK, headWool ? 1 : 0, true);
         goat.addTextureToAnimalTextureGrouping(angoraDetailGroup, TexturingType.APPLY_RGB, "misc/angora_lightness.png", "an", color.getWhiteColor());
         goat.addTextureToAnimalTextureGrouping(angoraDetailGroup, "misc/angora_curly.png", true);
         return angoraDetailGroup;
