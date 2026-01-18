@@ -49,14 +49,18 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.IForgeShearable;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
-public class EnhancedGoat extends EnhancedAnimalAbstract {
+public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeShearable {
 
     private static final EntityDataAccessor<Integer> WOOL_LENGTH = SynchedEntityData.defineId(EnhancedGoat.class, EntityDataSerializers.INT);
 
@@ -200,6 +204,8 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
         return super.mobInteract(player, hand);
     }
 
+
+
     private @NotNull InteractionResult handleMilkingInteraction(Player player, InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
         Item item = itemStack.getItem();
@@ -287,6 +293,17 @@ public class EnhancedGoat extends EnhancedAnimalAbstract {
         }
 
         return InteractionResult.SUCCESS;
+    }
+
+    public List<ItemStack> onSheared(Player player, ItemStack item, Level world, BlockPos pos, int fortune) {
+        List<ItemStack> shearingDrops = new ArrayList<>();
+        if (!getLevel().isClientSide()) {
+            for (int i = 0; i < woolLength/4; i++) {
+                shearingDrops.add(new ItemStack(Blocks.WHITE_WOOL)); // TODO: Colored wool drops
+            }
+        }
+        setWoolLength(0);
+        return shearingDrops;
     }
 
     public void readAdditionalSaveData(CompoundTag compound) {
