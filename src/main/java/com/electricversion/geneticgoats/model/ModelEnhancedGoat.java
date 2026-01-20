@@ -816,7 +816,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             Map<String, List<Float>> mapOfScale = new HashMap<>(); //Stores transformations for blocks and bones
             poseStack.pushPose();
 
-            float woolScale1 = 1F + (0.25F * goatModelData.getWoolLength());
+            float woolScale1 = 1F + (0.2F * goatModelData.getWoolLength());
             float woolScale2 = 1F + (0.125F * goatModelData.getWoolLength());
             mapOfScale.put("bBodyF", phenotype.getFullBodyScalings());
             mapOfScale.put("bBodyB", phenotype.getFullBodyScalings());
