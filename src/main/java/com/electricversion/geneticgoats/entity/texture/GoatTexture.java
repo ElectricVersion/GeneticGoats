@@ -298,6 +298,19 @@ public class GoatTexture {
             "misc/angora_full_mask.png",
     };
 
+    private static final String[][] TX_BROCKLING = new String[][] {
+            { // LOW
+                    //TODO: Replace these with real textures
+                    "white/brockling/brockling_med1.png",
+            },
+            { // MEDIUM
+                    "white/brockling/brockling_med1.png",
+            },
+            { // HIGH
+                    "white/brockling/brockling_high1.png",
+            }
+    };
+
 
     // This method handles the logic of how individual texture components and genes should
     // interact to create a single, "compiled" texture.
@@ -365,12 +378,18 @@ public class GoatTexture {
         rootGroup.addGrouping(moonspotGroup);
 
         // White Layer
-        TextureGrouping whiteGroup = new TextureGrouping(TexturingType.MASK_GROUP);
+        TextureGrouping whiteGroup = new TextureGrouping(TexturingType.CUTOUT_GROUP);
+
+        // Add brockling and any other cutouts
+        whiteGroup.addGrouping(makeWhiteCutout(goat, genes, uuidArry, hairType));
+
+        TextureGrouping whiteGroupWithoutCutout = new TextureGrouping(TexturingType.MASK_GROUP);
         // White mask group needs to be saved as a variable for reuse later with the keratin group
         TextureGrouping whiteMaskGroup = makeWhiteMask(goat, genes, uuidArry, hairType);
-        whiteGroup.addGrouping(whiteMaskGroup);
-        whiteGroup.addGrouping(makeWhiteColor(goat, genes, uuidArry, color));
+        whiteGroupWithoutCutout.addGrouping(whiteMaskGroup);
+        whiteGroupWithoutCutout.addGrouping(makeWhiteColor(goat, genes, uuidArry, color));
 
+        whiteGroup.addGrouping(whiteGroupWithoutCutout);
         rootGroup.addGrouping(whiteGroup);
 
         // Angora-specific shading and details
@@ -636,6 +655,26 @@ public class GoatTexture {
         }
 
         return whiteGroup;
+    }
+
+    private static TextureGrouping makeWhiteCutout(EnhancedGoat goat, int[] genes, char[] uuidArry, int hairType) {
+        TextureGrouping whiteCutoutGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
+        if (genes[138] == 2 || genes[139] == 2) {
+            // Brockling
+            int brocklingSize = 1;
+            if (genes[140] == 2 || genes[141] == 2) {
+                // Less brockling
+                brocklingSize--;
+            }
+            if (genes[140] == 3 || genes[141] == 3) {
+                // More brockling
+                brocklingSize++;
+            }
+            int brocklingRandom = 0;
+            goat.addDelimiter("br");
+            goat.addPrefixedTexture(whiteCutoutGroup, HAIR_PREFIX, hairType, TX_BROCKLING, brocklingSize, brocklingRandom, true);
+        }
+        return whiteCutoutGroup;
     }
 
     private static TextureGrouping makeWhiteColor(EnhancedGoat goat, int[] genes, char[] uuidArry, GoatColors color) {

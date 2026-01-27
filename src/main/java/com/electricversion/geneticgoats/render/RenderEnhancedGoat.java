@@ -51,7 +51,7 @@ public class RenderEnhancedGoat extends MobRenderer<EnhancedGoat, ModelEnhancedG
             try {
                 resourceLocation = new ResourceLocation(path);
 
-                Minecraft.getInstance().getTextureManager().register(resourceLocation, new EnhancedLayeredTexturer(GOAT_TEXTURE_LOCATION, textureGrouping, colors, 128, 128));
+                Minecraft.getInstance().getTextureManager().register(resourceLocation, new EnhancedLayeredTexturer(GOAT_TEXTURE_LOCATION, textureGrouping, colors, 256, 256));
 
                 textureCache.putInCache(path, resourceLocation);
             } catch (IllegalStateException e) {
