@@ -300,8 +300,7 @@ public class GoatTexture {
 
     private static final String[][] TX_BROCKLING = new String[][] {
             { // LOW
-                    //TODO: Replace these with real textures
-                    "white/brockling/brockling_med1.png",
+                    "white/brockling/brockling_low1.png",
             },
             { // MEDIUM
                     "white/brockling/brockling_med1.png",
