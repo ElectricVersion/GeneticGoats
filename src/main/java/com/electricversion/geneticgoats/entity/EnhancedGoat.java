@@ -111,6 +111,12 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
     }
 
     @Override
+    public void setInitialDefaults() {
+        super.setInitialDefaults();
+        initialWool();
+    }
+
+    @Override
     public @NotNull SpawnGroupData finalizeSpawn(ServerLevelAccessor inWorld, DifficultyInstance difficulty, MobSpawnType spawnReason, @Nullable SpawnGroupData livingData, @Nullable CompoundTag itemNbt) {
         // ageMinimum and ageMaximum parameters are unused so just put zeroes to avoid confusion
         return commonInitialSpawnSetup(inWorld, livingData, getAdultAge(), 0, 0, spawnReason);
@@ -160,8 +166,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         // Wool growth code based on core GA's sheep code for functional consistency.
 
         // Babies have a lower wool cap so they don't grow out too fast
-        float age = getEnhancedAnimalAge();
-        int currentWoolCap = (age >= getAdultAge()) ? individualMaxWool : (int)(individualMaxWool * (age / (float)getAdultAge()));
+        int currentWoolCap = getCurrentMaxWool();
 
         if (currentWoolCap > 0 && currentWoolCap > woolLength) {
             if (hunger <= 36000) {
@@ -360,6 +365,12 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         setBagSize(milk / (maxBagSize * maxPossibleMilk));
     }
 
+    protected void initialWool() {
+        setMaxWool();
+        setWoolLength(getCurrentMaxWool());
+    }
+
+
     public int getWoolLength() {
         return entityData.get(WOOL_LENGTH);
     }
@@ -376,10 +387,19 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         int maxWool = 0;
 
         if (genes[134] == 2 || genes[135] == 2) {
-            maxWool = 12; // TODO: Add real math here once actual genes exist
+            maxWool = 2;
+        }
+
+        for (int i = 142; i < 152; i++) {
+            if (genes[i] == 2) maxWool++;
         }
 
         individualMaxWool = maxWool;
+    }
+
+    private int getCurrentMaxWool() {
+        float age = getEnhancedAnimalAge();
+        return (age >= getAdultAge()) ? individualMaxWool : (int)(individualMaxWool * (age / (float)getAdultAge()));
     }
 
     protected void defineSynchedData() {
