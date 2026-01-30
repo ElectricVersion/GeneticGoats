@@ -816,8 +816,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             Map<String, List<Float>> mapOfScale = new HashMap<>(); //Stores transformations for blocks and bones
             poseStack.pushPose();
 
-            float woolScale1 = 1F + (0.2F * goatModelData.getWoolLength());
-            float woolScale2 = 1F + (0.125F * goatModelData.getWoolLength());
+            float woolLength = phenotype.isAngora() ? goatModelData.getWoolLength() : 0;
+            float woolScale1 = 1F + (0.2F * woolLength);
+            float woolScale2 = 1F + (0.125F * woolLength);
             mapOfScale.put("bBodyF", phenotype.getFullBodyScalings());
             mapOfScale.put("bBodyB", phenotype.getFullBodyScalings());
             List<Float> bodyScalings = ModelHelper.createScalings(woolScale1, woolScale1 * (9F + phenotype.getBodyHeight()) / 9F, woolScale2, 0F, 0F, 0F);
