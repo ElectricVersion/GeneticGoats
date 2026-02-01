@@ -274,10 +274,10 @@ public class GoatTexture {
                     "shared/white/blaze/blaze_med7.png", "shared/white/blaze/blaze_med8.png",
             },
             { // HIGH
-                    "shared/white/blaze/blaze_med1.png", "shared/white/blaze/blaze_med2.png",
-                    "shared/white/blaze/blaze_med3.png",
+                    "shared/white/blaze/blaze_high1.png", "shared/white/blaze/blaze_high2.png",
+                    "shared/white/blaze/blaze_high3.png",
                     //TODO: Replace these with real textures
-                    "shared/white/blaze/blaze_med1.png",
+                    "shared/white/blaze/blaze_high1.png",
             }
     };
 
