@@ -18,6 +18,8 @@ public class GoatColors {
     private int skinBlackColor = -1;
     private int skinWhiteColor = -1;
 
+    private int moonspotColor = -1;
+
     public int getWhiteColor() {
         return whiteColor;
     }
@@ -48,6 +50,10 @@ public class GoatColors {
 
     public int getSkinWhiteColor() {
         return skinWhiteColor;
+    }
+
+    public int getMoonspotColor() {
+        return moonspotColor;
     }
 
     private static void modifyRed(float[] red, float[] white, float percent) {
@@ -83,6 +89,8 @@ public class GoatColors {
         float[] skinRed = {0.035F, 0.30F, 0.66F};
         float[] skinBlack = {0.025F, 0.32F, 0.48F};
         float[] skinWhite = {0.004F, 0.17F, 0.79F};
+
+        float[] moonspot = {0.067F, 0.33F, 0.737F};
 
         float[] eyes = {0.084F, 0.76F, 0.671F};
 
@@ -187,6 +195,8 @@ public class GoatColors {
         color.skinRedColor = Colouration.HSBtoARGB(clamp(skinRed[0]), clamp(skinRed[1]), clamp(skinRed[2]));
         color.skinBlackColor = Colouration.HSBtoARGB(clamp(skinBlack[0]), clamp(skinBlack[1]), clamp(skinBlack[2]));
         color.skinWhiteColor = Colouration.HSBtoARGB(clamp(skinWhite[0]), clamp(skinWhite[1]), clamp(skinWhite[2]));
+
+        color.moonspotColor = Colouration.HSBtoARGB(clamp(moonspot[0]), clamp(moonspot[1]), clamp(moonspot[2]));
 
         return color;
     }

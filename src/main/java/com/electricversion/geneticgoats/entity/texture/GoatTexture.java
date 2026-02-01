@@ -728,7 +728,7 @@ public class GoatTexture {
 
     private static TextureGrouping makeMoonspotColor(EnhancedGoat goat, int[] genes, char[] uuidArry, GoatColors color) {
         TextureGrouping moonspotColorGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
-        goat.addTextureToAnimalTextureGrouping(moonspotColorGroup, "misc/solid.png");
+        goat.addTextureToAnimalTextureGrouping(moonspotColorGroup, TexturingType.APPLY_RGB, "misc/solid.png", "ms", color.getMoonspotColor());
         return moonspotColorGroup;
     }
 
