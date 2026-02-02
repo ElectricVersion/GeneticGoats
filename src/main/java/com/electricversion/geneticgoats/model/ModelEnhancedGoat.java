@@ -239,7 +239,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bHead.addChild(head);
         bHead.addChild(headWool);
         bHead.addChild(headHair);
-        mouth.addChild(beard);
+        bMouth.addChild(beard);
         bHead.addChild(bMuzzle);
         bMuzzle.addChild(muzzleLong);
         bMuzzle.addChild(muzzleShort);
@@ -784,6 +784,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             muzzleShort.hide();
             muzzleLong.show();
         }
+        beard.setZ(phenotype.getBeardZ());
     }
 
     private void setupHorns(GoatPhenotype phenotype) {

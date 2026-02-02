@@ -62,6 +62,9 @@ public class GoatPhenotype implements Phenotype {
         return mouthXRot;
     }
 
+    public float getBeardZ() {
+        return beardZ;
+    }
     public float getBodyHeight() {
         return bodyHeight;
     }
@@ -161,6 +164,7 @@ public class GoatPhenotype implements Phenotype {
     private float muzzleY;
     private boolean shortMuzzled;
     private float mouthXRot;
+    private float beardZ;
 
     //Beard & Hair Settings
     private boolean bearded;
@@ -356,6 +360,7 @@ public class GoatPhenotype implements Phenotype {
         float mouthLengthA = originalMuzzleLength * Mth.sin(Mth.HALF_PI - muzzleXRot);
         float mouthLengthB = originalMuzzleHeight * Mth.cos(Mth.HALF_PI - muzzleXRot);
         upperMouthScaleZ = (mouthLengthA - (mouthLengthB + 0.2F))/originalMouthLength; // the 0.2 block difference just looks better
+        beardZ = originalMouthLength - (mouthLengthA - (mouthLengthB + 0.2F));
     }
 
     private void calculateBody(int[] genes) {
