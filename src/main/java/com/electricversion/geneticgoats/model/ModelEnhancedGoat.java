@@ -208,9 +208,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         base.addChild(bBodyF);
         base.addChild(bBodyB);
         bBodyF.addChild(bodyF);
-        bBodyF.addChild(bodyHairF);
+        bodyF.addChild(bodyHairF);
         bBodyB.addChild(bodyB);
-        bBodyB.addChild(bodyHairB);
+        bodyB.addChild(bodyHairB);
 
         bBodyB.addChild(tail);
         bBodyB.addChild(bUdder);
@@ -332,7 +332,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("bodyHairF", CubeListBuilder.create()
                         .texOffs(71, 0)
                         .addBox(-4.5F, 0F, 0F, 9, 7, 10),
-                PartPose.offset(0F, 9F, 0F));
+                PartPose.offset(0F, 9F, -10F));
 
         baseDef.addOrReplaceChild("bodyHairB", CubeListBuilder.create()
                         .texOffs(71, 18)
