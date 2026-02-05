@@ -201,11 +201,17 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         }
 
         /* MUZZLE SHORTNESS
-         * Total Range: 0 - 2
+         * 1 - Wildtype
+         * 2 - Shorter Muzzle; Dominant
          */
-        for (int i = 46; i < 50; i++) {
-            autosomalGenes[i] = randomizeGene(2);
-        }
+        autosomalGenes[46] = randomizeGene(2);
+        autosomalGenes[47] = randomizeGene(2);
+
+        /* EMPTY GENE REUSE ME
+         *
+         */
+        autosomalGenes[48] = randomizeGene(2);
+        autosomalGenes[49] = randomizeGene(2);
 
         /* LONG HAIR
          * 1 - Wildtype

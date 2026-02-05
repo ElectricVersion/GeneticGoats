@@ -338,19 +338,13 @@ public class GoatPhenotype implements Phenotype {
                 romanNose -= 0.0875F;
             }
         }
-        float muzzleShortness = 0F;
-        for (int i = 46; i < 50; i++) {
-            if (genes[i] == 2) {
-                muzzleShortness += 0.25F;
-            }
+
+        if (genes[46] == 2 || genes[47] == 2) {
+                originalMuzzleLength = 4.2F;
+                shortMuzzled = true;
         }
 
         mouthXRot = romanNose < 0F ? (romanNose * Mth.HALF_PI * 0.175F) : 0F;
-
-        if (muzzleShortness > 0F) {
-            originalMuzzleLength = 4.2F;
-            shortMuzzled = true;
-        }
 
         muzzleXRot = Mth.HALF_PI * 0.125F;
         muzzleY = 1F;
