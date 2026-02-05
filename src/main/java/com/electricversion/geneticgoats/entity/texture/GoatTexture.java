@@ -377,19 +377,45 @@ public class GoatTexture {
         rootGroup.addGrouping(moonspotGroup);
 
         // White Layer
-        TextureGrouping whiteGroup = new TextureGrouping(TexturingType.CUTOUT_GROUP);
+        // White mask groups need to be saved as a variable for reuse later with the keratin group
+        TextureGrouping[] whiteMaskGroups = makeWhiteMask(goat, genes, uuidArry, hairType);
 
-        // Add brockling and any other cutouts
-        whiteGroup.addGrouping(makeWhiteCutout(goat, genes, uuidArry, hairType));
+        // TODO: Consider phasing out the color mask system in favor of tinted textures or something.
+        TextureGrouping whiteColorGroup = makeWhiteColor(goat, genes, uuidArry, color);
 
-        TextureGrouping whiteGroupWithoutCutout = new TextureGrouping(TexturingType.MASK_GROUP);
-        // White mask group needs to be saved as a variable for reuse later with the keratin group
-        TextureGrouping whiteMaskGroup = makeWhiteMask(goat, genes, uuidArry, hairType);
-        whiteGroupWithoutCutout.addGrouping(whiteMaskGroup);
-        whiteGroupWithoutCutout.addGrouping(makeWhiteColor(goat, genes, uuidArry, color));
+        TextureGrouping brockledWhiteColorGroup = new TextureGrouping(TexturingType.CUTOUT_GROUP);
+        TextureGrouping brocklingGroup = makeBrocklingGroup(goat, genes, uuidArry, hairType);
+        if (brocklingGroup.isPopulated()) brockledWhiteColorGroup.addGrouping(makeBrocklingGroup(goat, genes, uuidArry, hairType));
 
-        whiteGroup.addGrouping(whiteGroupWithoutCutout);
-        rootGroup.addGrouping(whiteGroup);
+
+        TextureGrouping whiteBottomGroup = new TextureGrouping(TexturingType.MASK_GROUP);
+        if (whiteMaskGroups[0].isPopulated()) {
+            whiteBottomGroup.addGrouping(whiteMaskGroups[0]);
+            whiteBottomGroup.addGrouping(whiteColorGroup);
+            rootGroup.addGrouping(whiteBottomGroup);
+        }
+
+        TextureGrouping whiteMiddleGroup = new TextureGrouping(TexturingType.MASK_GROUP);
+        if (whiteMaskGroups[1].isPopulated()) {
+            whiteMiddleGroup.addGrouping(whiteMaskGroups[1]);
+            whiteMiddleGroup.addGrouping(whiteColorGroup);
+            rootGroup.addGrouping(whiteMiddleGroup);
+        }
+
+        TextureGrouping whiteTopGroup = new TextureGrouping(TexturingType.MASK_GROUP);
+        if (whiteMaskGroups[2].isPopulated()) {
+            whiteTopGroup.addGrouping(whiteMaskGroups[2]);
+            whiteTopGroup.addGrouping(whiteColorGroup);
+            rootGroup.addGrouping(whiteTopGroup);
+        }
+
+        if (whiteMaskGroups[3].isPopulated()) {
+            TextureGrouping whiteRoanGroup = new TextureGrouping(TexturingType.MASK_GROUP);
+            whiteTopGroup.addGrouping(whiteMaskGroups[3]);
+            whiteTopGroup.addGrouping(whiteColorGroup);
+            rootGroup.addGrouping(whiteRoanGroup);
+        }
+
 
         // Angora-specific shading and details
         if (angora) {
@@ -405,14 +431,19 @@ public class GoatTexture {
         rootGroup.addGrouping(detailGroup);
 
         // White Keratin Layer; only technically separate from the detail layer for masking purposes
-        TextureGrouping whiteKeratinGroup = new TextureGrouping(TexturingType.MASK_GROUP);
-        whiteKeratinGroup.addGrouping(whiteMaskGroup);
-        TextureGrouping whiteKeratinColorGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
-        goat.addTextureToAnimalTextureGrouping(whiteKeratinColorGroup, "misc/hooves_white.png");
-        goat.addTextureToAnimalTextureGrouping(whiteKeratinColorGroup, "misc/horns_white.png");
-        whiteKeratinGroup.addGrouping(whiteKeratinColorGroup);
-        rootGroup.addGrouping(whiteKeratinGroup);
-
+        if (whiteBottomGroup.isPopulated() || whiteMiddleGroup.isPopulated() || whiteTopGroup.isPopulated()) {
+            TextureGrouping whiteKeratinGroup = new TextureGrouping(TexturingType.MASK_GROUP);
+            TextureGrouping whiteCombinedGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
+            whiteCombinedGroup.addGrouping(whiteBottomGroup);
+            whiteCombinedGroup.addGrouping(whiteMiddleGroup);
+            whiteCombinedGroup.addGrouping(whiteTopGroup);
+            whiteKeratinGroup.addGrouping(whiteCombinedGroup);
+            TextureGrouping whiteKeratinColorGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
+            goat.addTextureToAnimalTextureGrouping(whiteKeratinColorGroup, "misc/hooves_white.png");
+            goat.addTextureToAnimalTextureGrouping(whiteKeratinColorGroup, "misc/horns_white.png");
+            whiteKeratinGroup.addGrouping(whiteKeratinColorGroup);
+            rootGroup.addGrouping(whiteKeratinGroup);
+        }
         rootGroup.addGrouping(makeEyeGroup(goat, genes));
 
         goat.setTextureGrouping(rootGroup);
@@ -513,11 +544,17 @@ public class GoatTexture {
         return blackColorGroup;
     }
 
-    private static TextureGrouping makeWhiteMask(EnhancedGoat goat, int[] genes, char[] uuidArry, int hairType) {
-        TextureGrouping whiteGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
-
-        // Blank texture to avoid issues when group is empty
-        goat.addTextureToAnimalTextureGrouping(whiteGroup, "misc/transparent.png");
+    private static TextureGrouping[] makeWhiteMask(EnhancedGoat goat, int[] genes, char[] uuidArry, int hairType) {
+        // Three different groups representing different moonspots interactions, plus an additional one for roan
+        // It's confusing it felt like the best way to represent the way that white and moonspots share space.
+        // Bottom group is below all moonspots.
+        TextureGrouping whiteBottomGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
+        // Middle group is above small moonspots, but below large and medium moonspots.
+        TextureGrouping whiteMiddleGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
+        // Top group is above all moonspots.
+        TextureGrouping whiteTopGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
+        // Roan is also above all moonspots but is additionally unaffected by brockling
+        TextureGrouping whiteRoanGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
 
         boolean whiteExt1 = genes[62] == 2 || genes[63] == 2;
         boolean whiteExt2 = genes[64] == 2 || genes[65] == 2;
@@ -533,20 +570,20 @@ public class GoatTexture {
             if (schwartzalSize > 0) whiteSize = Math.min(2, whiteSize+1); // Anything above low expression boosts overall white
             int schwartzalRandom = 0;
             goat.addDelimiter("sz");
-            goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_SCHWARTZAL, schwartzalSize, schwartzalRandom, true);
+            goat.addPrefixedTexture(whiteTopGroup, HAIR_PREFIX, hairType, TX_SCHWARTZAL, schwartzalSize, schwartzalRandom, true);
         }
 
         // KIT locus
         if (genes[4] == 2 || genes[5] == 2) {
             // Dominant White
-            goat.addTextureToAnimalTextureGrouping(whiteGroup, "misc/solid.png", "dw");
+            goat.addTextureToAnimalTextureGrouping(whiteTopGroup, "misc/solid.png", "dw");
         } else {
             // Not Dom White
             if (genes[4] == 3 || genes[5] == 3) {
                 // Goulet
                 goat.addDelimiter("g");
                 int gouletRandom = uuidArry[IDX_KIT_BODY] % (whiteSize == 2 ? 4 : 8);
-                goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_GOULET, whiteSize, gouletRandom, true);
+                goat.addPrefixedTexture(whiteSize == 2 ? whiteTopGroup : whiteMiddleGroup, HAIR_PREFIX, hairType, TX_GOULET, whiteSize, gouletRandom, true);
 
             } else if (genes[4] == 4 && genes[5] == 4) {
                 // Piebald
@@ -555,13 +592,13 @@ public class GoatTexture {
                     int piebaldBeltRandom = uuidArry[IDX_KIT_BODY] % 8;
 
                     goat.addDelimiter("pbe");
-                    goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_PIEBALD_BELT, whiteSize, piebaldBeltRandom, true);
+                    goat.addPrefixedTexture(whiteSize > 0 ? whiteTopGroup : whiteMiddleGroup, HAIR_PREFIX, hairType, TX_PIEBALD_BELT, whiteSize, piebaldBeltRandom, true);
                 } else {
                     // Piebald without belt
                     int piebaldRandom = uuidArry[IDX_KIT_BODY] % 8;
 
                     goat.addDelimiter("pb");
-                    goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_PIEBALD, whiteSize, piebaldRandom, true);
+                    goat.addPrefixedTexture(whiteSize == 2 ? whiteTopGroup : whiteMiddleGroup, HAIR_PREFIX, hairType, TX_PIEBALD, whiteSize, piebaldRandom, true);
                 }
             } else if (genes[58] != 1 || genes[59] != 1) {
                 // Belted without piebald
@@ -602,15 +639,15 @@ public class GoatTexture {
                 if (genes[130] == 2 && genes[131] == 2) {
                     // Half-white modifier
                     goat.addDelimiter("hw");
-                    goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_HALFWHITE, whiteSize,true);
+                    goat.addPrefixedTexture(whiteTopGroup, HAIR_PREFIX, hairType, TX_HALFWHITE, whiteSize,true);
                 } else {
                     // Normal belt
                     goat.addDelimiter("be");
-                    goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_BELT, whiteSize, beltQuality, beltRandom, true);
+                    goat.addPrefixedTexture(whiteTopGroup, HAIR_PREFIX, hairType, TX_BELT, whiteSize, beltQuality, beltRandom, true);
                 }
 
-                goat.addTextureToAnimalTextureGrouping(whiteGroup, TexturingType.NONE, TX_SOCKS_FRONT, sockFrontSize, sockQuality, sockFrontRandom, sockFrontSize != 0);
-                goat.addTextureToAnimalTextureGrouping(whiteGroup, TexturingType.NONE, TX_SOCKS_BACK, sockBackSize, sockQuality, sockBackRandom, sockBackSize != 0);
+                goat.addTextureToAnimalTextureGrouping(whiteTopGroup, TexturingType.NONE, TX_SOCKS_FRONT, sockFrontSize, sockQuality, sockFrontRandom, sockFrontSize != 0);
+                goat.addTextureToAnimalTextureGrouping(whiteTopGroup, TexturingType.NONE, TX_SOCKS_BACK, sockBackSize, sockQuality, sockBackRandom, sockBackSize != 0);
             }
 
             // Blaze or White Poll
@@ -618,11 +655,11 @@ public class GoatTexture {
                 // Blaze
                 int blazeRandom = uuidArry[IDX_BLAZE] % (whiteSize == 1 ? 8 : 4);
                 goat.addDelimiter("bz");
-                goat.addTextureToAnimalTextureGrouping(whiteGroup, TexturingType.NONE, TX_BLAZE, whiteSize, blazeRandom, true);
+                goat.addTextureToAnimalTextureGrouping(whiteBottomGroup, TexturingType.NONE, TX_BLAZE, whiteSize, blazeRandom, true);
             } else if (genes[106] == 3 || genes[107] == 3) {
                 // White Poll
                 goat.addDelimiter("wp");
-                goat.addTextureToAnimalTextureGrouping(whiteGroup, TX_WHITE_POLL, whiteSize, true);
+                goat.addTextureToAnimalTextureGrouping(whiteBottomGroup, TX_WHITE_POLL, whiteSize, true);
             }
         }
 
@@ -637,7 +674,7 @@ public class GoatTexture {
             // Flowery
             goat.addDelimiter("f");
             int floweryRandom = uuidArry[IDX_FLOWERY] % 4;
-            goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_FLOWERY, whiteSize, floweryRandom, true);
+            goat.addPrefixedTexture(whiteSize == 2 ? whiteTopGroup : whiteBottomGroup, HAIR_PREFIX, hairType, TX_FLOWERY, whiteSize, floweryRandom, true);
         }
         if (genes[80] == 3 || genes[81] == 3) {
             // Roan
@@ -646,17 +683,17 @@ public class GoatTexture {
                 roan = 1;
             }
             int roanRandom = 0;
-            goat.addTextureToAnimalTextureGrouping(whiteGroup, "shared/frosting.png", "rn");
-            goat.addPrefixedTexture(whiteGroup, HAIR_PREFIX, hairType, TX_ROAN, roan, roanRandom, true);
+            goat.addTextureToAnimalTextureGrouping(whiteTopGroup, "shared/frosting.png", "rn");
+            goat.addPrefixedTexture(whiteRoanGroup, HAIR_PREFIX, hairType, TX_ROAN, roan, roanRandom, true);
         } else if (genes[80] == 5 || genes[81] == 5) {
             // Frosting
-            goat.addTextureToAnimalTextureGrouping(whiteGroup, "shared/frosting.png", "fr");
+            goat.addTextureToAnimalTextureGrouping(whiteTopGroup, "shared/frosting.png", "fr");
         }
 
-        return whiteGroup;
+        return new TextureGrouping[]{whiteBottomGroup, whiteMiddleGroup, whiteTopGroup, whiteRoanGroup};
     }
 
-    private static TextureGrouping makeWhiteCutout(EnhancedGoat goat, int[] genes, char[] uuidArry, int hairType) {
+    private static TextureGrouping makeBrocklingGroup(EnhancedGoat goat, int[] genes, char[] uuidArry, int hairType) {
         TextureGrouping whiteCutoutGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         if (genes[138] == 2 || genes[139] == 2) {
             // Brockling
