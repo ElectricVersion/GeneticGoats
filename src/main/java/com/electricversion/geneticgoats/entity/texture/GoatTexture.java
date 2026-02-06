@@ -386,26 +386,26 @@ public class GoatTexture {
         TextureGrouping brockledWhiteColorGroup = new TextureGrouping(TexturingType.CUTOUT_GROUP);
         TextureGrouping brocklingGroup = makeBrocklingGroup(goat, genes, uuidArry, hairType);
         if (brocklingGroup.isPopulated()) brockledWhiteColorGroup.addGrouping(makeBrocklingGroup(goat, genes, uuidArry, hairType));
-
+        brockledWhiteColorGroup.addGrouping(whiteColorGroup);
 
         TextureGrouping whiteBottomGroup = new TextureGrouping(TexturingType.MASK_GROUP);
         if (whiteMaskGroups[0].isPopulated()) {
             whiteBottomGroup.addGrouping(whiteMaskGroups[0]);
-            whiteBottomGroup.addGrouping(whiteColorGroup);
+            whiteBottomGroup.addGrouping(brockledWhiteColorGroup);
             rootGroup.addGrouping(whiteBottomGroup);
         }
 
         TextureGrouping whiteMiddleGroup = new TextureGrouping(TexturingType.MASK_GROUP);
         if (whiteMaskGroups[1].isPopulated()) {
             whiteMiddleGroup.addGrouping(whiteMaskGroups[1]);
-            whiteMiddleGroup.addGrouping(whiteColorGroup);
+            whiteMiddleGroup.addGrouping(brockledWhiteColorGroup);
             rootGroup.addGrouping(whiteMiddleGroup);
         }
 
         TextureGrouping whiteTopGroup = new TextureGrouping(TexturingType.MASK_GROUP);
         if (whiteMaskGroups[2].isPopulated()) {
             whiteTopGroup.addGrouping(whiteMaskGroups[2]);
-            whiteTopGroup.addGrouping(whiteColorGroup);
+            whiteTopGroup.addGrouping(brockledWhiteColorGroup);
             rootGroup.addGrouping(whiteTopGroup);
         }
 
