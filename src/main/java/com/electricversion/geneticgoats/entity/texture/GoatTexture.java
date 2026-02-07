@@ -411,8 +411,8 @@ public class GoatTexture {
 
         if (whiteMaskGroups[3].isPopulated()) {
             TextureGrouping whiteRoanGroup = new TextureGrouping(TexturingType.MASK_GROUP);
-            whiteTopGroup.addGrouping(whiteMaskGroups[3]);
-            whiteTopGroup.addGrouping(whiteColorGroup);
+            whiteRoanGroup.addGrouping(whiteMaskGroups[3]);
+            whiteRoanGroup.addGrouping(whiteColorGroup);
             rootGroup.addGrouping(whiteRoanGroup);
         }
 
@@ -600,7 +600,9 @@ public class GoatTexture {
                     goat.addDelimiter("pb");
                     goat.addPrefixedTexture(whiteSize == 2 ? whiteTopGroup : whiteMiddleGroup, HAIR_PREFIX, hairType, TX_PIEBALD, whiteSize, piebaldRandom, true);
                 }
-            } else if (genes[58] != 1 || genes[59] != 1) {
+            }
+            // Can't use an else-if because that would make it mutually exclusive with goulet - just have to make sure it's not piebald!
+            if ((genes[58] != 1 || genes[59] != 1) && (genes[4] != 4 || genes[5] != 4)) {
                 // Belted without piebald
 
                 int beltQuality = 0;
