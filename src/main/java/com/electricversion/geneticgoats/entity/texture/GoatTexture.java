@@ -370,18 +370,13 @@ public class GoatTexture {
 
         rootGroup.addGrouping(blackGroup);
 
-        // Moonspot Layer
-        TextureGrouping moonspotGroup = new TextureGrouping(TexturingType.MASK_GROUP);
-        moonspotGroup.addGrouping(makeMoonspotMask(goat, genes, uuidArry, hairType));
-        moonspotGroup.addGrouping(makeMoonspotColor(goat, genes, uuidArry, color));
-        rootGroup.addGrouping(moonspotGroup);
-
-        // White Layer
-        // White mask groups need to be saved as a variable for reuse later with the keratin group
+        // White Layer & Moonspots, they share a space effectively so they interact closely with each other
         TextureGrouping[] whiteMaskGroups = makeWhiteMask(goat, genes, uuidArry, hairType);
+        TextureGrouping[] moonspotMaskGroups = makeMoonspotMask(goat, genes, uuidArry, hairType);
 
         // TODO: Consider phasing out the color mask system in favor of tinted textures or something.
         TextureGrouping whiteColorGroup = makeWhiteColor(goat, genes, uuidArry, color);
+        TextureGrouping moonspotColorGroup = makeMoonspotColor(goat, genes, uuidArry, color);
 
         TextureGrouping brockledWhiteColorGroup = new TextureGrouping(TexturingType.CUTOUT_GROUP);
         TextureGrouping brocklingGroup = makeBrocklingGroup(goat, genes, uuidArry, hairType);
@@ -395,11 +390,25 @@ public class GoatTexture {
             rootGroup.addGrouping(whiteBottomGroup);
         }
 
+        TextureGrouping moonspotBottomGroup = new TextureGrouping(TexturingType.MASK_GROUP);
+        if (moonspotMaskGroups[0].isPopulated()) {
+            moonspotBottomGroup.addGrouping(moonspotMaskGroups[0]);
+            moonspotBottomGroup.addGrouping(moonspotColorGroup);
+            rootGroup.addGrouping(moonspotBottomGroup);
+        }
+
         TextureGrouping whiteMiddleGroup = new TextureGrouping(TexturingType.MASK_GROUP);
         if (whiteMaskGroups[1].isPopulated()) {
             whiteMiddleGroup.addGrouping(whiteMaskGroups[1]);
             whiteMiddleGroup.addGrouping(brockledWhiteColorGroup);
             rootGroup.addGrouping(whiteMiddleGroup);
+        }
+
+        TextureGrouping moonspotTopGroup = new TextureGrouping(TexturingType.MASK_GROUP);
+        if (moonspotMaskGroups[1].isPopulated()) {
+            moonspotTopGroup.addGrouping(moonspotMaskGroups[1]);
+            moonspotTopGroup.addGrouping(moonspotColorGroup);
+            rootGroup.addGrouping(moonspotTopGroup);
         }
 
         TextureGrouping whiteTopGroup = new TextureGrouping(TexturingType.MASK_GROUP);
@@ -723,8 +732,12 @@ public class GoatTexture {
         return whiteColorGroup;
     }
 
-    private static TextureGrouping makeMoonspotMask(EnhancedGoat goat, int[] genes, char[] uuidArry, int hairType) {
-        TextureGrouping moonspotGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
+    private static TextureGrouping[] makeMoonspotMask(EnhancedGoat goat, int[] genes, char[] uuidArry, int hairType) {
+        // In the current state of things, only one moonspot size can exist at a time, making the two groups unnecessary.
+        // But it's very likely we'll at some point try to implement multiple sizes on a single goat, so I figure it's
+        // better to plan ahead a bit and not make my life harder than necessary when the time comes.
+        TextureGrouping moonspotBottomGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
+        TextureGrouping moonspotTopGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         if (genes[84] == 2 || genes[85] == 2) {
             // Because of the sheer quantity of moonspots textures, making a 3-dimensional array of them all feels excessive.
             // Instead, just piece together the texture name based on fixed descriptors
@@ -756,13 +769,10 @@ public class GoatTexture {
 
             String textureName = "ms" + hairType + "-" + moonspotQuantity +  "-" + moonspotSize +  "-" + moonspotRandom;
 
-            goat.addTextureToAnimalTextureGrouping(moonspotGroup, texturePath, textureName);
+            goat.addTextureToAnimalTextureGrouping(moonspotQuantity == 0 ? moonspotBottomGroup : moonspotTopGroup, texturePath, textureName);
 
-        } else {
-            // Blank texture to avoid issues when group is empty
-            goat.addTextureToAnimalTextureGrouping(moonspotGroup, "misc/transparent.png");
         }
-        return moonspotGroup;
+        return new TextureGrouping[]{moonspotBottomGroup, moonspotTopGroup};
     }
 
     private static TextureGrouping makeMoonspotColor(EnhancedGoat goat, int[] genes, char[] uuidArry, GoatColors color) {
