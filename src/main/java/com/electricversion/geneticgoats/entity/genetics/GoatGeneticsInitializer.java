@@ -22,7 +22,9 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
     List<Breed> breeds = new ArrayList<>();
 
     public GoatGeneticsInitializer() {
-        breeds.add(GoatBreeds.PLACEHOLDER);
+        breeds.add(GoatBreeds.BOER);
+        breeds.add(GoatBreeds.WHITEANGORA);
+        breeds.add(GoatBreeds.COLOREDANGORA);
     }
 
     public Genes generateNewGenetics(LevelAccessor world, BlockPos pos, boolean isBreed) {
@@ -532,7 +534,6 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
             autosomalGenes[i] = randomizeGene(2);
             autosomalGenes[i] = randomizeGene(2);
         }
-
 
         return new Genes(sexlinkedGenes, autosomalGenes);
     }
