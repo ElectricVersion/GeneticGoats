@@ -769,7 +769,7 @@ public class GoatTexture {
 
             String textureName = "ms" + hairType + "-" + moonspotQuantity +  "-" + moonspotSize +  "-" + moonspotRandom;
 
-            goat.addTextureToAnimalTextureGrouping(moonspotQuantity == 0 ? moonspotBottomGroup : moonspotTopGroup, texturePath, textureName);
+            goat.addTextureToAnimalTextureGrouping(moonspotSize == 0 ? moonspotBottomGroup : moonspotTopGroup, texturePath, textureName);
 
         }
         return new TextureGrouping[]{moonspotBottomGroup, moonspotTopGroup};
