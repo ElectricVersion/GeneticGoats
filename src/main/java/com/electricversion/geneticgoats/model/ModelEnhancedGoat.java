@@ -400,7 +400,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("beard", CubeListBuilder.create()
                         .texOffs(29, 62)
                         .addBox(0F, 0F, -4F, 0, 8, 6),
-                PartPose.offset(0F, 0F, 0F));
+                PartPose.offset(0F, 1F, 0F));
 
         baseDef.addOrReplaceChild("eyeL", CubeListBuilder.create()
                         .texOffs(61, 68)
@@ -785,6 +785,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             muzzleLong.show();
         }
         beard.setZ(phenotype.getBeardZ());
+        beard.setY(phenotype.getBeardY());
     }
 
     private void setupHorns(GoatPhenotype phenotype) {
