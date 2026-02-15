@@ -32,6 +32,10 @@ public class GoatTexture {
             "misc/short_hair_overlay.png", "misc/long_hair_overlay.png"
     };
 
+    private static final String[] TX_HAIR_TEXTURE = new String[] {
+            "", "misc/hair_wavy.png", "misc/hair_curly.png"
+    };
+
 
     private static final String[] TX_BEARD_LENGTH = new String[] {
             "misc/mask/beard_shortest.png", // Female Exclusive
@@ -426,9 +430,10 @@ public class GoatTexture {
         }
 
 
-        // Angora-specific shading and details
-        if (angora) {
-            rootGroup.addGrouping(makeAngoraDetailGroup(goat, genes, color));
+        boolean curlyOrWavy = genes[48] == 2 || genes[49] == 2;
+        // Curly haired/Angora shading and details
+        if (angora || curlyOrWavy) {
+            rootGroup.addGrouping(makeHairDetailGroup(goat, genes, color));
         }
 
         // Detail Layer
@@ -781,12 +786,18 @@ public class GoatTexture {
         return moonspotColorGroup;
     }
 
-    private static TextureGrouping makeAngoraDetailGroup(EnhancedGoat goat, int[] genes, GoatColors color) {
-        TextureGrouping angoraDetailGroup = new TextureGrouping(TexturingType.MASK_GROUP);
-        boolean headWool = genes[136] == 2 && genes[137] == 2;
-        goat.addTextureToAnimalTextureGrouping(angoraDetailGroup, TX_ANGORA_MASK, headWool ? 1 : 0, true);
-        goat.addTextureToAnimalTextureGrouping(angoraDetailGroup, TexturingType.APPLY_RGB, "misc/angora_lightness.png", "an", color.getWhiteColor());
-        goat.addTextureToAnimalTextureGrouping(angoraDetailGroup, "misc/angora_curly.png", true);
-        return angoraDetailGroup;
+    private static TextureGrouping makeHairDetailGroup(EnhancedGoat goat, int[] genes, GoatColors color) {
+        TextureGrouping hairDetailGroup = new TextureGrouping(TexturingType.MASK_GROUP);
+        boolean angora = genes[134] == 2 || genes[135] == 2;
+        boolean headWool = angora && genes[136] == 2 && genes[137] == 2;
+        int hairType = 0;
+        if (genes[48] == 2 || genes[49] == 2) {
+            hairType = genes[48] == genes[49] ? 2 : 1; // Curly if homozygous, wavy otherwise
+        }
+        goat.addDelimiter("h");
+        goat.addTextureToAnimalTextureGrouping(hairDetailGroup, TX_ANGORA_MASK, headWool ? 1 : 0, true);
+        if (angora) goat.addTextureToAnimalTextureGrouping(hairDetailGroup, TexturingType.APPLY_RGB, "misc/angora_lightness.png", "an", color.getWhiteColor());
+        goat.addTextureToAnimalTextureGrouping(hairDetailGroup, TX_HAIR_TEXTURE, hairType, hairType != 0);
+        return hairDetailGroup;
     }
 }

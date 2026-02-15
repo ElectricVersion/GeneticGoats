@@ -209,8 +209,9 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[46] = randomizeGene(2);
         autosomalGenes[47] = randomizeGene(2);
 
-        /* EMPTY GENE REUSE ME
-         *
+        /* ANGORA CURLINESS
+         * 1 - Wildtype
+         * 2 - Curly; Incomplete Dominant
          */
         autosomalGenes[48] = randomizeGene(2);
         autosomalGenes[49] = randomizeGene(2);
