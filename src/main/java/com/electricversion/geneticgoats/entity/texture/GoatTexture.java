@@ -315,7 +315,7 @@ public class GoatTexture {
     // interact to create a single, "compiled" texture.
     public static void calculateTexture(EnhancedGoat goat, int[] genes, char[] uuidArry) {
 
-        GoatColors color = GoatColors.calculateColors(goat, genes, uuidArry);
+        GoatColors color = GoatColors.calculateColors(goat, genes, uuidArry, goat.isBaby());
 
         TextureGrouping rootGroup = new TextureGrouping(TexturingType.MASK_GROUP);
 

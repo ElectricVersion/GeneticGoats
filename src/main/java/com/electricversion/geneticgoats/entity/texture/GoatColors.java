@@ -72,7 +72,7 @@ public class GoatColors {
         red[2] = clamp(red[2], 0.29F, white[2]);
     }
 
-    protected static GoatColors calculateColors(EnhancedGoat goat, int[] genes, char[] uuidArry) {
+    protected static GoatColors calculateColors(EnhancedGoat goat, int[] genes, char[] uuidArry, boolean isBaby) {
 
         GoatColors color = new GoatColors();
 
@@ -167,7 +167,25 @@ public class GoatColors {
             melanin[1] += -0.25F;
             melanin[2] += 0.2F;
         }
-        
+
+        // Moonspot Color
+        if (genes[152] == 2 || genes[153] == 2) {
+            // White
+            moonspot[0] = white[0];
+            moonspot[1] = white[1];
+            moonspot[2] = white[2];
+        } else if (genes[152] == 3 || genes[153] == 3) {
+            // Silver
+            moonspot[0] = white[0];
+            moonspot[1] = white[1];
+            moonspot[2] = white[2];
+        } else if (genes[152] == 4 && genes[153] == 4) {
+            // Brown
+            moonspot[0] = 0.0541F;
+            moonspot[1] = 0.552F;
+            moonspot[2] = 0.497F;
+        }
+
         GoatColors.modifyRed(pheomelanin, white, redModifier/6F);
         GoatColors.modifyRed(cream, white, (redModifier+tanModifier+4)/6F);
 

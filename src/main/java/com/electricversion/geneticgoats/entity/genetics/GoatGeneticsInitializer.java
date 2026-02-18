@@ -15,7 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
 
-    public static final int AUTOSOMAL_GENES_LENGTH = 152;
+    public static final int AUTOSOMAL_GENES_LENGTH = 154;
     public static final int SEXLINKED_GENES_LENGTH = 2;
 
     int WTC = GoatsCommonConfig.COMMON.wildTypeChance.get();
@@ -526,7 +526,7 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[140] = randomizeGene(3);
         autosomalGenes[141] = randomizeGene(3);
 
-        /* Angora Wool Modifiers
+        /* ANGORA WOOL MODIFIERS
          * 1 - Wildtype
          * 2 - More Wool; Incomplete Dominant
          */
@@ -534,6 +534,18 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
             autosomalGenes[i] = randomizeGene(2);
             autosomalGenes[i] = randomizeGene(2);
         }
+
+        /* MOONSPOT COLORATION
+         * 1 - Wildtype (Cream)
+         * 2 - White; Dominant
+         * 3 - Silver; Dominant
+         * 4 - Brown; Recessive
+         * White > Silver > Cream > Brown
+         * All moonspots except white start out dark and lighten with age
+         */
+
+        autosomalGenes[152] = randomizeGene(4);
+        autosomalGenes[153] = randomizeGene(4);
 
         return new Genes(sexlinkedGenes, autosomalGenes);
     }
