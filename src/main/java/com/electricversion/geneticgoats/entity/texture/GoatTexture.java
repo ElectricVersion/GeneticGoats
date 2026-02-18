@@ -504,14 +504,14 @@ public class GoatTexture {
 
         if (genes[2] == 2 || genes[3] == 2) {
             // Dom Black. It's solid black, so agouti doesn't matter
-            goat.addTextureToAnimalTextureGrouping(blackGroup, "misc/solid.png");
+            goat.addTextureToAnimalTextureGrouping(blackGroup, "misc/solid.png", "db");
         } else if (genes[2] == 3 && genes[3] == 3) {
             // Recessive Red. It's solid red, so again, agouti doesn't matter.
             // Currently identical to gold visually but that maaay change, hence the separate branch
-            goat.addTextureToAnimalTextureGrouping(blackGroup, "misc/transparent.png");
+            goat.addTextureToAnimalTextureGrouping(blackGroup, "misc/transparent.png", "rr");
         } else if (agouti1 == 2 || agouti2 == 2) {
             // Gold agouti. Fully dominant and has no black, so we can stop here
-            goat.addTextureToAnimalTextureGrouping(blackGroup, "misc/transparent.png");
+            goat.addTextureToAnimalTextureGrouping(blackGroup, "misc/transparent.png", "ag");
         } else {
             // Agouti
             TextureGrouping agoutiGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
