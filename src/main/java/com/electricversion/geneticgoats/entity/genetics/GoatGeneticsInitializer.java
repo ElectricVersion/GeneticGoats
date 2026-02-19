@@ -25,6 +25,7 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         breeds.add(GoatBreeds.BOER);
         breeds.add(GoatBreeds.WHITEANGORA);
         breeds.add(GoatBreeds.COLOREDANGORA);
+        breeds.add(GoatBreeds.LAMANCHA);
     }
 
     public Genes generateNewGenetics(LevelAccessor world, BlockPos pos, boolean isBreed) {

@@ -32,4 +32,14 @@ public class GoatBreeds {
                     .add(0, "1|5|9|11|12") // Many different agoutis!
                     .add(4, "1") // No Dom White
             ));
+    public static final Breed LAMANCHA = new Breed(new Breed.Properties().setData("Lamancha", Biomes.FOREST, Breed.Rarity.ORDINARY)
+            .setGeneSketch(new GeneSketch(), new GeneSketch()
+                    // TODO: Add nonagouti/recessive black when it exists
+                    .add(0, "2|4|5|7") // Many different agoutis!
+                    .add(30, "2") // Gopher Ears
+                    .add(58, "2|3") // Belted
+                    .add(70, "1,2") // Het Bearded
+                    .add(114, "4|5", "4|5", "4|5", "10", "10") // High Dairy
+                    .add(130, "1|2") // Optional Half-White modifier
+            ));
 }
