@@ -9,6 +9,7 @@ public class GoatBreeds {
             .setGeneSketch(new GeneSketch(), new GeneSketch()
                     .add(0, "2") // Gold agouti - technically inaccurate but phenotypically close enough, the real gene isn't in yet
                     .add(10, "3|4") // Darker Red Coloration
+                    .add(32, "2", "2") // Roman Nose
                     .add(82, "2") // Schwartzal
                     .add(108, "5", "5", "5") // Meat Genes
             ));
