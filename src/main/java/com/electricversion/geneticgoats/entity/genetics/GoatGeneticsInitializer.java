@@ -341,7 +341,7 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
          * 2 - Many Moonspots; Incomplete Dominant
          * 3 - Few Moonspots; Incomplete Dominant
          * (Many/Some will produce Many; Few/Some will produce Few; Many/Few will produce Some)
-        */
+         */
         autosomalGenes[86] = randomizeGene(3);
         autosomalGenes[87] = randomizeGene(3);
 
@@ -416,73 +416,73 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[106] = randomizeGene(3);
         autosomalGenes[107] = randomizeGene(3);
 
-        /* Meat Adder 1
+        /* MEAT ADDER 1
          * 1 - 5
          */
         autosomalGenes[108] = randomizeGene(5);
         autosomalGenes[109] = randomizeGene(5);
 
-        /* Meat Adder 2
+        /* MEAT ADDER 2
          * 1 - 5
          */
         autosomalGenes[110] = randomizeGene(5);
         autosomalGenes[111] = randomizeGene(5);
 
-        /* Meat Adder 3
+        /* MEAT ADDER 3
          * 1 - 5
          */
         autosomalGenes[112] = randomizeGene(5);
         autosomalGenes[113] = randomizeGene(5);
 
-        /* Dairy Adder 1
+        /* DAIRY ADDER 1
          * 1 - 5
          */
         autosomalGenes[114] = randomizeGene(5);
         autosomalGenes[115] = randomizeGene(5);
 
-        /* Dairy Adder 2
+        /* DAIRY ADDER 2
          * 1 - 5
          */
         autosomalGenes[116] = randomizeGene(5);
         autosomalGenes[117] = randomizeGene(5);
 
-        /* Dairy Adder 3
+        /* DAIRY ADDER 3
          * 1 - 5
          */
         autosomalGenes[118] = randomizeGene(5);
         autosomalGenes[119] = randomizeGene(5);
 
-        /* Udder Size/Milk Production 1
+        /* UDDER SIZE/MILK PRODUCTION 1
          * 1 - 10
          */
         autosomalGenes[120] = randomizeGene(10);
         autosomalGenes[121] = randomizeGene(10);
 
-        /* Udder Size/Milk Production 2
+        /* UDDER SIZE/MILK PRODUCTION 2
          * 1 - 10
          */
         autosomalGenes[122] = randomizeGene(10);
         autosomalGenes[123] = randomizeGene(10);
 
-        /* Size Reducer 1
+        /* SIZE REDUCER 1
          * 1 - 5
          */
         autosomalGenes[124] = randomizeGene(5);
         autosomalGenes[125] = randomizeGene(5);
 
-        /* Size Reducer 2
+        /* SIZE REDUCER 2
          * 1 - 5
          */
         autosomalGenes[126] = randomizeGene(5);
         autosomalGenes[127] = randomizeGene(5);
 
-        /* Size Adder 1
+        /* SIZE ADDER 1
          * 1 - 5
          */
         autosomalGenes[128] = randomizeGene(5);
         autosomalGenes[129] = randomizeGene(5);
 
-        /* Half-White Modifier
+        /* HALF-WHITE MODIFIER
          * 1 - Wildtype
          * 2 - Half-White; Recessive, only works on belt
          */
@@ -496,14 +496,14 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[132] = randomizeGene(2);
         autosomalGenes[133] = randomizeGene(2);
 
-        /* Angora Fiber
+        /* ANGORA FIBER
          * 1 - Wildtype
          * 2 - Angora Hair; Dominant
          */
         autosomalGenes[134] = randomizeGene(2);
         autosomalGenes[135] = randomizeGene(2);
 
-        /* Head Wool
+        /* HEAD WOOL
          * 1 - Wildtype
          * 2 - Head Wool; Recessive
          */
@@ -540,7 +540,7 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
          * 2 - White; Dominant
          * 3 - Silver; Dominant
          * 4 - Brown; Recessive
-         * White > Silver > Cream > Brown
+         * (White > Silver > Cream > Brown)
          * All moonspots except white start out dark and lighten with age
          */
 

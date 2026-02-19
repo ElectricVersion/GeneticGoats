@@ -34,7 +34,7 @@ public class GoatAi {
                         new MoveToTargetSink(),
                         new Grazing(),
                         new CountDownCooldownTicks(ModMemoryModuleTypes.PAUSE_BETWEEN_EATING.get())
-        )
+                )
         );
     }
 

@@ -27,8 +27,8 @@ import java.util.Map;
 
 @OnlyIn(Dist.CLIENT)
 public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalModel<T> {
-    private static final float baseNeckAngle = Mth.HALF_PI*0.30F;
-    private static final float baseHeadAngle = -Mth.HALF_PI*0.225F;
+    private static final float baseNeckAngle = Mth.HALF_PI * 0.30F;
+    private static final float baseHeadAngle = -Mth.HALF_PI * 0.225F;
 
     public static final int MAX_HORN_LENGTH = 17;
 
@@ -272,8 +272,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bHornL.addChild(hornL[0]);
         bHornR.addChild(hornR[0]);
         for (int i = 1; i < MAX_HORN_LENGTH; i++) {
-            hornL[i-1].addChild(hornL[i]);
-            hornR[i-1].addChild(hornR[i]);
+            hornL[i - 1].addChild(hornL[i]);
+            hornR[i - 1].addChild(hornR[i]);
         }
     }
 
@@ -357,8 +357,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                 PartPose.offset(0F, 14F, 0F));
 
         baseDef.addOrReplaceChild("neck", CubeListBuilder.create()
-                           .texOffs(0, 40)
-                     .addBox(-2.5F, -11F, -6F, 5, 11, 6),
+                        .texOffs(0, 40)
+                        .addBox(-2.5F, -11F, -6F, 5, 11, 6),
                 PartPose.offset(0F, 0F, 3F));
 
         // Head
@@ -455,34 +455,34 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("earL7", CubeListBuilder.create()
                         .texOffs(87, 64)
                         .addBox(0F, -7F, -1F, 3, 7, 1),
-                PartPose.offsetAndRotation(0F,0F,0F, 0F, -Mth.HALF_PI, Mth.HALF_PI));
+                PartPose.offsetAndRotation(0F, 0F, 0F, 0F, -Mth.HALF_PI, Mth.HALF_PI));
 
         baseDef.addOrReplaceChild("earR7", CubeListBuilder.create()
                         .texOffs(78, 64)
                         .addBox(-3F, -7F, -1F, 3, 7, 1),
-                PartPose.offsetAndRotation(0F,0F,0F, 0F, Mth.HALF_PI, -Mth.HALF_PI));
+                PartPose.offsetAndRotation(0F, 0F, 0F, 0F, Mth.HALF_PI, -Mth.HALF_PI));
 
 
         baseDef.addOrReplaceChild("earL9", CubeListBuilder.create()
                         .texOffs(87, 64)
                         .addBox(0F, -9F, -1F, 3, 9, 1),
-                PartPose.offsetAndRotation(0F,0F,0F, 0F, -Mth.HALF_PI, Mth.HALF_PI));
+                PartPose.offsetAndRotation(0F, 0F, 0F, 0F, -Mth.HALF_PI, Mth.HALF_PI));
 
         baseDef.addOrReplaceChild("earR9", CubeListBuilder.create()
                         .texOffs(78, 64)
                         .addBox(-3F, -9F, -1F, 3, 9, 1),
-                PartPose.offsetAndRotation(0F,0F,0F, 0F, Mth.HALF_PI, -Mth.HALF_PI));
+                PartPose.offsetAndRotation(0F, 0F, 0F, 0F, Mth.HALF_PI, -Mth.HALF_PI));
 
 
         baseDef.addOrReplaceChild("earL12", CubeListBuilder.create()
                         .texOffs(87, 64)
                         .addBox(0F, -12F, -1F, 3, 12, 1),
-                PartPose.offsetAndRotation(0F,0F,0F, 0F, -Mth.HALF_PI, Mth.HALF_PI));
+                PartPose.offsetAndRotation(0F, 0F, 0F, 0F, -Mth.HALF_PI, Mth.HALF_PI));
 
         baseDef.addOrReplaceChild("earR12", CubeListBuilder.create()
                         .texOffs(78, 64)
                         .addBox(-3F, -12F, -1F, 3, 12, 1),
-                PartPose.offsetAndRotation(0F,0F,0F, 0F, Mth.HALF_PI, -Mth.HALF_PI));
+                PartPose.offsetAndRotation(0F, 0F, 0F, 0F, Mth.HALF_PI, -Mth.HALF_PI));
 
         // Upper Legs
         baseDef.addOrReplaceChild("legFL", CubeListBuilder.create()
@@ -567,7 +567,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     }
 
     private void updateWoolLength(AnimalModelData animalModelData, T enhancedAnimal) {
-        ((GoatModelData) animalModelData).setWoolLength(enhancedAnimal.getWoolLength()/EnhancedGoat.maxPossibleWool);
+        ((GoatModelData) animalModelData).setWoolLength(enhancedAnimal.getWoolLength() / EnhancedGoat.maxPossibleWool);
     }
 
     @Override
@@ -656,8 +656,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     }
 
     private void grazeAnim(float ticksOfGrazing) {
-        bNeck.setXRot(lerpTo(bNeck.getXRot(), Mth.HALF_PI*0.9F + baseNeckAngle));
-        bHead.setXRot(lerpTo(bHead.getXRot(), -Mth.HALF_PI*0.075F + baseHeadAngle));
+        bNeck.setXRot(lerpTo(bNeck.getXRot(), Mth.HALF_PI * 0.9F + baseNeckAngle));
+        bHead.setXRot(lerpTo(bHead.getXRot(), -Mth.HALF_PI * 0.075F + baseHeadAngle));
     }
 
     @Override
@@ -668,7 +668,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
             if (goatModelData.isEating != 0) {
                 if (goatModelData.isEating == -1) {
-                    goatModelData.isEating = (int)ageInTicks + 90;
+                    goatModelData.isEating = (int) ageInTicks + 90;
                 } else if (goatModelData.isEating < ageInTicks) {
                     goatModelData.isEating = 0;
                 }
@@ -799,8 +799,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             } else if (i == MAX_HORN_LENGTH - phenotype.getHornLength()) {
                 hornL[i].setPosYAndRot(Vector3f.ZERO, phenotype.getHornLeftRotation(i));
                 hornR[i].setPosYAndRot(Vector3f.ZERO, phenotype.getHornRightRotation(i));
-            }
-            else {
+            } else {
                 hornL[i].setPosYAndRot(Vector3f.ZERO, Vector3f.ZERO);
                 hornR[i].setPosYAndRot(Vector3f.ZERO, Vector3f.ZERO);
             }

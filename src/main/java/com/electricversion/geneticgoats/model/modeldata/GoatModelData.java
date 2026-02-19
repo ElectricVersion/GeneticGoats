@@ -19,7 +19,7 @@ public class GoatModelData extends AnimalModelData {
     }
 
     public float getNippleSize() {
-        return udderSize >= 1 ? udderSize * 1.375F : 1F ;
+        return udderSize >= 1 ? udderSize * 1.375F : 1F;
     }
 
     public float getWoolLength() {

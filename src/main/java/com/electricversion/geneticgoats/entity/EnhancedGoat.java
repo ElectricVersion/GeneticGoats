@@ -172,9 +172,9 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
             if (hunger <= 36000) {
                 woolGrowthTimer++;
             }
-            if (woolGrowthTimer >= (24000/currentWoolCap)) {
+            if (woolGrowthTimer >= (24000 / currentWoolCap)) {
                 woolGrowthTimer = 0;
-                setWoolLength(woolLength+1);
+                setWoolLength(woolLength + 1);
             }
         }
     }
@@ -208,7 +208,6 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
 
         return super.mobInteract(player, hand);
     }
-
 
 
     private @NotNull InteractionResult handleMilkingInteraction(Player player, InteractionHand hand) {
@@ -303,7 +302,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
     public List<ItemStack> onSheared(Player player, ItemStack item, Level world, BlockPos pos, int fortune) {
         List<ItemStack> shearingDrops = new ArrayList<>();
         if (!getLevel().isClientSide()) {
-            for (int i = 0; i < woolLength/4; i++) {
+            for (int i = 0; i < woolLength / 4; i++) {
                 shearingDrops.add(new ItemStack(Blocks.WHITE_WOOL)); // TODO: Colored wool drops
             }
         }
@@ -345,7 +344,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
                 // More dairy-bodied
                 bodyTypeGenes += genes[i];
             }
-            float bodyTypeMult = bodyTypeGenes/48F;
+            float bodyTypeMult = bodyTypeGenes / 48F;
             bagSize += bodyTypeMult * 0.375F;
 
             //TODO: Set up scale
@@ -399,7 +398,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
 
     private int getCurrentMaxWool() {
         float age = getEnhancedAnimalAge();
-        return (age >= getAdultAge()) ? individualMaxWool : (int)(individualMaxWool * (age / (float)getAdultAge()));
+        return (age >= getAdultAge()) ? individualMaxWool : (int) (individualMaxWool * (age / (float) getAdultAge()));
     }
 
     protected void defineSynchedData() {
