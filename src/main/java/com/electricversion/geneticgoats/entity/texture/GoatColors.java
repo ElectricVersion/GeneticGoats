@@ -174,16 +174,24 @@ public class GoatColors {
             moonspot[0] = white[0];
             moonspot[1] = white[1];
             moonspot[2] = white[2];
-        } else if (genes[152] == 3 || genes[153] == 3) {
-            // Silver
-            moonspot[0] = white[0];
-            moonspot[1] = white[1];
-            moonspot[2] = white[2];
-        } else if (genes[152] == 4 && genes[153] == 4) {
-            // Brown
-            moonspot[0] = 0.0541F;
-            moonspot[1] = 0.552F;
-            moonspot[2] = 0.497F;
+        } else {
+            if (isBaby) {
+                // Babies should have dark moonspots unless white
+                moonspot[0] = 0.0427F;
+                moonspot[1] = 0.227F;
+                moonspot[2] = 0.071F;
+            }
+            else if (genes[152] == 3 || genes[153] == 3) {
+                // Silver
+                moonspot[0] = white[0];
+                moonspot[1] = white[1];
+                moonspot[2] = white[2];
+            } else if (genes[152] == 4 && genes[153] == 4) {
+                // Brown
+                moonspot[0] = 0.0541F;
+                moonspot[1] = 0.552F;
+                moonspot[2] = 0.497F;
+            }
         }
 
         GoatColors.modifyRed(pheomelanin, white, redModifier/6F);
