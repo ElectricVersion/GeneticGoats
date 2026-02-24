@@ -143,6 +143,14 @@ public class GoatPhenotype implements Phenotype {
         return angora;
     }
 
+    public Vector3f getFullHornLeftRotation() {
+        return fullHornLeftRotation;
+    }
+
+    public Vector3f getFullHornRightRotation() {
+        return fullHornRightRotation;
+    }
+
     public enum EarLength {
         GOPHER,
         ELF,
@@ -192,6 +200,8 @@ public class GoatPhenotype implements Phenotype {
 
     // Horn Settings
     private int hornLength;
+    private Vector3f fullHornLeftRotation;
+    private Vector3f fullHornRightRotation;
     private Vector3f[] hornLeftRotations;
     private Vector3f[] hornRightRotations;
     private Vector3f[] hornOffsets;
@@ -460,11 +470,21 @@ public class GoatPhenotype implements Phenotype {
         float[] hornYRots = new float[MAX_HORN_LENGTH];
         float[] hornZRots = new float[MAX_HORN_LENGTH];
 
+        // Horn Base
+        float[] baseRots1 = calculateHornSegment(genes[154], 0, 0);
+        float[] baseRots2 = calculateHornSegment(genes[155], 0, 0);
+        // Note the divide by 4 - this gene is intentionally only half as strong as the others
+        float fullHornXRot = (baseRots1[0] + baseRots2[0]) / 4F;
+        float fullHornYRot = (0.1875F * Mth.HALF_PI) + ((baseRots1[1] + baseRots2[1]) / 4F);
+        fullHornLeftRotation = new Vector3f(fullHornXRot, 0f, fullHornYRot);
+        fullHornRightRotation = new Vector3f(fullHornXRot, 0f, -fullHornYRot);
+
         // Horn Root
         float[] rootRots1 = calculateHornSegment(genes[90], 0, 0);
         float[] rootRots2 = calculateHornSegment(genes[91], 0, 0);
-        hornXRots[0] = (rootRots1[0] + rootRots2[0]) / 2F;
-        hornZRots[0] = (rootRots1[1] + rootRots2[1]) / 2F;
+        // Note the divide by 4 - this gene is intentionally only half as strong as the others
+        hornXRots[0] = (rootRots1[0] + rootRots2[0]) / 4F;
+        hornZRots[0] = (rootRots1[1] + rootRots2[1]) / 4F;
 
         // Horn Middle 1
         float[] middle1Rots1 = calculateHornSegment(genes[92], -0.125F * Mth.HALF_PI, 0);

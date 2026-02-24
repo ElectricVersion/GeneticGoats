@@ -15,7 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
 
-    public static final int AUTOSOMAL_GENES_LENGTH = 154;
+    public static final int AUTOSOMAL_GENES_LENGTH = 156;
     public static final int SEXLINKED_GENES_LENGTH = 2;
 
     int WTC = GoatsCommonConfig.COMMON.wildTypeChance.get();
@@ -544,9 +544,15 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
          * (White > Silver > Cream > Brown)
          * All moonspots except white start out dark and lighten with age
          */
-
         autosomalGenes[152] = randomizeGene(4);
         autosomalGenes[153] = randomizeGene(4);
+
+        /* HORN ROTATION
+         * 1-99
+         * Differs from root rotation in that it isn't interpolated - just rotates the whole horn
+         */
+        autosomalGenes[154] = randomizeGene(99);
+        autosomalGenes[155] = randomizeGene(99);
 
         return new Genes(sexlinkedGenes, autosomalGenes);
     }

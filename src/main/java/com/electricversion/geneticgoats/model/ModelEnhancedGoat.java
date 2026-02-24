@@ -789,6 +789,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     }
 
     private void setupHorns(GoatPhenotype phenotype) {
+        bHornL.setRotation(phenotype.getFullHornLeftRotation());
+        bHornR.setRotation(phenotype.getFullHornRightRotation());
         for (int i = 0; i < MAX_HORN_LENGTH; i++) {
             boolean isSegmentRendered = i >= MAX_HORN_LENGTH - phenotype.getHornLength();
             hornL[i].boxIsRendered = isSegmentRendered;
