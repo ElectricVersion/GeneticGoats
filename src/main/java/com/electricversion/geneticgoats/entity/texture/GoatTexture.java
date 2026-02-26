@@ -195,26 +195,26 @@ public class GoatTexture {
             {},
             { // LOW
                     {
-                            "shared/white/socks/socks_low_broken_front1.png",
+                            "shared/white/socks/broken/socks_low_broken_front1.png",
                     },
                     {
-                            "shared/white/socks/socks_low_clean_front1.png",
+                            "shared/white/socks/clean/socks_low_clean_front1.png",
                     }
             },
             { // MEDIUM
                     {
-                            "shared/white/socks/socks_med_broken_front1.png",
+                            "shared/white/socks/broken/socks_med_broken_front1.png",
                     },
                     {
-                            "shared/white/socks/socks_med_clean_front1.png",
+                            "shared/white/socks/clean/socks_med_clean_front1.png",
                     }
             },
             { // HIGH
                     {
-                            "shared/white/socks/socks_high_broken_front1.png",
+                            "shared/white/socks/broken/socks_high_broken_front1.png",
                     },
                     {
-                            "shared/white/socks/socks_high_clean_front1.png",
+                            "shared/white/socks/clean/socks_high_clean_front1.png",
                     }
             }
     };
@@ -223,26 +223,26 @@ public class GoatTexture {
             {},
             { // LOW
                     {
-                            "shared/white/socks/socks_low_broken_back1.png",
+                            "shared/white/socks/broken/socks_low_broken_back1.png",
                     },
                     {
-                            "shared/white/socks/socks_low_clean_back1.png",
+                            "shared/white/socks/clean/socks_low_clean_back1.png",
                     }
             },
             { // MEDIUM
                     {
-                            "shared/white/socks/socks_med_broken_back1.png",
+                            "shared/white/socks/broken/socks_med_broken_back1.png",
                     },
                     {
-                            "shared/white/socks/socks_med_clean_back1.png",
+                            "shared/white/socks/clean/socks_med_clean_back1.png",
                     }
             },
             { // HIGH
                     {
-                            "shared/white/socks/socks_high_broken_back1.png",
+                            "shared/white/socks/broken/socks_high_broken_back1.png",
                     },
                     {
-                            "shared/white/socks/socks_high_clean_back1.png",
+                            "shared/white/socks/clean/socks_high_clean_back1.png",
                     }
             }
     };
