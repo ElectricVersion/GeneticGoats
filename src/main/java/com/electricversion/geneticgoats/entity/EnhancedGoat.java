@@ -117,7 +117,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
     }
 
     @Override
-    public @NotNull SpawnGroupData finalizeSpawn(ServerLevelAccessor inWorld, DifficultyInstance difficulty, MobSpawnType spawnReason, @Nullable SpawnGroupData livingData, @Nullable CompoundTag itemNbt) {
+    public @NotNull SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor inWorld, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType spawnReason, @Nullable SpawnGroupData livingData, @Nullable CompoundTag itemNbt) {
         // ageMinimum and ageMaximum parameters are unused so just put zeroes to avoid confusion
         return commonInitialSpawnSetup(inWorld, livingData, getAdultAge(), 0, 0, spawnReason);
     }
@@ -147,6 +147,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         EnhancedGoat goat = AddonEntities.ENHANCED_GOAT.get().create(level);
         Genes babyGenes = new Genes(genetics).makeChild(getOrSetIsFemale(), mateGender, mateGenetics);
         defaultCreateAndSpawn(goat, level, babyGenes, -getAdultAge());
+        assert goat != null;
         level.addFreshEntity(goat);
         goat.setInitialDefaults();
     }
@@ -203,14 +204,15 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
             return InteractionResult.SUCCESS;
         }
         if ((item == Items.BUCKET || item == ModItems.ONESIXTH_MILK_BUCKET.get() || item == ModItems.ONETHIRD_MILK_BUCKET.get() || item == ModItems.HALF_MILK_BUCKET.get() || item == ModItems.TWOTHIRDS_MILK_BUCKET.get() || item == ModItems.FIVESIXTHS_MILK_BUCKET.get() || item == ModItems.HALF_MILK_BOTTLE.get() || item == Items.GLASS_BOTTLE) && !isBaby() && getEntityStatus().equals(EntityState.MOTHER.toString())) {
-            return handleMilkingInteraction(player, hand);
+            handleMilkingInteraction(player, hand);
+            return InteractionResult.SUCCESS;
         }
 
         return super.mobInteract(player, hand);
     }
 
 
-    private @NotNull InteractionResult handleMilkingInteraction(Player player, InteractionHand hand) {
+    private void handleMilkingInteraction(Player player, InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
         Item item = itemStack.getItem();
 
@@ -259,7 +261,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         switch (resultAmount) {
             case 0:
                 player.playSound(SoundEvents.GOAT_HURT, 1.0F, 1.0F);
-                return InteractionResult.SUCCESS;
+                return;
             case 1:
                 if (isBottle) {
                     resultItem = new ItemStack(ModItems.HALF_MILK_BOTTLE.get());
@@ -295,11 +297,9 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         } else if (!player.getInventory().add(resultItem)) {
             player.drop(resultItem, false);
         }
-
-        return InteractionResult.SUCCESS;
     }
 
-    public List<ItemStack> onSheared(Player player, ItemStack item, Level world, BlockPos pos, int fortune) {
+    public @NotNull List<ItemStack> onSheared(Player player, @NotNull ItemStack item, Level world, BlockPos pos, int fortune) {
         List<ItemStack> shearingDrops = new ArrayList<>();
         if (!getLevel().isClientSide()) {
             for (int i = 0; i < woolLength / 4; i++) {
@@ -557,17 +557,17 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
     }
 
     @Override
-    protected Brain.Provider<EnhancedGoat> brainProvider() {
+    protected Brain.@NotNull Provider<EnhancedGoat> brainProvider() {
         return Brain.provider(MEMORY_TYPES, SENSOR_TYPES);
     }
 
     @Override
-    protected Brain<?> makeBrain(Dynamic<?> dynamic) {
+    protected @NotNull Brain<?> makeBrain(@NotNull Dynamic<?> dynamic) {
         return GoatAi.makeBrain(brainProvider().makeBrain(dynamic));
     }
 
     @Override
-    public Brain<EnhancedGoat> getBrain() {
+    public @NotNull Brain<EnhancedGoat> getBrain() {
         return (Brain<EnhancedGoat>) super.getBrain();
     }
 
