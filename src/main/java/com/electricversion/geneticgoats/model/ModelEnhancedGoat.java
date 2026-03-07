@@ -81,8 +81,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     private final WrappedModelPart mouth;
     private final WrappedModelPart eyeL;
     private final WrappedModelPart eyeR;
-    private final WrappedModelPart waddleL;
-    private final WrappedModelPart waddleR;
+    private final WrappedModelPart wattleL;
+    private final WrappedModelPart wattleR;
 
     private final WrappedModelPart earLG;
     private final WrappedModelPart earRG;
@@ -172,8 +172,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         mouth = new WrappedModelPart("mouth", basePart);
         eyeL = new WrappedModelPart("eyeL", basePart);
         eyeR = new WrappedModelPart("eyeR", basePart);
-        waddleL = new WrappedModelPart("waddleL", basePart);
-        waddleR = new WrappedModelPart("waddleR", basePart);
+        wattleL = new WrappedModelPart("wattleL", basePart);
+        wattleR = new WrappedModelPart("wattleR", basePart);
 
         earLG = new WrappedModelPart("earLG", basePart);
         earRG = new WrappedModelPart("earRG", basePart);
@@ -252,8 +252,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bHead.addChild(upperMouth);
         head.addChild(eyeL);
         head.addChild(eyeR);
-        head.addChild(waddleL);
-        head.addChild(waddleR);
+        head.addChild(wattleL);
+        head.addChild(wattleR);
 
         bHead.addChild(bHornL);
         bHead.addChild(bHornR);
@@ -418,12 +418,12 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                         .addBox(-4.505F, -5.5F, -7.505F, 4, 4, 4, new CubeDeformation(-1.5F)),
                 PartPose.ZERO);
 
-        baseDef.addOrReplaceChild("waddleL", CubeListBuilder.create()
+        baseDef.addOrReplaceChild("wattleL", CubeListBuilder.create()
                         .texOffs(48, 58)
                         .addBox(1F, 0F, -5F, 1, 2, 1),
                 PartPose.ZERO);
 
-        baseDef.addOrReplaceChild("waddleR", CubeListBuilder.create()
+        baseDef.addOrReplaceChild("wattleR", CubeListBuilder.create()
                         .texOffs(43, 58)
                         .addBox(-2F, 0F, -5F, 1, 2, 1),
                 PartPose.ZERO);
@@ -736,8 +736,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         beard.show(phenotype.isBearded());
 
-        waddleL.show(phenotype.isWattled());
-        waddleR.show(phenotype.isWattled());
+        wattleL.show(phenotype.isWattled());
+        wattleR.show(phenotype.isWattled());
 
         if (phenotype.isAngora() && phenotype.isHeadWooled()) {
             headWool.show();
