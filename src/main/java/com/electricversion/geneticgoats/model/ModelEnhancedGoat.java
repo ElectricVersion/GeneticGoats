@@ -428,7 +428,6 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                         .addBox(-2F, 0F, -5F, 1, 2, 1),
                 PartPose.ZERO);
 
-
         baseDef.addOrReplaceChild("earLG", CubeListBuilder.create()
                         .texOffs(87, 64)
                         .addBox(-0.5F, -0.5F, -1F, 3, 2, 1, new CubeDeformation(-0.5F, 0F, 0F)),
@@ -736,6 +735,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bUdder.show(goatModelData.getUdderSize() != -1F);
 
         beard.show(phenotype.isBearded());
+
+        waddleL.show(phenotype.isWattled());
+        waddleR.show(phenotype.isWattled());
 
         if (phenotype.isAngora() && phenotype.isHeadWooled()) {
             headWool.show();

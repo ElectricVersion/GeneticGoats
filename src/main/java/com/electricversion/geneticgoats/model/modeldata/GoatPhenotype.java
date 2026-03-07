@@ -151,6 +151,10 @@ public class GoatPhenotype implements Phenotype {
         return fullHornRightRotation;
     }
 
+    public boolean isWattled() {
+        return wattled;
+    }
+
     public enum EarLength {
         GOPHER,
         ELF,
@@ -206,6 +210,9 @@ public class GoatPhenotype implements Phenotype {
     private Vector3f[] hornRightRotations;
     private Vector3f[] hornOffsets;
     private List<Float> hornScalings;
+
+    // Misc Settings
+    private boolean wattled;
 
     // General
     private final boolean female;
@@ -558,6 +565,7 @@ public class GoatPhenotype implements Phenotype {
 
     public GoatPhenotype(int[] genes, boolean isFemale) {
         female = isFemale;
+        wattled = genes[156] == 2 || genes[157] == 2;
         calculateHair(genes);
         calculateEars(genes);
         calculateMuzzle(genes);
