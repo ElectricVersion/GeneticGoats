@@ -81,6 +81,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     private final WrappedModelPart mouth;
     private final WrappedModelPart eyeL;
     private final WrappedModelPart eyeR;
+    private final WrappedModelPart waddleL;
+    private final WrappedModelPart waddleR;
 
     private final WrappedModelPart earLG;
     private final WrappedModelPart earRG;
@@ -170,6 +172,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         mouth = new WrappedModelPart("mouth", basePart);
         eyeL = new WrappedModelPart("eyeL", basePart);
         eyeR = new WrappedModelPart("eyeR", basePart);
+        waddleL = new WrappedModelPart("waddleL", basePart);
+        waddleR = new WrappedModelPart("waddleR", basePart);
 
         earLG = new WrappedModelPart("earLG", basePart);
         earRG = new WrappedModelPart("earRG", basePart);
@@ -248,6 +252,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bHead.addChild(upperMouth);
         head.addChild(eyeL);
         head.addChild(eyeR);
+        head.addChild(waddleL);
+        head.addChild(waddleR);
 
         bHead.addChild(bHornL);
         bHead.addChild(bHornR);
@@ -411,6 +417,17 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                         .texOffs(44, 68)
                         .addBox(-4.505F, -5.5F, -7.505F, 4, 4, 4, new CubeDeformation(-1.5F)),
                 PartPose.ZERO);
+
+        baseDef.addOrReplaceChild("waddleL", CubeListBuilder.create()
+                        .texOffs(48, 58)
+                        .addBox(1F, 0F, -5F, 1, 2, 1),
+                PartPose.ZERO);
+
+        baseDef.addOrReplaceChild("waddleR", CubeListBuilder.create()
+                        .texOffs(43, 58)
+                        .addBox(-2F, 0F, -5F, 1, 2, 1),
+                PartPose.ZERO);
+
 
         baseDef.addOrReplaceChild("earLG", CubeListBuilder.create()
                         .texOffs(87, 64)
