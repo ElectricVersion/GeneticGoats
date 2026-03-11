@@ -347,13 +347,14 @@ public class GoatTexture {
         if (genes[74] == 2 || genes[75] == 2) beardLength++;
 
         boolean angora = genes[134] == 2 || genes[135] == 2;
+        boolean headWool = angora && genes[136] == 2 && genes[137] == 2;
 
         // Alpha Mask Layer
         TextureGrouping alphaGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         goat.addTextureToAnimalTextureGrouping(alphaGroup, "misc/mask/body.png");
         goat.addTextureToAnimalTextureGrouping(alphaGroup, TX_HAIR_LENGTH, hairLength, hairType != 0);
         goat.addTextureToAnimalTextureGrouping(alphaGroup, TX_BEARD_LENGTH, beardLength, true);
-        goat.addTextureToAnimalTextureGrouping(alphaGroup, "misc/mask/hair_angora.png", angora);
+        goat.addTextureToAnimalTextureGrouping(alphaGroup, "misc/mask/hair_angora.png", headWool);
         rootGroup.addGrouping(alphaGroup);
 
         // Red Layer
