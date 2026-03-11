@@ -32,6 +32,9 @@ public class GoatTexture {
             "misc/short_hair_overlay.png", "misc/long_hair_overlay.png"
     };
 
+    private static final String[] TX_SHADING_ANGORA = new String[]{
+            "misc/short_hair_overlay.png", "misc/angora_long_hair_overlay.png"
+    };
 
     private static final String[] TX_BEARD_LENGTH = new String[]{
             "misc/mask/beard_shortest.png", // Female Exclusive
@@ -344,9 +347,6 @@ public class GoatTexture {
         if (genes[74] == 2 || genes[75] == 2) beardLength++;
 
         boolean angora = genes[134] == 2 || genes[135] == 2;
-        if (angora) {
-            hairType = 0;
-        }
 
         // Alpha Mask Layer
         TextureGrouping alphaGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
@@ -434,7 +434,8 @@ public class GoatTexture {
 
         // Detail Layer
         TextureGrouping detailGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
-        goat.addTextureToAnimalTextureGrouping(detailGroup, TX_SHADING, hairType, true);
+        goat.addTextureToAnimalTextureGrouping(detailGroup, TX_SHADING, hairType, !angora);
+        goat.addTextureToAnimalTextureGrouping(detailGroup, TX_SHADING_ANGORA, hairType, angora);
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/udder_overlay.png");
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/hooves_black.png");
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/horns_black.png");

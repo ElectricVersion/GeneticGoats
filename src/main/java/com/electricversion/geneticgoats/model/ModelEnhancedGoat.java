@@ -739,16 +739,22 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         wattleL.show(phenotype.isWattled());
         wattleR.show(phenotype.isWattled());
 
+        if (phenotype.isLongHaired()) {
+            // Any long-haired goat
+            headHair.show();
+            bodyHairF.show();
+            bodyHairB.show();
+        }
+
         if (phenotype.isAngora() && phenotype.isHeadWooled()) {
             headWool.show();
             headHair.show();
             headHair.setY(-0.5F); // Offset the head hair to add visual floofiness!
         } else if (phenotype.isLongHaired()) {
-            headHair.show();
+            // Long-haired and not a head-wooled angora
             headHair.setY(0F);
-            bodyHairF.show();
-            bodyHairB.show();
         }
+
         setupEars(phenotype);
         setupMuzzle(phenotype);
         setupHorns(phenotype);
