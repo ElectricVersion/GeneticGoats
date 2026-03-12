@@ -97,7 +97,7 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[7] = randomizeGene(4);
 
         /* RED COLOR 1 (Incomplete Dominant)
-         * 1 - wildtype/tan
+         * 1 - tan (wildtype)
          * 2 - cream
          * 3 - off-white
          * 4 - white
@@ -106,7 +106,7 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[9] = randomizeGene(4);
 
         /* RED COLOR 2 (Incomplete Dominant)
-         * 1 - wildtype/tan
+         * 1 - tan (wildtype)
          * 2 - red-brown
          * 3 - darker red
          * 4 - deep red
@@ -505,8 +505,9 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[135] = randomizeGene(2);
 
         /* HEAD WOOL
-         * 1 - Wildtype
+         * 1 - No Head Wool (Wildtype)
          * 2 - Head Wool; Recessive
+         * Requires angora fiber to express.
          */
         autosomalGenes[136] = randomizeGene(2);
         autosomalGenes[137] = randomizeGene(2);
@@ -519,10 +520,11 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[139] = randomizeGene(2);
 
         /* BROCKLING AMOUNT
-         * 1 - Wildtype (Medium)
+         * 1 - Medium (Wildtype)
          * 2 - Less Brockling; Dominant
          * 3 - More Brockling; Dominant
          * (Less Brockling <> More Brockling > Wildtype)
+         * Requires Brockling to express.
          */
         autosomalGenes[140] = randomizeGene(3);
         autosomalGenes[141] = randomizeGene(3);
@@ -537,7 +539,7 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         }
 
         /* MOONSPOT COLORATION
-         * 1 - Wildtype (Cream)
+         * 1 - Cream (Wildtype)
          * 2 - White; Dominant
          * 3 - Silver; Dominant
          * 4 - Brown; Recessive

@@ -323,7 +323,7 @@ public class GoatTexture {
         TextureGrouping rootGroup = new TextureGrouping(TexturingType.MASK_GROUP);
 
         // Most textures have a longhaired and shorthaired variant, so we'll need to determine which hair type to use first
-        int hairType = 0; // Short or long hair. Stored as an int for texture indexing reasons
+        int hairType = 0; // Short (0) or long (1) hair. Stored as an int for texture indexing reasons
         int hairLength = 0; // If long-haired, the polygenic length of the hair
         if (genes[50] == 2 && genes[51] == 2) {
             hairType = 1;
@@ -436,7 +436,7 @@ public class GoatTexture {
         // Detail Layer
         TextureGrouping detailGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         goat.addTextureToAnimalTextureGrouping(detailGroup, TX_SHADING, hairType, !angora);
-        goat.addTextureToAnimalTextureGrouping(detailGroup, TX_SHADING_ANGORA, hairType, angora);
+        goat.addTextureToAnimalTextureGrouping(detailGroup, TX_SHADING_ANGORA, hairType, angora); // Not masked so it doesn't go in angoraDetailGroup
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/udder_overlay.png");
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/hooves_black.png");
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/horns_black.png");
