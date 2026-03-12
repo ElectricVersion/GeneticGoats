@@ -430,7 +430,7 @@ public class GoatTexture {
 
         // Angora-specific shading and details
         if (angora) {
-            rootGroup.addGrouping(makeAngoraDetailGroup(goat, genes, color));
+            rootGroup.addGrouping(makeAngoraDetailGroup(goat, genes, color, hairType));
         }
 
         // Detail Layer
@@ -775,12 +775,13 @@ public class GoatTexture {
         return moonspotColorGroup;
     }
 
-    private static TextureGrouping makeAngoraDetailGroup(EnhancedGoat goat, int[] genes, GoatColors color) {
+    private static TextureGrouping makeAngoraDetailGroup(EnhancedGoat goat, int[] genes, GoatColors color, int hairType) {
         TextureGrouping angoraDetailGroup = new TextureGrouping(TexturingType.MASK_GROUP);
         boolean headWool = genes[136] == 2 && genes[137] == 2;
         goat.addTextureToAnimalTextureGrouping(angoraDetailGroup, TX_ANGORA_MASK, headWool ? 1 : 0, true);
         goat.addTextureToAnimalTextureGrouping(angoraDetailGroup, TexturingType.APPLY_RGB, "misc/angora_lightness.png", "an", color.getWhiteColor());
-        goat.addTextureToAnimalTextureGrouping(angoraDetailGroup, "misc/angora_curly.png", true);
+        // TODO: Make it use longhair curly textures (once we have those) instead of just disabling
+        goat.addTextureToAnimalTextureGrouping(angoraDetailGroup, "misc/angora_curly.png", hairType == 0);
         return angoraDetailGroup;
     }
 }
