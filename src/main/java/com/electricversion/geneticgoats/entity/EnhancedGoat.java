@@ -521,7 +521,9 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
             ModMemoryModuleTypes.SLEEPING.get(),
             ModMemoryModuleTypes.SEEKING_FOOD.get(), ModMemoryModuleTypes.HUNGRY.get(),
             ModMemoryModuleTypes.PAUSE_BETWEEN_EATING.get(),
-            ModMemoryModuleTypes.FOCUS_BRAIN.get(), ModMemoryModuleTypes.PAUSE_BRAIN.get()
+            ModMemoryModuleTypes.FOCUS_BRAIN.get(), ModMemoryModuleTypes.PAUSE_BRAIN.get(),
+            // The following required for the generic grazing AI, even though we won't ever be setting them obviously
+            ModMemoryModuleTypes.ROOSTING.get(), ModMemoryModuleTypes.EGG_LAYING.get()
     );
 
 
