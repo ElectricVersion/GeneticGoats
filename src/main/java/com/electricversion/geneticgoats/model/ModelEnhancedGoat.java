@@ -79,8 +79,6 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     private final WrappedModelPart muzzleShort;
     private final WrappedModelPart upperMouth;
     private final WrappedModelPart mouth;
-    private final WrappedModelPart eyeL;
-    private final WrappedModelPart eyeR;
     private final WrappedModelPart wattleL;
     private final WrappedModelPart wattleR;
 
@@ -170,8 +168,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         muzzleShort = new WrappedModelPart("muzzleShort", basePart);
         upperMouth = new WrappedModelPart("upperMouth", basePart);
         mouth = new WrappedModelPart("mouth", basePart);
-        eyeL = new WrappedModelPart("eyeL", basePart);
-        eyeR = new WrappedModelPart("eyeR", basePart);
+        eyes = new WrappedModelPart("eyes", basePart);
         wattleL = new WrappedModelPart("wattleL", basePart);
         wattleR = new WrappedModelPart("wattleR", basePart);
 
@@ -250,8 +247,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bHead.addChild(bMouth);
         bMouth.addChild(mouth);
         bHead.addChild(upperMouth);
-        head.addChild(eyeL);
-        head.addChild(eyeR);
+        head.addChild(eyes);
         head.addChild(wattleL);
         head.addChild(wattleR);
 
@@ -408,12 +404,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                         .addBox(0F, 0F, -4F, 0, 8, 6),
                 PartPose.offset(0F, 1F, 0F));
 
-        baseDef.addOrReplaceChild("eyeL", CubeListBuilder.create()
+        baseDef.addOrReplaceChild("eyes", CubeListBuilder.create()
                         .texOffs(61, 68)
-                        .addBox(0.505F, -5.5F, -7.505F, 4, 4, 4, new CubeDeformation(-1.5F)),
-                PartPose.ZERO);
-
-        baseDef.addOrReplaceChild("eyeR", CubeListBuilder.create()
+                        .addBox(0.505F, -5.5F, -7.505F, 4, 4, 4, new CubeDeformation(-1.5F))
                         .texOffs(44, 68)
                         .addBox(-4.505F, -5.5F, -7.505F, 4, 4, 4, new CubeDeformation(-1.5F)),
                 PartPose.ZERO);
