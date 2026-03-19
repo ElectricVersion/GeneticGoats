@@ -666,11 +666,42 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bMouth.setXRot(lerpTo(bMouth.getXRot(), Mth.sin(ticksOfGrazing*0.75F)*0.15F));;
     }
 
+    private void earTwitchAnim(float ageInTicks, boolean isLeftEar, float baseXRot, float baseZRot) {
+        float angleMultiplier = Mth.cos(ageInTicks*0.8F)*Mth.HALF_PI;
+        if (isLeftEar) {
+            bEarL.setXRot(baseXRot + (angleMultiplier * 0.03F));
+            bEarL.setZRot(baseZRot + (angleMultiplier * 0.02F));
+        } else {
+            bEarR.setXRot(baseXRot + (angleMultiplier * 0.03F));
+            bEarR.setZRot(-baseZRot + (angleMultiplier * -0.02F));
+        }
+    }
+
     @Override
     public void setupAnim(@NotNull T goat, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         goatModelData = getCreateGoatModelData(goat);
         if (goatModelData != null) {
+            GoatPhenotype phenotype = goatModelData.getPhenotype();
             setupInitialAnimationValues(goatModelData, netHeadYaw, headPitch);
+
+            float baseEarXRot = phenotype.getEarXRot();
+            float baseEarZRot = phenotype.getEarZRot();
+
+            // Modeled after the sheep ear twitch functionality in core GA. Credit to Bearded & Moki for the logic
+            if (goatModelData.earTwitchTimer <= ageInTicks) {
+                if (bEarL.getXRot() != baseEarXRot|| bEarL.getXRot() != baseEarXRot) {
+                    bEarL.setXRot(lerpTo(bEarL.getXRot(), baseEarXRot));
+                    bEarL.setZRot(lerpTo(bEarL.getZRot(), baseEarZRot));
+                    bEarR.setXRot(lerpTo(bEarR.getXRot(), baseEarXRot));
+                    bEarR.setZRot(lerpTo(bEarR.getZRot(), -baseEarZRot));
+                }
+                else {
+                    goatModelData.earTwitchSide = goat.getRandom().nextBoolean();
+                    goatModelData.earTwitchTimer = (int) ageInTicks + goat.getRandom().nextInt(goatModelData.sleeping ? 1200 : 600);
+                }
+            } else if (goatModelData.earTwitchTimer <= ageInTicks + 30) {
+                earTwitchAnim(ageInTicks, goatModelData.earTwitchSide, baseEarXRot, baseEarZRot);
+            }
 
             if (goatModelData.isEating != 0) {
                 if (goatModelData.isEating == -1) {
@@ -683,6 +714,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                 lookAnim(netHeadYaw, headPitch);
                 bMouth.setXRot(lerpTo(bMouth.getXRot(), 0F));
             }
+
 
             if (goat.getDeltaMovement().horizontalDistanceSqr() > 0.001 || goat.xOld != goat.getX() || goat.zOld != goat.getZ()) {
                 walkAnim(limbSwing, limbSwingAmount);
