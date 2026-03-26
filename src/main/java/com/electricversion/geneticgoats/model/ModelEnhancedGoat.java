@@ -680,7 +680,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     @Override
     public void setupAnim(@NotNull T goat, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         goatModelData = getCreateGoatModelData(goat);
-        if (goatModelData != null) {
+        if (goatModelData != null && !goat.isNoAi()) {
             GoatPhenotype phenotype = goatModelData.getPhenotype();
             setupInitialAnimationValues(goatModelData, netHeadYaw, headPitch);
 
