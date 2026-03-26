@@ -245,9 +245,10 @@ public class GoatPhenotype implements Phenotype {
         }
         // Ear Flop
         float earFlop = 0.25F;
+        boolean polled = false; // Placeholder
         earFlop += 0.75F * ((genes[18] + genes[19] + genes[20] + genes[21] - 4) / 6F);
         earFlop -= 0.25F * ((genes[22] + genes[23] - 2) / 4F);
-        earFlop = clamp(earFlop, 0F, 1F); // 0 to 1
+        earFlop = clamp(earFlop, polled ? 0F : 0.25F, 1F); // 0 to 1
 
         float earForward = clamp((genes[24] + genes[25] - 2) / 4F, 0F, 1F);  // 0 to 1
         float earLowering = 0;
@@ -263,7 +264,7 @@ public class GoatPhenotype implements Phenotype {
         earXRot = 0F;
         earYRot = 0F;
         earZRot = (earFlop * 2F) - 1;
-        earY = 0F;
+        earY = 0.01F;
         earZ = -2.05F;
         smallEarPivotZ = 0F;
 
@@ -271,7 +272,7 @@ public class GoatPhenotype implements Phenotype {
             case GOPHER -> {
                 earZRot = -0.1F;
                 earX = 3F;
-                earY = 0F;
+                earY = 0.01F;
             }
             case ELF -> {
                 earZRot = -0.5F;
