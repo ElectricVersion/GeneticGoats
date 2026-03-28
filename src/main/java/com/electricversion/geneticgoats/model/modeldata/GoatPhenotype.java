@@ -155,6 +155,10 @@ public class GoatPhenotype implements Phenotype {
         return wattled;
     }
 
+    public float getUpperMouthY() {
+        return upperMouthY;
+    }
+
     public enum EarLength {
         GOPHER,
         ELF,
@@ -176,7 +180,9 @@ public class GoatPhenotype implements Phenotype {
     private float smallEarPivotZ;
 
     //Muzzle Settings
-    private float lowerMuzzleScaleZ;
+    private float mouthScaleZ;
+    private float upperMouthScaleZ;
+    private float upperMouthY;
     private float muzzleXRot;
     private float muzzleY;
     private boolean shortMuzzled;
@@ -375,9 +381,19 @@ public class GoatPhenotype implements Phenotype {
         muzzleY -= romanNose;
         muzzleXRot += Mth.HALF_PI * 0.25F * romanNose;
 
+        upperMouthY = 4F;
+
         float mouthLengthA = originalMuzzleLength * Mth.sin(Mth.HALF_PI - muzzleXRot);
         float mouthLengthB = originalMuzzleHeight * Mth.cos(Mth.HALF_PI - muzzleXRot);
-        lowerMuzzleScaleZ = (mouthLengthA - (mouthLengthB + 0.2F)) / originalMouthLength; // the 0.2 block difference just looks better
+        mouthScaleZ = (mouthLengthA - (mouthLengthB + 0.2F)) / originalMouthLength; // the 0.2 block difference just looks better
+        // Use the pythagorean theorem to get the diagonal length of the muzzle
+        float muzzleDiagonalSquared = (originalMuzzleLength*originalMuzzleLength) + (originalMuzzleHeight*originalMuzzleHeight);
+        // Now use that to figure out the distance from the top of the muzzle to the bottom of the uppermouth
+        float trueMouthLength = (mouthLengthA - (mouthLengthB));
+        float upperMouthYDistance = Mth.sqrt(muzzleDiagonalSquared - (trueMouthLength*trueMouthLength));
+        upperMouthY = upperMouthYDistance - romanNose;
+        upperMouthScaleZ = trueMouthLength/originalMouthLength;
+
         beardZ = originalMouthLength - (mouthLengthA - (mouthLengthB + 0.2F));
         beardY = romanNose < 0F ? 1F + (Mth.sin(mouthXRot) * originalMouthLength) : 1F;
     }
@@ -576,7 +592,7 @@ public class GoatPhenotype implements Phenotype {
         upperLegHeight = (5F - bodyHeight) / 5F;
         fullBodyScalings = ModelHelper.createScalings(bodyWidth, 1F, 1F, 0F, 0F, 0F);
         headScalings = ModelHelper.createScalings(headWidth, 1F, 1F, 0F, 0F, 0F);
-        lowerMuzzleScalings = ModelHelper.createScalings(0.999F * headWidth, 1F, lowerMuzzleScaleZ, 0F, 0F, 0F);
-        mouthScalings = ModelHelper.createScalings(0.999F * headWidth, 1F, lowerMuzzleScaleZ, 0F, 0F, 0F);
+        lowerMuzzleScalings = ModelHelper.createScalings(0.999F * headWidth, 1F, upperMouthScaleZ, 0F, 0F, 0F);
+        mouthScalings = ModelHelper.createScalings(0.999F * headWidth, 1F, mouthScaleZ, 0F, 0F, 0F);
     }
 }

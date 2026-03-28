@@ -78,6 +78,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     private final WrappedModelPart muzzleLong;
     private final WrappedModelPart muzzleShort;
     private final WrappedModelPart lowerMuzzle;
+    private final WrappedModelPart upperMouth;
     private final WrappedModelPart mouth;
     private final WrappedModelPart wattleL;
     private final WrappedModelPart wattleR;
@@ -167,6 +168,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         muzzleLong = new WrappedModelPart("muzzleLong", basePart);
         muzzleShort = new WrappedModelPart("muzzleShort", basePart);
         lowerMuzzle = new WrappedModelPart("lowerMuzzle", basePart);
+        upperMouth = new WrappedModelPart("upperMouth", basePart);
         mouth = new WrappedModelPart("mouth", basePart);
         eyes = new WrappedModelPart("eyes", basePart);
         wattleL = new WrappedModelPart("wattleL", basePart);
@@ -247,6 +249,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bHead.addChild(bMouth);
         bMouth.addChild(mouth);
         bHead.addChild(lowerMuzzle);
+        bHead.addChild(upperMouth);
         head.addChild(eyes);
         head.addChild(wattleL);
         head.addChild(wattleR);
@@ -392,6 +395,11 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("lowerMuzzle", CubeListBuilder.create()
                         .texOffs(28, 56)
                         .addBox(-1.5F, -1.5F, -4F, 3, 1, 4, new CubeDeformation(0F, 0.5F, 0F)),
+                PartPose.offset(0F, 4F, -6F));
+
+        baseDef.addOrReplaceChild("upperMouth", CubeListBuilder.create()
+                        .texOffs(28, 56)
+                        .addBox(-1.5F, 0F, -4F, 3, 1, 4, new CubeDeformation(-0.01F, 0F, 0F)),
                 PartPose.offset(0F, 4F, -6F));
 
         baseDef.addOrReplaceChild("mouth", CubeListBuilder.create()
@@ -837,6 +845,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         
         // Set genetic muzzle & mouth rotation
         bMuzzle.setXRot(phenotype.getMuzzleXRot());
+        upperMouth.setY(phenotype.getUpperMouthY());
         mouth.setXRot(phenotype.getMouthXRot());
     }
 
@@ -885,6 +894,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             mapOfScale.put("head", phenotype.getHeadScalings());
             mapOfScale.put("bMuzzle", phenotype.getHeadScalings());
             mapOfScale.put("lowerMuzzle", phenotype.getLowerMuzzleScalings());
+            mapOfScale.put("upperMouth", phenotype.getLowerMuzzleScalings());
             mapOfScale.put("mouth", phenotype.getMouthScalings());
 
             List<Float> upperLegScalings = ModelHelper.createScalings(woolScale1, phenotype.getUpperLegHeight(), woolScale1, 0F, 0F, 0F);
