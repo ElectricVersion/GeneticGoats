@@ -688,7 +688,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     @Override
     public void setupAnim(@NotNull T goat, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         goatModelData = getCreateGoatModelData(goat);
-        if (goatModelData != null && !goat.isNoAi()) {
+        boolean hasAI = !goat.isNoAi();
+        if (goatModelData != null) {
             GoatPhenotype phenotype = goatModelData.getPhenotype();
             setupInitialAnimationValues(goatModelData, netHeadYaw, headPitch);
 
@@ -707,7 +708,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                     goatModelData.earTwitchSide = goat.getRandom().nextBoolean();
                     goatModelData.earTwitchTimer = (int) ageInTicks + goat.getRandom().nextInt(goatModelData.sleeping ? 1200 : 600);
                 }
-            } else if (goatModelData.earTwitchTimer <= ageInTicks + 30) {
+            } else if (goatModelData.earTwitchTimer <= ageInTicks + 30 && hasAI) {
                 earTwitchAnim(ageInTicks, goatModelData.earTwitchSide, baseEarXRot, baseEarZRot);
             }
 
