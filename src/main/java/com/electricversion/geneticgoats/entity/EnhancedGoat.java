@@ -1,20 +1,18 @@
 package com.electricversion.geneticgoats.entity;
 
-import com.electricversion.geneticgoats.ai.GoatAi;
 import com.electricversion.geneticgoats.config.GoatsCommonConfig;
 import com.electricversion.geneticgoats.entity.genetics.GoatGeneticsInitializer;
 import com.electricversion.geneticgoats.entity.texture.GoatTexture;
 import com.electricversion.geneticgoats.init.AddonEntities;
 import com.electricversion.geneticgoats.init.AddonItems;
 import com.electricversion.geneticgoats.model.modeldata.GoatModelData;
-import com.google.common.collect.ImmutableList;
-import com.mojang.serialization.Dynamic;
+import mokiyoki.enhancedanimals.ai.EnhancedEatPlantsGoal;
+import mokiyoki.enhancedanimals.ai.general.*;
 import mokiyoki.enhancedanimals.config.GeneticAnimalsConfig;
 import mokiyoki.enhancedanimals.entity.EnhancedAnimalAbstract;
 import mokiyoki.enhancedanimals.entity.EntityState;
 import mokiyoki.enhancedanimals.init.FoodSerialiser;
 import mokiyoki.enhancedanimals.init.ModItems;
-import mokiyoki.enhancedanimals.init.ModMemoryModuleTypes;
 import mokiyoki.enhancedanimals.model.modeldata.AnimalModelData;
 import mokiyoki.enhancedanimals.renderer.texture.TextureGrouping;
 import mokiyoki.enhancedanimals.renderer.texture.TextureLayer;
@@ -25,7 +23,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -34,14 +31,12 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
-import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.LookControl;
 import net.minecraft.world.entity.ai.control.MoveControl;
-import net.minecraft.world.entity.ai.memory.MemoryModuleType;
-import net.minecraft.world.entity.ai.sensing.Sensor;
-import net.minecraft.world.entity.ai.sensing.SensorType;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.FollowParentGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -49,6 +44,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraftforge.api.distmarker.Dist;
@@ -58,7 +54,9 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeShearable {
 
@@ -403,7 +401,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
 
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(WOOL_LENGTH, 0);
+        entityData.define(WOOL_LENGTH, 0);
     }
 
     /* Gene Related Code */
@@ -512,33 +510,38 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         texturesIndexes.add(CACHE_DELIMITER);
     }
 
-    /* Brain/AI Related Code */
-
-    static final ImmutableList<? extends MemoryModuleType<?>> MEMORY_TYPES = ImmutableList.of(
-            MemoryModuleType.PATH, MemoryModuleType.WALK_TARGET, MemoryModuleType.LOOK_TARGET,
-            MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE,
-            MemoryModuleType.BREED_TARGET,
-            ModMemoryModuleTypes.SLEEPING.get(),
-            ModMemoryModuleTypes.SEEKING_FOOD.get(), ModMemoryModuleTypes.HUNGRY.get(),
-            ModMemoryModuleTypes.PAUSE_BETWEEN_EATING.get(),
-            ModMemoryModuleTypes.FOCUS_BRAIN.get(), ModMemoryModuleTypes.PAUSE_BRAIN.get(),
-            // The following required for the generic grazing AI, even though we won't ever be setting them obviously
-            ModMemoryModuleTypes.ROOSTING.get(), ModMemoryModuleTypes.EGG_LAYING.get()
-    );
+    /* Brain/AI Related Code
+    * Currently all brain related code is commented out because after seeing that modern minecraft is still using goals,
+    * and brains have been changed considerably from 1.18, it's hard to justify using the more complex Brain system
+    * for an animal with pretty basic AI functions.
+    * */
 
 
-    private static final ImmutableList<? extends SensorType<? extends Sensor<? super EnhancedGoat>>> SENSOR_TYPES = ImmutableList.of(
-            SensorType.NEAREST_LIVING_ENTITIES, SensorType.NEAREST_ADULT
-    );
+//    static final ImmutableList<? extends MemoryModuleType<?>> MEMORY_TYPES = ImmutableList.of(
+//            MemoryModuleType.PATH, MemoryModuleType.WALK_TARGET, MemoryModuleType.LOOK_TARGET,
+//            MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE,
+//            MemoryModuleType.BREED_TARGET,
+//            ModMemoryModuleTypes.SLEEPING.get(),
+//            ModMemoryModuleTypes.SEEKING_FOOD.get(), ModMemoryModuleTypes.HUNGRY.get(),
+//            ModMemoryModuleTypes.PAUSE_BETWEEN_EATING.get(),
+//            ModMemoryModuleTypes.FOCUS_BRAIN.get(), ModMemoryModuleTypes.PAUSE_BRAIN.get(),
+//            // The following required for the generic grazing AI, even though we won't ever be setting them obviously
+//            ModMemoryModuleTypes.ROOSTING.get(), ModMemoryModuleTypes.EGG_LAYING.get()
+//    );
+
+
+//    private static final ImmutableList<? extends SensorType<? extends Sensor<? super EnhancedGoat>>> SENSOR_TYPES = ImmutableList.of(
+//            SensorType.NEAREST_LIVING_ENTITIES, SensorType.NEAREST_ADULT
+//    );
 
 
     @Override
     protected void customServerAiStep() {
-        getBrain().tick((ServerLevel) getLevel(), this);
+//        getBrain().tick((ServerLevel) getLevel(), this);
         if (!isNoAi()) {
-            if (getHunger() > hungerLimit) {
-                getBrain().setMemory(ModMemoryModuleTypes.HUNGRY.get(), true);
-            }
+//            if (getHunger() > hungerLimit) {
+//                getBrain().setMemory(ModMemoryModuleTypes.HUNGRY.get(), true);
+//            }
 
             // Dairy Functionality
             if (getEntityStatus().equals(EntityState.MOTHER.toString())) {
@@ -554,23 +557,45 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
                     }
                 }
             }
-            GoatAi.updateActivity(this);
+//            GoatAi.updateActivity(this);
         }
     }
 
-    @Override
-    protected Brain.@NotNull Provider<EnhancedGoat> brainProvider() {
-        return Brain.provider(MEMORY_TYPES, SENSOR_TYPES);
+    private Map<Block, EnhancedEatPlantsGoal.EatValues> createGrazingMap() {
+        // TODO: Add grazing
+        return new HashMap<>();
     }
 
-    @Override
-    protected @NotNull Brain<?> makeBrain(@NotNull Dynamic<?> dynamic) {
-        return GoatAi.makeBrain(brainProvider().makeBrain(dynamic));
-    }
 
     @Override
-    public @NotNull Brain<EnhancedGoat> getBrain() {
-        return (Brain<EnhancedGoat>) super.getBrain();
+    protected void registerGoals() {
+        goalSelector.addGoal(0, new FloatGoal(this));
+        goalSelector.addGoal(1, new EnhancedPanicGoal(this, 1.25D));
+        goalSelector.addGoal(3, new EnhancedBreedGoal(this, 1.0D));
+        goalSelector.addGoal(4, new EnhancedTemptGoal(this, 1.0D, 1.2D, false, Items.AIR));
+        goalSelector.addGoal(5, new FollowParentGoal(this, 1.1D));
+        goalSelector.addGoal(6, new StayShelteredGoal(this, 5723, 7000, 1000));
+        goalSelector.addGoal(7, new SeekShelterGoal(this, 1.0D, 5723, 7000, 1000));
+        goalSelector.addGoal(8, new EnhancedEatPlantsGoal(this, createGrazingMap()));
+        goalSelector.addGoal(9, new EnhancedWaterAvoidingRandomWalkingEatingGoal(this, 1.0D, 7, 0.001F, 120, 2, 50));
+        goalSelector.addGoal(10, new EnhancedLookAtGoal(this, Player.class, 6.0F));
+        goalSelector.addGoal(11, new EnhancedLookRandomlyGoal(this));
     }
+
+
+//    @Override
+//    protected Brain.@NotNull Provider<EnhancedGoat> brainProvider() {
+//        return Brain.provider(MEMORY_TYPES, SENSOR_TYPES);
+//    }
+
+//    @Override
+//    protected @NotNull Brain<?> makeBrain(@NotNull Dynamic<?> dynamic) {
+//        return GoatAi.makeBrain(brainProvider().makeBrain(dynamic));
+//    }
+
+//    @Override
+//    public @NotNull Brain<EnhancedGoat> getBrain() {
+//        return (Brain<EnhancedGoat>) super.getBrain();
+//    }
 
 }
