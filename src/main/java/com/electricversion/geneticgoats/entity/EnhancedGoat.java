@@ -297,11 +297,25 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         }
     }
 
+    private Block getWoolColor() {
+        // TODO: More dynamic colored wool drops, possibly split up GoatTexture code into smaller public methods for reuse
+        int[] genes = getGenes().getAutosomalGenes();
+        if (genes[4] == 2 || genes[5] == 2) {
+            // Dom White
+            return Blocks.WHITE_WOOL;
+        }
+        else if (genes[2] == 2 || genes[3] == 2) {
+            // Dom Black
+            return Blocks.BLACK_WOOL;
+        }
+        return Blocks.BROWN_WOOL;
+    }
+
     public @NotNull List<ItemStack> onSheared(Player player, @NotNull ItemStack item, Level world, BlockPos pos, int fortune) {
         List<ItemStack> shearingDrops = new ArrayList<>();
         if (!getLevel().isClientSide()) {
             for (int i = 0; i < woolLength / 4; i++) {
-                shearingDrops.add(new ItemStack(Blocks.WHITE_WOOL)); // TODO: Colored wool drops
+                shearingDrops.add(new ItemStack(getWoolColor()));
             }
         }
         setWoolLength(0);
