@@ -554,6 +554,17 @@ public class GoatTexture {
         return blackColorGroup;
     }
 
+    public static int getWhiteExtension(int[] genes) {
+        // Returns the modifier level for white. Public because so that it can be called in wool color calculation.
+        boolean whiteExt1 = genes[62] == 2 || genes[63] == 2;
+        boolean whiteExt2 = genes[64] == 2 || genes[65] == 2;
+        int whiteSize = 0;
+        if (whiteExt1) whiteSize++;
+        if (whiteExt2) whiteSize++;
+
+        return whiteSize;
+    }
+
     private static TextureGrouping[] makeWhiteMask(EnhancedGoat goat, int[] genes, char[] uuidArry, int hairType) {
         // Three different groups representing different moonspots interactions, plus an additional one for roan
         // It's confusing it felt like the best way to represent the way that white and moonspots share space.
@@ -566,11 +577,7 @@ public class GoatTexture {
         // Roan is also above all moonspots but is additionally unaffected by brockling
         TextureGrouping whiteRoanGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
 
-        boolean whiteExt1 = genes[62] == 2 || genes[63] == 2;
-        boolean whiteExt2 = genes[64] == 2 || genes[65] == 2;
-        int whiteSize = 0;
-        if (whiteExt1) whiteSize++;
-        if (whiteExt2) whiteSize++;
+        int whiteSize = getWhiteExtension(genes);
 
         // EDNRA. Because it potentially boosts white level, it has to be processed before KIT etc.
         if (genes[82] != 1 || genes[83] != 1) {

@@ -298,10 +298,20 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
     }
 
     private Block getWoolColor() {
-        // TODO: More dynamic colored wool drops, possibly split up GoatTexture code into smaller public methods for reuse
         int[] genes = getGenes().getAutosomalGenes();
-        if (genes[4] == 2 || genes[5] == 2) {
-            // Dom White
+        boolean mediumOrHighWhite = GoatTexture.getWhiteExtension(genes) > 0;
+        if (
+                (genes[4] == 2 || genes[5] == 2) || // Dom White
+                (genes[82] != 1 || genes[83] != 1) || // Any level of Schwartzal
+                (mediumOrHighWhite && ( // Medium to high...
+                            (genes[4] == 3 || genes[5] == 3) // ...Goulet
+                            || (genes[4] == 4 && genes[5] == 4) // ...Piebald
+                            || (genes[58] != 1 || genes[59] != 1) // ...Belt
+                            || (genes[80] == 4 || genes[81] == 4) // ...Flowery
+                        )
+                )
+        ) {
+            // White markings
             return Blocks.WHITE_WOOL;
         }
         else if (genes[2] == 2 || genes[3] == 2) {
