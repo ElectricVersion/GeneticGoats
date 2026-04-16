@@ -37,7 +37,7 @@ public class GoatTexture {
     };
 
     private static final String[] TX_SHADING_ANGORA = new String[]{
-            "misc/short_hair_overlay.png", "misc/angora_long_hair_overlay.png"
+            "misc/angora_short_hair_overlay.png", "misc/angora_long_hair_overlay.png"
     };
 
     private static final String[] TX_BEARD_LENGTH = new String[]{
