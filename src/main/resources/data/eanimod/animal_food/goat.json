@@ -78,7 +78,7 @@
     },
     {
       "registryName": "minecraft:paper",
-      "hungerRestored": 0,
+      "hungerRestored": 100,
       "isBreedingItem": false
     }
   ]
