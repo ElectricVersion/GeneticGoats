@@ -7,6 +7,16 @@
       "isBreedingItem": false
     },
     {
+      "registryName": "minecraft:pumpkin",
+      "hungerRestored": 12000,
+      "isBreedingItem": false
+    },
+    {
+      "registryName": "minecraft:melon",
+      "hungerRestored": 9000,
+      "isBreedingItem": false
+    },
+    {
       "registryName": "minecraft:wheat",
       "hungerRestored": 6000,
       "isBreedingItem": true
