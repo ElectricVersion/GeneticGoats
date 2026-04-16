@@ -22,6 +22,16 @@
       "isBreedingItem": true
     },
     {
+      "registryName": "minecraft:grass",
+      "hungerRestored": 6000,
+      "isBreedingItem": false
+    },
+    {
+      "registryName": "minecraft:tall_grass",
+      "hungerRestored": 6000,
+      "isBreedingItem": false
+    },
+    {
       "registryName": "minecraft:beetroot",
       "hungerRestored": 6000,
       "isBreedingItem": false
@@ -48,6 +58,16 @@
     },
     {
       "registryName": "minecraft:spruce_leaves",
+      "hungerRestored": 2000,
+      "isBreedingItem": false
+    },
+    {
+      "registryName": "minecraft:birch_sapling",
+      "hungerRestored": 2000,
+      "isBreedingItem": false
+    },
+    {
+      "registryName": "minecraft:birch_leaves",
       "hungerRestored": 2000,
       "isBreedingItem": false
     },
