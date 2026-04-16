@@ -791,15 +791,15 @@ public class GoatTexture {
         TextureGrouping hairDetailGroup = new TextureGrouping(TexturingType.MASK_GROUP);
         boolean angora = genes[134] == 2 || genes[135] == 2;
         boolean headWool = angora && genes[136] == 2 && genes[137] == 2;
-        int hairTexture = 0;
+        int hairCurliness = 0;
         if (genes[48] == 2 || genes[49] == 2) {
-            hairTexture = genes[48] == genes[49] ? 2 : 1; // Curly if homozygous, wavy otherwise
+            hairCurliness = genes[48] == genes[49] ? 2 : 1; // Curly if homozygous, wavy otherwise
         }
         goat.addDelimiter("h");
         goat.addTextureToAnimalTextureGrouping(hairDetailGroup, TX_ANGORA_MASK, headWool ? 1 : 0, true);
         if (angora) goat.addTextureToAnimalTextureGrouping(hairDetailGroup, TexturingType.APPLY_RGB, "misc/angora_lightness.png", "an", color.getWhiteColor());
         // TODO: Make it use longhair curly textures (once we have those) instead of just disabling
-        goat.addTextureToAnimalTextureGrouping(hairDetailGroup, TX_HAIR_TEXTURE, hairTexture, hairTexture != 0 && hairType == 0);
+        goat.addTextureToAnimalTextureGrouping(hairDetailGroup, TX_HAIR_TEXTURE, hairCurliness, hairCurliness != 0 && hairType == 0);
         return hairDetailGroup;
     }
 }
