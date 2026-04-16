@@ -893,6 +893,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             mapOfScale.put("neck", ModelHelper.createScalings(phenotype.getNeckWidth() * woolScale2, 1F, phenotype.getNeckDepth() * woolScale2, 0F, 0F, 0F));
 
             mapOfScale.put("head", phenotype.getHeadScalings());
+            mapOfScale.put("headWool", phenotype.getHeadScalings());
+            mapOfScale.put("headHair", phenotype.getHeadScalings());
             mapOfScale.put("bMuzzle", phenotype.getHeadScalings());
             mapOfScale.put("lowerMuzzle", phenotype.getLowerMuzzleScalings());
             mapOfScale.put("upperMouth", phenotype.getLowerMuzzleScalings());
