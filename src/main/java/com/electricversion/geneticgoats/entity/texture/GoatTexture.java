@@ -15,20 +15,20 @@ public class GoatTexture {
     private static final int IDX_FLOWERY = 4;
     private static final int IDX_BLAZE = 5;
 
-    private static final String[] AGOUTIS = new String[] {
+    private static final String[] AGOUTIS = new String[]{
             "", "bezoar", "gold", "buckskin", "chamoisee", "swiss", "cou_clair",
             "sundgau", "tanhead", "caramel", "sable", "masked", "redcheek"
     };
 
-    private static final String[] HAIR_PREFIX = new String[] {
+    private static final String[] HAIR_PREFIX = new String[]{
             "shorthair/", "longhair/",
     };
 
-    private static final String[] TX_EYES = new String[] {
+    private static final String[] TX_EYES = new String[]{
             "misc/eyes_yellow.png", "misc/eyes_blue.png"
     };
 
-    private static final String[] TX_SHADING = new String[] {
+    private static final String[] TX_SHADING = new String[]{
             "misc/short_hair_overlay.png", "misc/long_hair_overlay.png"
     };
 
@@ -36,39 +36,42 @@ public class GoatTexture {
             "", "misc/hair_wavy.png", "misc/hair_curly.png"
     };
 
+    private static final String[] TX_SHADING_ANGORA = new String[]{
+            "misc/short_hair_overlay.png", "misc/angora_long_hair_overlay.png"
+    };
 
-    private static final String[] TX_BEARD_LENGTH = new String[] {
+    private static final String[] TX_BEARD_LENGTH = new String[]{
             "misc/mask/beard_shortest.png", // Female Exclusive
             "misc/mask/beard_short.png", "misc/mask/beard_medium.png", "misc/mask/beard_long.png",
             "misc/mask/beard_longest.png", // Male Exclusive
     };
 
-    private static final String[] TX_HAIR_LENGTH = new String[] {
+    private static final String[] TX_HAIR_LENGTH = new String[]{
             "", "misc/mask/hair_short.png", "misc/mask/hair_medium.png", "misc/mask/hair_long.png", "misc/mask/hair_longest.png",
     };
 
-    private static final String[] TX_AGOUTI_BLACK = new String[] {
+    private static final String[] TX_AGOUTI_BLACK = new String[]{
             "", "agouti/bezoar_light.png", "", "agouti/buckskin_light.png", "agouti/chamoisee_light.png",
             "agouti/swiss_light.png", "agouti/cou_clair_light.png", "agouti/sundgau_light.png",
             "agouti/tanhead_light.png", "agouti/caramel_light.png", "agouti/sable_light.png",
             "agouti/masked_light.png", "agouti/redcheek_light.png"
     };
 
-    private static final String[] TX_AGOUTI_CREAM = new String[] {
+    private static final String[] TX_AGOUTI_CREAM = new String[]{
             "", "agouti/bezoar_cream.png", "", "", "",
             "agouti/swiss_cream.png", "", "agouti/sundgau_cream.png",
             "", "", "agouti/sable_cream.png",
             "agouti/masked_cream.png", ""
     };
 
-    private static final String[] TX_AGOUTI_MALE_SHADING = new String[] {
+    private static final String[] TX_AGOUTI_MALE_SHADING = new String[]{
             "", "male_shading_light1.png", "", "male_shading_light1.png", "",
             "", "male_shading_light1.png", "",
             "male_shading_light1.png", "male_shading_light1.png", "male_shading_light1.png",
             "male_shading_light1.png", ""
     };
 
-    private static final String[][] TX_ROAN = new String[][] {
+    private static final String[][] TX_ROAN = new String[][]{
             {
                     "white/roan/roan_low1.png",
             },
@@ -77,7 +80,7 @@ public class GoatTexture {
             },
     };
 
-    private static final String[][] TX_FLOWERY = new String[][] {
+    private static final String[][] TX_FLOWERY = new String[][]{
             { // LOW
                     "white/flowery/flowery_low1.png", "white/flowery/flowery_low2.png",
                     "white/flowery/flowery_low3.png", "white/flowery/flowery_low4.png",
@@ -98,7 +101,7 @@ public class GoatTexture {
             },
     };
 
-    private static final String[][] TX_GOULET = new String[][] {
+    private static final String[][] TX_GOULET = new String[][]{
             { // LOW
                     "white/goulet/goulet_low1.png", "white/goulet/goulet_low2.png", "white/goulet/goulet_low3.png", "white/goulet/goulet_low4.png",
                     "white/goulet/goulet_low5.png", "white/goulet/goulet_low6.png", "white/goulet/goulet_low7.png", "white/goulet/goulet_low8.png",
@@ -115,7 +118,7 @@ public class GoatTexture {
             },
     };
 
-    private static final String[][] TX_PIEBALD = new String[][] {
+    private static final String[][] TX_PIEBALD = new String[][]{
             { // LOW
                     "white/piebald/piebald_low1.png", "white/piebald/piebald_low2.png",
                     "white/piebald/piebald_low3.png", "white/piebald/piebald_low4.png",
@@ -136,7 +139,7 @@ public class GoatTexture {
             }
     };
 
-    private static final String[][] TX_PIEBALD_BELT = new String[][] {
+    private static final String[][] TX_PIEBALD_BELT = new String[][]{
             { // LOW
                     "white/piebald_belt/piebelt_low1.png", "white/piebald_belt/piebelt_low2.png",
                     "white/piebald_belt/piebelt_low3.png", "white/piebald_belt/piebelt_low4.png",
@@ -159,7 +162,7 @@ public class GoatTexture {
             }
     };
 
-    private static final String[][][] TX_BELT = new String[][][] {
+    private static final String[][][] TX_BELT = new String[][][]{
             { // LOW
                     {
                             "white/belt/belt_low_poor1.png"
@@ -195,63 +198,63 @@ public class GoatTexture {
             }
     };
 
-    private static final String[][][] TX_SOCKS_FRONT = new String[][][] {
+    private static final String[][][] TX_SOCKS_FRONT = new String[][][]{
             {},
             { // LOW
                     {
-                            "shared/white/socks/socks_low_broken_front1.png",
+                            "shared/white/socks/broken/socks_low_broken_front1.png",
                     },
                     {
-                            "shared/white/socks/socks_low_clean_front1.png",
+                            "shared/white/socks/clean/socks_low_clean_front1.png",
                     }
             },
             { // MEDIUM
                     {
-                            "shared/white/socks/socks_med_broken_front1.png",
+                            "shared/white/socks/broken/socks_med_broken_front1.png",
                     },
                     {
-                            "shared/white/socks/socks_med_clean_front1.png",
+                            "shared/white/socks/clean/socks_med_clean_front1.png",
                     }
             },
             { // HIGH
                     {
-                            "shared/white/socks/socks_high_broken_front1.png",
+                            "shared/white/socks/broken/socks_high_broken_front1.png",
                     },
                     {
-                            "shared/white/socks/socks_high_clean_front1.png",
+                            "shared/white/socks/clean/socks_high_clean_front1.png",
                     }
             }
     };
 
-    private static final String[][][] TX_SOCKS_BACK = new String[][][] {
+    private static final String[][][] TX_SOCKS_BACK = new String[][][]{
             {},
             { // LOW
                     {
-                            "shared/white/socks/socks_low_broken_back1.png",
+                            "shared/white/socks/broken/socks_low_broken_back1.png",
                     },
                     {
-                            "shared/white/socks/socks_low_clean_back1.png",
+                            "shared/white/socks/clean/socks_low_clean_back1.png",
                     }
             },
             { // MEDIUM
                     {
-                            "shared/white/socks/socks_med_broken_back1.png",
+                            "shared/white/socks/broken/socks_med_broken_back1.png",
                     },
                     {
-                            "shared/white/socks/socks_med_clean_back1.png",
+                            "shared/white/socks/clean/socks_med_clean_back1.png",
                     }
             },
             { // HIGH
                     {
-                            "shared/white/socks/socks_high_broken_back1.png",
+                            "shared/white/socks/broken/socks_high_broken_back1.png",
                     },
                     {
-                            "shared/white/socks/socks_high_clean_back1.png",
+                            "shared/white/socks/clean/socks_high_clean_back1.png",
                     }
             }
     };
 
-    private static final String[][] TX_SCHWARTZAL = new String[][] {
+    private static final String[][] TX_SCHWARTZAL = new String[][]{
             { // LOW
                     "white/schwartzal/schwartzal_low1.png",
             },
@@ -266,7 +269,7 @@ public class GoatTexture {
             }
     };
 
-    private static final String[][] TX_BLAZE = new String[][] {
+    private static final String[][] TX_BLAZE = new String[][]{
             { // LOW
                     "shared/white/blaze/blaze_low1.png", "shared/white/blaze/blaze_low2.png",
                     "shared/white/blaze/blaze_low3.png", "shared/white/blaze/blaze_low4.png",
@@ -285,24 +288,24 @@ public class GoatTexture {
             }
     };
 
-    private static final String[] TX_WHITE_POLL = new String[] {
+    private static final String[] TX_WHITE_POLL = new String[]{
             "shared/white/white_poll/white_poll_low.png",
             "shared/white/white_poll/white_poll_med.png",
             "shared/white/white_poll/white_poll_high.png",
     };
 
-    private static final String[] TX_HALFWHITE = new String[] {
+    private static final String[] TX_HALFWHITE = new String[]{
             "white/belt/halfwhite/halfwhite_low.png",
             "white/belt/halfwhite/halfwhite_med.png",
             "white/belt/halfwhite/halfwhite_high.png",
     };
 
-    private static final String[] TX_ANGORA_MASK = new String[] {
+    private static final String[] TX_ANGORA_MASK = new String[]{
             "misc/angora_partial_mask.png",
             "misc/angora_full_mask.png",
     };
 
-    private static final String[][] TX_BROCKLING = new String[][] {
+    private static final String[][] TX_BROCKLING = new String[][]{
             { // LOW
                     "white/brockling/brockling_low1.png",
             },
@@ -319,12 +322,12 @@ public class GoatTexture {
     // interact to create a single, "compiled" texture.
     public static void calculateTexture(EnhancedGoat goat, int[] genes, char[] uuidArry) {
 
-        GoatColors color = GoatColors.calculateColors(goat, genes, uuidArry);
+        GoatColors color = GoatColors.calculateColors(goat, genes, uuidArry, goat.isBaby());
 
         TextureGrouping rootGroup = new TextureGrouping(TexturingType.MASK_GROUP);
 
         // Most textures have a longhaired and shorthaired variant, so we'll need to determine which hair type to use first
-        int hairType = 0; // Short or long hair. Stored as an int for texture indexing reasons
+        int hairType = 0; // Short (0) or long (1) hair. Stored as an int for texture indexing reasons
         int hairLength = 0; // If long-haired, the polygenic length of the hair
         if (genes[50] == 2 && genes[51] == 2) {
             hairType = 1;
@@ -348,16 +351,14 @@ public class GoatTexture {
         if (genes[74] == 2 || genes[75] == 2) beardLength++;
 
         boolean angora = genes[134] == 2 || genes[135] == 2;
-        if (angora) {
-            hairType = 0;
-        }
+        boolean headWool = angora && genes[136] == 2 && genes[137] == 2;
 
         // Alpha Mask Layer
         TextureGrouping alphaGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         goat.addTextureToAnimalTextureGrouping(alphaGroup, "misc/mask/body.png");
         goat.addTextureToAnimalTextureGrouping(alphaGroup, TX_HAIR_LENGTH, hairLength, hairType != 0);
         goat.addTextureToAnimalTextureGrouping(alphaGroup, TX_BEARD_LENGTH, beardLength, true);
-        goat.addTextureToAnimalTextureGrouping(alphaGroup, "misc/mask/hair_angora.png", angora);
+        goat.addTextureToAnimalTextureGrouping(alphaGroup, "misc/mask/hair_angora.png", headWool);
         rootGroup.addGrouping(alphaGroup);
 
         // Red Layer
@@ -384,7 +385,8 @@ public class GoatTexture {
 
         TextureGrouping brockledWhiteColorGroup = new TextureGrouping(TexturingType.CUTOUT_GROUP);
         TextureGrouping brocklingGroup = makeBrocklingGroup(goat, genes, uuidArry, hairType);
-        if (brocklingGroup.isPopulated()) brockledWhiteColorGroup.addGrouping(makeBrocklingGroup(goat, genes, uuidArry, hairType));
+        if (brocklingGroup.isPopulated())
+            brockledWhiteColorGroup.addGrouping(makeBrocklingGroup(goat, genes, uuidArry, hairType));
         brockledWhiteColorGroup.addGrouping(whiteColorGroup);
 
         TextureGrouping whiteBottomGroup = new TextureGrouping(TexturingType.MASK_GROUP);
@@ -433,12 +435,13 @@ public class GoatTexture {
         boolean curlyOrWavy = genes[48] == 2 || genes[49] == 2;
         // Curly haired/Angora shading and details
         if (angora || curlyOrWavy) {
-            rootGroup.addGrouping(makeHairDetailGroup(goat, genes, color));
+            rootGroup.addGrouping(makeHairDetailGroup(goat, genes, color, hairType));
         }
 
         // Detail Layer
         TextureGrouping detailGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
-        goat.addTextureToAnimalTextureGrouping(detailGroup, TX_SHADING, hairType, true);
+        goat.addTextureToAnimalTextureGrouping(detailGroup, TX_SHADING, hairType, !angora);
+        goat.addTextureToAnimalTextureGrouping(detailGroup, TX_SHADING_ANGORA, hairType, angora); // Not masked so it doesn't go in angoraDetailGroup
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/udder_overlay.png");
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/hooves_black.png");
         goat.addTextureToAnimalTextureGrouping(detailGroup, "misc/horns_black.png");
@@ -509,26 +512,24 @@ public class GoatTexture {
 
         if (genes[2] == 2 || genes[3] == 2) {
             // Dom Black. It's solid black, so agouti doesn't matter
-            goat.addTextureToAnimalTextureGrouping(blackGroup, "misc/solid.png");
+            goat.addTextureToAnimalTextureGrouping(blackGroup, "misc/solid.png", "db");
         } else if (genes[2] == 3 && genes[3] == 3) {
             // Recessive Red. It's solid red, so again, agouti doesn't matter.
             // Currently identical to gold visually but that maaay change, hence the separate branch
-            goat.addTextureToAnimalTextureGrouping(blackGroup, "misc/transparent.png");
+            goat.addTextureToAnimalTextureGrouping(blackGroup, "misc/transparent.png", "rr");
         } else if (agouti1 == 2 || agouti2 == 2) {
             // Gold agouti. Fully dominant and has no black, so we can stop here
-            goat.addTextureToAnimalTextureGrouping(blackGroup, "misc/transparent.png");
+            goat.addTextureToAnimalTextureGrouping(blackGroup, "misc/transparent.png", "ag");
         } else {
             // Agouti
             TextureGrouping agoutiGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
             if (agouti1 == agouti2) {
                 // Homozygous Agouti
-                goat.addDelimiter("a");
-                goat.addPrefixedTexture(agoutiGroup, HAIR_PREFIX, hairType, TX_AGOUTI_BLACK, agouti1, true);
+                goat.addPrefixedTexture(agoutiGroup, HAIR_PREFIX, hairType, TX_AGOUTI_BLACK, agouti1, "a", true);
 
                 if (!goat.getOrSetIsFemale()) {
                     // Male Shading
-                    goat.addDelimiter("m");
-                    goat.addPrefixedTexture(agoutiGroup, HAIR_PREFIX, hairType, TX_AGOUTI_MALE_SHADING, agouti1, !TX_AGOUTI_MALE_SHADING[agouti1].isEmpty());
+                    goat.addPrefixedTexture(agoutiGroup, HAIR_PREFIX, hairType, TX_AGOUTI_MALE_SHADING, agouti1, "m", !TX_AGOUTI_MALE_SHADING[agouti1].isEmpty());
                 }
             } else {
                 // Heterozygous Agouti
@@ -558,6 +559,17 @@ public class GoatTexture {
         return blackColorGroup;
     }
 
+    public static int getWhiteExtension(int[] genes) {
+        // Returns the modifier level for white. Public because so that it can be called in wool color calculation.
+        boolean whiteExt1 = genes[62] == 2 || genes[63] == 2;
+        boolean whiteExt2 = genes[64] == 2 || genes[65] == 2;
+        int whiteSize = 0;
+        if (whiteExt1) whiteSize++;
+        if (whiteExt2) whiteSize++;
+
+        return whiteSize;
+    }
+
     private static TextureGrouping[] makeWhiteMask(EnhancedGoat goat, int[] genes, char[] uuidArry, int hairType) {
         // Three different groups representing different moonspots interactions, plus an additional one for roan
         // It's confusing it felt like the best way to represent the way that white and moonspots share space.
@@ -570,21 +582,17 @@ public class GoatTexture {
         // Roan is also above all moonspots but is additionally unaffected by brockling
         TextureGrouping whiteRoanGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
 
-        boolean whiteExt1 = genes[62] == 2 || genes[63] == 2;
-        boolean whiteExt2 = genes[64] == 2 || genes[65] == 2;
-        int whiteSize = 0;
-        if (whiteExt1) whiteSize++;
-        if (whiteExt2) whiteSize++;
+        int whiteSize = getWhiteExtension(genes);
 
         // EDNRA. Because it potentially boosts white level, it has to be processed before KIT etc.
         if (genes[82] != 1 || genes[83] != 1) {
             int schwartzalSize = genes[82] + genes[83] - 3; // Since WT is 1, homozygous WT = 2. Min expression = 3
             // Clamp value to prevent crashes in case of user error (aka gene data modification)
             schwartzalSize = Mth.clamp(schwartzalSize, 0, 3);
-            if (schwartzalSize > 0) whiteSize = Math.min(2, whiteSize+1); // Anything above low expression boosts overall white
+            if (schwartzalSize > 0)
+                whiteSize = Math.min(2, whiteSize + 1); // Anything above low expression boosts overall white
             int schwartzalRandom = 0;
-            goat.addDelimiter("sz");
-            goat.addPrefixedTexture(whiteTopGroup, HAIR_PREFIX, hairType, TX_SCHWARTZAL, schwartzalSize, schwartzalRandom, true);
+            goat.addPrefixedTexture(whiteTopGroup, HAIR_PREFIX, hairType, TX_SCHWARTZAL, schwartzalSize, schwartzalRandom, "sz", true);
         }
 
         // KIT locus
@@ -595,9 +603,8 @@ public class GoatTexture {
             // Not Dom White
             if (genes[4] == 3 || genes[5] == 3) {
                 // Goulet
-                goat.addDelimiter("g");
                 int gouletRandom = uuidArry[IDX_KIT_BODY] % (whiteSize == 2 ? 4 : 8);
-                goat.addPrefixedTexture(whiteSize == 2 ? whiteTopGroup : whiteMiddleGroup, HAIR_PREFIX, hairType, TX_GOULET, whiteSize, gouletRandom, true);
+                goat.addPrefixedTexture(whiteSize == 2 ? whiteTopGroup : whiteMiddleGroup, HAIR_PREFIX, hairType, TX_GOULET, whiteSize, gouletRandom, "g", true);
 
             } else if (genes[4] == 4 && genes[5] == 4) {
                 // Piebald
@@ -605,14 +612,12 @@ public class GoatTexture {
                     // Piebald AND belt
                     int piebaldBeltRandom = uuidArry[IDX_KIT_BODY] % 8;
 
-                    goat.addDelimiter("pbe");
-                    goat.addPrefixedTexture(whiteSize > 0 ? whiteTopGroup : whiteMiddleGroup, HAIR_PREFIX, hairType, TX_PIEBALD_BELT, whiteSize, piebaldBeltRandom, true);
+                    goat.addPrefixedTexture(whiteSize > 0 ? whiteTopGroup : whiteMiddleGroup, HAIR_PREFIX, hairType, TX_PIEBALD_BELT, whiteSize, piebaldBeltRandom, "pbe", true);
                 } else {
                     // Piebald without belt
                     int piebaldRandom = uuidArry[IDX_KIT_BODY] % 8;
 
-                    goat.addDelimiter("pb");
-                    goat.addPrefixedTexture(whiteSize == 2 ? whiteTopGroup : whiteMiddleGroup, HAIR_PREFIX, hairType, TX_PIEBALD, whiteSize, piebaldRandom, true);
+                    goat.addPrefixedTexture(whiteSize == 2 ? whiteTopGroup : whiteMiddleGroup, HAIR_PREFIX, hairType, TX_PIEBALD, whiteSize, piebaldRandom, "pb", true);
                 }
             }
             // Can't use an else-if because that would make it mutually exclusive with goulet - just have to make sure it's not piebald!
@@ -654,12 +659,10 @@ public class GoatTexture {
 
                 if (genes[130] == 2 && genes[131] == 2) {
                     // Half-white modifier
-                    goat.addDelimiter("hw");
-                    goat.addPrefixedTexture(whiteTopGroup, HAIR_PREFIX, hairType, TX_HALFWHITE, whiteSize,true);
+                    goat.addPrefixedTexture(whiteTopGroup, HAIR_PREFIX, hairType, TX_HALFWHITE, whiteSize, "hw", true);
                 } else {
                     // Normal belt
-                    goat.addDelimiter("be");
-                    goat.addPrefixedTexture(whiteTopGroup, HAIR_PREFIX, hairType, TX_BELT, whiteSize, beltQuality, beltRandom, true);
+                    goat.addPrefixedTexture(whiteTopGroup, HAIR_PREFIX, hairType, TX_BELT, whiteSize, beltQuality, beltRandom, "be", true);
                 }
 
                 goat.addTextureToAnimalTextureGrouping(whiteTopGroup, TexturingType.NONE, TX_SOCKS_FRONT, sockFrontSize, sockQuality, sockFrontRandom, sockFrontSize != 0);
@@ -688,9 +691,8 @@ public class GoatTexture {
         }
         if (genes[80] == 4 || genes[81] == 4) {
             // Flowery
-            goat.addDelimiter("f");
             int floweryRandom = uuidArry[IDX_FLOWERY] % 4;
-            goat.addPrefixedTexture(whiteSize == 2 ? whiteTopGroup : whiteBottomGroup, HAIR_PREFIX, hairType, TX_FLOWERY, whiteSize, floweryRandom, true);
+            goat.addPrefixedTexture(whiteSize == 2 ? whiteTopGroup : whiteBottomGroup, HAIR_PREFIX, hairType, TX_FLOWERY, whiteSize, floweryRandom, "f", true);
         }
         if (genes[80] == 3 || genes[81] == 3) {
             // Roan
@@ -699,8 +701,8 @@ public class GoatTexture {
                 roan = 1;
             }
             int roanRandom = 0;
-            goat.addTextureToAnimalTextureGrouping(whiteTopGroup, "shared/frosting.png", "rn");
-            goat.addPrefixedTexture(whiteRoanGroup, HAIR_PREFIX, hairType, TX_ROAN, roan, roanRandom, true);
+            goat.addTextureToAnimalTextureGrouping(whiteTopGroup, "shared/frosting.png");
+            goat.addPrefixedTexture(whiteRoanGroup, HAIR_PREFIX, hairType, TX_ROAN, roan, roanRandom, "rn", true);
         } else if (genes[80] == 5 || genes[81] == 5) {
             // Frosting
             goat.addTextureToAnimalTextureGrouping(whiteTopGroup, "shared/frosting.png", "fr");
@@ -723,8 +725,7 @@ public class GoatTexture {
                 brocklingSize++;
             }
             int brocklingRandom = 0;
-            goat.addDelimiter("br");
-            goat.addPrefixedTexture(whiteCutoutGroup, HAIR_PREFIX, hairType, TX_BROCKLING, brocklingSize, brocklingRandom, true);
+            goat.addPrefixedTexture(whiteCutoutGroup, HAIR_PREFIX, hairType, TX_BROCKLING, brocklingSize, brocklingRandom, "br", true);
         }
         return whiteCutoutGroup;
     }
@@ -746,8 +747,8 @@ public class GoatTexture {
         if (genes[84] == 2 || genes[85] == 2) {
             // Because of the sheer quantity of moonspots textures, making a 3-dimensional array of them all feels excessive.
             // Instead, just piece together the texture name based on fixed descriptors
-            String[] quantityDescriptors = { "few", "some", "many" };
-            String[] sizeDescriptors = { "small", "med", "large" };
+            String[] quantityDescriptors = {"few", "some", "many"};
+            String[] sizeDescriptors = {"small", "med", "large"};
             int moonspotQuantity = 1;
             int moonspotSize = 1;
             int moonspotRandom = 0;
@@ -772,7 +773,7 @@ public class GoatTexture {
             String texturePath = HAIR_PREFIX[hairType] + "moonspots/moonspots_" +
                     quantityDescriptors[moonspotQuantity] + "_" + sizeDescriptors[moonspotSize] + (moonspotRandom + 1) + ".png";
 
-            String textureName = "ms" + hairType + "-" + moonspotQuantity +  "-" + moonspotSize +  "-" + moonspotRandom;
+            String textureName = "ms" + hairType + "-" + moonspotQuantity + "-" + moonspotSize + "-" + moonspotRandom;
 
             goat.addTextureToAnimalTextureGrouping(moonspotSize == 0 ? moonspotBottomGroup : moonspotTopGroup, texturePath, textureName);
 
@@ -786,18 +787,19 @@ public class GoatTexture {
         return moonspotColorGroup;
     }
 
-    private static TextureGrouping makeHairDetailGroup(EnhancedGoat goat, int[] genes, GoatColors color) {
+    private static TextureGrouping makeHairDetailGroup(EnhancedGoat goat, int[] genes, GoatColors color, int hairType) {
         TextureGrouping hairDetailGroup = new TextureGrouping(TexturingType.MASK_GROUP);
         boolean angora = genes[134] == 2 || genes[135] == 2;
         boolean headWool = angora && genes[136] == 2 && genes[137] == 2;
-        int hairType = 0;
+        int hairTexture = 0;
         if (genes[48] == 2 || genes[49] == 2) {
-            hairType = genes[48] == genes[49] ? 2 : 1; // Curly if homozygous, wavy otherwise
+            hairTexture = genes[48] == genes[49] ? 2 : 1; // Curly if homozygous, wavy otherwise
         }
         goat.addDelimiter("h");
         goat.addTextureToAnimalTextureGrouping(hairDetailGroup, TX_ANGORA_MASK, headWool ? 1 : 0, true);
         if (angora) goat.addTextureToAnimalTextureGrouping(hairDetailGroup, TexturingType.APPLY_RGB, "misc/angora_lightness.png", "an", color.getWhiteColor());
-        goat.addTextureToAnimalTextureGrouping(hairDetailGroup, TX_HAIR_TEXTURE, hairType, hairType != 0);
+        // TODO: Make it use longhair curly textures (once we have those) instead of just disabling
+        goat.addTextureToAnimalTextureGrouping(hairDetailGroup, TX_HAIR_TEXTURE, hairTexture, hairTexture != 0 && hairType == 0);
         return hairDetailGroup;
     }
 }

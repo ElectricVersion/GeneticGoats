@@ -3,8 +3,8 @@ package com.electricversion.geneticgoats.entity.texture;
 import com.electricversion.geneticgoats.entity.EnhancedGoat;
 import mokiyoki.enhancedanimals.entity.util.Colouration;
 
-import static net.minecraft.util.Mth.clamp;
 import static com.electricversion.geneticgoats.util.AddonUtils.clamp;
+import static net.minecraft.util.Mth.clamp;
 
 public class GoatColors {
     private int whiteColor = -1;
@@ -72,7 +72,7 @@ public class GoatColors {
         red[2] = clamp(red[2], 0.29F, white[2]);
     }
 
-    protected static GoatColors calculateColors(EnhancedGoat goat, int[] genes, char[] uuidArry) {
+    protected static GoatColors calculateColors(EnhancedGoat goat, int[] genes, char[] uuidArry, boolean isBaby) {
 
         GoatColors color = new GoatColors();
 
@@ -97,15 +97,14 @@ public class GoatColors {
         // Brown Locus/TYRP1
         if (genes[6] == 2 || genes[7] == 2) {
             // Dark Brown
-            if (genes[6] != genes[7])  {
+            if (genes[6] != genes[7]) {
                 // Heterozygous Dark Brown
                 melanin[0] = 0.044F;
                 melanin[1] = 0.333F;
                 melanin[2] = 0.153F;
-                
+
                 noseBlack[2] += 0.075F;
-            }
-            else {
+            } else {
                 // Homozygous Dark Brown
                 melanin[0] = 0.044F;
                 melanin[1] = 0.351F;
@@ -130,7 +129,7 @@ public class GoatColors {
         }
         if (genes[0] == 5 || genes[1] == 5) {
             // Swiss specifically seems to have lighter cream points than other agoutis. This includes heterozygotes
-            tanModifier = tanModifier+4;
+            tanModifier = tanModifier + 4;
         }
 
         int eyeDarkness = 0;
@@ -167,9 +166,34 @@ public class GoatColors {
             melanin[1] += -0.25F;
             melanin[2] += 0.2F;
         }
-        
-        GoatColors.modifyRed(pheomelanin, white, redModifier/6F);
-        GoatColors.modifyRed(cream, white, (redModifier+tanModifier+4)/6F);
+
+        // Moonspot Color
+        if (genes[152] == 2 || genes[153] == 2) {
+            // White
+            moonspot[0] = white[0];
+            moonspot[1] = white[1];
+            moonspot[2] = white[2];
+        } else {
+            if (isBaby) {
+                // Babies should have dark moonspots unless white
+                moonspot[0] = 0.0427F;
+                moonspot[1] = 0.227F;
+                moonspot[2] = 0.071F;
+            } else if (genes[152] == 3 || genes[153] == 3) {
+                // Silver
+                moonspot[0] = white[0];
+                moonspot[1] = white[1];
+                moonspot[2] = white[2];
+            } else if (genes[152] == 4 && genes[153] == 4) {
+                // Brown
+                moonspot[0] = 0.0541F;
+                moonspot[1] = 0.552F;
+                moonspot[2] = 0.497F;
+            }
+        }
+
+        GoatColors.modifyRed(pheomelanin, white, redModifier / 6F);
+        GoatColors.modifyRed(cream, white, (redModifier + tanModifier + 4) / 6F);
 
         //Universal Colouration Values (Uses ABGR)
         goat.colouration.setMelaninColour(
@@ -177,7 +201,7 @@ public class GoatColors {
         );
         goat.colouration.setPheomelaninColour(
                 Colouration.HSBtoABGR(clamp(pheomelanin[0]), clamp(pheomelanin[1]), clamp(pheomelanin[2])
-        ));
+                ));
         // ...except for this one. For some reason eyes use ARGB
         // Only need to set one eye because goats don't really have heterochromia. Just using left eye for everything
         goat.colouration.setLeftEyeColour(

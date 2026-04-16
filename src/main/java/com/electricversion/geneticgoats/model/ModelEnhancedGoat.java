@@ -27,8 +27,8 @@ import java.util.Map;
 
 @OnlyIn(Dist.CLIENT)
 public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalModel<T> {
-    private static final float baseNeckAngle = Mth.HALF_PI*0.30F;
-    private static final float baseHeadAngle = -Mth.HALF_PI*0.225F;
+    private static final float baseNeckAngle = Mth.HALF_PI * 0.30F;
+    private static final float baseHeadAngle = -Mth.HALF_PI * 0.225F;
 
     public static final int MAX_HORN_LENGTH = 17;
 
@@ -77,10 +77,11 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     private final WrappedModelPart beard;
     private final WrappedModelPart muzzleLong;
     private final WrappedModelPart muzzleShort;
+    private final WrappedModelPart lowerMuzzle;
     private final WrappedModelPart upperMouth;
     private final WrappedModelPart mouth;
-    private final WrappedModelPart eyeL;
-    private final WrappedModelPart eyeR;
+    private final WrappedModelPart wattleL;
+    private final WrappedModelPart wattleR;
 
     private final WrappedModelPart earLG;
     private final WrappedModelPart earRG;
@@ -166,10 +167,12 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         beard = new WrappedModelPart("beard", basePart);
         muzzleLong = new WrappedModelPart("muzzleLong", basePart);
         muzzleShort = new WrappedModelPart("muzzleShort", basePart);
+        lowerMuzzle = new WrappedModelPart("lowerMuzzle", basePart);
         upperMouth = new WrappedModelPart("upperMouth", basePart);
         mouth = new WrappedModelPart("mouth", basePart);
-        eyeL = new WrappedModelPart("eyeL", basePart);
-        eyeR = new WrappedModelPart("eyeR", basePart);
+        eyes = new WrappedModelPart("eyes", basePart);
+        wattleL = new WrappedModelPart("wattleL", basePart);
+        wattleR = new WrappedModelPart("wattleR", basePart);
 
         earLG = new WrappedModelPart("earLG", basePart);
         earRG = new WrappedModelPart("earRG", basePart);
@@ -245,9 +248,11 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bMuzzle.addChild(muzzleShort);
         bHead.addChild(bMouth);
         bMouth.addChild(mouth);
+        bHead.addChild(lowerMuzzle);
         bHead.addChild(upperMouth);
-        head.addChild(eyeL);
-        head.addChild(eyeR);
+        head.addChild(eyes);
+        head.addChild(wattleL);
+        head.addChild(wattleR);
 
         bHead.addChild(bHornL);
         bHead.addChild(bHornR);
@@ -272,8 +277,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bHornL.addChild(hornL[0]);
         bHornR.addChild(hornR[0]);
         for (int i = 1; i < MAX_HORN_LENGTH; i++) {
-            hornL[i-1].addChild(hornL[i]);
-            hornR[i-1].addChild(hornR[i]);
+            hornL[i - 1].addChild(hornL[i]);
+            hornR[i - 1].addChild(hornR[i]);
         }
     }
 
@@ -357,8 +362,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                 PartPose.offset(0F, 14F, 0F));
 
         baseDef.addOrReplaceChild("neck", CubeListBuilder.create()
-                           .texOffs(0, 40)
-                     .addBox(-2.5F, -11F, -6F, 5, 11, 6),
+                        .texOffs(0, 40)
+                        .addBox(-2.5F, -11F, -6F, 5, 11, 6),
                 PartPose.offset(0F, 0F, 3F));
 
         // Head
@@ -387,9 +392,14 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                         .addBox(-2.5F, -0.8F, -5.6F, 5, 4, 7, new CubeDeformation(-0.99F, -0.8F, -1.4F)),
                 PartPose.offset(0F, 0F, 0F));
 
-        baseDef.addOrReplaceChild("upperMouth", CubeListBuilder.create()
+        baseDef.addOrReplaceChild("lowerMuzzle", CubeListBuilder.create()
                         .texOffs(28, 56)
                         .addBox(-1.5F, -1.5F, -4F, 3, 1, 4, new CubeDeformation(0F, 0.5F, 0F)),
+                PartPose.offset(0F, 4F, -6F));
+
+        baseDef.addOrReplaceChild("upperMouth", CubeListBuilder.create()
+                        .texOffs(28, 56)
+                        .addBox(-1.5F, 0F, -4F, 3, 1, 4, new CubeDeformation(-0.01F, 0F, 0F)),
                 PartPose.offset(0F, 4F, -6F));
 
         baseDef.addOrReplaceChild("mouth", CubeListBuilder.create()
@@ -402,14 +412,21 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                         .addBox(0F, 0F, -4F, 0, 8, 6),
                 PartPose.offset(0F, 1F, 0F));
 
-        baseDef.addOrReplaceChild("eyeL", CubeListBuilder.create()
+        baseDef.addOrReplaceChild("eyes", CubeListBuilder.create()
                         .texOffs(61, 68)
-                        .addBox(0.505F, -5.5F, -7.505F, 4, 4, 4, new CubeDeformation(-1.5F)),
-                PartPose.ZERO);
-
-        baseDef.addOrReplaceChild("eyeR", CubeListBuilder.create()
+                        .addBox(0.505F, -5.5F, -7.505F, 4, 4, 4, new CubeDeformation(-1.5F))
                         .texOffs(44, 68)
                         .addBox(-4.505F, -5.5F, -7.505F, 4, 4, 4, new CubeDeformation(-1.5F)),
+                PartPose.ZERO);
+
+        baseDef.addOrReplaceChild("wattleL", CubeListBuilder.create()
+                        .texOffs(48, 58)
+                        .addBox(1F, 0F, -5F, 1, 2, 1),
+                PartPose.ZERO);
+
+        baseDef.addOrReplaceChild("wattleR", CubeListBuilder.create()
+                        .texOffs(43, 58)
+                        .addBox(-2F, 0F, -5F, 1, 2, 1),
                 PartPose.ZERO);
 
         baseDef.addOrReplaceChild("earLG", CubeListBuilder.create()
@@ -455,34 +472,34 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("earL7", CubeListBuilder.create()
                         .texOffs(87, 64)
                         .addBox(0F, -7F, -1F, 3, 7, 1),
-                PartPose.offsetAndRotation(0F,0F,0F, 0F, -Mth.HALF_PI, Mth.HALF_PI));
+                PartPose.offsetAndRotation(0F, 0F, 0F, 0F, -Mth.HALF_PI, Mth.HALF_PI));
 
         baseDef.addOrReplaceChild("earR7", CubeListBuilder.create()
                         .texOffs(78, 64)
                         .addBox(-3F, -7F, -1F, 3, 7, 1),
-                PartPose.offsetAndRotation(0F,0F,0F, 0F, Mth.HALF_PI, -Mth.HALF_PI));
+                PartPose.offsetAndRotation(0F, 0F, 0F, 0F, Mth.HALF_PI, -Mth.HALF_PI));
 
 
         baseDef.addOrReplaceChild("earL9", CubeListBuilder.create()
                         .texOffs(87, 64)
                         .addBox(0F, -9F, -1F, 3, 9, 1),
-                PartPose.offsetAndRotation(0F,0F,0F, 0F, -Mth.HALF_PI, Mth.HALF_PI));
+                PartPose.offsetAndRotation(0F, 0F, 0F, 0F, -Mth.HALF_PI, Mth.HALF_PI));
 
         baseDef.addOrReplaceChild("earR9", CubeListBuilder.create()
                         .texOffs(78, 64)
                         .addBox(-3F, -9F, -1F, 3, 9, 1),
-                PartPose.offsetAndRotation(0F,0F,0F, 0F, Mth.HALF_PI, -Mth.HALF_PI));
+                PartPose.offsetAndRotation(0F, 0F, 0F, 0F, Mth.HALF_PI, -Mth.HALF_PI));
 
 
         baseDef.addOrReplaceChild("earL12", CubeListBuilder.create()
                         .texOffs(87, 64)
                         .addBox(0F, -12F, -1F, 3, 12, 1),
-                PartPose.offsetAndRotation(0F,0F,0F, 0F, -Mth.HALF_PI, Mth.HALF_PI));
+                PartPose.offsetAndRotation(0F, 0F, 0F, 0F, -Mth.HALF_PI, Mth.HALF_PI));
 
         baseDef.addOrReplaceChild("earR12", CubeListBuilder.create()
                         .texOffs(78, 64)
                         .addBox(-3F, -12F, -1F, 3, 12, 1),
-                PartPose.offsetAndRotation(0F,0F,0F, 0F, Mth.HALF_PI, -Mth.HALF_PI));
+                PartPose.offsetAndRotation(0F, 0F, 0F, 0F, Mth.HALF_PI, -Mth.HALF_PI));
 
         // Upper Legs
         baseDef.addOrReplaceChild("legFL", CubeListBuilder.create()
@@ -567,7 +584,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     }
 
     private void updateWoolLength(AnimalModelData animalModelData, T enhancedAnimal) {
-        ((GoatModelData) animalModelData).setWoolLength(enhancedAnimal.getWoolLength()/EnhancedGoat.maxPossibleWool);
+        ((GoatModelData) animalModelData).setWoolLength(enhancedAnimal.getWoolLength() / EnhancedGoat.maxPossibleWool);
     }
 
     @Override
@@ -594,6 +611,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             bLegBR.setRotation(0F, 0F, 0F);
             bNeck.setRotation(baseNeckAngle, 0F, 0F);
             bHead.setRotation(baseHeadAngle, 0F, 0F);
+            bMouth.setXRot(0F);
             // Set genetic ear rotation
             bEarL.setXRot(phenotype.getEarXRot());
             bEarR.setXRot(phenotype.getEarXRot());
@@ -603,9 +621,6 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
             bEarL.setZRot(phenotype.getEarZRot());
             bEarR.setZRot(-phenotype.getEarZRot());
-            // Set genetic muzzle & mouth rotation
-            bMuzzle.setXRot(phenotype.getMuzzleXRot());
-            mouth.setXRot(phenotype.getMouthXRot());
 
         } else {
             setRotationFromVector(bLegFL, map.get("bLegFL"));
@@ -614,10 +629,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             setRotationFromVector(bLegBR, map.get("bLegBR"));
             setRotationFromVector(bNeck, map.get("bNeck"));
             setRotationFromVector(bHead, map.get("bHead"));
-            setRotationFromVector(mouth, map.get("mouth"));
+            setRotationFromVector(bMouth, map.get("bMouth"));
             setRotationFromVector(bEarL, map.get("bEarL"));
             setRotationFromVector(bEarR, map.get("bEarR"));
-            setRotationFromVector(bMuzzle, map.get("bMuzzle"));
         }
     }
 
@@ -630,10 +644,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         map.put("bLegBR", getRotationVector(bLegBR));
         map.put("bNeck", getRotationVector(bNeck));
         map.put("bHead", getRotationVector(bHead));
-        map.put("mouth", getRotationVector(mouth));
+        map.put("bMouth", getRotationVector(bMouth));
         map.put("bEarL", getRotationVector(bEarL));
         map.put("bEarR", getRotationVector(bEarR));
-        map.put("bMuzzle", getRotationVector(bMuzzle));
     }
 
     private void lookAnim(float netHeadYaw, float headPitch) {
@@ -656,26 +669,61 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     }
 
     private void grazeAnim(float ticksOfGrazing) {
-        bNeck.setXRot(lerpTo(bNeck.getXRot(), Mth.HALF_PI*0.9F + baseNeckAngle));
-        bHead.setXRot(lerpTo(bHead.getXRot(), -Mth.HALF_PI*0.075F + baseHeadAngle));
+        bNeck.setXRot(lerpTo(bNeck.getXRot(), Mth.HALF_PI * 0.9F + baseNeckAngle));
+        bHead.setXRot(lerpTo(bHead.getXRot(), -Mth.HALF_PI * 0.075F + baseHeadAngle));
+        bMouth.setXRot(lerpTo(bMouth.getXRot(), Mth.sin(ticksOfGrazing*0.75F)*0.15F));;
+    }
+
+    private void earTwitchAnim(float ageInTicks, boolean isLeftEar, float baseXRot, float baseZRot) {
+        float angleMultiplier = Mth.cos(ageInTicks*0.8F)*Mth.HALF_PI;
+        if (isLeftEar) {
+            bEarL.setXRot(baseXRot + (angleMultiplier * 0.03F));
+            bEarL.setZRot(baseZRot + (angleMultiplier * 0.02F));
+        } else {
+            bEarR.setXRot(baseXRot + (angleMultiplier * 0.03F));
+            bEarR.setZRot(-baseZRot + (angleMultiplier * -0.02F));
+        }
     }
 
     @Override
     public void setupAnim(@NotNull T goat, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         goatModelData = getCreateGoatModelData(goat);
+        boolean hasAI = !goat.isNoAi();
         if (goatModelData != null) {
+            GoatPhenotype phenotype = goatModelData.getPhenotype();
             setupInitialAnimationValues(goatModelData, netHeadYaw, headPitch);
+
+            float baseEarXRot = phenotype.getEarXRot();
+            float baseEarZRot = phenotype.getEarZRot();
+
+            // Modeled after the sheep ear twitch functionality in core GA. Credit to Bearded & Moki for the logic
+            if (goatModelData.earTwitchTimer <= ageInTicks) {
+                if (bEarL.getXRot() != baseEarXRot|| bEarL.getXRot() != baseEarXRot) {
+                    bEarL.setXRot(lerpTo(bEarL.getXRot(), baseEarXRot));
+                    bEarL.setZRot(lerpTo(bEarL.getZRot(), baseEarZRot));
+                    bEarR.setXRot(lerpTo(bEarR.getXRot(), baseEarXRot));
+                    bEarR.setZRot(lerpTo(bEarR.getZRot(), -baseEarZRot));
+                }
+                else {
+                    goatModelData.earTwitchSide = goat.getRandom().nextBoolean();
+                    goatModelData.earTwitchTimer = (int) ageInTicks + goat.getRandom().nextInt(goatModelData.sleeping ? 1200 : 600);
+                }
+            } else if (goatModelData.earTwitchTimer <= ageInTicks + 30 && hasAI) {
+                earTwitchAnim(ageInTicks, goatModelData.earTwitchSide, baseEarXRot, baseEarZRot);
+            }
 
             if (goatModelData.isEating != 0) {
                 if (goatModelData.isEating == -1) {
-                    goatModelData.isEating = (int)ageInTicks + 90;
+                    goatModelData.isEating = (int) ageInTicks + 90;
                 } else if (goatModelData.isEating < ageInTicks) {
                     goatModelData.isEating = 0;
                 }
                 grazeAnim(goatModelData.isEating - ageInTicks);
             } else {
                 lookAnim(netHeadYaw, headPitch);
+                bMouth.setXRot(lerpTo(bMouth.getXRot(), 0F));
             }
+
 
             if (goat.getDeltaMovement().horizontalDistanceSqr() > 0.001 || goat.xOld != goat.getX() || goat.zOld != goat.getZ()) {
                 walkAnim(limbSwing, limbSwingAmount);
@@ -720,16 +768,25 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         beard.show(phenotype.isBearded());
 
+        wattleL.show(phenotype.isWattled());
+        wattleR.show(phenotype.isWattled());
+
+        if (phenotype.isLongHaired()) {
+            // Any long-haired goat
+            headHair.show();
+            bodyHairF.show();
+            bodyHairB.show();
+        }
+
         if (phenotype.isAngora() && phenotype.isHeadWooled()) {
             headWool.show();
             headHair.show();
             headHair.setY(-0.5F); // Offset the head hair to add visual floofiness!
         } else if (phenotype.isLongHaired()) {
-            headHair.show();
+            // Long-haired and not a head-wooled angora
             headHair.setY(0F);
-            bodyHairF.show();
-            bodyHairB.show();
         }
+
         setupEars(phenotype);
         setupMuzzle(phenotype);
         setupHorns(phenotype);
@@ -786,9 +843,16 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         }
         beard.setZ(phenotype.getBeardZ());
         beard.setY(phenotype.getBeardY());
+        
+        // Set genetic muzzle & mouth rotation
+        bMuzzle.setXRot(phenotype.getMuzzleXRot());
+        upperMouth.setY(phenotype.getUpperMouthY());
+        mouth.setXRot(phenotype.getMouthXRot());
     }
 
     private void setupHorns(GoatPhenotype phenotype) {
+        bHornL.setRotation(phenotype.getFullHornLeftRotation());
+        bHornR.setRotation(phenotype.getFullHornRightRotation());
         for (int i = 0; i < MAX_HORN_LENGTH; i++) {
             boolean isSegmentRendered = i >= MAX_HORN_LENGTH - phenotype.getHornLength();
             hornL[i].boxIsRendered = isSegmentRendered;
@@ -799,8 +863,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             } else if (i == MAX_HORN_LENGTH - phenotype.getHornLength()) {
                 hornL[i].setPosYAndRot(Vector3f.ZERO, phenotype.getHornLeftRotation(i));
                 hornR[i].setPosYAndRot(Vector3f.ZERO, phenotype.getHornRightRotation(i));
-            }
-            else {
+            } else {
                 hornL[i].setPosYAndRot(Vector3f.ZERO, Vector3f.ZERO);
                 hornR[i].setPosYAndRot(Vector3f.ZERO, Vector3f.ZERO);
             }
@@ -831,7 +894,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
             mapOfScale.put("head", phenotype.getHeadScalings());
             mapOfScale.put("bMuzzle", phenotype.getHeadScalings());
-            mapOfScale.put("upperMouth", phenotype.getUpperMouthScalings());
+            mapOfScale.put("lowerMuzzle", phenotype.getLowerMuzzleScalings());
+            mapOfScale.put("upperMouth", phenotype.getLowerMuzzleScalings());
             mapOfScale.put("mouth", phenotype.getMouthScalings());
 
             List<Float> upperLegScalings = ModelHelper.createScalings(woolScale1, phenotype.getUpperLegHeight(), woolScale1, 0F, 0F, 0F);

@@ -95,8 +95,8 @@ public class GoatPhenotype implements Phenotype {
         return headScalings;
     }
 
-    public List<Float> getUpperMouthScalings() {
-        return upperMouthScalings;
+    public List<Float> getLowerMuzzleScalings() {
+        return lowerMuzzleScalings;
     }
 
     public List<Float> getMouthScalings() {
@@ -143,6 +143,22 @@ public class GoatPhenotype implements Phenotype {
         return angora;
     }
 
+    public Vector3f getFullHornLeftRotation() {
+        return fullHornLeftRotation;
+    }
+
+    public Vector3f getFullHornRightRotation() {
+        return fullHornRightRotation;
+    }
+
+    public boolean isWattled() {
+        return wattled;
+    }
+
+    public float getUpperMouthY() {
+        return upperMouthY;
+    }
+
     public enum EarLength {
         GOPHER,
         ELF,
@@ -164,7 +180,9 @@ public class GoatPhenotype implements Phenotype {
     private float smallEarPivotZ;
 
     //Muzzle Settings
+    private float mouthScaleZ;
     private float upperMouthScaleZ;
+    private float upperMouthY;
     private float muzzleXRot;
     private float muzzleY;
     private boolean shortMuzzled;
@@ -184,18 +202,23 @@ public class GoatPhenotype implements Phenotype {
     private float neckDepth;
     private float neckWidth;
     private float headWidth;
-    private float upperLegHeight;
-    private List<Float> fullBodyScalings;
-    private List<Float> headScalings;
-    private List<Float> upperMouthScalings;
-    private List<Float> mouthScalings;
+    private final float upperLegHeight;
+    private final List<Float> fullBodyScalings;
+    private final List<Float> headScalings;
+    private final List<Float> lowerMuzzleScalings;
+    private final List<Float> mouthScalings;
 
     // Horn Settings
     private int hornLength;
+    private Vector3f fullHornLeftRotation;
+    private Vector3f fullHornRightRotation;
     private Vector3f[] hornLeftRotations;
     private Vector3f[] hornRightRotations;
     private Vector3f[] hornOffsets;
     private List<Float> hornScalings;
+
+    // Misc Settings
+    private boolean wattled;
 
     // General
     private final boolean female;
@@ -228,9 +251,10 @@ public class GoatPhenotype implements Phenotype {
         }
         // Ear Flop
         float earFlop = 0.25F;
-        earFlop += 0.75F * ((genes[18] + genes[19] + genes[20] + genes[21] - 4)/6F);
-        earFlop -= 0.25F * ((genes[22] + genes[23] - 2)/4F);
-        earFlop = clamp(earFlop, 0F, 1F); // 0 to 1
+        boolean polled = false; // Placeholder
+        earFlop += 0.75F * ((genes[18] + genes[19] + genes[20] + genes[21] - 4) / 6F);
+        earFlop -= 0.25F * ((genes[22] + genes[23] - 2) / 4F);
+        earFlop = clamp(earFlop, polled ? 0F : 0.25F, 1F); // 0 to 1
 
         float earForward = clamp((genes[24] + genes[25] - 2) / 4F, 0F, 1F);  // 0 to 1
         float earLowering = 0;
@@ -246,7 +270,7 @@ public class GoatPhenotype implements Phenotype {
         earXRot = 0F;
         earYRot = 0F;
         earZRot = (earFlop * 2F) - 1;
-        earY = 0F;
+        earY = 0.01F;
         earZ = -2.05F;
         smallEarPivotZ = 0F;
 
@@ -254,7 +278,7 @@ public class GoatPhenotype implements Phenotype {
             case GOPHER -> {
                 earZRot = -0.1F;
                 earX = 3F;
-                earY = 0F;
+                earY = 0.01F;
             }
             case ELF -> {
                 earZRot = -0.5F;
@@ -346,8 +370,8 @@ public class GoatPhenotype implements Phenotype {
         }
 
         if (genes[46] == 2 || genes[47] == 2) {
-                originalMuzzleLength = 4.2F;
-                shortMuzzled = true;
+            originalMuzzleLength = 4.2F;
+            shortMuzzled = true;
         }
 
         mouthXRot = romanNose < 0F ? (romanNose * Mth.HALF_PI * 0.175F) : 0F;
@@ -357,9 +381,19 @@ public class GoatPhenotype implements Phenotype {
         muzzleY -= romanNose;
         muzzleXRot += Mth.HALF_PI * 0.25F * romanNose;
 
+        upperMouthY = 4F;
+
         float mouthLengthA = originalMuzzleLength * Mth.sin(Mth.HALF_PI - muzzleXRot);
         float mouthLengthB = originalMuzzleHeight * Mth.cos(Mth.HALF_PI - muzzleXRot);
-        upperMouthScaleZ = (mouthLengthA - (mouthLengthB + 0.2F))/originalMouthLength; // the 0.2 block difference just looks better
+        mouthScaleZ = (mouthLengthA - (mouthLengthB + 0.2F)) / originalMouthLength; // the 0.2 block difference just looks better
+        // Use the pythagorean theorem to get the diagonal length of the muzzle
+        float muzzleDiagonalSquared = (originalMuzzleLength*originalMuzzleLength) + (originalMuzzleHeight*originalMuzzleHeight);
+        // Now use that to figure out the distance from the top of the muzzle to the bottom of the uppermouth
+        float trueMouthLength = (mouthLengthA - (mouthLengthB));
+        float upperMouthYDistance = Mth.sqrt(muzzleDiagonalSquared - (trueMouthLength*trueMouthLength));
+        upperMouthY = upperMouthYDistance - romanNose;
+        upperMouthScaleZ = trueMouthLength/originalMouthLength;
+
         beardZ = originalMouthLength - (mouthLengthA - (mouthLengthB + 0.2F));
         beardY = romanNose < 0F ? 1F + (Mth.sin(mouthXRot) * originalMouthLength) : 1F;
     }
@@ -429,7 +463,7 @@ public class GoatPhenotype implements Phenotype {
 
     private float[] calculateHornSegment(int geneValue, float wildtypeX, float wildtypeZ) {
         if (geneValue == 1) {
-            return new float[] {wildtypeX, wildtypeZ};
+            return new float[]{wildtypeX, wildtypeZ};
         }
 
         float[] digitXRotations = {
@@ -446,7 +480,7 @@ public class GoatPhenotype implements Phenotype {
         float xRot = digitXRotations[getDigit(geneValue, 0)];
         float zRot = digitZRotations[getDigit(geneValue, 1)];
 
-        return new float[] {xRot, zRot};
+        return new float[]{xRot, zRot};
     }
 
     private void calculateHorns(int[] genes) {
@@ -460,35 +494,45 @@ public class GoatPhenotype implements Phenotype {
         float[] hornYRots = new float[MAX_HORN_LENGTH];
         float[] hornZRots = new float[MAX_HORN_LENGTH];
 
+        // Horn Base
+        float[] baseRots1 = calculateHornSegment(genes[154], 0, 0);
+        float[] baseRots2 = calculateHornSegment(genes[155], 0, 0);
+        // Note the divide by 4 - this gene is intentionally only half as strong as the others
+        float fullHornXRot = (baseRots1[0] + baseRots2[0]) / 4F;
+        float fullHornYRot = (0.1875F * Mth.HALF_PI) + ((baseRots1[1] + baseRots2[1]) / 4F);
+        fullHornLeftRotation = new Vector3f(fullHornXRot, 0f, fullHornYRot);
+        fullHornRightRotation = new Vector3f(fullHornXRot, 0f, -fullHornYRot);
+
         // Horn Root
         float[] rootRots1 = calculateHornSegment(genes[90], 0, 0);
         float[] rootRots2 = calculateHornSegment(genes[91], 0, 0);
-        hornXRots[0] = (rootRots1[0] + rootRots2[0])/2F;
-        hornZRots[0] = (rootRots1[1] + rootRots2[1])/2F;
+        // Note the divide by 4 - this gene is intentionally only half as strong as the others
+        hornXRots[0] = (rootRots1[0] + rootRots2[0]) / 4F;
+        hornZRots[0] = (rootRots1[1] + rootRots2[1]) / 4F;
 
         // Horn Middle 1
         float[] middle1Rots1 = calculateHornSegment(genes[92], -0.125F * Mth.HALF_PI, 0);
         float[] middle1Rots2 = calculateHornSegment(genes[93], -0.125F * Mth.HALF_PI, 0);
-        hornXRots[4] = (middle1Rots1[0] + middle1Rots2[0])/2F;
-        hornZRots[4] = (middle1Rots1[1] + middle1Rots2[1])/2F;
+        hornXRots[4] = (middle1Rots1[0] + middle1Rots2[0]) / 2F;
+        hornZRots[4] = (middle1Rots1[1] + middle1Rots2[1]) / 2F;
 
         // Horn Middle 2
         float[] middle2Rots1 = calculateHornSegment(genes[94], -0.125F * Mth.HALF_PI, 0);
         float[] middle2Rots2 = calculateHornSegment(genes[95], -0.125F * Mth.HALF_PI, 0);
-        hornXRots[8] = (middle2Rots1[0] + middle2Rots2[0])/2F;
-        hornZRots[8] = (middle2Rots1[1] + middle2Rots2[1])/2F;
+        hornXRots[8] = (middle2Rots1[0] + middle2Rots2[0]) / 2F;
+        hornZRots[8] = (middle2Rots1[1] + middle2Rots2[1]) / 2F;
 
         // Horn Middle 3
         float[] middle3Rots1 = calculateHornSegment(genes[96], -0.1875F * Mth.HALF_PI, 0);
         float[] middle3Rots2 = calculateHornSegment(genes[97], -0.1875F * Mth.HALF_PI, 0);
-        hornXRots[12] = (middle3Rots1[0] + middle3Rots2[0])/2F;
-        hornZRots[12] = (middle3Rots1[1] + middle3Rots2[1])/2F;
+        hornXRots[12] = (middle3Rots1[0] + middle3Rots2[0]) / 2F;
+        hornZRots[12] = (middle3Rots1[1] + middle3Rots2[1]) / 2F;
 
         // Horn Tip
         float[] tipRots1 = calculateHornSegment(genes[98], -0.1875F * Mth.HALF_PI, 0);
         float[] tipRots2 = calculateHornSegment(genes[99], -0.1875F * Mth.HALF_PI, 0);
-        hornXRots[16] = (tipRots1[0] + tipRots2[0])/2F;
-        hornZRots[16] = (tipRots1[1] + tipRots2[1])/2F;
+        hornXRots[16] = (tipRots1[0] + tipRots2[0]) / 2F;
+        hornZRots[16] = (tipRots1[1] + tipRots2[1]) / 2F;
 
         // Manually interpolate the even numbered midpoints
         hornXRots[2] = Mth.lerp(0.25F, hornXRots[0], hornXRots[4]);
@@ -527,8 +571,8 @@ public class GoatPhenotype implements Phenotype {
                 hornYRots[i] = (hornYRots[i - 1] + hornYRots[i + 1]) / 2F;
                 hornZRots[i] = (hornZRots[i - 1] + hornZRots[i + 1]) / 2F;
             }
-            float parentDeform = i == 0 ? 0F : ModelEnhancedGoat.getHornSegmentDeform(i-1);
-            hornOffsets[i] = new Vector3f(0F, i == 0 ? 0F : -(2F+(2F*parentDeform)), 0F);
+            float parentDeform = i == 0 ? 0F : ModelEnhancedGoat.getHornSegmentDeform(i - 1);
+            hornOffsets[i] = new Vector3f(0F, i == 0 ? 0F : -(2F + (2F * parentDeform)), 0F);
             hornLeftRotations[i] = new Vector3f(hornXRots[i], hornYRots[i], hornZRots[i]);
             hornRightRotations[i] = new Vector3f(hornXRots[i], -hornYRots[i], -hornZRots[i]);
         }
@@ -538,16 +582,17 @@ public class GoatPhenotype implements Phenotype {
 
     public GoatPhenotype(int[] genes, boolean isFemale) {
         female = isFemale;
+        wattled = genes[156] == 2 || genes[157] == 2;
         calculateHair(genes);
         calculateEars(genes);
         calculateMuzzle(genes);
         calculateBody(genes);
         calculateHorns(genes);
         // Generate Scalings
-        upperLegHeight = (5F - bodyHeight)/5F;
+        upperLegHeight = (5F - bodyHeight) / 5F;
         fullBodyScalings = ModelHelper.createScalings(bodyWidth, 1F, 1F, 0F, 0F, 0F);
         headScalings = ModelHelper.createScalings(headWidth, 1F, 1F, 0F, 0F, 0F);
-        upperMouthScalings = ModelHelper.createScalings(0.999F*headWidth, 1F, upperMouthScaleZ, 0F, 0F, 0F);
-        mouthScalings = ModelHelper.createScalings(0.999F*headWidth, 1F, upperMouthScaleZ, 0F, 0F, 0F);
+        lowerMuzzleScalings = ModelHelper.createScalings(0.999F * headWidth, 1F, upperMouthScaleZ, 0F, 0F, 0F);
+        mouthScalings = ModelHelper.createScalings(0.999F * headWidth, 1F, mouthScaleZ, 0F, 0F, 0F);
     }
 }

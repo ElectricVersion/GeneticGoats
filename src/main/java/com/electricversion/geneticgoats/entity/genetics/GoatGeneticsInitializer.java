@@ -15,7 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
 
-    public static final int AUTOSOMAL_GENES_LENGTH = 152;
+    public static final int AUTOSOMAL_GENES_LENGTH = 158;
     public static final int SEXLINKED_GENES_LENGTH = 2;
 
     int WTC = GoatsCommonConfig.COMMON.wildTypeChance.get();
@@ -25,6 +25,7 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         breeds.add(GoatBreeds.BOER);
         breeds.add(GoatBreeds.WHITEANGORA);
         breeds.add(GoatBreeds.COLOREDANGORA);
+        breeds.add(GoatBreeds.LAMANCHA);
     }
 
     public Genes generateNewGenetics(LevelAccessor world, BlockPos pos, boolean isBreed) {
@@ -96,7 +97,7 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[7] = randomizeGene(4);
 
         /* RED COLOR 1 (Incomplete Dominant)
-         * 1 - wildtype/tan
+         * 1 - tan (wildtype)
          * 2 - cream
          * 3 - off-white
          * 4 - white
@@ -105,7 +106,7 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[9] = randomizeGene(4);
 
         /* RED COLOR 2 (Incomplete Dominant)
-         * 1 - wildtype/tan
+         * 1 - tan (wildtype)
          * 2 - red-brown
          * 3 - darker red
          * 4 - deep red
@@ -342,7 +343,7 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
          * 2 - Many Moonspots; Incomplete Dominant
          * 3 - Few Moonspots; Incomplete Dominant
          * (Many/Some will produce Many; Few/Some will produce Few; Many/Few will produce Some)
-        */
+         */
         autosomalGenes[86] = randomizeGene(3);
         autosomalGenes[87] = randomizeGene(3);
 
@@ -417,73 +418,73 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[106] = randomizeGene(3);
         autosomalGenes[107] = randomizeGene(3);
 
-        /* Meat Adder 1
+        /* MEAT ADDER 1
          * 1 - 5
          */
         autosomalGenes[108] = randomizeGene(5);
         autosomalGenes[109] = randomizeGene(5);
 
-        /* Meat Adder 2
+        /* MEAT ADDER 2
          * 1 - 5
          */
         autosomalGenes[110] = randomizeGene(5);
         autosomalGenes[111] = randomizeGene(5);
 
-        /* Meat Adder 3
+        /* MEAT ADDER 3
          * 1 - 5
          */
         autosomalGenes[112] = randomizeGene(5);
         autosomalGenes[113] = randomizeGene(5);
 
-        /* Dairy Adder 1
+        /* DAIRY ADDER 1
          * 1 - 5
          */
         autosomalGenes[114] = randomizeGene(5);
         autosomalGenes[115] = randomizeGene(5);
 
-        /* Dairy Adder 2
+        /* DAIRY ADDER 2
          * 1 - 5
          */
         autosomalGenes[116] = randomizeGene(5);
         autosomalGenes[117] = randomizeGene(5);
 
-        /* Dairy Adder 3
+        /* DAIRY ADDER 3
          * 1 - 5
          */
         autosomalGenes[118] = randomizeGene(5);
         autosomalGenes[119] = randomizeGene(5);
 
-        /* Udder Size/Milk Production 1
+        /* UDDER SIZE/MILK PRODUCTION 1
          * 1 - 10
          */
         autosomalGenes[120] = randomizeGene(10);
         autosomalGenes[121] = randomizeGene(10);
 
-        /* Udder Size/Milk Production 2
+        /* UDDER SIZE/MILK PRODUCTION 2
          * 1 - 10
          */
         autosomalGenes[122] = randomizeGene(10);
         autosomalGenes[123] = randomizeGene(10);
 
-        /* Size Reducer 1
+        /* SIZE REDUCER 1
          * 1 - 5
          */
         autosomalGenes[124] = randomizeGene(5);
         autosomalGenes[125] = randomizeGene(5);
 
-        /* Size Reducer 2
+        /* SIZE REDUCER 2
          * 1 - 5
          */
         autosomalGenes[126] = randomizeGene(5);
         autosomalGenes[127] = randomizeGene(5);
 
-        /* Size Adder 1
+        /* SIZE ADDER 1
          * 1 - 5
          */
         autosomalGenes[128] = randomizeGene(5);
         autosomalGenes[129] = randomizeGene(5);
 
-        /* Half-White Modifier
+        /* HALF-WHITE MODIFIER
          * 1 - Wildtype
          * 2 - Half-White; Recessive, only works on belt
          */
@@ -497,16 +498,17 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[132] = randomizeGene(2);
         autosomalGenes[133] = randomizeGene(2);
 
-        /* Angora Fiber
+        /* ANGORA FIBER
          * 1 - Wildtype
          * 2 - Angora Hair; Dominant
          */
         autosomalGenes[134] = randomizeGene(2);
         autosomalGenes[135] = randomizeGene(2);
 
-        /* Head Wool
-         * 1 - Wildtype
+        /* HEAD WOOL
+         * 1 - No Head Wool (Wildtype)
          * 2 - Head Wool; Recessive
+         * Requires angora fiber to express.
          */
         autosomalGenes[136] = randomizeGene(2);
         autosomalGenes[137] = randomizeGene(2);
@@ -519,15 +521,16 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[139] = randomizeGene(2);
 
         /* BROCKLING AMOUNT
-         * 1 - Wildtype (Medium)
+         * 1 - Medium (Wildtype)
          * 2 - Less Brockling; Dominant
          * 3 - More Brockling; Dominant
          * (Less Brockling <> More Brockling > Wildtype)
+         * Requires Brockling to express.
          */
         autosomalGenes[140] = randomizeGene(3);
         autosomalGenes[141] = randomizeGene(3);
 
-        /* Angora Wool Modifiers
+        /* ANGORA WOOL MODIFIERS
          * 1 - Wildtype
          * 2 - More Wool; Incomplete Dominant
          */
@@ -535,6 +538,32 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
             autosomalGenes[i] = randomizeGene(2);
             autosomalGenes[i] = randomizeGene(2);
         }
+
+        /* MOONSPOT COLORATION
+         * 1 - Cream (Wildtype)
+         * 2 - White; Dominant
+         * 3 - Silver; Dominant
+         * 4 - Brown; Recessive
+         * (White > Silver > Cream > Brown)
+         * All moonspots except white start out dark and lighten with age
+         */
+        autosomalGenes[152] = randomizeGene(4);
+        autosomalGenes[153] = randomizeGene(4);
+
+        /* HORN ROTATION
+         * 1-99
+         * Differs from root rotation in that it isn't interpolated - just rotates the whole horn
+         */
+        autosomalGenes[154] = randomizeGene(99);
+        autosomalGenes[155] = randomizeGene(99);
+
+        /* WATTLES
+         * 1 - No Wattles (Wildtype)
+         * 2 - Wattles; Dominant
+         */
+        autosomalGenes[156] = randomizeGene(2);
+        autosomalGenes[157] = randomizeGene(2);
+
 
         return new Genes(sexlinkedGenes, autosomalGenes);
     }

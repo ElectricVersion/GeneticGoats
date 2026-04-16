@@ -2,9 +2,104 @@
   "replaceDefault": false,
   "values": [
     {
+      "registryName": "minecraft:hay_block",
+      "hungerRestored": 54000,
+      "isBreedingItem": false
+    },
+    {
+      "registryName": "minecraft:pumpkin",
+      "hungerRestored": 12000,
+      "isBreedingItem": false
+    },
+    {
+      "registryName": "minecraft:melon",
+      "hungerRestored": 9000,
+      "isBreedingItem": false
+    },
+    {
       "registryName": "minecraft:wheat",
       "hungerRestored": 6000,
       "isBreedingItem": true
+    },
+    {
+      "registryName": "minecraft:grass",
+      "hungerRestored": 6000,
+      "isBreedingItem": false
+    },
+    {
+      "registryName": "minecraft:tall_grass",
+      "hungerRestored": 6000,
+      "isBreedingItem": false
+    },
+    {
+      "registryName": "minecraft:beetroot",
+      "hungerRestored": 6000,
+      "isBreedingItem": false
+    },
+    {
+      "registryName": "minecraft:carrot",
+      "hungerRestored": 6000,
+      "isBreedingItem": false
+    },
+    {
+      "registryName": "minecraft:apple",
+      "hungerRestored": 6000,
+      "isBreedingItem": false
+    },
+    {
+      "registryName": "minecraft:sweet_berries",
+      "hungerRestored": 2000,
+      "isBreedingItem": false
+    },
+    {
+      "registryName": "minecraft:spruce_sapling",
+      "hungerRestored": 2000,
+      "isBreedingItem": false
+    },
+    {
+      "registryName": "minecraft:spruce_leaves",
+      "hungerRestored": 2000,
+      "isBreedingItem": false
+    },
+    {
+      "registryName": "minecraft:birch_sapling",
+      "hungerRestored": 2000,
+      "isBreedingItem": false
+    },
+    {
+      "registryName": "minecraft:birch_leaves",
+      "hungerRestored": 2000,
+      "isBreedingItem": false
+    },
+    {
+      "registryName": "minecraft:rose_bush",
+      "hungerRestored": 2000,
+      "isBreedingItem": false
+    },
+    {
+      "registryName": "minecraft:oxeye_daisy",
+      "hungerRestored": 2000,
+      "isBreedingItem": false
+    },
+    {
+      "registryName": "minecraft:dandelion",
+      "hungerRestored": 2000,
+      "isBreedingItem": false
+    },
+    {
+      "registryName": "minecraft:melon_slice",
+      "hungerRestored": 1000,
+      "isBreedingItem": false
+    },
+    {
+      "registryName": "minecraft:brown_mushroom",
+      "hungerRestored": 1000,
+      "isBreedingItem": false
+    },
+    {
+      "registryName": "minecraft:paper",
+      "hungerRestored": 100,
+      "isBreedingItem": false
     }
   ]
 }
