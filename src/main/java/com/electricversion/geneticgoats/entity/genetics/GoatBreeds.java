@@ -18,6 +18,7 @@ public class GoatBreeds {
     // Non-spawning Angora "base" breed
     public static final Breed ANGORA = new Breed(new Breed.Properties().setData("Angora", Biomes.FOREST, Breed.Rarity.ORDINARY)
             .setGeneSketch(new GeneSketch(), new GeneSketch()
+                    .add(48, "2") // Curly Hair
                     .add(134, "2") // Angora Hair
                     .add(136, "2") // Head Wool
                     .add(142, "2", "2", "2", "2", "2") // Higher Wool Production
