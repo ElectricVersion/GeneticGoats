@@ -336,13 +336,20 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         super.readAdditionalSaveData(compound);
         setBagSize(getMilkAmount() / maxPossibleMilk);
 
-        setWoolLength(compound.getInt("Wool"));
         setMaxWool();
+        if (!compound.getString("breed").isEmpty()) {
+            // When summoning a purebred, it should spawn with its wool fully grown
+            setWoolLength(getCurrentMaxWool());
+        }
+        else {
+            // Otherwise, load from saved data
+            setWoolLength(compound.getInt("Wool"));
+        }
     }
 
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
-        compound.putInt("Wool", woolLength);
+        compound.putInt("Wool", getWoolLength());
     }
 
     @Override
