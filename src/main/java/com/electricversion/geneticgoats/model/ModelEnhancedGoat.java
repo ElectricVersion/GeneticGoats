@@ -29,6 +29,7 @@ import java.util.Map;
 public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalModel<T> {
     private static final float baseNeckAngle = Mth.HALF_PI * 0.30F;
     private static final float baseHeadAngle = -Mth.HALF_PI * 0.225F;
+    private static final float baseTailAngle = Mth.HALF_PI * 0.45F;
 
     public static final int MAX_HORN_LENGTH = 17;
 
@@ -347,7 +348,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         baseDef.addOrReplaceChild("tail", CubeListBuilder.create()
                         .texOffs(39, 30)
                         .addBox(-1F, 0F, -2F, 2, 3, 6),
-                PartPose.offsetAndRotation(0F, -1F, 9F, Mth.HALF_PI * 0.45F, 0F, 0F));
+                PartPose.offsetAndRotation(0F, -1F, 9F, baseTailAngle, 0F, 0F));
 
         baseDef.addOrReplaceChild("udder", CubeListBuilder.create()
                         .texOffs(40, 0)
@@ -622,6 +623,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             bEarL.setZRot(phenotype.getEarZRot());
             bEarR.setZRot(-phenotype.getEarZRot());
 
+            tail.setYRot(0F);
+
         } else {
             setRotationFromVector(bLegFL, map.get("bLegFL"));
             setRotationFromVector(bLegFR, map.get("bLegFR"));
@@ -632,6 +635,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             setRotationFromVector(bMouth, map.get("bMouth"));
             setRotationFromVector(bEarL, map.get("bEarL"));
             setRotationFromVector(bEarR, map.get("bEarR"));
+            setRotationFromVector(tail, map.get("tail"));
         }
     }
 
@@ -647,6 +651,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         map.put("bMouth", getRotationVector(bMouth));
         map.put("bEarL", getRotationVector(bEarL));
         map.put("bEarR", getRotationVector(bEarR));
+        map.put("tail", getRotationVector(tail));
     }
 
     private void lookAnim(float netHeadYaw, float headPitch) {
@@ -685,11 +690,16 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         }
     }
 
+    private void tailSwishAnim(float ageInTicks) {
+        float angleMultiplier = Mth.cos(ageInTicks*0.9F)*Mth.HALF_PI;
+        tail.setYRot(angleMultiplier * 0.07F);
+    }
+
     @Override
     public void setupAnim(@NotNull T goat, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         goatModelData = getCreateGoatModelData(goat);
-        boolean hasAI = !goat.isNoAi();
         if (goatModelData != null) {
+            boolean hasAI = !goat.isNoAi();
             GoatPhenotype phenotype = goatModelData.getPhenotype();
             setupInitialAnimationValues(goatModelData, netHeadYaw, headPitch);
 
@@ -712,6 +722,19 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                 earTwitchAnim(ageInTicks, goatModelData.earTwitchSide, baseEarXRot, baseEarZRot);
             }
 
+            // Tail wiggle
+            if (goatModelData.tailSwishTimer <= ageInTicks) {
+                if (tail.getYRot() != 0F) {
+                    tail.setYRot(lerpTo(tail.getYRot(), 0F));
+                }
+                else {
+                    goatModelData.tailSwishTimer = (int) ageInTicks + goat.getRandom().nextInt(goatModelData.sleeping ? 1200 : 600);
+                }
+            } else if (goatModelData.tailSwishTimer <= ageInTicks + 30 && hasAI) {
+                tailSwishAnim(ageInTicks);
+            }
+
+            // Grazing
             if (goatModelData.isEating != 0) {
                 if (goatModelData.isEating == -1) {
                     goatModelData.isEating = (int) ageInTicks + 90;
@@ -725,6 +748,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             }
 
 
+            // Walking
             if (goat.getDeltaMovement().horizontalDistanceSqr() > 0.001 || goat.xOld != goat.getX() || goat.zOld != goat.getZ()) {
                 walkAnim(limbSwing, limbSwingAmount);
             } else {
