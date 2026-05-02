@@ -790,6 +790,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         bUdder.show(goatModelData.getUdderSize() != -1F);
 
+        bHornL.show(!phenotype.isPolled());
+        bHornR.show(!phenotype.isPolled());
+
         beard.show(phenotype.isBearded());
 
         wattleL.show(phenotype.isWattled());

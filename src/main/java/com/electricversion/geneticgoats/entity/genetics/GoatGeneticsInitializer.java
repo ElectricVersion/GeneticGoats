@@ -15,7 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
 
-    public static final int AUTOSOMAL_GENES_LENGTH = 158;
+    public static final int AUTOSOMAL_GENES_LENGTH = 160;
     public static final int SEXLINKED_GENES_LENGTH = 2;
 
     int WTC = GoatsCommonConfig.COMMON.wildTypeChance.get();
@@ -564,6 +564,17 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         autosomalGenes[156] = randomizeGene(2);
         autosomalGenes[157] = randomizeGene(2);
 
+        /* POLLED
+         * 1 - Horns (Wildtype)
+         * 2 - Polled; Dominant
+         * In the real world, females that are homozygous for polled are infertile.
+         * Goat breeds that appear polled are in fact disbudded. However, since body modification is not
+         * included in this mod, and we wish to allow recreation of real-life breeds, we have taken some creative
+         * license and made the gene simply *reduce* fertility rather than entirely eliminating it.
+         */
+        // TODO: Actually implement this fertility nerf
+        autosomalGenes[158] = randomizeGene(2);
+        autosomalGenes[159] = randomizeGene(2);
 
         return new Genes(sexlinkedGenes, autosomalGenes);
     }

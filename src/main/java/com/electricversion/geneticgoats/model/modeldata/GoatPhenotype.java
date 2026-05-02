@@ -159,6 +159,10 @@ public class GoatPhenotype implements Phenotype {
         return upperMouthY;
     }
 
+    public boolean isPolled() {
+        return polled;
+    }
+
     public enum EarLength {
         GOPHER,
         ELF,
@@ -216,6 +220,7 @@ public class GoatPhenotype implements Phenotype {
     private Vector3f[] hornRightRotations;
     private Vector3f[] hornOffsets;
     private List<Float> hornScalings;
+    private boolean polled;
 
     // Misc Settings
     private boolean wattled;
@@ -251,7 +256,6 @@ public class GoatPhenotype implements Phenotype {
         }
         // Ear Flop
         float earFlop = 0.25F;
-        boolean polled = false; // Placeholder
         earFlop += 0.75F * ((genes[18] + genes[19] + genes[20] + genes[21] - 4) / 6F);
         earFlop -= 0.25F * ((genes[22] + genes[23] - 2) / 4F);
         earFlop = clamp(earFlop, polled ? 0F : 0.25F, 1F); // 0 to 1
@@ -484,6 +488,9 @@ public class GoatPhenotype implements Phenotype {
     }
 
     private void calculateHorns(int[] genes) {
+        if (polled) {
+            return; // It would be pointless to calculate horns on a hornless goat!
+        }
         hornLength = female ? MAX_HORN_LENGTH - 4 : MAX_HORN_LENGTH;
         float hornThickness = 1F;
         hornOffsets = new Vector3f[MAX_HORN_LENGTH];
@@ -583,6 +590,7 @@ public class GoatPhenotype implements Phenotype {
     public GoatPhenotype(int[] genes, boolean isFemale) {
         female = isFemale;
         wattled = genes[156] == 2 || genes[157] == 2;
+        polled = genes[158] == 2 || genes[159] == 2; // Needed for both calculateEars and calculateHorns
         calculateHair(genes);
         calculateEars(genes);
         calculateMuzzle(genes);
