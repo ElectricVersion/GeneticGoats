@@ -62,6 +62,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
 
     private static final EntityDataAccessor<Integer> WOOL_LENGTH = SynchedEntityData.defineId(EnhancedGoat.class, EntityDataSerializers.INT);
 
+    // The highest production amounts possible for an animal with all favorable genetics
     public static final float maxPossibleMilk = 24;
     public static final float maxPossibleWool = 12;
 
@@ -357,11 +358,11 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         if (getOrSetIsFemale() || GeneticAnimalsConfig.COMMON.omnigenders.get()) {
             int[] genes = getGenes().getAutosomalGenes();
 
-            float bagSize = 0.125F; // Once calculations are complete this should add up to a max of 1.0
+            // Once calculations are complete this should add up to a max of 24.
+            float bagSize = 0F;
 
             // Dairy added by the udder capacity
-            float udderSizeMult = (genes[120] + genes[121] + genes[122] + genes[123] - 4) / 36F;
-            bagSize += udderSizeMult * 0.5F;
+            float udderMult = (genes[120] + genes[121] + genes[122] + genes[123] - 4) / 36F;
 
             // Dairy added by the body type
             int bodyTypeGenes = 24;
@@ -373,12 +374,19 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
                 // More dairy-bodied
                 bodyTypeGenes += genes[i];
             }
-            float bodyTypeMult = bodyTypeGenes / 48F;
-            bagSize += bodyTypeMult * 0.375F;
+            float bodyMult = bodyTypeGenes / 48F;
 
-            //TODO: Set up scale
+            int sizeModifier = 16;
+            sizeModifier += ((genes[128] + genes[129] - 2)); // Max 8 in normal gameplay
+            sizeModifier -= ((genes[124] + genes[125] + genes[126] + genes[127] - 4)); // Max 16 in normal gameplay
+            float sizeMult = sizeModifier/24F;
 
-            maxBagSize = bagSize;
+            bagSize = (2F * sizeMult) // 1/3 bucket added purely by size
+                    + (10F * udderMult * sizeMult) // 1 2/3 added by udder size, but scales with size
+                    + (8F * bodyMult * ((1 / 3F) + ((2 / 3F) * sizeMult))) // 1 1/3 buckets added by body type, partially scales with size
+                    + (4 * udderMult * bodyMult); // 2/3 buckets added by udder size scales with body type
+
+            maxBagSize = bagSize/24F;
         }
     }
 
