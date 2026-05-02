@@ -298,7 +298,7 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
 
         /* BLUE EYES
          * 1 - Yellow Eyes (Wildtype)
-         * 2 - Blue Eyes
+         * 2 - Blue Eyes; Dominant
          */
         autosomalGenes[76] = randomizeGene(2);
         autosomalGenes[77] = randomizeGene(2);
