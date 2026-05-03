@@ -303,19 +303,18 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         boolean mediumOrHighWhite = GoatTexture.getWhiteExtension(genes) > 0;
         if (
                 (genes[4] == 2 || genes[5] == 2) || // Dom White
-                (genes[82] != 1 || genes[83] != 1) || // Any level of Schwartzal
-                (mediumOrHighWhite && ( // Medium to high...
-                            (genes[4] == 3 || genes[5] == 3) // ...Goulet
-                            || (genes[4] == 4 && genes[5] == 4) // ...Piebald
-                            || (genes[58] != 1 || genes[59] != 1) // ...Belt
-                            || (genes[80] == 4 || genes[81] == 4) // ...Flowery
+                        (genes[82] != 1 || genes[83] != 1) || // Any level of Schwartzal
+                        (mediumOrHighWhite && ( // Medium to high...
+                                (genes[4] == 3 || genes[5] == 3) // ...Goulet
+                                        || (genes[4] == 4 && genes[5] == 4) // ...Piebald
+                                        || (genes[58] != 1 || genes[59] != 1) // ...Belt
+                                        || (genes[80] == 4 || genes[81] == 4) // ...Flowery
                         )
-                )
+                        )
         ) {
             // White markings
             return Blocks.WHITE_WOOL;
-        }
-        else if (genes[2] == 2 || genes[3] == 2) {
+        } else if (genes[2] == 2 || genes[3] == 2) {
             // Dom Black
             return Blocks.BLACK_WOOL;
         }
@@ -341,8 +340,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         if (!compound.getString("breed").isEmpty()) {
             // When summoning a purebred, it should spawn with its wool fully grown
             setWoolLength(getCurrentMaxWool());
-        }
-        else {
+        } else {
             // Otherwise, load from saved data
             setWoolLength(compound.getInt("Wool"));
         }
@@ -379,14 +377,14 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
             int sizeModifier = 16;
             sizeModifier += ((genes[128] + genes[129] - 2)); // Max 8 in normal gameplay
             sizeModifier -= ((genes[124] + genes[125] + genes[126] + genes[127] - 4)); // Max 16 in normal gameplay
-            float sizeMult = sizeModifier/24F;
+            float sizeMult = sizeModifier / 24F;
 
             bagSize = (2F * sizeMult) // 1/3 bucket added purely by size
                     + (10F * udderMult * sizeMult) // 1 2/3 added by udder size, but scales with size
                     + (8F * bodyMult * ((1 / 3F) + ((2 / 3F) * sizeMult))) // 1 1/3 buckets added by body type, partially scales with size
                     + (4 * udderMult * bodyMult); // 2/3 buckets added by udder size scales with body type
 
-            maxBagSize = bagSize/24F;
+            maxBagSize = bagSize / 24F;
         }
     }
 
@@ -443,12 +441,6 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         entityData.define(WOOL_LENGTH, 0);
     }
 
-    /* Gene Related Code */
-
-    @Override
-    protected void fixGeneLengths() {
-    }
-
     @Override
     protected int getAdultAge() {
         return GoatsCommonConfig.COMMON.growthTime.get();
@@ -457,6 +449,12 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
     @Override
     protected int gestationConfig() {
         return GoatsCommonConfig.COMMON.birthTime.get();
+    }
+
+    /* Gene Related Code */
+
+    @Override
+    protected void fixGeneLengths() {
     }
 
     @Override
@@ -550,10 +548,10 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
     }
 
     /* Brain/AI Related Code
-    * Currently all brain related code is commented out because after seeing that modern minecraft is still using goals,
-    * and brains have been changed considerably from 1.18, it's hard to justify using the more complex Brain system
-    * for an animal with pretty basic AI functions.
-    * */
+     * Currently all brain related code is commented out because after seeing that modern minecraft is still using goals,
+     * and brains have been changed considerably from 1.18, it's hard to justify using the more complex Brain system
+     * for an animal with pretty basic AI functions.
+     * */
 
 
 //    static final ImmutableList<? extends MemoryModuleType<?>> MEMORY_TYPES = ImmutableList.of(
