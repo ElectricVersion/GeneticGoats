@@ -619,6 +619,11 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         goalSelector.addGoal(11, new EnhancedLookRandomlyGoal(this));
     }
 
+    @Override
+    public boolean canBreed() {
+        int[] genes = getGenes().getAutosomalGenes();
+        return super.canBreed() && !(genes[158] == 2 && genes[159] == 2); // Not homozygous for true polled, which causes infertility
+    }
 
 //    @Override
 //    protected Brain.@NotNull Provider<EnhancedGoat> brainProvider() {
