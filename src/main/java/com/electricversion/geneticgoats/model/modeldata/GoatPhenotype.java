@@ -590,7 +590,7 @@ public class GoatPhenotype implements Phenotype {
     public GoatPhenotype(int[] genes, boolean isFemale) {
         female = isFemale;
         wattled = genes[156] == 2 || genes[157] == 2;
-        polled = genes[158] == 2 || genes[159] == 2; // Needed for both calculateEars and calculateHorns
+        polled = genes[158] == 2 || genes[159] == 2 || (genes[158] == 3 && genes[159] == 3); // Needed for both calculateEars and calculateHorns
         calculateHair(genes);
         calculateEars(genes);
         calculateMuzzle(genes);

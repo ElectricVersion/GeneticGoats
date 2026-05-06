@@ -567,14 +567,15 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
         /* POLLED
          * 1 - Horns (Wildtype)
          * 2 - Polled; Dominant
-         * In the real world, females that are homozygous for polled are infertile.
-         * Goat breeds that appear polled are in fact disbudded. However, since body modification is not
+         * 3 - Fictional Polled; Recessive
+         * Females that are homozygous for dominant polled are intersex and infertile, as in the real world.
+         * Goat breeds that appear polled are in fact usually disbudded. However, since body modification is not
          * included in this mod, and we wish to allow recreation of real-life breeds, we have taken some creative
-         * license and made the gene simply *reduce* fertility rather than entirely eliminating it.
+         * license and added a second fictional polled gene that does not cause infertility.
          */
-        // TODO: Actually implement this fertility nerf
-        autosomalGenes[158] = randomizeGene(2);
-        autosomalGenes[159] = randomizeGene(2);
+        autosomalGenes[158] = randomizeGene(3);
+        autosomalGenes[159] = randomizeGene(3);
+
 
         return new Genes(sexlinkedGenes, autosomalGenes);
     }
