@@ -57,6 +57,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeShearable {
 
@@ -451,6 +452,26 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         return GoatsCommonConfig.COMMON.birthTime.get();
     }
 
+    @Override
+    protected int getNumberOfChildren() {
+        int[] genes = getGenes().getAutosomalGenes();
+        // the fewest offspring an individual goat can have
+        int minKids = switch (Math.min(genes[160], genes[161])) {
+            case 2 -> 2;
+            case 3 -> 3;
+            default -> 1;
+        };
+        // the most offspring an individual goat can have
+        int maxKids = switch (Math.max(genes[160], genes[161])) {
+            case 2 -> 3;
+            case 3 -> 4;
+            default -> 2;
+        };
+
+        int kidRange = (maxKids - minKids) + 1; // the +1 offsets the fact that nextInt's upper bound is exclusive
+        return ThreadLocalRandom.current().nextInt(kidRange) + minKids;
+    }
+
     /* Gene Related Code */
 
     @Override
@@ -624,6 +645,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         int[] genes = getGenes().getAutosomalGenes();
         return super.canBreed() && !(genes[158] == 2 && genes[159] == 2); // Not homozygous for true polled, which causes infertility
     }
+
 
 //    @Override
 //    protected Brain.@NotNull Provider<EnhancedGoat> brainProvider() {
