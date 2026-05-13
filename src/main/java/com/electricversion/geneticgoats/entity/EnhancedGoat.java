@@ -23,10 +23,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
@@ -46,6 +48,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -661,5 +664,33 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
 //    public @NotNull Brain<EnhancedGoat> getBrain() {
 //        return (Brain<EnhancedGoat>) super.getBrain();
 //    }
+
+    /* Sounds */
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        if (isAnimalSleeping()) {
+            return null;
+        }
+        return SoundEvents.GOAT_AMBIENT;
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(@NotNull DamageSource damageSource) {
+        return SoundEvents.GOAT_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.GOAT_DEATH;
+    }
+
+    @Override
+    protected void playStepSound(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
+        playSound(SoundEvents.GOAT_STEP, 0.15F, 1.0F);
+        if (!isSilent() && getBells()) {
+            playSound(SoundEvents.NOTE_BLOCK_CHIME, 1.5F, 0.1F);
+        }
+    }
 
 }
