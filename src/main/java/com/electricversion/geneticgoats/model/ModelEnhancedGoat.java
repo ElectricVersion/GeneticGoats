@@ -592,12 +592,14 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     protected void additionalModelDataInfo(AnimalModelData animalModelData, T enhancedAnimal) {
         updateUdderSize(animalModelData, enhancedAnimal);
         updateWoolLength(animalModelData, enhancedAnimal);
+        ((GoatModelData)animalModelData).setFainted(enhancedAnimal.isFainted());
     }
 
     @Override
     protected void additionalUpdateModelDataInfo(AnimalModelData animalModelData, T enhancedAnimal) {
         updateUdderSize(animalModelData, enhancedAnimal);
         updateWoolLength(animalModelData, enhancedAnimal);
+        ((GoatModelData)animalModelData).setFainted(enhancedAnimal.isFainted());
     }
 
     /* Animation */
@@ -679,6 +681,10 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bMouth.setXRot(lerpTo(bMouth.getXRot(), Mth.sin(ticksOfGrazing*0.75F)*0.15F));;
     }
 
+    private void faintAnim() {
+        base.setZRot(Mth.HALF_PI);
+    }
+
     private void earTwitchAnim(float ageInTicks, boolean isLeftEar, float baseXRot, float baseZRot) {
         float angleMultiplier = Mth.cos(ageInTicks*0.8F)*Mth.HALF_PI;
         if (isLeftEar) {
@@ -705,6 +711,12 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
             float baseEarXRot = phenotype.getEarXRot();
             float baseEarZRot = phenotype.getEarZRot();
+
+            if (goatModelData.isFainted()) {
+                faintAnim();
+            } else {
+                base.setZRot(0F);
+            }
 
             // Modeled after the sheep ear twitch functionality in core GA. Credit to Bearded & Moki for the logic
             if (goatModelData.earTwitchTimer <= ageInTicks) {

@@ -1,5 +1,6 @@
 package com.electricversion.geneticgoats.entity;
 
+import com.electricversion.geneticgoats.ai.FaintGoal;
 import com.electricversion.geneticgoats.config.GoatsCommonConfig;
 import com.electricversion.geneticgoats.entity.genetics.GoatGeneticsInitializer;
 import com.electricversion.geneticgoats.entity.texture.GoatTexture;
@@ -65,6 +66,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeShearable {
 
     private static final EntityDataAccessor<Integer> WOOL_LENGTH = SynchedEntityData.defineId(EnhancedGoat.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> FAINTED = SynchedEntityData.defineId(EnhancedGoat.class, EntityDataSerializers.BOOLEAN);
 
     // The highest production amounts possible for an animal with all favorable genetics
     public static final float maxPossibleMilk = 24;
@@ -443,6 +445,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
     protected void defineSynchedData() {
         super.defineSynchedData();
         entityData.define(WOOL_LENGTH, 0);
+        entityData.define(FAINTED, false);
     }
 
     @Override
@@ -631,6 +634,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
     @Override
     protected void registerGoals() {
         goalSelector.addGoal(0, new FloatGoal(this));
+        goalSelector.addGoal(1, new FaintGoal(this));
         goalSelector.addGoal(1, new EnhancedPanicGoal(this, 1.25D));
         goalSelector.addGoal(3, new EnhancedBreedGoal(this, 1.0D));
         goalSelector.addGoal(4, new EnhancedTemptGoal(this, 1.0D, 1.2D, false, Items.AIR));
@@ -693,4 +697,11 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         }
     }
 
+    public boolean isFainted() {
+        return entityData.get(FAINTED);
+    }
+
+    public void setFainted(boolean fainted) {
+        entityData.set(FAINTED, fainted);
+    }
 }
