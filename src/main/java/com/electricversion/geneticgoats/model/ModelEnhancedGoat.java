@@ -42,6 +42,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     /* Bones */
 
     private final WrappedModelPart root;
+    private final WrappedModelPart basePivot;
 
     private final WrappedModelPart bBodyF;
     private final WrappedModelPart bBodyB;
@@ -130,6 +131,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         /* BONES */
         root = new WrappedModelPart(rootPart, "root");
+        basePivot = new WrappedModelPart("basePivot", rootPart);
 
         bBodyF = new WrappedModelPart("bBodyF", rootPart);
         bBodyB = new WrappedModelPart("bBodyB", rootPart);
@@ -209,8 +211,10 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             hornR[i] = new WrappedModelPart("hornR" + i, rootPart);
         }
 
-        root.addChild(bBodyF);
-        root.addChild(bBodyB);
+        root.addChild(basePivot);
+
+        basePivot.addChild(bBodyF);
+        basePivot.addChild(bBodyB);
         bBodyF.addChild(bodyF);
         bodyF.addChild(bodyHairF);
         bBodyB.addChild(bodyB);
@@ -236,7 +240,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bLegBL.addChild(legBBL);
         bLegBR.addChild(legBBR);
 
-        root.addChild(bNeck);
+        basePivot.addChild(bNeck);
         bNeck.addChild(neck);
 
         bNeck.addChild(bHead);
@@ -292,6 +296,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         PartDefinition rootDef = meshDefinition.getRoot().addOrReplaceChild("root", CubeListBuilder.create(),
                 PartPose.offset(0F, 24F, 0F));
+
+        rootDef.addOrReplaceChild("basePivot", CubeListBuilder.create(),
+                PartPose.ZERO);
 
         rootDef.addOrReplaceChild("bBodyF", CubeListBuilder.create(),
                 PartPose.offset(0F, -19F, -9F));
@@ -608,6 +615,10 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         Map<String, Vector3f> map = data.offsets;
         if (map.isEmpty()) {
             GoatPhenotype phenotype = goatModelData.getPhenotype();
+            root.setX(0F);
+            root.setZRot(0F);
+            basePivot.setX(0F);
+
             bLegFL.setRotation(0F, 0F, 0F);
             bLegFR.setRotation(0F, 0F, 0F);
             bLegBL.setRotation(0F, 0F, 0F);
@@ -628,6 +639,11 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             tail.setYRot(0F);
 
         } else {
+            setOffsetFromVector(root, map.get("rootPos"));
+            setRotationFromVector(root, map.get("rootRot"));
+
+            setOffsetFromVector(basePivot, map.get("basePivot"));
+
             setRotationFromVector(bLegFL, map.get("bLegFL"));
             setRotationFromVector(bLegFR, map.get("bLegFR"));
             setRotationFromVector(bLegBL, map.get("bLegBL"));
@@ -642,8 +658,11 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     }
 
     protected void saveAnimationValues(AnimalModelData data) {
-        // TODO: Look into the prospect of using an EnumMap instead. Might be faster
         Map<String, Vector3f> map = data.offsets;
+        map.put("rootPos", getPosVector(root));
+        map.put("rootRot", getRotationVector(root));
+        map.put("basePivot", getPosVector(basePivot));
+
         map.put("bLegFL", getRotationVector(bLegFL));
         map.put("bLegFR", getRotationVector(bLegFR));
         map.put("bLegBL", getRotationVector(bLegBL));
@@ -682,7 +701,10 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     }
 
     private void faintAnim() {
-        root.setZRot(Mth.HALF_PI);
+        root.setX(4.5F);
+        basePivot.setX(-4.5F);
+        root.setZRot(lerpTo(root.getZRot(), Mth.HALF_PI));
+        // TODO: Add getting up animation and make the side fainted to random
     }
 
     private void earTwitchAnim(float ageInTicks, boolean isLeftEar, float baseXRot, float baseZRot) {
