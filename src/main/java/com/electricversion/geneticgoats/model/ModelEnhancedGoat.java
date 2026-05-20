@@ -704,7 +704,41 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         root.setX(4.5F);
         basePivot.setX(-4.5F);
         root.setZRot(lerpTo(root.getZRot(), Mth.HALF_PI));
-        // TODO: Add getting up animation and make the side fainted to random
+        // TODO: make the side fainted to random
+    }
+
+    private void unfaintAnim() {
+        float absoluteZRot = Mth.abs(root.getZRot());
+        boolean onLeftSide = root.getZRot() > 0; // Which side the goat fainted on
+        if (absoluteZRot > Mth.HALF_PI*0.5F) {
+            // Still less than halfway off the ground
+            root.setZRot(lerpTo(0.015F, root.getZRot(), 0F));
+            bNeck.setZRot(lerpTo(bNeck.getZRot(), onLeftSide ? (0.2F * Mth.HALF_PI) : (-0.2F * Mth.HALF_PI))); // Push off ground with head
+
+            // Legs spread forward/backwards...
+            bLegFL.setXRot(lerpTo(0.1F, bLegFL.getXRot(), 0.35F * -Mth.HALF_PI));
+            bLegBL.setXRot(lerpTo(0.1F, bLegBL.getXRot(), 0.35F * Mth.HALF_PI));
+            // and to the right as the goat pushes off the ground
+            bLegFL.setZRot(lerpTo(bLegFL.getZRot(), onLeftSide ? (-0.15F * Mth.HALF_PI) : (0.15F * Mth.HALF_PI)));
+            bLegBL.setZRot(lerpTo(bLegBL.getZRot(), onLeftSide ? (-0.15F * Mth.HALF_PI) : (0.15F * Mth.HALF_PI)));
+
+        }
+        else {
+            if (absoluteZRot > Mth.HALF_PI * 0.15F) {
+                // Over halfway done
+                root.setZRot(lerpTo(0.05F, root.getZRot(), 0F));
+                bNeck.setZRot(lerpTo(bNeck.getZRot(), onLeftSide ? (-0.15F * Mth.HALF_PI) : (0.15F * Mth.HALF_PI))); // Move neck to balance
+            }
+            else {
+                // Almost done
+                root.setZRot(lerpTo(0.075F, root.getZRot(), 0F));
+                bNeck.setZRot(lerpTo(bNeck.getZRot(), 0F));
+            }
+            bLegFL.setXRot(lerpTo(bLegFL.getXRot(), 0));
+            bLegBL.setXRot(lerpTo(bLegBL.getXRot(), 0));
+            bLegFL.setZRot(lerpTo(bLegFL.getZRot(), 0));
+            bLegBL.setZRot(lerpTo(bLegBL.getZRot(), 0));
+        }
     }
 
     private void earTwitchAnim(float ageInTicks, boolean isLeftEar, float baseXRot, float baseZRot) {
@@ -734,10 +768,14 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             float baseEarXRot = phenotype.getEarXRot();
             float baseEarZRot = phenotype.getEarZRot();
 
+            // Fainting
             if (goatModelData.isFainted()) {
                 faintAnim();
-            } else {
-                root.setZRot(0F);
+            } else if (root.getZRot() != 0F) {
+                // Not fainted, but still on the ground.
+                unfaintAnim();
+                saveAnimationValues(goatModelData);
+                return;
             }
 
             // Modeled after the sheep ear twitch functionality in core GA. Credit to Bearded & Moki for the logic
