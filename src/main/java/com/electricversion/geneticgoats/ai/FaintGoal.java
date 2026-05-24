@@ -31,8 +31,7 @@ public class FaintGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        // TODO: Make conditional on fainting gene
-        if (enhancedGoat.getLastHurtByMob() != null) {
+        if (enhancedGoat.getLastHurtByMob() != null && enhancedGoat.canFaint()) {
             return startTick == -1 || enhancedGoat.tickCount <= startTick + 100;
         }
         return false;

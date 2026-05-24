@@ -77,6 +77,8 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
     private int woolLength; // Used for getting when possible, should never be modified except by setWoolLength.
     // It feels messy having two variables for wool length but its probably better than having to access the synched data every time
 
+    private boolean canFaint;
+
     @OnlyIn(Dist.CLIENT)
     private GoatModelData goatModelData;
 
@@ -119,6 +121,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
     public void setInitialDefaults() {
         super.setInitialDefaults();
         initialWool();
+        setCanFaint();
     }
 
     @Override
@@ -351,6 +354,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         setBagSize(getMilkAmount() / maxPossibleMilk);
 
         setMaxWool();
+        setCanFaint();
         if (!compound.getString("breed").isEmpty()) {
             // When summoning a purebred, it should spawn with its wool fully grown
             setWoolLength(getCurrentMaxWool());
@@ -711,5 +715,14 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
 
     public void setFainted(boolean fainted) {
         entityData.set(FAINTED, fainted);
+    }
+
+    public boolean canFaint() {
+        return canFaint;
+    }
+
+    public void setCanFaint() {
+        int[] genes = getGenes().getAutosomalGenes();
+        canFaint = genes[162] == 2 && genes[163] == 2;
     }
 }
