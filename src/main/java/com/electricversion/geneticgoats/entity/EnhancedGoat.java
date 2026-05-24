@@ -322,6 +322,14 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
             return Blocks.WHITE_WOOL;
         } else if (genes[2] == 2 || genes[3] == 2) {
             // Dom Black
+            if (genes[6] == 2 || genes[7] == 2 || (genes[6] == 3 && genes[7] == 3)) {
+                // Dark brown or chocolate
+                return Blocks.BROWN_WOOL;
+            }
+            else if (genes[132] == 2 && genes[133] == 2) {
+                // DIlute, and not dark brown or chocolate
+                return Blocks.GRAY_WOOL;
+            }
             return Blocks.BLACK_WOOL;
         }
         return Blocks.BROWN_WOOL;
