@@ -694,6 +694,13 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bLegBR.setXRot(rightLegAngle);
     }
 
+    private void straightenLegsAnim() {
+        bLegFL.setXRot(lerpTo(bLegFL.getXRot(), 0F));
+        bLegFR.setXRot(lerpTo(bLegFR.getXRot(), 0F));
+        bLegBL.setXRot(lerpTo(bLegBL.getXRot(), 0F));
+        bLegBR.setXRot(lerpTo(bLegBR.getXRot(), 0F));
+    }
+
     private void grazeAnim(float ticksOfGrazing) {
         bNeck.setXRot(lerpTo(bNeck.getXRot(), Mth.HALF_PI * 0.9F + baseNeckAngle));
         bHead.setXRot(lerpTo(bHead.getXRot(), -Mth.HALF_PI * 0.075F + baseHeadAngle));
@@ -771,6 +778,10 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             // Fainting
             if (goatModelData.isFainted()) {
                 faintAnim();
+                straightenLegsAnim();
+                // No other animations can occur while fainting
+                saveAnimationValues(goatModelData);
+                return;
             } else if (root.getZRot() != 0F) {
                 // Not fainted, but still on the ground.
                 unfaintAnim();
@@ -824,10 +835,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             if (goat.getDeltaMovement().horizontalDistanceSqr() > 0.001 || goat.xOld != goat.getX() || goat.zOld != goat.getZ()) {
                 walkAnim(limbSwing, limbSwingAmount);
             } else {
-                bLegFL.setXRot(lerpTo(bLegFL.getXRot(), 0F));
-                bLegFR.setXRot(lerpTo(bLegFR.getXRot(), 0F));
-                bLegBL.setXRot(lerpTo(bLegBL.getXRot(), 0F));
-                bLegBR.setXRot(lerpTo(bLegBR.getXRot(), 0F));
+                straightenLegsAnim();
             }
             saveAnimationValues(goatModelData);
         }
