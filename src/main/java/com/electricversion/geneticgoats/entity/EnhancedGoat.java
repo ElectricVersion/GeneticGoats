@@ -14,6 +14,7 @@ import mokiyoki.enhancedanimals.config.GeneticAnimalsConfig;
 import mokiyoki.enhancedanimals.entity.EnhancedAnimalAbstract;
 import mokiyoki.enhancedanimals.entity.EntityState;
 import mokiyoki.enhancedanimals.init.FoodSerialiser;
+import mokiyoki.enhancedanimals.init.ModBlocks;
 import mokiyoki.enhancedanimals.init.ModItems;
 import mokiyoki.enhancedanimals.model.modeldata.AnimalModelData;
 import mokiyoki.enhancedanimals.renderer.texture.TextureGrouping;
@@ -638,8 +639,28 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
     }
 
     private Map<Block, EnhancedEatPlantsGoal.EatValues> createGrazingMap() {
-        // TODO: Add grazing
-        return new HashMap<>();
+        HashMap<Block, EnhancedEatPlantsGoal.EatValues> grazingMap = new HashMap<>();
+        // Eat grass
+        grazingMap.put(Blocks.GRASS, new EnhancedEatPlantsGoal.EatValues(3, 7, 750));
+        grazingMap.put(ModBlocks.GROWABLE_GRASS.get(), new EnhancedEatPlantsGoal.EatValues(3, 7, 750));
+        grazingMap.put(Blocks.TALL_GRASS, new EnhancedEatPlantsGoal.EatValues(3, 7, 750));
+        grazingMap.put(ModBlocks.GROWABLE_TALL_GRASS.get(), new EnhancedEatPlantsGoal.EatValues(3, 7, 750));
+        // Eat your crops
+        grazingMap.put(Blocks.PUMPKIN, new EnhancedEatPlantsGoal.EatValues(0, 1, 6000));
+        grazingMap.put(Blocks.MELON, new EnhancedEatPlantsGoal.EatValues(0, 1, 4500));
+        grazingMap.put(Blocks.WHEAT, new EnhancedEatPlantsGoal.EatValues(3, 7, 750));
+        grazingMap.put(Blocks.BEETROOTS, new EnhancedEatPlantsGoal.EatValues(2, 3, 750));
+        grazingMap.put(Blocks.CARROTS, new EnhancedEatPlantsGoal.EatValues(3, 7, 750));
+        grazingMap.put(Blocks.SWEET_BERRY_BUSH, new EnhancedEatPlantsGoal.EatValues(1, 3, 500));
+        // Eat your flowers too
+        grazingMap.put(Blocks.OXEYE_DAISY, new EnhancedEatPlantsGoal.EatValues(3, 7, 750));
+        grazingMap.put(ModBlocks.GROWABLE_OXEYE_DAISY.get(), new EnhancedEatPlantsGoal.EatValues(7, 2, 750));
+        grazingMap.put(Blocks.DANDELION, new EnhancedEatPlantsGoal.EatValues(3, 7, 750));
+        grazingMap.put(ModBlocks.GROWABLE_DANDELION.get(), new EnhancedEatPlantsGoal.EatValues(3, 7, 750));
+        grazingMap.put(Blocks.ROSE_BUSH, new EnhancedEatPlantsGoal.EatValues(3, 7, 750));
+        grazingMap.put(ModBlocks.GROWABLE_ROSE_BUSH.get(), new EnhancedEatPlantsGoal.EatValues(3, 7, 750));
+
+        return grazingMap;
     }
 
 
