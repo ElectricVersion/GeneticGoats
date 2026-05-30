@@ -16,4 +16,9 @@ public class GoatFollowParentGoal extends FollowParentGoal {
     public boolean canUse() {
         return super.canUse() && !goat.isFainted();
     }
+
+    @Override
+    public boolean canContinueToUse() {
+        return super.canContinueToUse() && !goat.isFainted();
+    }
 }
