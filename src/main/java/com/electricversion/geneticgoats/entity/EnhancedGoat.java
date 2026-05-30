@@ -1,6 +1,7 @@
 package com.electricversion.geneticgoats.entity;
 
 import com.electricversion.geneticgoats.ai.FaintGoal;
+import com.electricversion.geneticgoats.ai.GoatFollowParentGoal;
 import com.electricversion.geneticgoats.config.GoatsCommonConfig;
 import com.electricversion.geneticgoats.entity.genetics.GoatGeneticsInitializer;
 import com.electricversion.geneticgoats.entity.texture.GoatTexture;
@@ -39,7 +40,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.LookControl;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.FollowParentGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -650,7 +650,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         goalSelector.addGoal(1, new EnhancedPanicGoal(this, 1.25D));
         goalSelector.addGoal(3, new EnhancedBreedGoal(this, 1.0D));
         goalSelector.addGoal(4, new EnhancedTemptGoal(this, 1.0D, 1.2D, false, Items.AIR));
-        goalSelector.addGoal(5, new FollowParentGoal(this, 1.1D));
+        goalSelector.addGoal(5, new GoatFollowParentGoal(this, 1.1D));
         goalSelector.addGoal(6, new StayShelteredGoal(this, 5723, 7000, 1000));
         goalSelector.addGoal(7, new SeekShelterGoal(this, 1.0D, 5723, 7000, 1000));
         goalSelector.addGoal(8, new EnhancedEatPlantsGoal(this, createGrazingMap()));
