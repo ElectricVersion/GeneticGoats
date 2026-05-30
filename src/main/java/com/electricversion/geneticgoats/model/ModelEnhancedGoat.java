@@ -710,7 +710,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     private void faintAnim() {
         root.setX(4.5F);
         basePivot.setX(-4.5F);
-        root.setZRot(lerpTo(root.getZRot(), Mth.HALF_PI));
+        float absoluteZRot = Mth.abs(root.getZRot()) / Mth.HALF_PI;
+        root.setZRot(lerpTo(absoluteZRot < 0.01F ? 0.006F : (0.06F * absoluteZRot), root.getZRot(), Mth.HALF_PI));
         // TODO: make the side fainted to random
     }
 

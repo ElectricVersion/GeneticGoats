@@ -29,7 +29,7 @@ public class FaintGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (enhancedGoat.getLastHurtByMob() != null && enhancedGoat.canFaint()) {
+        if (enhancedGoat.getLastHurtByMob() != null && enhancedGoat.canFaint() && enhancedGoat.isOnGround()) {
             return startTick == -1 || enhancedGoat.tickCount <= startTick + 100;
         }
         return false;
