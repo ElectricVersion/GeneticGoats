@@ -645,8 +645,8 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
 
     @Override
     protected void registerGoals() {
+        goalSelector.addGoal(0, new FaintGoal(this));
         goalSelector.addGoal(0, new FloatGoal(this));
-        goalSelector.addGoal(1, new FaintGoal(this));
         goalSelector.addGoal(1, new EnhancedPanicGoal(this, 1.25D));
         goalSelector.addGoal(3, new EnhancedBreedGoal(this, 1.0D));
         goalSelector.addGoal(4, new EnhancedTemptGoal(this, 1.0D, 1.2D, false, Items.AIR));

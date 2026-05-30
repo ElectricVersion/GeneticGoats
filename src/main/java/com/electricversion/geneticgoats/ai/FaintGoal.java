@@ -1,8 +1,6 @@
 package com.electricversion.geneticgoats.ai;
 
 import com.electricversion.geneticgoats.entity.EnhancedGoat;
-import net.minecraft.world.entity.PathfinderMob;
-import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.Goal;
 
 import java.util.EnumSet;
@@ -13,7 +11,7 @@ public class FaintGoal extends Goal {
 
     public FaintGoal(EnhancedGoat enhancedGoat) {
         this.enhancedGoat = enhancedGoat;
-        setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
+        setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
 
     @Override
@@ -35,6 +33,16 @@ public class FaintGoal extends Goal {
             return startTick == -1 || enhancedGoat.tickCount <= startTick + 100;
         }
         return false;
+    }
+
+    @Override
+    public boolean isInterruptable() {
+        return false;
+    }
+
+    @Override
+    public void tick() {
+        enhancedGoat.getNavigation().stop();
     }
 
 }
