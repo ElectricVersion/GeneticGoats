@@ -714,7 +714,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         // TODO: make the side fainted to random
     }
 
-    private void unfaintAnim() {
+    private void getUpFromFaintingAnim() {
         float absoluteZRot = Mth.abs(root.getZRot());
         boolean onLeftSide = root.getZRot() > 0; // Which side the goat fainted on
         if (absoluteZRot > Mth.HALF_PI*0.5F) {
@@ -724,11 +724,15 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
             // Legs spread forward/backwards...
             bLegFL.setXRot(lerpTo(0.1F, bLegFL.getXRot(), 0.35F * -Mth.HALF_PI));
+            bLegFR.setXRot(lerpTo(bLegFR.getXRot(), 0.2F * -Mth.HALF_PI));
             bLegBL.setXRot(lerpTo(0.1F, bLegBL.getXRot(), 0.35F * Mth.HALF_PI));
-            // and to the right as the goat pushes off the ground
-            bLegFL.setZRot(lerpTo(bLegFL.getZRot(), onLeftSide ? (-0.15F * Mth.HALF_PI) : (0.15F * Mth.HALF_PI)));
-            bLegBL.setZRot(lerpTo(bLegBL.getZRot(), onLeftSide ? (-0.15F * Mth.HALF_PI) : (0.15F * Mth.HALF_PI)));
-
+            bLegBR.setXRot(lerpTo(bLegBR.getXRot(), 0.2F * Mth.HALF_PI));
+            // and to the side fallen on as the goat pushes off the ground
+            float legZRotTarget = onLeftSide ? (-0.2F * Mth.HALF_PI) : (0.2F * Mth.HALF_PI);
+            bLegFL.setZRot(lerpTo(0.03F, bLegFL.getZRot(), legZRotTarget * 0.75F));
+            bLegFR.setZRot(lerpTo(0.1F, bLegFR.getZRot(), legZRotTarget));
+            bLegBL.setZRot(lerpTo(0.03F, bLegBL.getZRot(), legZRotTarget * 0.75F));
+            bLegBR.setZRot(lerpTo(0.1F, bLegBR.getZRot(), legZRotTarget));
         }
         else {
             if (absoluteZRot > Mth.HALF_PI * 0.15F) {
@@ -741,10 +745,11 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                 root.setZRot(lerpTo(0.075F, root.getZRot(), 0F));
                 bNeck.setZRot(lerpTo(bNeck.getZRot(), 0F));
             }
-            bLegFL.setXRot(lerpTo(bLegFL.getXRot(), 0));
-            bLegBL.setXRot(lerpTo(bLegBL.getXRot(), 0));
+            straightenLegsAnim(); // Only covers x rotation, so we need to reset Z rotation manually
             bLegFL.setZRot(lerpTo(bLegFL.getZRot(), 0));
+            bLegFR.setZRot(lerpTo(0.1F, bLegFR.getZRot(), 0));
             bLegBL.setZRot(lerpTo(bLegBL.getZRot(), 0));
+            bLegBR.setZRot(lerpTo(0.1F, bLegBR.getZRot(), 0));
         }
     }
 
@@ -784,7 +789,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                 return;
             } else if (root.getZRot() != 0F) {
                 // Not fainted, but still on the ground.
-                unfaintAnim();
+                getUpFromFaintingAnim();
                 saveAnimationValues(goatModelData);
                 return;
             }
