@@ -745,7 +745,12 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                 root.setZRot(lerpTo(0.075F, root.getZRot(), 0F));
                 bNeck.setZRot(lerpTo(bNeck.getZRot(), 0F));
             }
-            straightenLegsAnim(); // Only covers x rotation, so we need to reset Z rotation manually
+            // Straighten x rotation, with the legs not fallen on moving faster...
+            bLegFL.setXRot(lerpTo(0.03F, bLegFL.getXRot(), 0F));
+            bLegFR.setXRot(lerpTo(0.1F, bLegFR.getXRot(), 0F));
+            bLegBL.setXRot(lerpTo(0.03F, bLegBL.getXRot(), 0F));
+            bLegBR.setXRot(lerpTo(0.1F, bLegBR.getXRot(), 0F));
+            // ...and same with z rotation
             bLegFL.setZRot(lerpTo(bLegFL.getZRot(), 0));
             bLegFR.setZRot(lerpTo(0.1F, bLegFR.getZRot(), 0));
             bLegBL.setZRot(lerpTo(bLegBL.getZRot(), 0));
