@@ -63,7 +63,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeShearable {
 
@@ -499,7 +498,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         };
 
         int kidRange = (maxKids - minKids) + 1; // the +1 offsets the fact that nextInt's upper bound is exclusive
-        return ThreadLocalRandom.current().nextInt(kidRange) + minKids;
+        return random.nextInt(kidRange) + minKids;
     }
 
     @Override
