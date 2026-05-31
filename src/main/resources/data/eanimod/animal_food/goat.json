@@ -87,6 +87,11 @@
       "isBreedingItem": false
     },
     {
+      "registryName": "minecraft:sunflower",
+      "hungerRestored": 2000,
+      "isBreedingItem": false
+    },
+    {
       "registryName": "minecraft:melon_slice",
       "hungerRestored": 1000,
       "isBreedingItem": false

@@ -659,6 +659,8 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         grazingMap.put(ModBlocks.GROWABLE_DANDELION.get(), new EnhancedEatPlantsGoal.EatValues(3, 7, 750));
         grazingMap.put(Blocks.ROSE_BUSH, new EnhancedEatPlantsGoal.EatValues(3, 7, 750));
         grazingMap.put(ModBlocks.GROWABLE_ROSE_BUSH.get(), new EnhancedEatPlantsGoal.EatValues(3, 7, 750));
+        grazingMap.put(Blocks.SUNFLOWER, new EnhancedEatPlantsGoal.EatValues(3, 7, 750));
+        grazingMap.put(ModBlocks.GROWABLE_SUNFLOWER.get(), new EnhancedEatPlantsGoal.EatValues(3, 7, 750));
 
         return grazingMap;
     }
