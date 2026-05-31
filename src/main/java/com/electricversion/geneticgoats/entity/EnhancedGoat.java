@@ -399,21 +399,10 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
             float udderMult = (genes[120] + genes[121] + genes[122] + genes[123] - 4) / 36F;
 
             // Dairy added by the body type
-            int bodyTypeGenes = 24;
-            for (int i = 108; i < 114; i++) {
-                // Less dairy-bodied
-                bodyTypeGenes -= genes[i];
-            }
-            for (int i = 114; i < 120; i++) {
-                // More dairy-bodied
-                bodyTypeGenes += genes[i];
-            }
-            float bodyMult = bodyTypeGenes / 48F;
+            float bodyMult = getBodyTypeMult(genes);
 
-            int sizeModifier = 16;
-            sizeModifier += ((genes[128] + genes[129] - 2)); // Max 8 in normal gameplay
-            sizeModifier -= ((genes[124] + genes[125] + genes[126] + genes[127] - 4)); // Max 16 in normal gameplay
-            float sizeMult = sizeModifier / 24F;
+            // Dairy added by size
+            float sizeMult = getSizeMult(genes);
 
             bagSize = (2F * sizeMult) // 1/3 bucket added purely by size
                     + (10F * udderMult * sizeMult) // 1 2/3 added by udder size, but scales with size
@@ -422,6 +411,28 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
 
             maxBagSize = bagSize / 24F;
         }
+    }
+
+    // Returns a float from 0 to 1, with 0 being min size and 1 being max size
+    private static float getSizeMult(int[] genes) {
+        int sizeModifier = 16;
+        sizeModifier += ((genes[128] + genes[129] - 2)); // Max 8 in normal gameplay
+        sizeModifier -= ((genes[124] + genes[125] + genes[126] + genes[127] - 4)); // Max 16 in normal gameplay
+        return sizeModifier / 24F;
+    }
+
+    // Returns a float from 0 to 1, with 0 being fully meat-bodied and 1 being fully dairy-bodied
+    private static float getBodyTypeMult(int[] genes) {
+        int bodyTypeGenes = 24;
+        for (int i = 108; i < 114; i++) {
+            // Less dairy-bodied, more meat bodied
+            bodyTypeGenes -= genes[i];
+        }
+        for (int i = 114; i < 120; i++) {
+            // More dairy-bodied, less meat-bodied
+            bodyTypeGenes += genes[i];
+        }
+        return bodyTypeGenes / 48F;
     }
 
     @Override
