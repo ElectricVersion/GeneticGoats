@@ -28,6 +28,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -393,7 +394,7 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
             int[] genes = getGenes().getAutosomalGenes();
 
             // Once calculations are complete this should add up to a max of 24.
-            float bagSize = 0F;
+            float bagSize;
 
             // Dairy added by the udder capacity
             float udderMult = (genes[120] + genes[121] + genes[122] + genes[123] - 4) / 36F;
@@ -499,6 +500,36 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
 
         int kidRange = (maxKids - minKids) + 1; // the +1 offsets the fact that nextInt's upper bound is exclusive
         return ThreadLocalRandom.current().nextInt(kidRange) + minKids;
+    }
+
+    @Override
+    protected void dropCustomDeathLoot(@NotNull DamageSource damageSource, int looting, boolean recentlyHit) {
+        super.dropCustomDeathLoot(damageSource, looting, recentlyHit);
+
+        int[] genes = getGenes().getAutosomalGenes();
+
+        // Once calculations are complete this should add up to a max of 4
+        float meatDropMult;
+
+        // Meat added by the body type
+        float bodyMult = 1F - getBodyTypeMult(genes);
+
+        // Meat added by size
+        float sizeMult = getSizeMult(genes);
+
+        meatDropMult = (bodyMult) // One meat added purely by body type
+                + (sizeMult) // One meat added purely by size
+                + (2F * sizeMult * bodyMult); // Two meat added by body type that scales with size
+
+        // The decimal portion of the meat drop should be interpreted as % chance of an additional drop
+        float additionalDropChance = meatDropMult - Mth.floor(meatDropMult);
+        boolean additionalDrop = additionalDropChance > random.nextFloat();
+
+        int meatDropCount = Mth.floor(additionalDrop ? (meatDropMult + 1) : meatDropMult);
+
+        // TODO: Add config for what items should drop for meat
+        ItemStack meatStack = new ItemStack(isOnFire() ? Items.COOKED_MUTTON : Items.MUTTON, meatDropCount);
+        spawnAtLocation(meatStack);
     }
 
     /* Gene Related Code */
