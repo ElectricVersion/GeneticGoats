@@ -199,10 +199,48 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         return true;
     }
 
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        entityData.define(WOOL_LENGTH, 0);
+        entityData.define(FAINTED, false);
+    }
+
+    @Override
+    protected int getAdultAge() {
+        return GoatsCommonConfig.COMMON.growthTime.get();
+    }
+
+    @Override
+    protected int gestationConfig() {
+        return GoatsCommonConfig.COMMON.birthTime.get();
+    }
+
     @Override
     protected FoodSerialiser.AnimalFoodMap getAnimalFoodType() {
         return FoodSerialiser.getAnimalFoodMap("goat");
     }
+
+    public void readAdditionalSaveData(CompoundTag compound) {
+        super.readAdditionalSaveData(compound);
+        setBagSize(getMilkAmount() / maxPossibleMilk);
+
+        setMaxWool();
+        setCanFaint();
+        if (!compound.getString("breed").isEmpty()) {
+            // When summoning a purebred, it should spawn with its wool fully grown
+            setWoolLength(getCurrentMaxWool());
+        } else {
+            // Otherwise, load from saved data
+            setWoolLength(compound.getInt("Wool"));
+        }
+    }
+
+    public void addAdditionalSaveData(CompoundTag compound) {
+        super.addAdditionalSaveData(compound);
+        compound.putInt("Wool", getWoolLength());
+    }
+
+    /* Production (wool, milk, meat, and fertility) */
 
     @Override
     public @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
@@ -219,7 +257,6 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
 
         return super.mobInteract(player, hand);
     }
-
 
     private void handleMilkingInteraction(Player player, InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
@@ -350,26 +387,6 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         return shearingDrops;
     }
 
-    public void readAdditionalSaveData(CompoundTag compound) {
-        super.readAdditionalSaveData(compound);
-        setBagSize(getMilkAmount() / maxPossibleMilk);
-
-        setMaxWool();
-        setCanFaint();
-        if (!compound.getString("breed").isEmpty()) {
-            // When summoning a purebred, it should spawn with its wool fully grown
-            setWoolLength(getCurrentMaxWool());
-        } else {
-            // Otherwise, load from saved data
-            setWoolLength(compound.getInt("Wool"));
-        }
-    }
-
-    public void addAdditionalSaveData(CompoundTag compound) {
-        super.addAdditionalSaveData(compound);
-        compound.putInt("Wool", getWoolLength());
-    }
-
     @Override
     protected void setMaxBagSize() {
         if (getOrSetIsFemale() || GeneticAnimalsConfig.COMMON.omnigenders.get()) {
@@ -423,7 +440,6 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         setWoolLength(getCurrentMaxWool());
     }
 
-
     public int getWoolLength() {
         return entityData.get(WOOL_LENGTH);
     }
@@ -432,7 +448,6 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         woolLength = newWoolLength; // Both variables should be updated to keep them consistent
         entityData.set(WOOL_LENGTH, newWoolLength);
     }
-
 
     protected void setMaxWool() {
         int[] genes = getGenes().getAutosomalGenes();
@@ -453,22 +468,6 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
     private int getCurrentMaxWool() {
         float age = getEnhancedAnimalAge();
         return (age >= getAdultAge()) ? individualMaxWool : (int) (individualMaxWool * (age / (float) getAdultAge()));
-    }
-
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        entityData.define(WOOL_LENGTH, 0);
-        entityData.define(FAINTED, false);
-    }
-
-    @Override
-    protected int getAdultAge() {
-        return GoatsCommonConfig.COMMON.growthTime.get();
-    }
-
-    @Override
-    protected int gestationConfig() {
-        return GoatsCommonConfig.COMMON.birthTime.get();
     }
 
     @Override
@@ -593,7 +592,6 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
      * for an animal with pretty basic AI functions.
      * */
 
-
 //    static final ImmutableList<? extends MemoryModuleType<?>> MEMORY_TYPES = ImmutableList.of(
 //            MemoryModuleType.PATH, MemoryModuleType.WALK_TARGET, MemoryModuleType.LOOK_TARGET,
 //            MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE,
@@ -606,11 +604,9 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
 //            ModMemoryModuleTypes.ROOSTING.get(), ModMemoryModuleTypes.EGG_LAYING.get()
 //    );
 
-
 //    private static final ImmutableList<? extends SensorType<? extends Sensor<? super EnhancedGoat>>> SENSOR_TYPES = ImmutableList.of(
 //            SensorType.NEAREST_LIVING_ENTITIES, SensorType.NEAREST_ADULT
 //    );
-
 
     @Override
     protected void customServerAiStep() {
@@ -665,7 +661,6 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         return grazingMap;
     }
 
-
     @Override
     protected void registerGoals() {
         goalSelector.addGoal(0, new FaintGoal(this));
@@ -688,6 +683,22 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         return super.canBreed() && !(genes[158] == 2 && genes[159] == 2); // Not homozygous for true polled, which causes infertility
     }
 
+    public boolean isFainted() {
+        return entityData.get(FAINTED);
+    }
+
+    public void setFainted(boolean fainted) {
+        entityData.set(FAINTED, fainted);
+    }
+
+    public boolean canFaint() {
+        return canFaint;
+    }
+
+    public void setCanFaint() {
+        int[] genes = getGenes().getAutosomalGenes();
+        canFaint = genes[162] == 2 && genes[163] == 2;
+    }
 
 //    @Override
 //    protected Brain.@NotNull Provider<EnhancedGoat> brainProvider() {
@@ -732,20 +743,4 @@ public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeSheara
         }
     }
 
-    public boolean isFainted() {
-        return entityData.get(FAINTED);
-    }
-
-    public void setFainted(boolean fainted) {
-        entityData.set(FAINTED, fainted);
-    }
-
-    public boolean canFaint() {
-        return canFaint;
-    }
-
-    public void setCanFaint() {
-        int[] genes = getGenes().getAutosomalGenes();
-        canFaint = genes[162] == 2 && genes[163] == 2;
-    }
 }
