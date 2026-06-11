@@ -163,6 +163,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bodyHairB = new WrappedModelPart("bodyHairB", rootPart);
 
         neck = new WrappedModelPart("neck", rootPart);
+        collar = new WrappedModelPart("collar", rootPart);
 
         head = new WrappedModelPart("head", rootPart);
         headWool = new WrappedModelPart("headWool", rootPart);
@@ -242,6 +243,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         basePivot.addChild(bNeck);
         bNeck.addChild(neck);
+        neck.addChild(collar);
 
         bNeck.addChild(bHead);
         bHead.addChild(head);
@@ -564,6 +566,12 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                             .addBox(-1F, -boxSize, -1F, 2, 2, 2, new CubeDeformation(deform)),
                     PartPose.ZERO);
         }
+        // Tack
+        rootDef.addOrReplaceChild("collar", CubeListBuilder.create()
+                        .texOffs(1, 121)
+                        .addBox(-1.5F, -1.5F, -1.5F, 3, 3, 3, new CubeDeformation(-0.5F)),
+                PartPose.offset(0F, -4F, -7F));
+
         return LayerDefinition.create(meshDefinition, 128, 128);
     }
 
