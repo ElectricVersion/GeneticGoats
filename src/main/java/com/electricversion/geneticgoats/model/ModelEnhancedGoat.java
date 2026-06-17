@@ -164,6 +164,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         neck = new WrappedModelPart("neck", rootPart);
         collar = new WrappedModelPart("collar", rootPart);
+        collarHardware = new WrappedModelPart("collarHardware", rootPart);
 
         head = new WrappedModelPart("head", rootPart);
         headWool = new WrappedModelPart("headWool", rootPart);
@@ -243,7 +244,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         basePivot.addChild(bNeck);
         bNeck.addChild(neck);
-        neck.addChild(collar);
+        bNeck.addChild(collar);
+        bNeck.addChild(collarHardware);
 
         bNeck.addChild(bHead);
         bHead.addChild(head);
@@ -567,10 +569,15 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                     PartPose.ZERO);
         }
         // Tack
-        rootDef.addOrReplaceChild("collar", CubeListBuilder.create()
+        rootDef.addOrReplaceChild("collar", CubeListBuilder.create() // Ring
+                        .texOffs(14, 121)
+                        .addBox(0.125F, 0F, -1.5F, 0, 3, 3, new CubeDeformation(0F, -0.5F, -0.5F)),
+                PartPose.offsetAndRotation(0F, -6F, -4.66F, 0, 0F, 0F));
+
+        rootDef.addOrReplaceChild("collarHardware", CubeListBuilder.create() // Bell
                         .texOffs(1, 121)
                         .addBox(-1.5F, -1.5F, -1.5F, 3, 3, 3, new CubeDeformation(-0.5F)),
-                PartPose.offset(0F, -4F, -7F));
+                PartPose.offsetAndRotation(0F, -3.25F, -5.5F, -baseNeckAngle, 0F, 0F));
 
         return LayerDefinition.create(meshDefinition, 128, 128);
     }
