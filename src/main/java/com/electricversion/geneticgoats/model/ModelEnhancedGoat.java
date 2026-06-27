@@ -172,6 +172,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         beard = new WrappedModelPart("beard", rootPart);
         muzzleLong = new WrappedModelPart("muzzleLong", rootPart);
         muzzleShort = new WrappedModelPart("muzzleShort", rootPart);
+        bridle = new WrappedModelPart("bridle", rootPart);
         lowerMuzzle = new WrappedModelPart("lowerMuzzle", rootPart);
         upperMouth = new WrappedModelPart("upperMouth", rootPart);
         mouth = new WrappedModelPart("mouth", rootPart);
@@ -255,6 +256,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bHead.addChild(bMuzzle);
         bMuzzle.addChild(muzzleLong);
         bMuzzle.addChild(muzzleShort);
+        bMuzzle.addChild(bridle);
         bHead.addChild(bMouth);
         bMouth.addChild(mouth);
         bHead.addChild(lowerMuzzle);
@@ -579,6 +581,11 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                         .addBox(-1.5F, -1.5F, -1.5F, 3, 3, 3, new CubeDeformation(-0.5F)),
                 PartPose.offsetAndRotation(0F, -3.25F, -4.5F, -baseNeckAngle, 0F, 0F));
 
+        rootDef.addOrReplaceChild("bridle", CubeListBuilder.create()
+                        .texOffs(28, 119)
+                        .addBox(-2.5F, -1.4F, -1F, 5, 7, 1, new CubeDeformation(-0.96F, -1.4F, 0F)),
+            PartPose.offsetAndRotation(0F, 0F, -1F, -0.1F * Mth.HALF_PI, 0F, 0F));
+
         return LayerDefinition.create(meshDefinition, 128, 128);
     }
 
@@ -622,6 +629,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         updateUdderSize(animalModelData, enhancedAnimal);
         updateWoolLength(animalModelData, enhancedAnimal);
         ((GoatModelData)animalModelData).setFainted(enhancedAnimal.isFainted());
+        animalModelData.bridle = enhancedAnimal.hasBridle();
     }
 
     /* Animation */
@@ -979,6 +987,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         
         // Set genetic muzzle & mouth rotation
         bMuzzle.setXRot(phenotype.getMuzzleXRot());
+        bridle.setXRot(-0.5F * phenotype.getMuzzleXRot());
         upperMouth.setY(phenotype.getUpperMouthY());
         mouth.setXRot(phenotype.getMouthXRot());
     }

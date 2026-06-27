@@ -12,6 +12,7 @@ import mokiyoki.enhancedanimals.ai.EnhancedEatPlantsGoal;
 import mokiyoki.enhancedanimals.ai.general.*;
 import mokiyoki.enhancedanimals.config.GeneticAnimalsConfig;
 import mokiyoki.enhancedanimals.entity.EnhancedAnimalAbstract;
+import mokiyoki.enhancedanimals.entity.EnhancedAnimalRideableAbstract;
 import mokiyoki.enhancedanimals.entity.EntityState;
 import mokiyoki.enhancedanimals.init.FoodSerialiser;
 import mokiyoki.enhancedanimals.init.ModBlocks;
@@ -64,7 +65,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EnhancedGoat extends EnhancedAnimalAbstract implements IForgeShearable {
+public class EnhancedGoat extends EnhancedAnimalRideableAbstract implements IForgeShearable {
 
     private static final EntityDataAccessor<Integer> WOOL_LENGTH = SynchedEntityData.defineId(EnhancedGoat.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> FAINTED = SynchedEntityData.defineId(EnhancedGoat.class, EntityDataSerializers.BOOLEAN);
