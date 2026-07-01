@@ -120,6 +120,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     private final WrappedModelPart[] hornL;
     private final WrappedModelPart[] hornR;
 
+    private final WrappedModelPart bridleNose2;
 
 
     /* Part Setup */
@@ -172,7 +173,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         beard = new WrappedModelPart("beard", rootPart);
         muzzleLong = new WrappedModelPart("muzzleLong", rootPart);
         muzzleShort = new WrappedModelPart("muzzleShort", rootPart);
-        bridle = new WrappedModelPart("bridle", rootPart);
+        bridleNose = new WrappedModelPart("bridleNose", rootPart);
+        bridleNose2 = new WrappedModelPart("bridleNose2", rootPart);
         lowerMuzzle = new WrappedModelPart("lowerMuzzle", rootPart);
         upperMouth = new WrappedModelPart("upperMouth", rootPart);
         mouth = new WrappedModelPart("mouth", rootPart);
@@ -256,7 +258,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bHead.addChild(bMuzzle);
         bMuzzle.addChild(muzzleLong);
         bMuzzle.addChild(muzzleShort);
-        bMuzzle.addChild(bridle);
+        bMuzzle.addChild(bridleNose);
+        bridleNose.addChild(bridleNose2);
         bHead.addChild(bMouth);
         bMouth.addChild(mouth);
         bHead.addChild(lowerMuzzle);
@@ -581,10 +584,19 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                         .addBox(-1.5F, -1.5F, -1.5F, 3, 3, 3, new CubeDeformation(-0.5F)),
                 PartPose.offsetAndRotation(0F, -3.25F, -4.5F, -baseNeckAngle, 0F, 0F));
 
-        rootDef.addOrReplaceChild("bridle", CubeListBuilder.create()
-                        .texOffs(28, 119)
-                        .addBox(-2.5F, -1.4F, -1F, 5, 7, 1, new CubeDeformation(-0.96F, -1.4F, 0F)),
+        // The part of the bridle that goes around the muzzle
+        rootDef.addOrReplaceChild("bridleNose", CubeListBuilder.create()
+                        .texOffs(26, 117)
+                        .addBox(-1.5F, 0F, -1F, 3, 4, 3, new CubeDeformation(0.05F, 0F, 0F)),
             PartPose.offsetAndRotation(0F, 0F, -1F, -0.1F * Mth.HALF_PI, 0F, 0F));
+
+        // The front part of the little connector thingy between the two sections of the bridle. Does that have a name??
+        rootDef.addOrReplaceChild("bridleNose2", CubeListBuilder.create()
+                        .texOffs(26, 124)
+                        .addBox(-1.5F, 0F, 0F, 3, 1, 3, new CubeDeformation(0.06F, 0F, 0F))
+                        .texOffs(43, 112)
+                        .addBox(-3F, 0F, 1F, 6, 1, 6, new CubeDeformation(0.26F, 0F, 0F)),
+                PartPose.offsetAndRotation(0F, 2F, 0F, -0.1F * Mth.HALF_PI, 0F, 0F));
 
         return LayerDefinition.create(meshDefinition, 128, 128);
     }
@@ -987,7 +999,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         
         // Set genetic muzzle & mouth rotation
         bMuzzle.setXRot(phenotype.getMuzzleXRot());
-        bridle.setXRot(-0.5F * phenotype.getMuzzleXRot());
+        bridleNose.setXRot(-0.5F * phenotype.getMuzzleXRot());
         upperMouth.setY(phenotype.getUpperMouthY());
         mouth.setXRot(phenotype.getMouthXRot());
     }
