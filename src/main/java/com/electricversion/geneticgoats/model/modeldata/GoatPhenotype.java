@@ -479,7 +479,7 @@ public class GoatPhenotype implements Phenotype {
         float[] digitZRotations = {
                 0F, 0F,
                 -0.125F * Mth.HALF_PI, -0.0625F * Mth.HALF_PI, -0.03125F * Mth.HALF_PI, 0.0625F * Mth.HALF_PI,
-                0.125F * Mth.HALF_PI, 0.125F * Mth.HALF_PI, 0.25F * Mth.HALF_PI, 0.375F * Mth.HALF_PI,
+                0.125F * Mth.HALF_PI, 0.1875F * Mth.HALF_PI, 0.25F * Mth.HALF_PI, 0.375F * Mth.HALF_PI,
         };
         float xRot = digitXRotations[getDigit(geneValue, 0)];
         float zRot = digitZRotations[getDigit(geneValue, 1)];
