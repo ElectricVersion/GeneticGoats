@@ -122,6 +122,11 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
     private final WrappedModelPart bridleNose2;
 
+    private final WrappedModelPart bridleDefault;
+    private final WrappedModelPart bridleWool;
+
+    private final WrappedModelPart bridleNeck;
+
 
     /* Part Setup */
 
@@ -164,6 +169,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bodyHairB = new WrappedModelPart("bodyHairB", rootPart);
 
         neck = new WrappedModelPart("neck", rootPart);
+        bridleNeck = new WrappedModelPart("bridleNeck", rootPart);
         collar = new WrappedModelPart("collar", rootPart);
         collarHardware = new WrappedModelPart("collarHardware", rootPart);
 
@@ -171,6 +177,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         headWool = new WrappedModelPart("headWool", rootPart);
         headHair = new WrappedModelPart("headHair", rootPart);
         beard = new WrappedModelPart("beard", rootPart);
+
         muzzleLong = new WrappedModelPart("muzzleLong", rootPart);
         muzzleShort = new WrappedModelPart("muzzleShort", rootPart);
         bridleNose = new WrappedModelPart("bridleNose", rootPart);
@@ -178,9 +185,15 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         lowerMuzzle = new WrappedModelPart("lowerMuzzle", rootPart);
         upperMouth = new WrappedModelPart("upperMouth", rootPart);
         mouth = new WrappedModelPart("mouth", rootPart);
+
         eyes = new WrappedModelPart("eyes", rootPart);
+
         wattleL = new WrappedModelPart("wattleL", rootPart);
         wattleR = new WrappedModelPart("wattleR", rootPart);
+
+        bridle = new WrappedModelPart("bridle", rootPart);
+        bridleDefault = new WrappedModelPart("bridleDefault", rootPart);
+        bridleWool = new WrappedModelPart("bridleWool", rootPart);
 
         earLG = new WrappedModelPart("earLG", rootPart);
         earRG = new WrappedModelPart("earRG", rootPart);
@@ -247,6 +260,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         basePivot.addChild(bNeck);
         bNeck.addChild(neck);
+        bNeck.addChild(bridleNeck);
         bNeck.addChild(collar);
         bNeck.addChild(collarHardware);
 
@@ -267,6 +281,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         head.addChild(eyes);
         head.addChild(wattleL);
         head.addChild(wattleR);
+        bHead.addChild(bridle);
+        bridle.addChild(bridleDefault);
+        bridle.addChild(bridleWool);
 
         bHead.addChild(bHornL);
         bHead.addChild(bHornR);
@@ -339,6 +356,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                 PartPose.offset(-3F, 0F, -1.05F));
         rootDef.addOrReplaceChild("bUdder", CubeListBuilder.create(),
                 PartPose.offset(0F, -3F, -5F));
+        rootDef.addOrReplaceChild("bridle", CubeListBuilder.create(),
+                PartPose.offset(0F, 3F, 0F));
 
         // Body
         rootDef.addOrReplaceChild("bodyF", CubeListBuilder.create()
@@ -573,16 +592,22 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
                             .addBox(-1F, -boxSize, -1F, 2, 2, 2, new CubeDeformation(deform)),
                     PartPose.ZERO);
         }
-        // Tack
+        // Collar
         rootDef.addOrReplaceChild("collar", CubeListBuilder.create() // Ring
                         .texOffs(14, 121)
                         .addBox(0.125F, 0F, -3F, 0, 3, 3, new CubeDeformation(0F, -0.5F, -0.5F)),
-                PartPose.offsetAndRotation(0F, -6F, -1.833333F, 0, 0F, 0F));
+                PartPose.offsetAndRotation(0F, -6F, -1.8333F, 0, 0F, 0F));
 
         rootDef.addOrReplaceChild("collarHardware", CubeListBuilder.create() // Bell
                         .texOffs(1, 121)
                         .addBox(-1.5F, -1.5F, -1.5F, 3, 3, 3, new CubeDeformation(-0.5F)),
                 PartPose.offsetAndRotation(0F, -3.25F, -4.5F, -baseNeckAngle, 0F, 0F));
+
+        // Bridle
+        rootDef.addOrReplaceChild("bridleNeck", CubeListBuilder.create()
+                        .texOffs(43, 120)
+                        .addBox(-3F, 0F, -3F, 6, 1, 6, new CubeDeformation(0.06F, 0F, 0.06F)),
+                PartPose.offsetAndRotation(0F, -8F, 0F, 0F, 0F, 0F));
 
         // The part of the bridle that goes around the muzzle
         rootDef.addOrReplaceChild("bridleNose", CubeListBuilder.create()
@@ -593,10 +618,18 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         // The front part of the little connector thingy between the two sections of the bridle. Does that have a name??
         rootDef.addOrReplaceChild("bridleNose2", CubeListBuilder.create()
                         .texOffs(26, 124)
-                        .addBox(-1.5F, 0F, 0F, 3, 1, 3, new CubeDeformation(0.06F, 0F, 0F))
-                        .texOffs(43, 112)
-                        .addBox(-3F, 0F, 1F, 6, 1, 6, new CubeDeformation(0.26F, 0F, 0F)),
+                        .addBox(-1.5F, 0F, 0F, 3, 1, 3, new CubeDeformation(0.06F, 0F, 0F)),
                 PartPose.offsetAndRotation(0F, 2F, 0F, -0.1F * Mth.HALF_PI, 0F, 0F));
+
+        rootDef.addOrReplaceChild("bridleDefault", CubeListBuilder.create()
+                        .texOffs(43, 112)
+                        .addBox(-3F, 0F, -6F, 6, 1, 6, new CubeDeformation(0.05F, 0F, 0.05F)),
+                PartPose.offsetAndRotation(0F, 0F, 0F, 0F, 0F, 0F));
+
+        rootDef.addOrReplaceChild("bridleWool", CubeListBuilder.create()
+                        .texOffs(43, 112)
+                        .addBox(-3F, 0F, -6F, 6, 1, 6, new CubeDeformation(0.3F, 0F, 0.3F)),
+                PartPose.offsetAndRotation(0F, 0F, 0F, 0F, 0F, 0F));
 
         return LayerDefinition.create(meshDefinition, 128, 128);
     }
@@ -933,11 +966,18 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         if (phenotype.isAngora() && phenotype.isHeadWooled()) {
             headWool.show();
+            bridleWool.show();
+            bridleDefault.hide();
             headHair.show();
             headHair.setY(-0.5F); // Offset the head hair to add visual floofiness!
-        } else if (phenotype.isLongHaired()) {
-            // Long-haired and not a head-wooled angora
-            headHair.setY(0F);
+        } else {
+            // No head wool
+            bridleDefault.show();
+            bridleWool.hide();
+            if (phenotype.isLongHaired()) {
+                // Long-haired and not a head-wooled angora
+                headHair.setY(0F);
+            }
         }
 
         setupEars(phenotype);
@@ -1000,6 +1040,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         // Set genetic muzzle & mouth rotation
         bMuzzle.setXRot(phenotype.getMuzzleXRot());
         bridleNose.setXRot(-0.5F * phenotype.getMuzzleXRot());
+        bridleNose2.setXRot(-0.5F * phenotype.getMuzzleXRot()); // TODO: Use trigonometry to make this line up with the rest of the bridle
         upperMouth.setY(phenotype.getUpperMouthY());
         mouth.setXRot(phenotype.getMouthXRot());
     }
@@ -1049,6 +1090,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             mapOfScale.put("head", phenotype.getHeadScalings());
             mapOfScale.put("headWool", phenotype.getHeadScalings());
             mapOfScale.put("headHair", phenotype.getHeadScalings());
+            mapOfScale.put("bridle", phenotype.getHeadScalings());
+            mapOfScale.put("bridleNeck", phenotype.getHeadScalings());
             mapOfScale.put("bMuzzle", phenotype.getHeadScalings());
             mapOfScale.put("lowerMuzzle", phenotype.getLowerMuzzleScalings());
             mapOfScale.put("upperMouth", phenotype.getLowerMuzzleScalings());
