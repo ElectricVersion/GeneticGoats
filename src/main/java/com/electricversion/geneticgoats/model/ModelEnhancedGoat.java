@@ -260,7 +260,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         basePivot.addChild(bNeck);
         bNeck.addChild(neck);
-        bNeck.addChild(bridleNeck);
+//        bNeck.addChild(bridleNeck);
         bNeck.addChild(collar);
         bNeck.addChild(collarHardware);
 
@@ -611,19 +611,19 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         // The part of the bridle that goes around the muzzle
         rootDef.addOrReplaceChild("bridleNose", CubeListBuilder.create()
-                        .texOffs(26, 117)
-                        .addBox(-1.5F, 0F, -1F, 3, 4, 3, new CubeDeformation(0.05F, 0F, 0F)),
-            PartPose.offsetAndRotation(0F, 0F, -1F, -0.1F * Mth.HALF_PI, 0F, 0F));
+                        .texOffs(77, 101)
+                        .addBox(-3F, -2F, -2.5F, 6, 8, 6, new CubeDeformation(-1.45F, -2F, -1.5F)),
+            PartPose.offsetAndRotation(0F, 0F, -2F, -0.1F * Mth.HALF_PI, 0F, 0F));
 
         // The front part of the little connector thingy between the two sections of the bridle. Does that have a name??
         rootDef.addOrReplaceChild("bridleNose2", CubeListBuilder.create()
-                        .texOffs(26, 124)
-                        .addBox(-1.5F, 0F, 0F, 3, 1, 3, new CubeDeformation(0.06F, 0F, 0F)),
+                        .texOffs(26, 108)
+                        .addBox(-3F, -0.5F, -1.5F, 6, 2, 6, new CubeDeformation(-1.46F, -0.5F, -1.5F)),
                 PartPose.offsetAndRotation(0F, 2F, 0F, -0.1F * Mth.HALF_PI, 0F, 0F));
 
         rootDef.addOrReplaceChild("bridleDefault", CubeListBuilder.create()
-                        .texOffs(43, 112)
-                        .addBox(-3F, 0F, -6F, 6, 1, 6, new CubeDeformation(0.05F, 0F, 0.05F)),
+                        .texOffs(39, 105)
+                        .addBox(-6F, -5.5F, -9.05F, 12, 10, 12, new CubeDeformation(-2.95F, -2.45F, -2.95F)),
                 PartPose.offsetAndRotation(0F, 0F, 0F, 0F, 0F, 0F));
 
         rootDef.addOrReplaceChild("bridleWool", CubeListBuilder.create()
