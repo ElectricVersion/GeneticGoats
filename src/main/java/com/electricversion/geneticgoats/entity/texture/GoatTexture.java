@@ -605,19 +605,19 @@ public class GoatTexture {
             // Not Dom White
             if (genes[4] == 3 || genes[5] == 3) {
                 // Goulet
-                int gouletRandom = uuidArry[IDX_KIT_BODY] % (whiteSize == 2 ? 4 : 8);
+                int gouletRandom = AddonUtils.hexToInt(uuidArry[IDX_KIT_BODY], (whiteSize == 2 ? 4 : 8));
                 goat.addPrefixedTexture(whiteSize == 2 ? whiteTopGroup : whiteMiddleGroup, HAIR_PREFIX, hairType, TX_GOULET, whiteSize, gouletRandom, "g", true);
 
             } else if (genes[4] == 4 && genes[5] == 4) {
                 // Piebald
                 if (genes[58] != 1 || genes[59] != 1) {
                     // Piebald AND belt
-                    int piebaldBeltRandom = uuidArry[IDX_KIT_BODY] % 8;
+                    int piebaldBeltRandom = AddonUtils.hexToInt(uuidArry[IDX_KIT_BODY], 8);
 
                     goat.addPrefixedTexture(whiteSize > 0 ? whiteTopGroup : whiteMiddleGroup, HAIR_PREFIX, hairType, TX_PIEBALD_BELT, whiteSize, piebaldBeltRandom, "pbe", true);
                 } else {
                     // Piebald without belt
-                    int piebaldRandom = uuidArry[IDX_KIT_BODY] % 8;
+                    int piebaldRandom = AddonUtils.hexToInt(uuidArry[IDX_KIT_BODY], 8);
 
                     goat.addPrefixedTexture(whiteSize == 2 ? whiteTopGroup : whiteMiddleGroup, HAIR_PREFIX, hairType, TX_PIEBALD, whiteSize, piebaldRandom, "pb", true);
                 }
@@ -728,7 +728,7 @@ public class GoatTexture {
             // Blaze or White Poll
             if (genes[106] == 2 || genes[107] == 2) {
                 // Blaze
-                int blazeRandom = uuidArry[IDX_BLAZE] % (whiteSize == 1 ? 8 : 4);
+                int blazeRandom = AddonUtils.hexToInt(uuidArry[IDX_BLAZE], (whiteSize == 1 ? 8 : 4));
                 goat.addDelimiter("bz");
                 goat.addTextureToAnimalTextureGrouping(whiteBottomGroup, TexturingType.NONE, TX_BLAZE, whiteSize, blazeRandom, true);
             } else if (genes[106] == 3 || genes[107] == 3) {
@@ -747,7 +747,7 @@ public class GoatTexture {
         }
         if (genes[80] == 4 || genes[81] == 4) {
             // Flowery
-            int floweryRandom = uuidArry[IDX_FLOWERY] % 4;
+            int floweryRandom = AddonUtils.hexToInt(uuidArry[IDX_FLOWERY], 4);
             goat.addPrefixedTexture(whiteSize == 2 ? whiteTopGroup : whiteBottomGroup, HAIR_PREFIX, hairType, TX_FLOWERY, whiteSize, floweryRandom, "f", true);
         }
         if (genes[80] == 3 || genes[81] == 3) {
