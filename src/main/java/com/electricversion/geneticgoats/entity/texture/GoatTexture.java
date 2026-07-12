@@ -1,6 +1,7 @@
 package com.electricversion.geneticgoats.entity.texture;
 
 import com.electricversion.geneticgoats.entity.EnhancedGoat;
+import com.electricversion.geneticgoats.util.AddonUtils;
 import mokiyoki.enhancedanimals.renderer.texture.TextureGrouping;
 import mokiyoki.enhancedanimals.renderer.texture.TexturingType;
 import net.minecraft.util.Mth;
@@ -14,6 +15,9 @@ public class GoatTexture {
     private static final int IDX_BELT_BODY = 3;
     private static final int IDX_FLOWERY = 4;
     private static final int IDX_BLAZE = 5;
+    private static final int IDX_SOCK_WEIGHT = 6;
+    private static final int IDK_SOCK_FRONT = 7;
+    private static final int IDK_SOCK_BACK = 8;
 
     private static final String[] AGOUTIS = new String[]{
             "", "bezoar", "gold", "buckskin", "chamoisee", "swiss", "cou_clair",
@@ -570,7 +574,7 @@ public class GoatTexture {
 
     private static TextureGrouping[] makeWhiteMask(EnhancedGoat goat, int[] genes, char[] uuidArry, int hairType) {
         // Three different groups representing different moonspots interactions, plus an additional one for roan
-        // It's confusing it felt like the best way to represent the way that white and moonspots share space.
+        // It's confusing, but it felt like the best way to represent the way that white and moonspots share space.
         // Bottom group is below all moonspots.
         TextureGrouping whiteBottomGroup = new TextureGrouping(TexturingType.MERGE_GROUP);
         // Middle group is above small moonspots, but below large and medium moonspots.
@@ -624,9 +628,11 @@ public class GoatTexture {
 
                 int beltQuality = 0;
                 int beltRandom = 0;
+
+                int sockSize = 0;
+                int sockQuality = 0;
                 int sockFrontSize = 0;
                 int sockBackSize = 0;
-                int sockQuality = 0;
                 int sockFrontRandom = 0;
                 int sockBackRandom = 0;
 
@@ -637,22 +643,74 @@ public class GoatTexture {
                 }
                 if (genes[58] == 2 || genes[59] == 2) {
                     // Socked Belted
-                    sockFrontSize = 1;
-                    sockBackSize = 1;
+
+                    // -1 = Front-weighted. 0 = even. 1 = Back-weighted
+                    float sockWeight = -1; // Front-weighted is wildtype
+                    if (genes[164] == 2 || genes[165] == 2) {
+                        // At least one copy of back-heavy
+                        if (genes[164] == genes[165]) {
+                            // Homozygous back-heavy
+                            sockWeight = 1;
+                        }
+                        else {
+                            sockWeight = 0;
+                        }
+                    }
+
+                    else if (genes[164] == 3 && genes[165] == 3) {
+                        // Homozygous even
+                        sockWeight = 0;
+                    }
+
+                    sockSize = 1;
 
                     if (whiteSize == 2) {
                         // Max white level increases sock size
-                        sockFrontSize++;
-                        sockBackSize++;
+                        sockSize++;
                     }
 
                     if (genes[66] == 2 || genes[67] == 2) {
                         // Sock Enhancer also increases sock size
-                        sockFrontSize++;
-                        sockBackSize++;
+                        sockSize++;
                     }
 
                     if (genes[68] == 2 && genes[69] == 2) sockQuality = 1; // Sock Quality Modifier
+
+                    // Randomize front and back socks based on weight
+                    int sockWeightRand = AddonUtils.hexToInt(uuidArry[IDX_SOCK_WEIGHT], 16);
+                    if (sockWeight == -1) {
+                        // Front Heavy
+                        if (sockWeightRand < 12) {
+                            sockFrontSize = sockSize;
+                        } else if (sockWeightRand < 15) {
+                            sockFrontSize = sockSize;
+                            sockBackSize = sockSize;
+                        } else {
+                            sockBackSize = sockSize;
+                        }
+                    } else if (sockWeight == 1) {
+                        // Back Heavy
+                        if (sockWeightRand < 12) {
+                            sockBackSize = sockSize;
+                        } else if (sockWeightRand < 15) {
+                            sockFrontSize = sockSize;
+                            sockBackSize = sockSize;
+                        } else {
+                            sockFrontSize = sockSize;
+                        }
+                    }
+                    else {
+                        // Even
+                        if (sockWeightRand < 12) {
+                            sockFrontSize = sockSize;
+                            sockBackSize = sockSize;
+                        } else if (sockWeightRand < 14) {
+                            sockFrontSize = sockSize;
+                        } else {
+                            sockBackSize = sockSize;
+                        }
+                    }
+
                 }
 
                 if (genes[130] == 2 && genes[131] == 2) {
