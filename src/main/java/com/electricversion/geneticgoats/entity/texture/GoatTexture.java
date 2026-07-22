@@ -684,7 +684,7 @@ public class GoatTexture {
                             sockFrontSize = sockSize;
                         } else if (sockWeightRand < 15) {
                             sockFrontSize = sockSize;
-                            sockBackSize = sockSize;
+                            sockBackSize = Mth.ceil(sockSize/2F);
                         } else {
                             sockBackSize = sockSize;
                         }
@@ -693,7 +693,7 @@ public class GoatTexture {
                         if (sockWeightRand < 12) {
                             sockBackSize = sockSize;
                         } else if (sockWeightRand < 15) {
-                            sockFrontSize = sockSize;
+                            sockFrontSize = Mth.ceil(sockSize/2F);;
                             sockBackSize = sockSize;
                         } else {
                             sockFrontSize = sockSize;
