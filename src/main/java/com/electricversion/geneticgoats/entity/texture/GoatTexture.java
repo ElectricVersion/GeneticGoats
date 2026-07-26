@@ -122,24 +122,39 @@ public class GoatTexture {
             },
     };
 
-    private static final String[][] TX_PIEBALD = new String[][]{
+    private static final String[][] TX_PIEBALD_BODY = new String[][]{
             { // LOW
-                    "white/piebald/piebald_low1.png", "white/piebald/piebald_low2.png",
-                    "white/piebald/piebald_low3.png", "white/piebald/piebald_low4.png",
-                    "white/piebald/piebald_low5.png", "white/piebald/piebald_low6.png",
-                    "white/piebald/piebald_low7.png", "white/piebald/piebald_low8.png",
+                    "white/piebald/body/piebald_low1.png", "white/piebald/body/piebald_low2.png",
+                    "white/piebald/body/piebald_low3.png", "white/piebald/body/piebald_low4.png",
+                    "white/piebald/body/piebald_low5.png", "white/piebald/body/piebald_low6.png",
+                    "white/piebald/body/piebald_low7.png", "white/piebald/body/piebald_low8.png",
             },
             { // MEDIUM
-                    "white/piebald/piebald_med1.png", "white/piebald/piebald_med2.png",
-                    "white/piebald/piebald_med3.png", "white/piebald/piebald_med4.png",
-                    "white/piebald/piebald_med5.png", "white/piebald/piebald_med6.png",
-                    "white/piebald/piebald_med7.png", "white/piebald/piebald_med8.png",
+                    "white/piebald/body/piebald_med1.png", "white/piebald/body/piebald_med2.png",
+                    "white/piebald/body/piebald_med3.png", "white/piebald/body/piebald_med4.png",
+                    "white/piebald/body/piebald_med5.png", "white/piebald/body/piebald_med6.png",
+                    "white/piebald/body/piebald_med7.png", "white/piebald/body/piebald_med8.png",
             },
             { // HIGH
-                    "white/piebald/piebald_high1.png", "white/piebald/piebald_high2.png",
-                    "white/piebald/piebald_high3.png", "white/piebald/piebald_high4.png",
-                    "white/piebald/piebald_high5.png", "white/piebald/piebald_high6.png",
-                    "white/piebald/piebald_high7.png", "white/piebald/piebald_high8.png",
+                    "white/piebald/body/piebald_high1.png", "white/piebald/body/piebald_high2.png",
+                    "white/piebald/body/piebald_high3.png", "white/piebald/body/piebald_high4.png",
+                    "white/piebald/body/piebald_high5.png", "white/piebald/body/piebald_high6.png",
+                    "white/piebald/body/piebald_high7.png", "white/piebald/body/piebald_high8.png",
+            }
+    };
+
+    private static final String[][] TX_PIEBALD_HEAD = new String[][]{
+            { // LOW
+                    "white/piebald/head/piebald_low1.png", "white/piebald/head/piebald_low2.png",
+                    "white/piebald/head/piebald_low3.png", "white/piebald/head/piebald_low4.png",
+                    "white/piebald/head/piebald_low5.png", "white/piebald/head/piebald_low6.png",
+                    "white/piebald/head/piebald_low7.png", "white/piebald/head/piebald_low8.png",
+            },
+            { // MEDIUM
+                    "white/piebald/head/piebald_med1.png", "white/piebald/head/piebald_med2.png",
+                    "white/piebald/head/piebald_med3.png", "white/piebald/head/piebald_med4.png",
+                    "white/piebald/head/piebald_med5.png", "white/piebald/head/piebald_med6.png",
+                    "white/piebald/head/piebald_med7.png", "white/piebald/head/piebald_med8.png",
             }
     };
 
@@ -617,9 +632,12 @@ public class GoatTexture {
                     goat.addPrefixedTexture(whiteSize > 0 ? whiteTopGroup : whiteMiddleGroup, HAIR_PREFIX, hairType, TX_PIEBALD_BELT, whiteSize, piebaldBeltRandom, "pbe", true);
                 } else {
                     // Piebald without belt
-                    int piebaldRandom = AddonUtils.hexToInt(uuidArry[IDX_KIT_BODY], 8);
+                    int piebaldBodyRandom = AddonUtils.hexToInt(uuidArry[IDX_KIT_BODY], 8);
+                    int piebaldHeadRandom = AddonUtils.hexToInt(uuidArry[IDX_KIT_BODY], 8);
 
-                    goat.addPrefixedTexture(whiteSize == 2 ? whiteTopGroup : whiteMiddleGroup, HAIR_PREFIX, hairType, TX_PIEBALD, whiteSize, piebaldRandom, "pb", true);
+                    goat.addPrefixedTexture(whiteSize == 2 ? whiteTopGroup : whiteMiddleGroup, HAIR_PREFIX, hairType, TX_PIEBALD_BODY, whiteSize, piebaldBodyRandom, "pb-b", true);
+                    // For low and medium piebald, where the pattern isn't necessarily connected to the body, randomize the head separately
+                    goat.addPrefixedTexture(whiteSize == 2 ? whiteTopGroup : whiteMiddleGroup, HAIR_PREFIX, hairType, TX_PIEBALD_HEAD, whiteSize, piebaldHeadRandom, "pb-h", whiteSize < 2);
                 }
             }
             // Can't use an else-if because that would make it mutually exclusive with goulet - just have to make sure it's not piebald!
