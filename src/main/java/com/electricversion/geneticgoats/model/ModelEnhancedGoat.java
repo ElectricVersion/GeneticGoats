@@ -561,23 +561,23 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         // Lower Legs
         rootDef.addOrReplaceChild("legBFL", CubeListBuilder.create()
                         .texOffs(13, 79)
-                        .addBox(0F, 5F, 0F, 3, 5, 3),
-                PartPose.offset(0F, 1F, -3F));
+                        .addBox(0F, 0F, 0F, 3, 5, 3),
+                PartPose.offset(0F, 6F, -3F));
 
         rootDef.addOrReplaceChild("legBFR", CubeListBuilder.create()
                         .texOffs(0, 79)
-                        .addBox(-3F, 5F, 0F, 3, 5, 3),
-                PartPose.offset(0F, 1F, -3F));
+                        .addBox(-3F, 0F, 0F, 3, 5, 3),
+                PartPose.offset(0F, 6F, -3F));
 
         rootDef.addOrReplaceChild("legBBL", CubeListBuilder.create()
                         .texOffs(13, 88)
-                        .addBox(0F, 5F, 0F, 3, 5, 3),
-                PartPose.offset(0F, 1F, -3F));
+                        .addBox(0F, 0F, 0F, 3, 5, 3),
+                PartPose.offset(0F, 6F, -3F));
 
         rootDef.addOrReplaceChild("legBBR", CubeListBuilder.create()
                         .texOffs(0, 88)
-                        .addBox(-3F, 5F, 0F, 3, 5, 3),
-                PartPose.offset(0F, 1F, -3F));
+                        .addBox(-3F, 0F, 0F, 3, 5, 3),
+                PartPose.offset(0F, 6F, -3F));
 
         // Horns
         for (int i = 0; i < MAX_HORN_LENGTH; i++) {
@@ -763,6 +763,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
     }
 
     private void straightenLegsAnim() {
+        if (goatModelData.sleeping) return;
         bLegFL.setXRot(lerpTo(bLegFL.getXRot(), 0F));
         bLegFR.setXRot(lerpTo(bLegFR.getXRot(), 0F));
         bLegBL.setXRot(lerpTo(bLegBL.getXRot(), 0F));
@@ -843,6 +844,41 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         tail.setYRot(angleMultiplier * 0.07F);
     }
 
+    private void sleepAnim() {
+        final float lerpSpeed = 0.01F;
+        bLegFL.setXRot(lerpTo(lerpSpeed, bLegFL.getXRot(), -Mth.HALF_PI*0.5F));
+        bLegFR.setXRot(lerpTo(lerpSpeed, bLegFR.getXRot(), -Mth.HALF_PI*0.5F));
+        bLegBL.setXRot(lerpTo(lerpSpeed, bLegBL.getXRot(), -Mth.HALF_PI*0.5F));
+        bLegBR.setXRot(lerpTo(lerpSpeed, bLegBR.getXRot(), -Mth.HALF_PI*0.5F));
+        legBFL.setXRot(lerpTo(lerpSpeed, legBFL.getXRot(), Mth.HALF_PI*1.5F));
+        legBFR.setXRot(lerpTo(lerpSpeed, legBFR.getXRot(), Mth.HALF_PI*1.5F));
+        legBBL.setXRot(lerpTo(lerpSpeed, legBBL.getXRot(), Mth.HALF_PI*1.5F));
+        legBBR.setXRot(lerpTo(lerpSpeed, legBBR.getXRot(), Mth.HALF_PI*1.5F));
+    }
+
+    private void repositionKnees() {
+        if (legBFL.getXRot() > 0F) {
+            legBFL.setZ(-3F + Math.min(3F, (3F * (legBFL.getXRot()/Mth.HALF_PI))));
+        } else {
+            legBFL.setZ(-3F);
+        }
+        if (legBFR.getXRot() > 0F) {
+            legBFR.setZ(-3F + Math.min(3F, (3F * (legBFR.getXRot()/Mth.HALF_PI))));
+        } else {
+            legBFR.setZ(-3F);
+        }
+        if (legBBL.getXRot() > 0F) {
+            legBBL.setZ(-3F + Math.min(3F, (3F * (legBBL.getXRot()/Mth.HALF_PI))));
+        } else {
+            legBBL.setZ(-3F);
+        }
+        if (legBBR.getXRot() > 0F) {
+            legBBR.setZ(-3F + Math.min(3F, (3F * (legBBR.getXRot()/Mth.HALF_PI))));
+        } else {
+            legBBR.setZ(-3F);
+        }
+    }
+
     @Override
     public void setupAnim(@NotNull T goat, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         goatModelData = getCreateGoatModelData(goat);
@@ -916,6 +952,18 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             } else {
                 straightenLegsAnim();
             }
+
+            if (goatModelData.sleeping) {
+                sleepAnim();
+            }
+            else {
+                legBFL.setXRot(lerpTo(0.01F, legBFL.getXRot(), 0F));
+                legBFR.setXRot(lerpTo(0.01F, legBFR.getXRot(), 0F));
+                legBBL.setXRot(lerpTo(0.01F, legBBL.getXRot(), 0F));
+                legBBR.setXRot(lerpTo(0.01F, legBBR.getXRot(), 0F));
+            }
+            repositionKnees();
+
             saveAnimationValues(goatModelData);
         }
     }
