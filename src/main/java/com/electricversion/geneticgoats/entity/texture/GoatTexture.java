@@ -633,7 +633,7 @@ public class GoatTexture {
                 } else {
                     // Piebald without belt
                     int piebaldBodyRandom = AddonUtils.hexToInt(uuidArry[IDX_KIT_BODY], 8);
-                    int piebaldHeadRandom = AddonUtils.hexToInt(uuidArry[IDX_KIT_BODY], 8);
+                    int piebaldHeadRandom = AddonUtils.hexToInt(uuidArry[IDX_KIT_HEAD], 8);
 
                     goat.addPrefixedTexture(whiteSize == 2 ? whiteTopGroup : whiteMiddleGroup, HAIR_PREFIX, hairType, TX_PIEBALD_BODY, whiteSize, piebaldBodyRandom, "pb-b", true);
                     // For low and medium piebald, where the pattern isn't necessarily connected to the body, randomize the head separately
