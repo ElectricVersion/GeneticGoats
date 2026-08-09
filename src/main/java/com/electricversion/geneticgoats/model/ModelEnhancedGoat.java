@@ -571,13 +571,13 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
 
         rootDef.addOrReplaceChild("legBBL", CubeListBuilder.create()
                         .texOffs(13, 88)
-                        .addBox(0F, 0F, 0F, 3, 5, 3),
-                PartPose.offset(0F, 6F, -3F));
+                        .addBox(0F, 0F, -3F, 3, 5, 3),
+                PartPose.offset(0F, 6F, 0F));
 
         rootDef.addOrReplaceChild("legBBR", CubeListBuilder.create()
                         .texOffs(0, 88)
-                        .addBox(-3F, 0F, 0F, 3, 5, 3),
-                PartPose.offset(0F, 6F, -3F));
+                        .addBox(-3F, 0F, -3F, 3, 5, 3),
+                PartPose.offset(0F, 6F, 0F));
 
         // Horns
         for (int i = 0; i < MAX_HORN_LENGTH; i++) {
@@ -852,8 +852,8 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         bLegBR.setXRot(lerpTo(lerpSpeed, bLegBR.getXRot(), -Mth.HALF_PI*0.5F));
         legBFL.setXRot(lerpTo(lerpSpeed, legBFL.getXRot(), Mth.HALF_PI*1.5F));
         legBFR.setXRot(lerpTo(lerpSpeed, legBFR.getXRot(), Mth.HALF_PI*1.5F));
-        legBBL.setXRot(lerpTo(lerpSpeed, legBBL.getXRot(), Mth.HALF_PI*1.5F));
-        legBBR.setXRot(lerpTo(lerpSpeed, legBBR.getXRot(), Mth.HALF_PI*1.5F));
+        legBBL.setXRot(lerpTo(lerpSpeed, legBBL.getXRot(), -Mth.HALF_PI*0.5F));
+        legBBR.setXRot(lerpTo(lerpSpeed, legBBR.getXRot(), -Mth.HALF_PI*0.5F));
     }
 
     private void repositionKnees() {
@@ -866,16 +866,6 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             legBFR.setZ(-3F + Math.min(3F, (3F * (legBFR.getXRot()/Mth.HALF_PI))));
         } else {
             legBFR.setZ(-3F);
-        }
-        if (legBBL.getXRot() > 0F) {
-            legBBL.setZ(-3F + Math.min(3F, (3F * (legBBL.getXRot()/Mth.HALF_PI))));
-        } else {
-            legBBL.setZ(-3F);
-        }
-        if (legBBR.getXRot() > 0F) {
-            legBBR.setZ(-3F + Math.min(3F, (3F * (legBBR.getXRot()/Mth.HALF_PI))));
-        } else {
-            legBBR.setZ(-3F);
         }
     }
 
