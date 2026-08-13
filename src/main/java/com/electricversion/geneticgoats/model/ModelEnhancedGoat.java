@@ -854,6 +854,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         legBFR.setXRot(lerpTo(lerpSpeed, legBFR.getXRot(), Mth.HALF_PI*1.5F));
         legBBL.setXRot(lerpTo(lerpSpeed, legBBL.getXRot(), -Mth.HALF_PI*0.5F));
         legBBR.setXRot(lerpTo(lerpSpeed, legBBR.getXRot(), -Mth.HALF_PI*0.5F));
+        root.setY((float) (24 + (10F * Math.asin(Mth.abs(bLegFL.getXRot())))));
     }
 
     private void repositionKnees() {
@@ -946,11 +947,12 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             if (goatModelData.sleeping) {
                 sleepAnim();
             }
-            else {
+            else if (root.getY() != 24F ){
                 legBFL.setXRot(lerpTo(0.01F, legBFL.getXRot(), 0F));
                 legBFR.setXRot(lerpTo(0.01F, legBFR.getXRot(), 0F));
                 legBBL.setXRot(lerpTo(0.01F, legBBL.getXRot(), 0F));
                 legBBR.setXRot(lerpTo(0.01F, legBBR.getXRot(), 0F));
+                root.setY((float) (24 + (10F * Math.asin(Mth.abs(bLegFL.getXRot())))));
             }
             repositionKnees();
 
