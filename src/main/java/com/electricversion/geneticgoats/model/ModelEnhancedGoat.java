@@ -947,7 +947,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             if (goatModelData.sleeping) {
                 sleepAnim();
             }
-            else if (root.getY() != 24F ){
+            else if (root.getY() != 24F){
                 legBFL.setXRot(lerpTo(0.01F, legBFL.getXRot(), 0F));
                 legBFR.setXRot(lerpTo(0.01F, legBFR.getXRot(), 0F));
                 legBBL.setXRot(lerpTo(0.01F, legBBL.getXRot(), 0F));
