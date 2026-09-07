@@ -743,7 +743,7 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         map.put("tail", getRotationVector(tail));
     }
 
-    private void lookAnim(float netHeadYaw, float headPitch) {
+        private void lookAnim(float netHeadYaw, float headPitch) {
         float xRot = (limit(headPitch, 45) * 0.0025F) * Mth.HALF_PI;
         float yRot = limit(netHeadYaw, 90) * Mth.HALF_PI * 0.005F;
         bHead.setXRot(lerpTo(bHead.getXRot(), xRot * 0.5F + baseHeadAngle));
@@ -854,7 +854,9 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
         legBFR.setXRot(lerpTo(lerpSpeed, legBFR.getXRot(), Mth.HALF_PI*1.5F));
         legBBL.setXRot(lerpTo(lerpSpeed, legBBL.getXRot(), -Mth.HALF_PI*0.5F));
         legBBR.setXRot(lerpTo(lerpSpeed, legBBR.getXRot(), -Mth.HALF_PI*0.5F));
-        root.setY((float) (24 + (10F * Math.asin(Mth.abs(bLegFL.getXRot())))));
+        bNeck.setXRot(lerpTo(bNeck.getXRot(), Mth.HALF_PI * 1.1F));
+        bHead.setXRot(lerpTo(bHead.getXRot(), -Mth.HALF_PI * 0.3F));
+        root.setY((float) (24 + (9F * Math.asin(Mth.abs(bLegFL.getXRot())))));
     }
 
     private void repositionKnees() {
@@ -878,81 +880,84 @@ public class ModelEnhancedGoat<T extends EnhancedGoat> extends EnhancedAnimalMod
             GoatPhenotype phenotype = goatModelData.getPhenotype();
             setupInitialAnimationValues(goatModelData, netHeadYaw, headPitch);
 
-            float baseEarXRot = phenotype.getEarXRot();
-            float baseEarZRot = phenotype.getEarZRot();
-
-            // Fainting
-            if (goatModelData.isFainted()) {
-                faintAnim();
-                straightenLegsAnim();
-                // No other animations can occur while fainting
-                saveAnimationValues(goatModelData);
-                return;
-            } else if (root.getZRot() != 0F) {
-                // Not fainted, but still on the ground.
-                getUpFromFaintingAnim();
-                saveAnimationValues(goatModelData);
-                return;
-            }
-
-            // Modeled after the sheep ear twitch functionality in core GA. Credit to Bearded & Moki for the logic
-            if (goatModelData.earTwitchTimer <= ageInTicks) {
-                if (bEarL.getXRot() != baseEarXRot|| bEarL.getXRot() != baseEarXRot) {
-                    bEarL.setXRot(lerpTo(bEarL.getXRot(), baseEarXRot));
-                    bEarL.setZRot(lerpTo(bEarL.getZRot(), baseEarZRot));
-                    bEarR.setXRot(lerpTo(bEarR.getXRot(), baseEarXRot));
-                    bEarR.setZRot(lerpTo(bEarR.getZRot(), -baseEarZRot));
-                }
-                else {
-                    goatModelData.earTwitchSide = goat.getRandom().nextBoolean();
-                    goatModelData.earTwitchTimer = (int) ageInTicks + goat.getRandom().nextInt(goatModelData.sleeping ? 1200 : 600);
-                }
-            } else if (goatModelData.earTwitchTimer <= ageInTicks + 30 && hasAI) {
-                earTwitchAnim(ageInTicks, goatModelData.earTwitchSide, baseEarXRot, baseEarZRot);
-            }
-
-            // Tail wiggle
-            if (goatModelData.tailSwishTimer <= ageInTicks) {
-                if (tail.getYRot() != 0F) {
-                    tail.setYRot(lerpTo(tail.getYRot(), 0F));
-                }
-                else {
-                    goatModelData.tailSwishTimer = (int) ageInTicks + goat.getRandom().nextInt(goatModelData.sleeping ? 1200 : 600);
-                }
-            } else if (goatModelData.tailSwishTimer <= ageInTicks + 30 && hasAI) {
-                tailSwishAnim(ageInTicks);
-            }
-
-            // Grazing
-            if (goatModelData.isEating != 0) {
-                if (goatModelData.isEating == -1) {
-                    goatModelData.isEating = (int) ageInTicks + 90;
-                } else if (goatModelData.isEating < ageInTicks) {
-                    goatModelData.isEating = 0;
-                }
-                grazeAnim(goatModelData.isEating - ageInTicks);
-            } else {
-                lookAnim(netHeadYaw, headPitch);
-                bMouth.setXRot(lerpTo(bMouth.getXRot(), 0F));
-            }
-
-
-            // Walking
-            if (goat.getDeltaMovement().horizontalDistanceSqr() > 0.001 || goat.xOld != goat.getX() || goat.zOld != goat.getZ()) {
-                walkAnim(limbSwing, limbSwingAmount);
-            } else {
-                straightenLegsAnim();
-            }
-
             if (goatModelData.sleeping) {
                 sleepAnim();
             }
-            else if (root.getY() != 24F){
+            else if (root.getY() != 24F || legBFL.getXRot() != 0F){
+                straightenLegsAnim();
                 legBFL.setXRot(lerpTo(0.01F, legBFL.getXRot(), 0F));
                 legBFR.setXRot(lerpTo(0.01F, legBFR.getXRot(), 0F));
                 legBBL.setXRot(lerpTo(0.01F, legBBL.getXRot(), 0F));
                 legBBR.setXRot(lerpTo(0.01F, legBBR.getXRot(), 0F));
+                lookAnim(netHeadYaw, headPitch);
                 root.setY((float) (24 + (10F * Math.asin(Mth.abs(bLegFL.getXRot())))));
+            }
+            else {
+                float baseEarXRot = phenotype.getEarXRot();
+                float baseEarZRot = phenotype.getEarZRot();
+
+                // Fainting
+                if (goatModelData.isFainted()) {
+                    faintAnim();
+                    straightenLegsAnim();
+                    // No other animations can occur while fainting
+                    saveAnimationValues(goatModelData);
+                    return;
+                } else if (root.getZRot() != 0F) {
+                    // Not fainted, but still on the ground.
+                    getUpFromFaintingAnim();
+                    saveAnimationValues(goatModelData);
+                    return;
+                }
+
+                // Modeled after the sheep ear twitch functionality in core GA. Credit to Bearded & Moki for the logic
+                if (goatModelData.earTwitchTimer <= ageInTicks) {
+                    if (bEarL.getXRot() != baseEarXRot|| bEarL.getXRot() != baseEarXRot) {
+                        bEarL.setXRot(lerpTo(bEarL.getXRot(), baseEarXRot));
+                        bEarL.setZRot(lerpTo(bEarL.getZRot(), baseEarZRot));
+                        bEarR.setXRot(lerpTo(bEarR.getXRot(), baseEarXRot));
+                        bEarR.setZRot(lerpTo(bEarR.getZRot(), -baseEarZRot));
+                    }
+                    else {
+                        goatModelData.earTwitchSide = goat.getRandom().nextBoolean();
+                        goatModelData.earTwitchTimer = (int) ageInTicks + goat.getRandom().nextInt(goatModelData.sleeping ? 1200 : 600);
+                    }
+                } else if (goatModelData.earTwitchTimer <= ageInTicks + 30 && hasAI) {
+                    earTwitchAnim(ageInTicks, goatModelData.earTwitchSide, baseEarXRot, baseEarZRot);
+                }
+
+                // Tail wiggle
+                if (goatModelData.tailSwishTimer <= ageInTicks) {
+                    if (tail.getYRot() != 0F) {
+                        tail.setYRot(lerpTo(tail.getYRot(), 0F));
+                    }
+                    else {
+                        goatModelData.tailSwishTimer = (int) ageInTicks + goat.getRandom().nextInt(goatModelData.sleeping ? 1200 : 600);
+                    }
+                } else if (goatModelData.tailSwishTimer <= ageInTicks + 30 && hasAI) {
+                    tailSwishAnim(ageInTicks);
+                }
+
+
+                // Walking
+                if (goat.getDeltaMovement().horizontalDistanceSqr() > 0.001 || goat.xOld != goat.getX() || goat.zOld != goat.getZ()) {
+                    walkAnim(limbSwing, limbSwingAmount);
+                } else {
+                    straightenLegsAnim();
+                }
+
+                // Grazing
+                if (goatModelData.isEating != 0) {
+                    if (goatModelData.isEating == -1) {
+                        goatModelData.isEating = (int) ageInTicks + 90;
+                    } else if (goatModelData.isEating < ageInTicks) {
+                        goatModelData.isEating = 0;
+                    }
+                    grazeAnim(goatModelData.isEating - ageInTicks);
+                } else {
+                    lookAnim(netHeadYaw, headPitch);
+                    bMouth.setXRot(lerpTo(bMouth.getXRot(), 0F));
+                }
             }
             repositionKnees();
 
