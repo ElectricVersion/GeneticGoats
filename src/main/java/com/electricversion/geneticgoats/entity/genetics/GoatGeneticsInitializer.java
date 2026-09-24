@@ -351,8 +351,6 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
          * 1 - Medium Size (Wildtype)
          * 2 - Large Moonspots; Incomplete Dominant
          * 3 - Small Moonspots; Incomplete Dominant
-         * (Heterozygotes produce a mixture of sizes - e.g. normal/large will produce goats with both normal and large spots)
-         * Implementation of the above currently undecided - may need to be adjusted or simplified somehow
          */
         autosomalGenes[88] = randomizeGene(3);
         autosomalGenes[89] = randomizeGene(3);
