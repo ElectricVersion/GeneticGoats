@@ -17,7 +17,9 @@ public class GoatTexture {
     private static final int IDX_BLAZE = 5;
     private static final int IDX_SOCK_WEIGHT = 6;
     private static final int IDK_SOCK_FRONT = 7;
-    private static final int IDK_SOCK_BACK = 8;
+    // Index 8 is a dash so skip
+    private static final int IDK_SOCK_BACK = 9;
+    private static final int IDX_MOONSPOTS = 10;
 
     private static final String[] AGOUTIS = new String[]{
             "", "bezoar", "gold", "buckskin", "chamoisee", "swiss", "cou_clair",
@@ -825,7 +827,7 @@ public class GoatTexture {
             String[] sizeDescriptors = {"small", "med", "large"};
             int moonspotQuantity = 1;
             int moonspotSize = 1;
-            int moonspotRandom = 0;
+            int moonspotRandom = AddonUtils.hexToInt(uuidArry[IDX_MOONSPOTS], 4) + 1;
             if (genes[86] == 2 || genes[87] == 2) {
                 // Many Moonspots
                 moonspotQuantity++;
@@ -845,7 +847,7 @@ public class GoatTexture {
             }
 
             String texturePath = HAIR_PREFIX[hairType] + "moonspots/moonspots_" +
-                    quantityDescriptors[moonspotQuantity] + "_" + sizeDescriptors[moonspotSize] + (moonspotRandom + 1) + ".png";
+                    quantityDescriptors[moonspotQuantity] + "_" + sizeDescriptors[moonspotSize] + (moonspotRandom) + ".png";
 
             String textureName = "ms" + hairType + "-" + moonspotQuantity + "-" + moonspotSize + "-" + moonspotRandom;
 
