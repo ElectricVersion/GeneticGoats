@@ -847,7 +847,7 @@ public class GoatTexture {
             }
 
             String texturePath = HAIR_PREFIX[hairType] + "moonspots/moonspots_" +
-                    quantityDescriptors[moonspotQuantity] + "_" + sizeDescriptors[moonspotSize] + (moonspotRandom) + ".png";
+                    quantityDescriptors[moonspotQuantity] + "_" + sizeDescriptors[moonspotSize] + moonspotRandom + ".png";
 
             String textureName = "ms" + hairType + "-" + moonspotQuantity + "-" + moonspotSize + "-" + moonspotRandom;
 
