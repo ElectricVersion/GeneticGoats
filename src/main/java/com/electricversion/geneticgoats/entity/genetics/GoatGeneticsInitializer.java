@@ -66,9 +66,10 @@ public class GoatGeneticsInitializer extends AbstractGeneticsInitialiser {
          * 10 - Sable; Incomplete Dom
          * 11 - Masked; Incomplete Dom
          * 12 - Red Cheek; Incomplete Dom
+         * 13 - Nonagouti; Incomplete Dom (darkens other agoutis)
          */
-        autosomalGenes[0] = randomizeGene(12);
-        autosomalGenes[1] = randomizeGene(12);
+        autosomalGenes[0] = randomizeGene(13);
+        autosomalGenes[1] = randomizeGene(13);
 
         /* EXTENSION/MC1R
          * 1 - Wildtype

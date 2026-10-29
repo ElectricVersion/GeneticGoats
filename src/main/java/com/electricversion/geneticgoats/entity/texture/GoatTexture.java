@@ -23,7 +23,8 @@ public class GoatTexture {
 
     private static final String[] AGOUTIS = new String[]{
             "", "bezoar", "gold", "buckskin", "chamoisee", "swiss", "cou_clair",
-            "sundgau", "tanhead", "caramel", "sable", "masked", "redcheek"
+            "sundgau", "tanhead", "caramel", "sable", "masked", "redcheek",
+            "nonagouti"
     };
 
     private static final String[] HAIR_PREFIX = new String[]{
@@ -57,24 +58,27 @@ public class GoatTexture {
     };
 
     private static final String[] TX_AGOUTI_BLACK = new String[]{
-            "", "agouti/bezoar_light.png", "", "agouti/buckskin_light.png", "agouti/chamoisee_light.png",
-            "agouti/swiss_light.png", "agouti/cou_clair_light.png", "agouti/sundgau_light.png",
-            "agouti/tanhead_light.png", "agouti/caramel_light.png", "agouti/sable_light.png",
-            "agouti/masked_light.png", "agouti/redcheek_light.png"
+            "", "agouti/bezoar.png", "", "agouti/buckskin.png", "agouti/chamoisee.png",
+            "agouti/swiss.png", "agouti/cou_clair.png", "agouti/sundgau.png",
+            "agouti/tanhead.png", "agouti/caramel.png", "agouti/sable.png",
+            "agouti/masked.png", "agouti/redcheek.png",
+            "agouti/nonagouti.png"
     };
 
     private static final String[] TX_AGOUTI_CREAM = new String[]{
             "", "agouti/bezoar_cream.png", "", "", "",
             "agouti/swiss_cream.png", "", "agouti/sundgau_cream.png",
             "", "", "agouti/sable_cream.png",
-            "agouti/masked_cream.png", ""
+            "agouti/masked_cream.png", "",
+            ""
     };
 
     private static final String[] TX_AGOUTI_MALE_SHADING = new String[]{
             "", "male_shading_light1.png", "", "male_shading_light1.png", "",
             "", "male_shading_light1.png", "",
             "male_shading_light1.png", "male_shading_light1.png", "male_shading_light1.png",
-            "male_shading_light1.png", ""
+            "male_shading_light1.png", "",
+            ""
     };
 
     private static final String[][] TX_ROAN = new String[][]{
@@ -558,9 +562,9 @@ public class GoatTexture {
                     String agouti2Name = AGOUTIS[agouti2];
                     String hetTextureString;
                     if (agouti1Name.compareToIgnoreCase(agouti2Name) < 0) {
-                        hetTextureString = HAIR_PREFIX[hairType] + "agouti/hets/" + agouti1Name + "_" + agouti2Name + "_light.png";
+                        hetTextureString = HAIR_PREFIX[hairType] + "agouti/hets/" + agouti1Name + "_" + agouti2Name + ".png";
                     } else {
-                        hetTextureString = HAIR_PREFIX[hairType] + "agouti/hets/" + agouti2Name + "_" + agouti1Name + "_light.png";
+                        hetTextureString = HAIR_PREFIX[hairType] + "agouti/hets/" + agouti2Name + "_" + agouti1Name + ".png";
                     }
                     goat.addTextureToAnimalTextureGrouping(agoutiGroup, hetTextureString, hairType + "-" + agouti1 + "-" + agouti2);
                 }
